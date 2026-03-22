@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.cache/
+*.log
+.env
+.env.local
+secrets.env
+memory-db/
+*.jsonl
+!config/*.example.json
+.DS_Store

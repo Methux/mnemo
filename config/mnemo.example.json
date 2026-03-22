@@ -1,0 +1,58 @@
+{
+  "embedding": {
+    "provider": "openai-compatible",
+    "apiKey": "${VOYAGE_API_KEY}",
+    "baseURL": "https://api.voyageai.com/v1",
+    "model": "voyage-3-large",
+    "dimensions": 1024,
+    "taskQuery": "retrieval.query",
+    "taskPassage": "retrieval.passage"
+  },
+  "dbPath": "~/.mnemo/memory-db",
+  "autoCapture": true,
+  "smartExtraction": true,
+  "autoRecall": true,
+  "autoRecallMinLength": 8,
+  "autoRecallMinRepeated": 3,
+  "captureAssistant": true,
+  "enableManagementTools": true,
+  "llm": {
+    "model": "gpt-4.1-mini",
+    "baseURL": "https://api.openai.com/v1",
+    "apiKey": "${OPENAI_API_KEY}"
+  },
+  "retrieval": {
+    "candidatePoolSize": 40,
+    "rerank": "cross-encoder",
+    "rerankProvider": "voyage",
+    "rerankApiKey": "${VOYAGE_API_KEY}",
+    "rerankModel": "rerank-2",
+    "rerankEndpoint": "https://api.voyageai.com/v1/rerank"
+  },
+  "decay": {
+    "recencyHalfLifeDays": 30,
+    "recencyWeight": 0.4,
+    "frequencyWeight": 0.3,
+    "intrinsicWeight": 0.3
+  },
+  "tier": {
+    "coreAccessThreshold": 10,
+    "coreImportanceThreshold": 0.8,
+    "peripheralAgeDays": 60
+  },
+  "mdMirror": {
+    "enabled": true,
+    "dir": "~/.mnemo/mirror"
+  },
+  "sessionStrategy": "memoryReflection",
+  "memoryReflection": {
+    "storeToLanceDB": true,
+    "injectMode": "inheritance+derived",
+    "messageCount": 120,
+    "thinkLevel": "medium"
+  },
+  "selfImprovement": {
+    "enabled": true,
+    "beforeResetNote": true
+  }
+}

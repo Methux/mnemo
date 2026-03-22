@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>OpenClaw Memory Architecture</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'PingFang SC', sans-serif; background: #0a0a0f; color: #e0e0e0; padding: 40px; min-width: 1100px; }
+  h1 { text-align: center; font-size: 28px; color: #fff; margin-bottom: 6px; }
+  .subtitle { text-align: center; color: #888; font-size: 14px; margin-bottom: 40px; }
+  .section { margin-bottom: 50px; }
+  .section-title { font-size: 20px; color: #60a5fa; margin-bottom: 20px; padding-left: 12px; border-left: 3px solid #60a5fa; }
+
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-row { display: flex; align-items: flex-start; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .arrow-down { width: 2px; height: 24px; background: #444; position: relative; margin: 4px 0; }
+  .arrow-down::after { content: '▼'; position: absolute; bottom: -10px; left: -5px; color: #555; font-size: 10px; }
+  .arrow-down.bright { background: linear-gradient(to bottom, #60a5fa, #3b82f6); }
+  .arrow-down.bright::after { color: #60a5fa; }
+
+  .card { border-radius: 10px; padding: 14px 18px; min-width: 200px; max-width: 320px; }
+  .card-sm { min-width: 140px; max-width: 250px; padding: 10px 14px; }
+  .card .label { font-size: 10px; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .card .title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .card .desc { font-size: 11px; color: #999; line-height: 1.5; }
+  .card .tag { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 3px; margin-top: 5px; margin-right: 3px; }
+
+  .card-blue { background: #111827; border: 1px solid #1e40af44; }
+  .card-blue .title { color: #60a5fa; }
+  .card-blue .tag { background: #1e40af33; color: #93c5fd; }
+
+  .card-green { background: #111f11; border: 1px solid #16653a44; }
+  .card-green .title { color: #4ade80; }
+  .card-green .tag { background: #16653a33; color: #86efac; }
+
+  .card-purple { background: #1f112a; border: 1px solid #7c3aed44; }
+  .card-purple .title { color: #c084fc; }
+  .card-purple .tag { background: #7c3aed33; color: #d8b4fe; }
+
+  .card-orange { background: #1f1a11; border: 1px solid #c2410c44; }
+  .card-orange .title { color: #fb923c; }
+  .card-orange .tag { background: #c2410c33; color: #fdba74; }
+
+  .card-red { background: #1f1111; border: 1px solid #b9181844; }
+  .card-red .title { color: #f87171; }
+  .card-red .tag { background: #b9181833; color: #fca5a5; }
+
+  .card-cyan { background: #111f1f; border: 1px solid #0e747444; }
+  .card-cyan .title { color: #22d3ee; }
+  .card-cyan .tag { background: #0e747433; color: #67e8f9; }
+
+  .card-gray { background: #161616; border: 1px solid #3f3f4644; }
+  .card-gray .title { color: #a1a1aa; }
+
+  .card-wide { min-width: 600px; max-width: 700px; text-align: center; }
+
+  .pipeline { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: center; margin: 6px 0; }
+  .stage { background: #111827; border: 1px solid #1e3a5f; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #94a3b8; text-align: center; }
+  .stage.highlight { border-color: #60a5fa55; color: #93c5fd; background: #0f1d35; }
+  .stage-arrow { color: #555; font-size: 10px; }
+  .stage .detail { font-size: 9px; color: #666; margin-top: 2px; }
+
+  .divider { width: 100%; max-width: 900px; margin: 0 auto; height: 1px; background: linear-gradient(to right, transparent, #333, transparent); }
+
+  .legend { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<h1>🧠 OpenClaw Memory Architecture</h1>
+<p class="subtitle">memory-lancedb-pro v1.1.0-beta.8 · 全链路流程图</p>
+
+<!-- ==================== WRITE LAYER ==================== -->
+<div class="section">
+  <div class="section-title">写入层 — 6 通道 → store.ts 统一入口 → 双引擎存储</div>
+  <div class="flow">
+
+    <div class="flow-row">
+      <div class="card card-blue card-sm">
+        <div class="label">① 实时 · message:sent</div>
+        <div class="title">Hook memory-extractor</div>
+        <div class="desc">Claude Sonnet 4<br>light: 6msg/3K · deep: 200msg/12K<br>importance 评分 · 情景上下文<br>去重: recall ≥0.9 跳过, ≥0.7 supersede</div>
+        <span class="tag">decision</span><span class="tag">fact</span><span class="tag">preference</span><span class="tag">entity</span>
+      </div>
+      <div class="card card-green card-sm">
+        <div class="label">② 深度 · agent_end</div>
+        <div class="title">Plugin SmartExtractor</div>
+        <div class="desc">GPT-4.1 · captureAssistant=true<br>三层: L0 abstract / L1 overview / L2 content<br>noise bank 预过滤 · 提取后 dedup 合并</div>
+        <span class="tag">profile</span><span class="tag">preferences</span><span class="tag">entities</span><span class="tag">events</span><span class="tag">cases</span><span class="tag">patterns</span>
+      </div>
+      <div class="card card-purple card-sm">
+        <div class="label">③ 定时 · cron 30m/1h</div>
+        <div class="title">L1 记忆提炼器</div>
+        <div class="desc">Claude Sonnet 4.6 · ×3 agent<br>回扫最近 2h 对话 (limit=30)<br>recall 去重 · 兜底网</div>
+        <span class="tag">default</span><span class="tag">bot3</span><span class="tag">bot5</span>
+      </div>
+      <div class="card card-orange card-sm">
+        <div class="label">④ 归档 · cron 23:30</div>
+        <div class="title">daily-md-extractor</div>
+        <div class="desc">Claude · ×3 agent<br>daily notes → 补录未入库 facts<br>超 7 天 → archive/</div>
+      </div>
+      <div class="card card-cyan card-sm">
+        <div class="label">⑤ 监听 · fs.watch</div>
+        <div class="title">memory-watcher</div>
+        <div class="desc">Claude Haiku 4.5 · 常驻后台<br>USER/AGENTS/IDENTITY.md<br>md5 对比 → 变更提取</div>
+      </div>
+      <div class="card card-gray card-sm">
+        <div class="label">⑥ 手动</div>
+        <div class="title">memory_store tool</div>
+        <div class="desc">agent 主动调用<br>最精确</div>
+      </div>
+    </div>
+
+    <div class="arrow-down bright"></div>
+
+    <div class="card card-blue card-wide">
+      <div class="title">store.ts 统一写入入口</div>
+      <div class="desc" style="margin-top:6px;">
+        Step 1: embedding 去重检查 → Step 2: LanceDB 写入 (向量 + BM25 索引 + scope/tier/importance) → Step 3: Graphiti 双写 (WAL: pending → committed/failed)
+      </div>
+    </div>
+
+    <div class="arrow-down bright"></div>
+
+    <div class="flow-row">
+      <div class="card card-blue">
+        <div class="title">LanceDB 向量数据库</div>
+        <div class="desc">
+          voyage-3-large 1024d · hybrid (vector + BM25 FTS)<br>
+          10,000 条 · scope 隔离 (6 bot)<br>
+          tier: core / working / peripheral<br>
+          decay: recency 0.4 + frequency 0.3 + intrinsic 0.3
+        </div>
+      </div>
+      <div class="card card-purple">
+        <div class="title">Graphiti / Neo4j 知识图谱</div>
+        <div class="desc">
+          Entity → Relation → Entity<br>
+          时序: valid_at / expired_at<br>
+          degree 中心度 · group_id 隔离<br>
+          WAL 保障 · fire-and-forget
+        </div>
+        <span class="tag">importance ≥ 0.5</span><span class="tag">text ≥ 20ch</span>
+      </div>
+      <div class="card card-green card-sm">
+        <div class="title">MD Mirror + Backup</div>
+        <div class="desc">每日 YYYY-MM-DD.md 镜像<br>每日 JSONL 全量备份</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== RETRIEVAL LAYER ==================== -->
+<div class="section" style="margin-top: 50px;">
+  <div class="section-title">检索层 — 10 级流水线</div>
+  <div class="flow">
+
+    <div class="card card-blue card-wide">
+      <div class="title">用户消息</div>
+      <div class="desc">autoRecall (before_agent_start, 每条) · memory_recall (agent 手动) · query-context (session 首条)</div>
+    </div>
+
+    <div class="arrow-down bright"></div>
+
+    <!-- S0-S2 -->
+    <div class="pipeline">
+      <div class="stage">
+        <b>S0</b> 预处理
+        <div class="detail">清除 metadata 污染 · &lt;8 字符跳过</div>
+      </div>
+      <span class="stage-arrow">→</span>
+      <div class="stage highlight">
+        <b>S1</b> 共振门控
+        <div class="detail">向量探测 top3 · sim≥0.55 或 (≥threshold + imp≥0.7)<br>不通过→返回空 · adaptive threshold · fail-open</div>
+      </div>
+      <span class="stage-arrow">→</span>
+      <div class="stage">
+        <b>S2</b> Multi-hop 检测
+        <div class="detail">≥2 实体→Graphiti 走 /search 不走 /spread</div>
+      </div>
+    </div>
+
+    <div class="arrow-down bright"></div>
+
+    <!-- S3: Triple parallel -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span style="font-size: 13px; color: #60a5fa; font-weight: 600;">S3 三路并行检索 — Promise.all</span>
+    </div>
+    <div class="flow-row">
+      <div class="card card-blue card-sm">
+        <div class="title">① Vector Search</div>
+        <div class="desc">voyage-3-large 1024d<br>candidatePool = 40 · scope 隔离</div>
+        <span class="tag">语义联想</span>
+      </div>
+      <div class="card card-green card-sm">
+        <div class="title">② BM25 全文搜索</div>
+        <div class="desc">LanceDB FTS 索引<br>candidatePool = 40</div>
+        <span class="tag">关键词匹配</span>
+      </div>
+      <div class="card card-purple card-sm">
+        <div class="title">③ Graphiti 图遍历</div>
+        <div class="desc">auto → /spread (limit=3, depth=1, spread=3)<br>manual → /search (limit=5)<br>5s 超时 · expired 过滤</div>
+        <span class="tag">search 0.65</span><span class="tag">spread 0.45</span><span class="tag">+degreeBoost</span>
+      </div>
+    </div>
+
+    <div class="arrow-down bright"></div>
+
+    <!-- S4: Fusion -->
+    <div class="card card-orange card-wide">
+      <div class="title">S4 RRF 三源融合</div>
+      <div class="desc" style="margin-top:4px;">
+        Vector × 0.7 + BM25 × 0.3 &nbsp;·&nbsp; BM25 ≥ 0.75 保底 ×0.92 &nbsp;·&nbsp; Graphiti 入场 ×0.85<br>
+        幽灵条目验证 hasId() &nbsp;·&nbsp; degreeBoost min(0.15, log1p(d)×0.03) &nbsp;·&nbsp; fused score 降序
+      </div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- S5-S6 -->
+    <div class="pipeline">
+      <div class="stage">
+        <b>S5</b> 初筛
+        <div class="detail">minScore &lt; 0.3 丢弃</div>
+      </div>
+      <span class="stage-arrow">→</span>
+      <div class="stage highlight">
+        <b>S6</b> Cross-Encoder Rerank
+        <div class="detail">Voyage rerank-2 · 所有结果统一精排<br>blend: rerank×0.6 + original×0.4<br>BM25≥0.75 保底 ×0.95 · 5s timeout → fallback cosine</div>
+      </div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- S7-S8 -->
+    <div class="pipeline">
+      <div class="stage">
+        <b>S7</b> Decay + Lifecycle
+        <div class="detail">core 地板 0.9 / working 0.7 / peripheral 0.5<br>半衰期 30d · reinforcement 0.5</div>
+      </div>
+      <span class="stage-arrow">→</span>
+      <div class="stage">
+        <b>S8</b> 长度归一 + 硬分数线
+        <div class="detail">锚点 500ch 过长降分 · hardMinScore 0.35</div>
+      </div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- S9-S10 -->
+    <div class="pipeline">
+      <div class="stage">
+        <b>S9</b> 噪音过滤 + MMR 去重
+        <div class="detail">过滤拒绝/元问题/样板 · 最大边际相关性去重</div>
+      </div>
+      <span class="stage-arrow">→</span>
+      <div class="stage highlight">
+        <b>S10</b> 会话去重 + 注入
+        <div class="detail">同一记忆 3 轮不重复 · access_count++ → tier 晋升</div>
+      </div>
+    </div>
+
+    <div class="arrow-down bright"></div>
+
+    <div class="card card-green" style="text-align: center; min-width: 300px;">
+      <div class="title">Top 3 注入 Agent Context</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== LIFECYCLE LAYER ==================== -->
+<div class="section" style="margin-top: 50px;">
+  <div class="section-title">生命周期管理层</div>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="card card-purple card-sm">
+        <div class="title">Tier 分级</div>
+        <div class="desc">
+          <b>Core</b>: access≥10 / imp≥0.8<br>
+          <b>Working</b>: access≥3 / composite≥0.4<br>
+          <b>Peripheral</b>: composite&lt;0.15 / age&gt;60d<br>
+          定期 maintenance 自动转换
+        </div>
+      </div>
+      <div class="card card-orange card-sm">
+        <div class="title">Decay 衰减引擎</div>
+        <div class="desc">
+          recency 0.4 / freq 0.3 / intrinsic 0.3<br>
+          β: core 0.8 / working 1.0 / peripheral 1.3<br>
+          floor: core 0.9 / working 0.7 / peripheral 0.5
+        </div>
+      </div>
+      <div class="card card-cyan card-sm">
+        <div class="title">Session Reflection</div>
+        <div class="desc">
+          memoryReflection · inheritance+derived<br>
+          会话间摘要 → LanceDB<br>
+          messageCount=120 · thinkLevel=medium
+        </div>
+      </div>
+      <div class="card card-red card-sm">
+        <div class="title">Cron 维护</div>
+        <div class="desc">
+          夜间深度巩固 (daily)<br>
+          记忆关联整合 (daily 03:00)<br>
+          周度去重 (weekly)<br>
+          月度健康 review
+        </div>
+      </div>
+    </div>
+    <div style="height:12px;"></div>
+    <div class="flow-row">
+      <div class="card card-green card-sm">
+        <div class="title">Self-Improvement</div>
+        <div class="desc">重置前自动记笔记 · 学习文件管理</div>
+      </div>
+      <div class="card card-blue card-sm">
+        <div class="title">Graphiti WAL</div>
+        <div class="desc">pending → committed/failed · 恢复后重放</div>
+      </div>
+      <div class="card card-gray card-sm">
+        <div class="title">Scope 隔离</div>
+        <div class="desc">6 bot scope · global + agent:self + agent:default</div>
+      </div>
+      <div class="card card-gray card-sm">
+        <div class="title">Management Tools</div>
+        <div class="desc">memory_list · memory_stats<br>memory_recall · memory_update</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa;"></div>向量/检索</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4ade80;"></div>提取/输出</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c084fc;"></div>图谱/反思</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fb923c;"></div>融合/归档</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#22d3ee;"></div>监听/会话</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f87171;"></div>维护</div>
+</div>
+
+<p style="text-align:center; color:#444; font-size:11px; margin-top:30px;">Generated 2026-03-22 · memory-lancedb-pro v1.1.0-beta.8</p>
+
+</body>
+</html>
