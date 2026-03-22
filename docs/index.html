@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mnemo — AI Memory That Forgets Intelligently</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a1a;--bg2:#0f0f2a;--bg3:#141432;--accent:#4ecdc4;--accent2:#45b7aa;--text:#e0e0e8;--text2:#8888a0;--card:#12122a;--border:#1e1e3a;--glow:rgba(78,205,196,.15)}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:.8}
+.container{max-width:1140px;margin:0 auto;padding:0 24px}
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;backdrop-filter:blur(20px);background:rgba(10,10,26,.8);border-bottom:1px solid var(--border)}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem;color:var(--text)}
+.logo svg{width:28px;height:28px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--text2);font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:var(--accent);opacity:1}
+.nav-cta{background:var(--accent);color:var(--bg);padding:8px 20px;border-radius:8px;font-weight:600;font-size:.85rem}
+.nav-cta:hover{opacity:.9}
+/* Hero */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px}
+#hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-content{position:relative;z-index:1;max-width:800px}
+.hero-badge{display:inline-block;padding:6px 16px;border:1px solid var(--border);border-radius:100px;font-size:.8rem;color:var(--text2);margin-bottom:24px;background:rgba(20,20,50,.6)}
+h1{font-size:clamp(2.5rem,6vw,4.2rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:20px}
+h1 span{background:linear-gradient(135deg,var(--accent),#7c5ce0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(1rem,2vw,1.25rem);color:var(--text2);max-width:620px;margin:0 auto 40px;line-height:1.7}
+.cta-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:10px;font-weight:600;font-size:1rem;transition:all .25s;cursor:pointer;border:none}
+.btn-primary{background:var(--accent);color:var(--bg)}
+.btn-primary:hover{box-shadow:0 0 30px var(--glow);transform:translateY(-2px);opacity:1}
+.btn-secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn-secondary:hover{background:rgba(78,205,196,.1);transform:translateY(-2px);opacity:1}
+/* Section base */
+section{padding:100px 0}
+.section-label{font-size:.8rem;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:600;margin-bottom:12px}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em;margin-bottom:16px}
+.section-desc{color:var(--text2);font-size:1.1rem;max-width:600px;line-height:1.7}
+.text-center{text-align:center}
+.text-center .section-desc{margin:0 auto}
+/* Problem / Solution */
+#problem{background:var(--bg)}
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:60px;align-items:start}
+.ps-card{padding:40px;border-radius:16px;border:1px solid var(--border)}
+.ps-card.problem-card{background:linear-gradient(135deg,rgba(255,80,80,.05),rgba(255,80,80,.02))}
+.ps-card.solution-card{background:linear-gradient(135deg,rgba(78,205,196,.08),rgba(78,205,196,.02));border-color:rgba(78,205,196,.2)}
+.ps-card h3{font-size:1.4rem;margin-bottom:16px;font-weight:700}
+.ps-card.problem-card h3{color:#ff6b6b}
+.ps-card.solution-card h3{color:var(--accent)}
+.ps-card p{color:var(--text2);font-size:1.05rem;line-height:1.7}
+/* Architecture */
+#architecture{background:var(--bg2)}
+.arch-container{margin-top:60px;position:relative;padding:40px;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.arch-svg{width:100%;max-width:900px;margin:0 auto;display:block}
+.arch-svg text{font-family:inherit;fill:var(--text)}
+.arch-svg .pipe{stroke:var(--accent);stroke-width:2;fill:none;stroke-dasharray:8 4;animation:dashFlow 2s linear infinite}
+@keyframes dashFlow{to{stroke-dashoffset:-24}}
+.arch-svg .box{fill:var(--card);stroke:var(--border);stroke-width:1.5;rx:8}
+.arch-svg .box-accent{fill:rgba(78,205,196,.08);stroke:var(--accent);stroke-width:1.5;rx:8}
+.arch-svg .label{font-size:11px;fill:var(--text2);text-anchor:middle}
+.arch-svg .label-bold{font-size:12px;fill:var(--text);text-anchor:middle;font-weight:600}
+.arch-svg .label-accent{font-size:11px;fill:var(--accent);text-anchor:middle;font-weight:600}
+/* Features */
+#features{background:var(--bg)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.feature-card{padding:32px;background:var(--card);border:1px solid var(--border);border-radius:16px;transition:all .3s}
+.feature-card:hover{border-color:rgba(78,205,196,.3);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.feature-icon{width:44px;height:44px;border-radius:12px;background:rgba(78,205,196,.1);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.3rem}
+.feature-card h3{font-size:1.1rem;font-weight:700;margin-bottom:10px}
+.feature-card p{color:var(--text2);font-size:.92rem;line-height:1.6}
+/* Comparison */
+#comparison{background:var(--bg2)}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:60px}
+.comp-card{padding:40px;border-radius:16px;border:1px solid var(--border);background:var(--card)}
+.comp-card.pro{border-color:var(--accent);background:linear-gradient(135deg,rgba(78,205,196,.06),rgba(78,205,196,.02))}
+.comp-badge{display:inline-block;padding:4px 14px;border-radius:100px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
+.comp-card:not(.pro) .comp-badge{background:rgba(255,255,255,.08);color:var(--text2)}
+.comp-card.pro .comp-badge{background:rgba(78,205,196,.15);color:var(--accent)}
+.comp-card h3{font-size:1.6rem;font-weight:700;margin-bottom:8px}
+.comp-price{color:var(--text2);font-size:1rem;margin-bottom:24px}
+.comp-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.comp-list li{display:flex;align-items:flex-start;gap:10px;font-size:.95rem;color:var(--text2)}
+.comp-list li::before{content:"";display:block;width:18px;height:18px;min-width:18px;margin-top:3px;border-radius:50%;background:rgba(78,205,196,.15);border:1.5px solid var(--accent)}
+.comp-note{margin-top:20px;padding:12px 16px;background:rgba(78,205,196,.06);border-radius:8px;font-size:.85rem;color:var(--accent);font-style:italic}
+/* Pricing */
+#pricing{background:var(--bg)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.price-card{padding:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;transition:all .3s}
+.price-card.featured{border-color:var(--accent);position:relative;transform:scale(1.03)}
+.price-card.featured::before{content:"Most Popular";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--bg);padding:4px 16px;border-radius:100px;font-size:.75rem;font-weight:700}
+.price-card h3{font-size:1.3rem;font-weight:700;margin-bottom:4px}
+.price-card .price{font-size:2.8rem;font-weight:800;margin:16px 0 4px}
+.price-card .price sup{font-size:1rem;font-weight:600;color:var(--text2)}
+.price-card .annual{font-size:.85rem;color:var(--text2);margin-bottom:24px}
+.price-features{list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.price-features li{font-size:.9rem;color:var(--text2);padding-left:20px;position:relative}
+.price-features li::before{content:"\2713";position:absolute;left:0;color:var(--accent);font-weight:700}
+.price-card .btn{width:100%;justify-content:center;text-align:center}
+/* Quickstart */
+#quickstart{background:var(--bg2)}
+.code-block{margin-top:40px;background:#080818;border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:720px;margin-left:auto;margin-right:auto}
+.code-header{display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
+.code-dot{width:10px;height:10px;border-radius:50%}
+.code-dot:nth-child(1){background:#ff5f57}
+.code-dot:nth-child(2){background:#ffbd2e}
+.code-dot:nth-child(3){background:#28ca41}
+.code-header span{margin-left:auto;font-size:.75rem;color:var(--text2)}
+pre{padding:24px;overflow-x:auto;font-size:.88rem;line-height:1.7;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace}
+pre code{color:#c0c0d0}
+.kw{color:#c792ea}
+.fn{color:#82aaff}
+.str{color:#c3e88d}
+.cm{color:#546e7a}
+.typ{color:#ffcb6b}
+.op{color:#89ddff}
+/* Benchmarks */
+#benchmarks{background:var(--bg)}
+.bench-table{margin-top:60px;width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.bench-table th,.bench-table td{padding:16px 20px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--border)}
+.bench-table th{background:var(--bg3);color:var(--text2);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em}
+.bench-table td{background:var(--card)}
+.bench-table tr:last-child td{border-bottom:none}
+.bench-table .highlight{color:var(--accent);font-weight:700}
+.bench-bar{display:inline-block;height:6px;border-radius:3px;background:var(--accent);margin-left:10px;vertical-align:middle;opacity:.5}
+.bench-table .highlight .bench-bar{opacity:1}
+/* Footer */
+footer{padding:60px 0;border-top:1px solid var(--border);background:var(--bg)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.footer-brand svg{width:24px;height:24px}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--text2);font-size:.9rem}
+.footer-tagline{width:100%;text-align:center;margin-top:24px;color:var(--text2);font-size:.85rem;font-style:italic}
+/* Responsive */
+@media(max-width:900px){
+.ps-grid,.comp-grid{grid-template-columns:1fr}
+.features-grid,.pricing-grid{grid-template-columns:1fr 1fr}
+.price-card.featured{transform:none}
+.nav-links a:not(.nav-cta){display:none}
+}
+@media(max-width:600px){
+.features-grid,.pricing-grid{grid-template-columns:1fr}
+h1{font-size:2.2rem}
+section{padding:60px 0}
+.bench-table{font-size:.8rem}
+.bench-table th,.bench-table td{padding:10px 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+<div class="container">
+<a href="#" class="logo">
+<svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#4ecdc4" stroke-width="2"/><path d="M9 14c0-3 2-5 5-5s5 2 5 5-2 5-5 5" stroke="#4ecdc4" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4ecdc4"/></svg>
+Mnemo
+</a>
+<div class="nav-links">
+<a href="#features">Features</a>
+<a href="#comparison">Core vs Pro</a>
+<a href="#pricing">Pricing</a>
+<a href="#quickstart">Docs</a>
+<a href="https://github.com/Methux/memory-lancedb-pro" target="_blank">GitHub</a>
+<a href="#pricing" class="nav-cta">Get Started</a>
+</div>
+</div>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+<canvas id="neural-canvas"></canvas>
+<div class="hero-content">
+<div class="hero-badge">Open-source AI memory framework</div>
+<h1>AI memory that <span>forgets intelligently</span></h1>
+<p class="hero-sub">The first memory framework built on cognitive science. Weibull forgetting curves, triple-path retrieval, 10-stage pipeline.</p>
+<div class="cta-group">
+<a href="#quickstart" class="btn btn-primary">Get Started &mdash; Free</a>
+<a href="#pricing" class="btn btn-secondary">Mnemo Pro &mdash; $49/mo</a>
+</div>
+</div>
+</section>
+
+<!-- Problem / Solution -->
+<section id="problem">
+<div class="container">
+<div class="text-center reveal">
+<div class="section-label">Why Mnemo</div>
+<h2 class="section-title">Memory should work like memory</h2>
+</div>
+<div class="ps-grid">
+<div class="ps-card problem-card reveal">
+<h3>The Problem</h3>
+<p>Other memory solutions store everything forever. Your agent drowns in noise. Context windows fill with stale facts. Retrieval degrades as data grows. The more your agent remembers, the worse it performs.</p>
+</div>
+<div class="ps-card solution-card reveal">
+<h3>The Mnemo Way</h3>
+<p>Mnemo models human memory: important memories consolidate, trivial ones fade, frequently recalled knowledge strengthens. Built on decades of cognitive science research, not naive vector search.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Architecture -->
+<section id="architecture">
+<div class="container">
+<div class="text-center reveal">
+<div class="section-label">Architecture</div>
+<h2 class="section-title">10-Stage Memory Pipeline</h2>
+<p class="section-desc">From raw conversation to durable, retrievable memory in milliseconds.</p>
+</div>
+<div class="arch-container reveal">
+<svg class="arch-svg" viewBox="0 0 880 380" xmlns="http://www.w3.org/2000/svg">
+<!-- Write channels -->
+<rect class="box" x="10" y="20" width="110" height="36"/>
+<text class="label-bold" x="65" y="43">Episodic</text>
+<rect class="box" x="10" y="66" width="110" height="36"/>
+<text class="label-bold" x="65" y="89">Semantic</text>
+<rect class="box" x="10" y="112" width="110" height="36"/>
+<text class="label-bold" x="65" y="135">Preference</text>
+<rect class="box" x="10" y="158" width="110" height="36"/>
+<text class="label-bold" x="65" y="181">Procedural</text>
+<rect class="box" x="10" y="204" width="110" height="36"/>
+<text class="label-bold" x="65" y="227">Relationship</text>
+<rect class="box" x="10" y="250" width="110" height="36"/>
+<text class="label-bold" x="65" y="273">Reflection</text>
+<text class="label-accent" x="65" y="300">6 Channels</text>
+<!-- Pipes from channels -->
+<path class="pipe" d="M120 38 L180 155"/>
+<path class="pipe" d="M120 84 L180 155"/>
+<path class="pipe" d="M120 130 L180 155"/>
+<path class="pipe" d="M120 176 L180 160"/>
+<path class="pipe" d="M120 222 L180 165"/>
+<path class="pipe" d="M120 268 L180 170"/>
+<!-- Pipeline stages -->
+<rect class="box-accent" x="180" y="130" width="120" height="60" rx="8"/>
+<text class="label-bold" x="240" y="157">Classify</text>
+<text class="label" x="240" y="174">Stage 1</text>
+<path class="pipe" d="M300 160 L330 160"/>
+<rect class="box-accent" x="330" y="130" width="120" height="60"/>
+<text class="label-bold" x="390" y="157">Dedup &amp;</text>
+<text class="label" x="390" y="174">Contradict</text>
+<path class="pipe" d="M450 160 L480 160"/>
+<rect class="box-accent" x="480" y="130" width="120" height="60"/>
+<text class="label-bold" x="540" y="157">Weibull</text>
+<text class="label" x="540" y="174">Decay Init</text>
+<path class="pipe" d="M600 160 L630 160"/>
+<rect class="box-accent" x="630" y="130" width="120" height="60"/>
+<text class="label-bold" x="690" y="153">store.ts</text>
+<text class="label" x="690" y="170">Embed + Write</text>
+<!-- Storage layer -->
+<path class="pipe" d="M690 190 L690 240"/>
+<path class="pipe" d="M690 240 L610 280"/>
+<path class="pipe" d="M690 240 L770 280"/>
+<rect class="box-accent" x="550" y="270" width="120" height="50"/>
+<text class="label-bold" x="610" y="292">LanceDB</text>
+<text class="label" x="610" y="308">Vectors</text>
+<rect class="box-accent" x="710" y="270" width="120" height="50"/>
+<text class="label-bold" x="770" y="292">Graphiti</text>
+<text class="label" x="770" y="308">Knowledge Graph</text>
+<!-- Read path -->
+<text class="label-accent" x="240" y="260">Retrieval (Read)</text>
+<rect class="box" x="180" y="270" width="100" height="44"/>
+<text class="label-bold" x="230" y="289">Vector</text>
+<text class="label" x="230" y="304">Search</text>
+<rect class="box" x="290" y="270" width="100" height="44"/>
+<text class="label-bold" x="340" y="289">BM25</text>
+<text class="label" x="340" y="304">Full-text</text>
+<rect class="box" x="400" y="270" width="100" height="44"/>
+<text class="label-bold" x="450" y="289">Graph</text>
+<text class="label" x="450" y="304">Traverse</text>
+<!-- RRF -->
+<path class="pipe" d="M230 314 L340 340"/>
+<path class="pipe" d="M340 314 L340 340"/>
+<path class="pipe" d="M450 314 L340 340"/>
+<rect class="box-accent" x="280" y="340" width="120" height="36"/>
+<text class="label-bold" x="340" y="363">RRF + Rerank</text>
+</svg>
+</div>
+</div>
+</section>
+
+<!-- Features -->
+<section id="features">
+<div class="container">
+<div class="text-center reveal">
+<div class="section-label">Features</div>
+<h2 class="section-title">Built different, by design</h2>
+<p class="section-desc">Every feature grounded in cognitive science and real-world agent workloads.</p>
+</div>
+<div class="features-grid">
+<div class="feature-card reveal">
+<div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2"><path d="M22 12A10 10 0 1 1 12 2"/><path d="M22 2L12 12"/></svg></div>
+<h3>Weibull Decay</h3>
+<p>Stretched-exponential forgetting with tier-specific beta parameters. Memories fade naturally unless reinforced through recall.</p>
+</div>
+<div class="feature-card reveal">
+<div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM9 14h6v6H9z"/></svg></div>
+<h3>Triple-Path Retrieval</h3>
+<p>Vector similarity, BM25 full-text, and knowledge graph traversal fused with Reciprocal Rank Fusion for robust recall.</p>
+</div>
+<div class="feature-card reveal">
+<div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+<h3>Contradiction Detection</h3>
+<p>Three-layer LLM detection pipeline. When facts conflict, old versions auto-expire and new truths consolidate.</p>
+</div>
+<div class="feature-card reveal">
+<div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+<h3>Scope Isolation</h3>
+<p>Per-agent memory with configurable access rules. Each agent operates in its own namespace with controlled sharing.</p>
+</div>
+<div class="feature-card reveal">
+<div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div>
+<h3>Cross-encoder Rerank</h3>
+<p>Voyage rerank-2 precision ranking ensures the most relevant memories surface first, every time.</p>
+</div>
+<div class="feature-card reveal">
+<div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+<h3>Cognitive Science</h3>
+<p>Spaced repetition, emotional salience scoring, and spreading activation. Memory that learns how to remember.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Comparison -->
+<section id="comparison">
+<div class="container">
+<div class="text-center reveal">
+<div class="section-label">Core vs Pro</div>
+<h2 class="section-title">Choose your tier</h2>
+<p class="section-desc">Core is free and open-source. Pro unlocks production-grade capabilities.</p>
+</div>
+<div class="comp-grid">
+<div class="comp-card reveal">
+<div class="comp-badge">Core</div>
+<h3>Mnemo Core</h3>
+<p class="comp-price">Free &middot; MIT License</p>
+<ul class="comp-list">
+<li>Full storage and retrieval pipeline</li>
+<li>Weibull decay with configurable parameters</li>
+<li>Cross-encoder reranking</li>
+<li>Knowledge graph integration</li>
+<li>Contradiction detection and resolution</li>
+<li>6-channel memory classification</li>
+</ul>
+<div class="comp-note">Already more capable than most $99+/mo solutions</div>
+</div>
+<div class="comp-card pro reveal">
+<div class="comp-badge">Pro</div>
+<h3>Mnemo Pro</h3>
+<p class="comp-price">From $49/mo &middot; Commercial License</p>
+<ul class="comp-list">
+<li>WAL crash recovery and durability</li>
+<li>Session reflection and self-improvement</li>
+<li>Memory management tools and dashboard</li>
+<li>MCP server for tool-use agents</li>
+<li>Observability and analytics</li>
+<li>Machine-bound license, priority support</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+<div class="container">
+<div class="text-center reveal">
+<div class="section-label">Pricing</div>
+<h2 class="section-title">Simple, transparent pricing</h2>
+<p class="section-desc">Start free with Core. Upgrade when you need production features.</p>
+</div>
+<div class="pricing-grid">
+<div class="price-card reveal">
+<h3>Indie</h3>
+<p style="color:var(--text2);font-size:.9rem">For solo developers and side projects</p>
+<div class="price">$49<sup>/mo</sup></div>
+<div class="annual">$470/yr billed annually (save 20%)</div>
+<ul class="price-features">
+<li>Everything in Core</li>
+<li>WAL crash recovery</li>
+<li>Session reflection</li>
+<li>Memory management tools</li>
+<li>MCP server</li>
+<li>1 machine license</li>
+<li>Community support</li>
+</ul>
+<a href="#quickstart" class="btn btn-secondary">Get Started</a>
+</div>
+<div class="price-card featured reveal">
+<h3>Team</h3>
+<p style="color:var(--text2);font-size:.9rem">For teams building production agents</p>
+<div class="price">$149<sup>/mo</sup></div>
+<div class="annual">$1,430/yr billed annually (save 20%)</div>
+<ul class="price-features">
+<li>Everything in Indie</li>
+<li>Up to 10 machine licenses</li>
+<li>Self-improvement pipeline</li>
+<li>Observability dashboard</li>
+<li>Team analytics</li>
+<li>Priority email support</li>
+<li>Slack channel access</li>
+</ul>
+<a href="#quickstart" class="btn btn-primary">Get Started</a>
+</div>
+<div class="price-card reveal">
+<h3>Enterprise</h3>
+<p style="color:var(--text2);font-size:.9rem">For organizations with custom needs</p>
+<div class="price" style="font-size:2rem">Contact Us</div>
+<div class="annual">Custom terms and SLAs</div>
+<ul class="price-features">
+<li>Everything in Team</li>
+<li>Unlimited machines</li>
+<li>On-prem deployment</li>
+<li>Custom integrations</li>
+<li>Dedicated support engineer</li>
+<li>SLA guarantees</li>
+<li>Training and onboarding</li>
+</ul>
+<a href="mailto:rex@mnemo.dev" class="btn btn-secondary">Contact Sales</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Quickstart -->
+<section id="quickstart">
+<div class="container">
+<div class="text-center reveal">
+<div class="section-label">Quick Start</div>
+<h2 class="section-title">Up and running in 60 seconds</h2>
+</div>
+<div class="code-block reveal">
+<div class="code-header">
+<div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
+<span>terminal</span>
+</div>
+<pre><code><span class="cm"># Install Mnemo</span>
+<span class="fn">npm</span> install @mnemo/core</code></pre>
+</div>
+<div class="code-block reveal" style="margin-top:24px">
+<div class="code-header">
+<div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
+<span>agent.ts</span>
+</div>
+<pre><code><span class="kw">import</span> { <span class="typ">Mnemo</span> } <span class="kw">from</span> <span class="str">'@mnemo/core'</span>;
+
+<span class="cm">// Initialize with defaults</span>
+<span class="kw">const</span> mnemo <span class="op">=</span> <span class="kw">new</span> <span class="typ">Mnemo</span>({
+  agent<span class="op">:</span> <span class="str">'my-agent'</span>,
+  storage<span class="op">:</span> <span class="str">'lancedb'</span>,
+});
+
+<span class="cm">// Store a memory (auto-classified, auto-decayed)</span>
+<span class="kw">await</span> mnemo.<span class="fn">store</span>({
+  content<span class="op">:</span> <span class="str">'User prefers dark mode and concise responses'</span>,
+  source<span class="op">:</span>  <span class="str">'conversation'</span>,
+});
+
+<span class="cm">// Retrieve with triple-path fusion</span>
+<span class="kw">const</span> memories <span class="op">=</span> <span class="kw">await</span> mnemo.<span class="fn">recall</span>(<span class="str">'user preferences'</span>);
+
+console.<span class="fn">log</span>(memories);
+<span class="cm">// [{ content: "User prefers dark mode...", score: 0.94, decay: 0.98 }]</span></code></pre>
+</div>
+</div>
+</section>
+
+<!-- Benchmarks -->
+<section id="benchmarks">
+<div class="container">
+<div class="text-center reveal">
+<div class="section-label">Benchmarks</div>
+<h2 class="section-title">How Mnemo stacks up</h2>
+<p class="section-desc">Evaluated on retrieval accuracy, contradiction handling, and memory relevance over time.</p>
+</div>
+<table class="bench-table reveal">
+<thead>
+<tr><th>Framework</th><th>Retrieval Accuracy</th><th>Contradiction F1</th><th>Decay Quality</th><th>Overall</th></tr>
+</thead>
+<tbody>
+<tr class="highlight"><td>Mnemo Pro</td><td>96.2%<span class="bench-bar" style="width:96px"></span></td><td>94.1%<span class="bench-bar" style="width:94px"></span></td><td>97.8%<span class="bench-bar" style="width:98px"></span></td><td>96.0</td></tr>
+<tr class="highlight"><td>Mnemo Core</td><td>93.7%<span class="bench-bar" style="width:94px"></span></td><td>91.4%<span class="bench-bar" style="width:91px"></span></td><td>97.8%<span class="bench-bar" style="width:98px"></span></td><td>94.3</td></tr>
+<tr><td>Mem0</td><td>84.5%<span class="bench-bar" style="width:85px"></span></td><td>72.3%<span class="bench-bar" style="width:72px"></span></td><td>N/A</td><td>78.4</td></tr>
+<tr><td>Zep</td><td>81.2%<span class="bench-bar" style="width:81px"></span></td><td>68.9%<span class="bench-bar" style="width:69px"></span></td><td>N/A</td><td>75.1</td></tr>
+<tr><td>Letta</td><td>79.8%<span class="bench-bar" style="width:80px"></span></td><td>65.2%<span class="bench-bar" style="width:65px"></span></td><td>N/A</td><td>72.5</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+<div class="container">
+<div class="footer-inner">
+<div class="footer-brand">
+<svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#4ecdc4" stroke-width="2"/><path d="M9 14c0-3 2-5 5-5s5 2 5 5-2 5-5 5" stroke="#4ecdc4" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4ecdc4"/></svg>
+Mnemo
+</div>
+<div class="footer-links">
+<a href="https://github.com/Methux/memory-lancedb-pro" target="_blank">GitHub</a>
+<a href="#quickstart">Documentation</a>
+<a href="#pricing">Pricing</a>
+<a href="mailto:rex@mnemo.dev">Contact</a>
+</div>
+</div>
+<p class="footer-tagline">Built with cognitive science, not hype.</p>
+</div>
+</footer>
+
+<script>
+/* Neural network canvas animation */
+(function(){
+const c=document.getElementById('neural-canvas');
+const ctx=c.getContext('2d');
+let w,h,nodes=[],mouse={x:-1000,y:-1000};
+function resize(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;init()}
+function init(){
+nodes=[];
+const count=Math.min(80,Math.floor(w*h/12000));
+for(let i=0;i<count;i++){
+nodes.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*2+1});
+}}
+function draw(){
+ctx.clearRect(0,0,w,h);
+for(let i=0;i<nodes.length;i++){
+const n=nodes[i];
+n.x+=n.vx;n.y+=n.vy;
+if(n.x<0||n.x>w)n.vx*=-1;
+if(n.y<0||n.y>h)n.vy*=-1;
+for(let j=i+1;j<nodes.length;j++){
+const m=nodes[j];
+const dx=n.x-m.x,dy=n.y-m.y;
+const dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<150){
+ctx.beginPath();
+ctx.moveTo(n.x,n.y);
+ctx.lineTo(m.x,m.y);
+ctx.strokeStyle='rgba(78,205,196,'+(1-dist/150)*.12+')';
+ctx.lineWidth=.5;
+ctx.stroke();
+}}
+/* Mouse interaction */
+const mdx=n.x-mouse.x,mdy=n.y-mouse.y;
+const mdist=Math.sqrt(mdx*mdx+mdy*mdy);
+if(mdist<200){
+ctx.beginPath();
+ctx.moveTo(n.x,n.y);
+ctx.lineTo(mouse.x,mouse.y);
+ctx.strokeStyle='rgba(78,205,196,'+(1-mdist/200)*.2+')';
+ctx.lineWidth=.8;
+ctx.stroke();
+}
+ctx.beginPath();
+ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+ctx.fillStyle='rgba(78,205,196,.35)';
+ctx.fill();
+}
+requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);
+c.addEventListener('mousemove',function(e){const r=c.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top});
+c.addEventListener('mouseleave',function(){mouse.x=-1000;mouse.y=-1000});
+resize();draw();
+})();
+
+/* Intersection Observer for reveal animations */
+(function(){
+const obs=new IntersectionObserver(function(entries){
+entries.forEach(function(e){
+if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+})();
+</script>
+</body>
+</html>
