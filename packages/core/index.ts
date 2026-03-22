@@ -2303,8 +2303,9 @@ const memoryLanceDBProPlugin = {
                 api.logger.warn(`mnemo: async smart extraction failed for agent ${agentId}: ${String(err)}`);
               });
 
-              // Don't await — fall through to regex fallback immediately
-              // Regex captures simple patterns now; smart extraction adds richer memories later
+              // Smart extraction is queued — skip regex to avoid duplicate extraction.
+              // SmartExtractor produces higher quality memories than regex anyway.
+              return;
             } else {
               api.logger.debug(
                 `mnemo: auto-capture skipped smart extraction for agent ${agentId} (${cleanTexts.length} < ${minMessages})`,
