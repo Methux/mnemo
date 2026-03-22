@@ -23,8 +23,8 @@ Configure per-bot memory isolation in openclaw.json:
 {
   "scopes": {
     "agentAccess": {
-      "bot3": ["global", "agent:bot3", "agent:default"],
-      "bot5": ["global", "agent:bot5", "agent:default"]
+      "assistant": ["global", "agent:assistant", "agent:default"],
+      "researcher": ["global", "agent:researcher", "agent:default"]
     }
   }
 }

@@ -71,7 +71,7 @@ OpenClaw 的记忆系统采用 **双引擎存储 + 多通道写入 + 10级检索
 
 ### 2.3 L1 记忆提炼器（定时回扫）
 
-- **触发**: cron 30m(default) / 1h(bot3, bot5)
+- **触发**: cron 30m(default) / 1h(other agents)
 - **模型**: Claude Sonnet 4.6
 - **输入**: 最近 2h 对话 (limit=30)
 - **作用**: 兜底网——实时提取漏掉的补上 · recall 去重

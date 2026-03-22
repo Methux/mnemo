@@ -940,7 +940,7 @@ export class MemoryRetriever {
 
     // Inject Graphiti graph traversal results as 3rd signal.
     // Synthetic entries (not in LanceDB) — scored slightly lower to avoid dominating,
-    // but provide coverage for relational queries (e.g. "光轮的客户", "Rex投了什么").
+    // but provide coverage for relational queries (e.g. "Alice's clients", "who did Bob meet?").
     for (const gr of graphitiResults) {
       fusedResults.push({
         entry: gr.entry,

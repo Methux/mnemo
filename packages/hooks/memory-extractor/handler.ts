@@ -668,11 +668,12 @@ const handler = async (event: {
           }
         }
 
-        // 检测实体 scope（只对 bot3/default 打 entity:xxx 标签；其他 agent 走默认 agent:xxx scope）
+        // Detect entity scope — only for agents that have entity detection enabled
         const currentAgentId = event.sessionKey.startsWith("agent:")
           ? event.sessionKey.split(":")[1] ?? "default"
           : "default";
-        const useEntityScope = currentAgentId === "bot3" || currentAgentId === "default";
+        const entityScopeAgents = (process.env.MNEMO_ENTITY_SCOPE_AGENTS || "default").split(",");
+        const useEntityScope = entityScopeAgents.includes(currentAgentId);
         const entityScope = useEntityScope ? detectEntityScope(mem.text) : null;
 
         // Encode episodic context as PREFIX — emotion/trigger before the fact text

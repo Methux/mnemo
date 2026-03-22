@@ -199,6 +199,44 @@ tr:hover td{background:var(--bg3);}
 .diag-status.err{color:var(--err);}
 .diag-status.warn{color:var(--warn);}
 
+/* ===== ARCH NODE ===== */
+.arch-node{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;min-width:110px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+.arch-node:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(78,205,196,.15);}
+.arch-node.ok{border-left:3px solid var(--ok);}
+.arch-node.warn{border-left:3px solid var(--warn);}
+.arch-node.err{border-left:3px solid var(--err);animation:pulse-err 2s infinite;}
+.arch-node .node-name{font-size:12px;font-weight:600;color:var(--text);}
+.arch-node .node-sub{font-size:10px;color:var(--text3);margin-top:2px;}
+.arch-node .node-badge{position:absolute;top:-6px;right:-6px;width:14px;height:14px;border-radius:50%;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;}
+.arch-arrow{color:var(--text3);font-size:16px;padding:0 2px;}
+@keyframes pulse-err{0%,100%{box-shadow:none;}50%{box-shadow:0 0 8px rgba(255,107,107,.4);}}
+
+/* ===== PIPE EVENT ===== */
+.pipe-event{display:flex;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;transition:background .2s;}
+.pipe-event:hover{background:var(--bg3);}
+.pipe-event .ev-time{font-family:var(--mono);font-size:11px;color:var(--text3);min-width:75px;}
+.pipe-event .ev-channel{min-width:90px;font-weight:600;}
+.pipe-event .ev-text{flex:1;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pipe-event .ev-status{min-width:80px;text-align:right;font-size:12px;font-weight:600;}
+.pipe-event .ev-detail{display:none;grid-column:1/-1;margin-top:6px;padding:8px;background:var(--bg);border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--text3);white-space:pre-wrap;}
+.pipe-event.expanded .ev-detail{display:block;}
+.pipe-filter.active{background:var(--accent);color:#000;border-color:var(--accent);}
+
+/* ===== CONFIG DIFF HIGHLIGHTS ===== */
+.cfg-custom{color:var(--ok);}
+.cfg-modified{color:var(--warn);}
+.cfg-missing{color:var(--err);}
+.cfg-default{color:var(--blue);}
+.cfg-val{font-family:var(--mono);font-size:12px;}
+
+/* ===== UPGRADE ITEM ===== */
+.upgrade-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.upgrade-check{width:20px;height:20px;border-radius:4px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;}
+.upgrade-check.done{background:var(--ok);border-color:var(--ok);color:#000;}
+.upgrade-info{flex:1;}
+.upgrade-title{font-size:14px;font-weight:600;color:var(--text);}
+.upgrade-desc{font-size:12px;color:var(--text3);margin-top:2px;}
+
 /* ===== RETRIEVAL RESULT CARD ===== */
 .result-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
 .result-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
@@ -237,6 +275,15 @@ tr:hover td{background:var(--bg3);}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
       Decay / 衰减曲线
     </div>
+    <div class="nav-label">Debug</div>
+    <div class="nav-item" data-tab="architecture">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="9" height="4" rx="1"/><rect x="13" y="10" width="9" height="4" rx="1"/><rect x="2" y="17" width="20" height="4" rx="1"/><line x1="7" y1="7" x2="7" y2="10"/><line x1="17" y1="7" x2="17" y2="10"/><line x1="12" y1="14" x2="12" y2="17"/></svg>
+      Architecture / 架构图
+    </div>
+    <div class="nav-item" data-tab="pipeline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h4v4H4z"/><path d="M14 4h4v4H14z"/><path d="M4 14h4v4H4z"/><path d="M14 14h4v4H14z"/><path d="M8 6h6"/><path d="M8 16h6"/><path d="M6 8v6"/><path d="M16 8v6"/></svg>
+      Pipeline / 管线监控
+    </div>
     <div class="nav-label">Testing</div>
     <div class="nav-item" data-tab="retrieval">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -245,6 +292,11 @@ tr:hover td{background:var(--bg3);}
     <div class="nav-item" data-tab="health">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
       Health / 健康诊断
+    </div>
+    <div class="nav-label">Upgrade</div>
+    <div class="nav-item" data-tab="config">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Config / 配置对比
     </div>
   </nav>
 
@@ -358,6 +410,195 @@ tr:hover td{background:var(--bg3);}
       </div>
 
       <div id="retrieval-results"></div>
+    </div>
+
+    <!-- ==================== TAB: ARCHITECTURE ==================== -->
+    <div class="tab-content" id="tab-architecture">
+      <div class="section-title">Architecture Map / 架构拓扑</div>
+      <div class="section-sub">Click any node to inspect status. Red border = error, yellow = degraded.</div>
+
+      <!-- Write Pipeline -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:16px">Write Pipeline / 写入管线 (6 channels → dual storage)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;" id="arch-write">
+        </div>
+      </div>
+
+      <!-- Retrieval Pipeline -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:16px">Retrieval Pipeline / 检索管线 (10 stages)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;" id="arch-retrieval">
+        </div>
+      </div>
+
+      <!-- Storage Layer -->
+      <div class="grid-3">
+        <div class="card" id="arch-lancedb" style="cursor:pointer;border-left:3px solid var(--accent);">
+          <div class="card-title">LanceDB (Vector + BM25)</div>
+          <div style="font-size:28px;font-weight:700;color:var(--accent);margin:8px 0;" id="arch-lance-count">200</div>
+          <div class="card-sub">vectors indexed | p99 latency: 18ms</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--text3);">
+            <div>Table: memories | Dim: 1024</div>
+            <div>Model: voyage-3-large</div>
+            <div>BM25 partitions: 6 (1 rebuilding)</div>
+          </div>
+        </div>
+        <div class="card" id="arch-graphiti" style="cursor:pointer;border-left:3px solid var(--purple);">
+          <div class="card-title">Graphiti / Neo4j (Knowledge Graph)</div>
+          <div style="font-size:28px;font-weight:700;color:var(--purple);margin:8px 0;">147 / 312</div>
+          <div class="card-sub">nodes / edges</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--text3);">
+            <div>Port: 18799 | Neo4j: bolt://localhost:7687</div>
+            <div>Endpoints: /episodes /search /spread /facts/expire</div>
+            <div>WAL pending: <span id="arch-wal-pending" style="color:var(--ok);">0</span></div>
+          </div>
+        </div>
+        <div class="card" id="arch-gateway" style="cursor:pointer;border-left:3px solid var(--blue);">
+          <div class="card-title">Host Application</div>
+          <div style="font-size:28px;font-weight:700;color:var(--blue);margin:8px 0;">3 agents</div>
+          <div class="card-sub">active on port 3000</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--text3);">
+            <div>Scope isolation: global + per-agent scopes</div>
+            <div>Uptime: 14d 6h 23m</div>
+            <div>Config: synced from repo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Component Versions -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title" style="margin-bottom:12px">Component Versions / 组件版本</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Component</th><th>Current</th><th>Required</th><th>Status</th><th>Notes</th></tr></thead>
+            <tbody id="arch-versions"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB: PIPELINE MONITOR ==================== -->
+    <div class="tab-content" id="tab-pipeline">
+      <div class="section-title">Pipeline Monitor / 管线监控</div>
+      <div class="section-sub">Real-time status of all write channels and processing stages</div>
+
+      <!-- Write Channels -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">Write Channels / 写入通道状态 (6 channels)</div>
+          <span style="font-size:12px;color:var(--text3);">Last refresh: <span id="pipe-refresh-time">just now</span></span>
+        </div>
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead><tr><th>Channel</th><th>Status</th><th>Last Write</th><th>Writes/24h</th><th>Errors/24h</th><th>Avg Latency</th><th>Model</th></tr></thead>
+            <tbody id="pipe-channels"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Contradiction Detection -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">Three-Layer Contradiction Detection / 三层矛盾检测</div>
+        </div>
+        <div class="grid-3" style="margin-top:12px;">
+          <div class="card" style="border-left:3px solid var(--accent);">
+            <div style="font-size:12px;color:var(--text3);margin-bottom:4px;">Layer 1: store.ts (regex signal)</div>
+            <div style="font-size:24px;font-weight:700;color:var(--accent);" id="contra-l1">12</div>
+            <div class="card-sub">caught in 24h | threshold: cos>0.70</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;">Patterns: 改成/变成/更新为/changed to/no longer</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--blue);">
+            <div style="font-size:12px;color:var(--text3);margin-bottom:4px;">Layer 2: Hook (Haiku 4.5 LLM)</div>
+            <div style="font-size:24px;font-weight:700;color:var(--blue);" id="contra-l2">5</div>
+            <div class="card-sub">5-class: contradict/update/supplement/dup/unrelated</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;">Old memory demotion: importance x0.2</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--purple);">
+            <div style="font-size:12px;color:var(--text3);margin-bottom:4px;">Layer 3: Plugin (GPT-4.1 dedup)</div>
+            <div style="font-size:24px;font-weight:700;color:var(--purple);" id="contra-l3">3</div>
+            <div class="card-sub">expired + supersedes relation + graph sync</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;">Graphiti /facts/expire cascading</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Write Events -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">Recent Write Events / 最近写入事件</div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-sm pipe-filter active" data-filter="all" onclick="filterPipeEvents(this,'all')">All</button>
+            <button class="btn btn-sm pipe-filter" data-filter="success" onclick="filterPipeEvents(this,'success')">Success</button>
+            <button class="btn btn-sm pipe-filter" data-filter="contradict" onclick="filterPipeEvents(this,'contradict')">Contradiction</button>
+            <button class="btn btn-sm pipe-filter" data-filter="error" onclick="filterPipeEvents(this,'error')">Error</button>
+          </div>
+        </div>
+        <div id="pipe-events" style="margin-top:12px;max-height:400px;overflow-y:auto;"></div>
+      </div>
+
+      <!-- Retrieval Stage Performance -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px">Retrieval Stage Performance (last 100 queries) / 检索阶段性能</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Stage</th><th>Avg ms</th><th>p50</th><th>p95</th><th>p99</th><th>Error Rate</th><th>Trend</th></tr></thead>
+            <tbody id="pipe-retrieval-perf"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB: CONFIG DIFF ==================== -->
+    <div class="tab-content" id="tab-config">
+      <div class="section-title">Config Inspector / 配置对比</div>
+      <div class="section-sub">Compare current config vs defaults. Highlights deviations and potential issues.</div>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:4px;">Current Config</div>
+          <div class="card-sub">~/.mnemo/mnemo.json (plugin config)</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:4px;">Default Config</div>
+          <div class="card-sub">Built-in defaults from plugin source</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">Config Diff / 配置差异</div>
+          <div style="display:flex;gap:8px;">
+            <span class="badge" style="background:#4ade8022;color:var(--ok);border:1px solid #4ade8044;">Custom</span>
+            <span class="badge" style="background:#ffd93d22;color:var(--warn);border:1px solid #ffd93d44;">Modified</span>
+            <span class="badge" style="background:#ff6b6b22;color:var(--err);border:1px solid #ff6b6b44;">Missing</span>
+            <span class="badge" style="background:#60a5fa22;color:var(--blue);border:1px solid #60a5fa44;">Default</span>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead><tr><th>Key</th><th>Current Value</th><th>Default Value</th><th>Status</th><th>Impact</th></tr></thead>
+            <tbody id="config-diff"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Feature Toggle Matrix -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:12px">Feature Toggle Matrix / 功能开关矩阵</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Feature</th><th>Status</th><th>Depends On</th><th>Description</th></tr></thead>
+            <tbody id="feature-toggles"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Upgrade Checklist -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px">Upgrade Checklist / 升级检查清单</div>
+        <div id="upgrade-checklist"></div>
+      </div>
     </div>
 
     <!-- ==================== TAB: HEALTH ==================== -->
@@ -475,12 +716,12 @@ const TEXTS_ZH = [
   "每季度与被投公司CEO会面",
   "风险偏好中高，偏好不对称赌注",
   "代码审查标准：优先检查错误处理",
-  "沟通风格：直接，零讨好",
+  "沟通风格偏好：简洁直接，不需要客套",
   "评估关键指标：早期阶段IRR优于MOIC",
   "技术栈偏好：TypeScript，性能敏感用Rust",
-  "决策框架：第一性原理优先于模式匹配",
+  "决策框架：数据驱动优先于直觉判断",
   "组合配置：60% AI/ML，20% 加密基础设施，20% 生物技术",
-  "Symphony工作流：配置变更必须通过openclaw-config仓库",
+  "团队工作流：配置变更必须通过Git仓库管理",
   "LanceDB向量检索延迟目标：< 50ms p99",
   "Graphiti知识图谱用于多跳推理场景",
   "记忆衰减模型采用Weibull分布",
@@ -488,7 +729,7 @@ const TEXTS_ZH = [
   "自动同步采用JSON深度合并策略",
   "检索管线10阶段：预处理→共振门→多跳→向量/BM25/Graphiti并行→RRF→重排→衰减→MMR",
   "核心记忆不参与衰减，永久保留",
-  "用户Rex：94年生，INTJ，投资人",
+  "用户偏好：深色模式，简洁界面，效率优先",
   "每次召回自动触发access_count递增和衰减重置",
 ];
 const ALL_TEXTS = [...TEXTS_EN, ...TEXTS_ZH];
@@ -534,8 +775,8 @@ const MEMORIES = generateMemories(200);
 const ACTIVITY_FEED = [
   {time:NOW-120000, action:'write', text:'用户偏好：所有应用使用深色模式'},
   {time:NOW-300000, action:'recall', text:'Investment thesis: focus on AI infrastructure layer companies'},
-  {time:NOW-900000, action:'write', text:'Symphony工作流：配置变更必须通过openclaw-config仓库'},
-  {time:NOW-1800000, action:'recall', text:'决策框架：第一性原理优先于模式匹配'},
+  {time:NOW-900000, action:'write', text:'团队工作流：配置变更必须通过Git仓库管理'},
+  {time:NOW-1800000, action:'recall', text:'决策框架：数据驱动优先于直觉判断'},
   {time:NOW-3600000, action:'decay', text:'Bulk decay run: 12 memories decayed below threshold'},
   {time:NOW-5400000, action:'write', text:'LanceDB向量检索延迟目标：< 50ms p99'},
   {time:NOW-7200000, action:'recall', text:'Portfolio allocation: 60% AI/ML, 20% crypto infra, 20% biotech'},
@@ -561,7 +802,7 @@ const MOCK_RETRIEVAL_RESULTS = [
   {rank:1, text:'投资论文：聚焦AI基础设施层公司', score:0.94, tier:'core', vector:0.88, bm25:0.72, graphiti:0.91, rrf:0.87, rerank:0.95, decay:0.98, mmr:0.94, importance:0.92},
   {rank:2, text:'Portfolio allocation: 60% AI/ML, 20% crypto infra, 20% biotech', score:0.89, tier:'core', vector:0.85, bm25:0.68, graphiti:0.82, rrf:0.81, rerank:0.90, decay:0.95, mmr:0.89, importance:0.88},
   {rank:3, text:'Risk tolerance is moderate-high, prefer asymmetric bets', score:0.82, tier:'working', vector:0.79, bm25:0.55, graphiti:0.70, rrf:0.72, rerank:0.84, decay:0.88, mmr:0.82, importance:0.65},
-  {rank:4, text:'决策框架：第一性原理优先于模式匹配', score:0.76, tier:'core', vector:0.72, bm25:0.61, graphiti:0.68, rrf:0.68, rerank:0.78, decay:0.92, mmr:0.76, importance:0.85},
+  {rank:4, text:'决策框架：数据驱动优先于直觉判断', score:0.76, tier:'core', vector:0.72, bm25:0.61, graphiti:0.68, rrf:0.68, rerank:0.78, decay:0.92, mmr:0.76, importance:0.85},
   {rank:5, text:'Key metric for evaluation: IRR over MOIC for early stage', score:0.71, tier:'working', vector:0.68, bm25:0.58, graphiti:0.55, rrf:0.62, rerank:0.73, decay:0.82, mmr:0.71, importance:0.60},
 ];
 
@@ -572,7 +813,7 @@ const ERROR_LOGS = [
   {time:'14:23:02', level:'info', msg:'Graphiti Neo4j driver connected to bolt://localhost:7687'},
   {time:'14:23:05', level:'warn', msg:'WAL replay: 2 pending entries recovered from crash'},
   {time:'14:23:05', level:'info', msg:'WAL replay completed successfully'},
-  {time:'14:25:18', level:'info', msg:'Auto-sync: pulled 3 config changes from openclaw-config'},
+  {time:'14:25:18', level:'info', msg:'Auto-sync: pulled 3 config changes from git remote'},
   {time:'14:30:00', level:'info', msg:'Decay sweep: processed 200 memories, 15 below threshold'},
   {time:'14:35:22', level:'warn', msg:'Graphiti query timeout: multi-hop depth 3 exceeded 500ms'},
   {time:'14:35:23', level:'info', msg:'Graphiti fallback: reduced to depth 2, completed in 180ms'},
@@ -1115,7 +1356,7 @@ function renderHealth(){
     {icon:'ok',name:'LanceDB',detail:'/data/mnemo.lance, 200 vectors',status:'Connected'},
     {icon:'ok',name:'Neo4j / Graphiti',detail:'bolt://localhost:7687, 147 nodes',status:'Connected'},
     {icon:'ok',name:'WAL Engine',detail:'0 pending entries, last flush 2m ago',status:'Synced'},
-    {icon:'ok',name:'Auto-sync',detail:'openclaw-config @ main, last pull 15m ago',status:'Active'},
+    {icon:'ok',name:'Auto-sync',detail:'config repo @ main, last pull 15m ago',status:'Active'},
   ].map(s=>`
     <div class="card diag-card" style="margin-bottom:8px;">
       <div class="diag-icon ${s.icon}">${s.icon==='ok'?'&#10003;':s.icon==='err'?'&#10007;':'!'}</div>
@@ -1207,12 +1448,299 @@ function clearLogs(){
 }
 
 // ===================================================================
+// ARCHITECTURE TAB
+// ===================================================================
+function renderArchitecture(){
+  // Write pipeline nodes
+  const writeChannels = [
+    {name:'Hook Extractor',sub:'Sonnet 4',status:'ok',writes:'34/24h'},
+    {name:'SmartExtractor',sub:'GPT-4.1',status:'ok',writes:'28/24h'},
+    {name:'L1 Distiller',sub:'Cron 15min',status:'ok',writes:'12/24h'},
+    {name:'daily-md',sub:'Cron 24h',status:'warn',writes:'1/24h'},
+    {name:'memory-watcher',sub:'fs.watch',status:'ok',writes:'6/24h'},
+    {name:'Manual API',sub:'memory_store',status:'ok',writes:'3/24h'},
+  ];
+  const writeEl = document.getElementById('arch-write');
+  writeEl.innerHTML = writeChannels.map((c,i) =>
+    `<div class="arch-node ${c.status}" onclick="alert('${c.name}\\nStatus: ${c.status}\\nWrites: ${c.writes}')">
+      <div class="node-badge" style="background:${c.status==='ok'?'var(--ok)':c.status==='warn'?'var(--warn)':'var(--err)'};">${c.status==='ok'?'&#10003;':'!'}</div>
+      <div class="node-name">${c.name}</div>
+      <div class="node-sub">${c.sub}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:4px;">${c.writes}</div>
+    </div>` + (i<writeChannels.length-1?'':'')
+  ).join('') +
+  `<div class="arch-arrow">&#8594;</div>
+   <div class="arch-node ok" style="border:2px solid var(--accent);min-width:140px;">
+     <div class="node-name" style="color:var(--accent);">store.ts</div>
+     <div class="node-sub">Dedup + Contradiction L1</div>
+     <div style="font-size:10px;color:var(--text3);margin-top:4px;">cos threshold: 0.70/0.92</div>
+   </div>
+   <div class="arch-arrow">&#8594;</div>
+   <div class="arch-node ok" style="border:2px solid var(--accent);">
+     <div class="node-name" style="color:var(--accent);">LanceDB</div>
+     <div class="node-sub">Vector + BM25</div>
+   </div>
+   <div style="font-size:10px;color:var(--text3);margin:0 4px;">+</div>
+   <div class="arch-node ok" style="border:2px solid var(--purple);">
+     <div class="node-name" style="color:var(--purple);">Graphiti</div>
+     <div class="node-sub">WAL → Neo4j</div>
+   </div>`;
+
+  // Retrieval pipeline nodes
+  const retrievalStages = [
+    {name:'S0 Preprocess',sub:'query expand',status:'ok'},
+    {name:'S1 Resonance',sub:'gate check',status:'ok'},
+    {name:'S2 Multi-hop',sub:'query expand',status:'ok'},
+    {name:'S3a Vector',sub:'voyage-3-large',status:'ok'},
+    {name:'S3b BM25',sub:'date expand',status:'ok'},
+    {name:'S3c Graphiti',sub:'search+spread',status:'ok'},
+    {name:'S4 RRF',sub:'k=60 fusion',status:'ok'},
+    {name:'S5 Min-score',sub:'threshold 0.15',status:'ok'},
+    {name:'S6 Rerank',sub:'Voyage rerank-2',status:'ok'},
+    {name:'S7 Weibull',sub:'beta 0.8-1.3',status:'ok'},
+    {name:'S8 Hardmin',sub:'score >= 0.25',status:'ok'},
+    {name:'S9 MMR',sub:'lambda 0.7',status:'ok'},
+    {name:'S10 Inject',sub:'session dedup',status:'ok'},
+  ];
+  const retEl = document.getElementById('arch-retrieval');
+  retEl.innerHTML = retrievalStages.map((s,i) => {
+    const isParallel = s.name.startsWith('S3');
+    const arrow = i>0 && !isParallel ? `<div class="arch-arrow">&#8594;</div>` :
+                  isParallel && i>3 ? `<div class="arch-arrow" style="font-size:10px;">||</div>` : '';
+    return arrow + `<div class="arch-node ${s.status}" style="${isParallel?'border-top:2px solid var(--accent);':''}">
+      <div class="node-name" style="font-size:10px;">${s.name}</div>
+      <div class="node-sub">${s.sub}</div>
+    </div>`;
+  }).join('');
+
+  // Versions table
+  const versions = [
+    {comp:'Mnemo Core',current:'1.1.0',required:'>=1.0.0',ok:true,notes:'Latest'},
+    {comp:'LanceDB',current:'0.15.0',required:'>=0.12.0',ok:true,notes:'Vector + BM25 hybrid'},
+    {comp:'Neo4j',current:'5.26-community',required:'>=5.0',ok:true,notes:'APOC plugin enabled'},
+    {comp:'Graphiti Service',current:'1.0.2',required:'>=1.0.0',ok:true,notes:'5 endpoints active'},
+    {comp:'Voyage Embeddings',current:'voyage-3-large',required:'-',ok:true,notes:'1024 dim, dual-task'},
+    {comp:'Voyage Rerank',current:'rerank-2',required:'-',ok:true,notes:'Cross-encoder'},
+    {comp:'GPT-4.1 (extraction)',current:'gpt-4.1',required:'-',ok:true,notes:'SmartExtractor LLM'},
+    {comp:'Haiku 4.5 (hook)',current:'claude-haiku-4-5',required:'-',ok:true,notes:'Contradiction classifier'},
+    {comp:'Node.js',current:'20.11.0',required:'>=18.0',ok:true,notes:'Runtime'},
+    {comp:'Python',current:'3.11.8',required:'>=3.10',ok:true,notes:'Graphiti runtime'},
+  ];
+  document.getElementById('arch-versions').innerHTML = versions.map(v => `
+    <tr>
+      <td style="color:var(--text);">${v.comp}</td>
+      <td class="cfg-val">${v.current}</td>
+      <td class="cfg-val" style="color:var(--text3);">${v.required}</td>
+      <td><span class="diag-status ${v.ok?'ok':'err'}">${v.ok?'OK':'UPDATE'}</span></td>
+      <td style="color:var(--text3);font-size:12px;">${v.notes}</td>
+    </tr>
+  `).join('');
+}
+
+// ===================================================================
+// PIPELINE MONITOR TAB
+// ===================================================================
+function renderPipelineMonitor(){
+  // Write channels
+  const channels = [
+    {name:'Hook Extractor',status:'ok',last:'2m ago',writes:34,errors:0,latency:'120ms',model:'Sonnet 4'},
+    {name:'SmartExtractor',status:'ok',last:'8m ago',writes:28,errors:1,latency:'798ms',model:'GPT-4.1'},
+    {name:'L1 Distiller',status:'ok',last:'12m ago',writes:12,errors:0,latency:'450ms',model:'Sonnet 4.6'},
+    {name:'daily-md-extractor',status:'warn',last:'6h ago',writes:1,errors:2,latency:'1200ms',model:'GPT-4.1-mini'},
+    {name:'memory-watcher',status:'ok',last:'25m ago',writes:6,errors:0,latency:'85ms',model:'fs.watch'},
+    {name:'Manual (memory_store)',status:'ok',last:'1h ago',writes:3,errors:0,latency:'45ms',model:'direct'},
+  ];
+  document.getElementById('pipe-channels').innerHTML = channels.map(c => `
+    <tr>
+      <td style="color:var(--text);font-weight:600;">${c.name}</td>
+      <td><span class="status-dot ${c.status}" style="display:inline-block;"></span> <span class="diag-status ${c.status}">${c.status==='ok'?'Active':'Degraded'}</span></td>
+      <td style="font-family:var(--mono);font-size:12px;">${c.last}</td>
+      <td style="color:var(--accent);font-weight:600;">${c.writes}</td>
+      <td style="color:${c.errors>0?'var(--err)':'var(--text3)'};font-weight:${c.errors>0?'600':'400'};">${c.errors}</td>
+      <td style="font-family:var(--mono);font-size:12px;">${c.latency}</td>
+      <td style="font-size:12px;color:var(--text3);">${c.model}</td>
+    </tr>
+  `).join('');
+
+  // Write events
+  renderPipeEvents('all');
+
+  // Retrieval performance
+  const retPerf = [
+    {stage:'S0 Preprocess',avg:3,p50:2,p95:5,p99:8,errRate:'0%',trend:'stable'},
+    {stage:'S1 Resonance Gate',avg:8,p50:6,p95:15,p99:22,errRate:'0%',trend:'stable'},
+    {stage:'S2 Multi-hop',avg:22,p50:18,p95:40,p99:55,errRate:'0.5%',trend:'up'},
+    {stage:'S3a Vector',avg:18,p50:15,p95:30,p99:42,errRate:'0%',trend:'stable'},
+    {stage:'S3b BM25',avg:12,p50:10,p95:22,p99:35,errRate:'0.2%',trend:'stable'},
+    {stage:'S3c Graphiti',avg:35,p50:28,p95:65,p99:120,errRate:'1.2%',trend:'down'},
+    {stage:'S4 RRF Fusion',avg:5,p50:4,p95:8,p99:12,errRate:'0%',trend:'stable'},
+    {stage:'S5 Min-score',avg:1,p50:1,p95:2,p99:3,errRate:'0%',trend:'stable'},
+    {stage:'S6 Rerank',avg:28,p50:25,p95:45,p99:68,errRate:'0.8%',trend:'stable'},
+    {stage:'S7 Weibull Decay',avg:2,p50:1,p95:3,p99:5,errRate:'0%',trend:'stable'},
+    {stage:'S8 Hardmin+Norm',avg:1,p50:1,p95:2,p99:2,errRate:'0%',trend:'stable'},
+    {stage:'S9 MMR',avg:6,p50:5,p95:10,p99:15,errRate:'0%',trend:'stable'},
+    {stage:'S10 Session Dedup',avg:2,p50:1,p95:3,p99:5,errRate:'0%',trend:'stable'},
+  ];
+  document.getElementById('pipe-retrieval-perf').innerHTML = retPerf.map(r => {
+    const trendIcon = r.trend==='up'?'<span style="color:var(--err);">&#9650;</span>':
+                      r.trend==='down'?'<span style="color:var(--ok);">&#9660;</span>':
+                      '<span style="color:var(--text3);">&#9654;</span>';
+    const errColor = parseFloat(r.errRate)>1?'var(--err)':parseFloat(r.errRate)>0?'var(--warn)':'var(--text3)';
+    return `<tr>
+      <td style="color:var(--text);font-weight:500;">${r.stage}</td>
+      <td style="font-family:var(--mono);">${r.avg}</td>
+      <td style="font-family:var(--mono);color:var(--text3);">${r.p50}</td>
+      <td style="font-family:var(--mono);color:var(--warn);">${r.p95}</td>
+      <td style="font-family:var(--mono);color:var(--err);">${r.p99}</td>
+      <td style="color:${errColor};font-weight:600;">${r.errRate}</td>
+      <td>${trendIcon} ${r.trend}</td>
+    </tr>`;
+  }).join('');
+}
+
+const PIPE_EVENTS = [
+  {time:'15:42:18',channel:'Hook',type:'success',text:'Extracted: User prefers data-driven decision making',detail:'Source: agent_end | Confidence: 0.92 | Importance: 0.85 | Scope: user\nLatency: 118ms | Model: claude-sonnet-4 | Tokens: 340'},
+  {time:'15:41:55',channel:'SmartExtractor',type:'contradict',text:'Updated: Team size changed from 8 to 12 people',detail:'Contradiction detected (Layer 3 - GPT-4.1)\nOld: mem_0042 "Team size: 8" (imp: 0.85 → 0.17)\nNew: "Team size: 12" (imp: 0.85, supersedes: mem_0042)\nGraphiti /facts/expire fired | Latency: 798ms'},
+  {time:'15:40:30',channel:'Hook',type:'success',text:'Extracted: Meeting with portfolio company next Tuesday',detail:'Source: agent_end | Confidence: 0.88 | Importance: 0.70 | Scope: project\nLatency: 105ms | Temporal: 2026-03-24 expanded'},
+  {time:'15:38:12',channel:'L1 Distiller',type:'success',text:'Consolidated 3 fragments into: 代码审查流程标准',detail:'Source: cron (15min) | Merged: mem_0156, mem_0157, mem_0161\nOutput importance: 0.72 | Model: claude-sonnet-4-6 | Tokens: 520'},
+  {time:'15:35:00',channel:'memory-watcher',type:'success',text:'Detected change: ~/.mnemo/mirror/investment-thesis.md',detail:'Source: fs.watch | File: investment-thesis.md | Delta: +2 lines\nExtracted 1 new memory | Importance: 0.68'},
+  {time:'15:30:22',channel:'SmartExtractor',type:'success',text:'Extracted: Graphiti知识图谱搜索延迟优化目标 <35ms',detail:'Source: agent_end | Confidence: 0.90 | Importance: 0.65 | Scope: project\nLatency: 812ms | Model: gpt-4.1 | Tokens: 280'},
+  {time:'15:25:00',channel:'daily-md',type:'error',text:'Timeout: daily-md-extractor network error',detail:'Error: ETIMEDOUT connecting to api.openai.com\nRetry 1/3 failed | Retry 2/3 failed | Giving up\nLast successful run: 2026-03-21 09:00\nNote: Network issue, not Mnemo problem'},
+  {time:'15:20:15',channel:'Hook',type:'contradict',text:'Updated: 项目截止日期从3月底改为4月中旬',detail:'Contradiction detected (Layer 2 - Haiku 4.5)\nClassification: update (confidence: 0.94)\nOld: mem_0023 "截止日期3月底" (imp: 0.78 → 0.16)\nNew: "截止日期4月中旬" (imp: 0.80)'},
+  {time:'15:15:40',channel:'Manual',type:'success',text:'User stored: config auto-sync strategy with deep merge',detail:'Source: memory_store tool | Direct user request\nImportance: 0.90 | Scope: global | Tags: config, workflow'},
+  {time:'15:10:00',channel:'SmartExtractor',type:'error',text:'LLM extraction failed: rate limit exceeded',detail:'Error: 429 Too Many Requests (OpenAI)\nHeaders: x-ratelimit-remaining: 0, retry-after: 12s\nFallback: skipped extraction, will retry next cycle\nNote: Consider switching to gpt-4.1-mini for high-volume'},
+];
+
+function renderPipeEvents(filter){
+  const events = filter==='all' ? PIPE_EVENTS : PIPE_EVENTS.filter(e=>e.type===filter);
+  document.getElementById('pipe-events').innerHTML = events.map((e,i) => {
+    const channelColors = {Hook:'var(--accent)',SmartExtractor:'var(--blue)','L1 Distiller':'var(--purple)','daily-md':'var(--orange)','memory-watcher':'var(--warn)',Manual:'var(--text2)'};
+    const statusColors = {success:'var(--ok)',contradict:'var(--warn)',error:'var(--err)'};
+    const statusLabels = {success:'OK',contradict:'CONTRADICT',error:'ERROR'};
+    return `
+      <div class="pipe-event" onclick="this.classList.toggle('expanded')" style="display:grid;grid-template-columns:75px 90px 1fr 80px;gap:12px;cursor:pointer;">
+        <span class="ev-time">${e.time}</span>
+        <span class="ev-channel" style="color:${channelColors[e.channel]||'var(--text2)'};">${e.channel}</span>
+        <span class="ev-text">${e.text}</span>
+        <span class="ev-status" style="color:${statusColors[e.type]};">${statusLabels[e.type]}</span>
+        <div class="ev-detail">${e.detail}</div>
+      </div>
+    `;
+  }).join('') || '<div style="color:var(--text3);padding:16px;text-align:center;">No events matching filter</div>';
+}
+
+function filterPipeEvents(btn, filter){
+  document.querySelectorAll('.pipe-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPipeEvents(filter);
+}
+
+// ===================================================================
+// CONFIG DIFF TAB
+// ===================================================================
+function renderConfigDiff(){
+  const configDiff = [
+    {key:'autoCapture',current:'true',default:'false',status:'custom',impact:'Enables automatic memory capture from conversations'},
+    {key:'captureAssistant',current:'true',default:'false',status:'custom',impact:'Critical — SmartExtractor needs assistant messages to extract from'},
+    {key:'smartExtraction',current:'true',default:'false',status:'custom',impact:'Enables GPT-4.1 based intelligent memory extraction'},
+    {key:'llm.model',current:'gpt-4.1',default:'gpt-4.1-mini',status:'modified',impact:'Higher quality extraction, 3x cost vs mini'},
+    {key:'llm.baseURL',current:'api.openai.com/v1',default:'(inherit embed)',status:'modified',impact:'Separate LLM endpoint from embedding endpoint'},
+    {key:'retrieval.rerank',current:'cross-encoder',default:'none',status:'custom',impact:'Voyage rerank-2 cross-encoder, +28ms latency, significant accuracy boost'},
+    {key:'retrieval.candidatePoolSize',current:'40',default:'20',status:'modified',impact:'Larger pool before rerank, better recall at cost of latency'},
+    {key:'decay.recencyHalfLifeDays',current:'30',default:'30',status:'default',impact:'Standard 30-day half-life'},
+    {key:'decay.recencyWeight',current:'0.4',default:'0.4',status:'default',impact:'Recency accounts for 40% of final score'},
+    {key:'tier.coreAccessThreshold',current:'10',default:'10',status:'default',impact:'10 accesses to promote to Core tier'},
+    {key:'tier.coreImportanceThreshold',current:'0.8',default:'0.8',status:'default',impact:'Importance >= 0.8 for Core tier'},
+    {key:'mdMirror.enabled',current:'true',default:'false',status:'custom',impact:'Mirrors memories to markdown files for backup'},
+    {key:'sessionStrategy',current:'memoryReflection',default:'simple',status:'modified',impact:'Full reflection mode with LanceDB storage'},
+    {key:'selfImprovement.enabled',current:'true',default:'false',status:'custom',impact:'Enables self-improving memory patterns'},
+    {key:'enableManagementTools',current:'true',default:'false',status:'custom',impact:'Exposes memory_store/search/delete tools to agents'},
+    {key:'scopes',current:'3 agents configured',default:'[]',status:'custom',impact:'Bot-level scope isolation'},
+    {key:'emotionalSalience',current:'true',default:'false',status:'custom',impact:'Amygdala-modeled half-life adjustment (up to 1.5x)'},
+    {key:'graphiti.enabled',current:'true',default:'false',status:'custom',impact:'Knowledge graph for temporal reasoning and spreading activation'},
+    {key:'graphiti.wal',current:'true',default:'false',status:'custom',impact:'Write-ahead log for crash recovery'},
+  ];
+
+  document.getElementById('config-diff').innerHTML = configDiff.map(c => {
+    const statusClass = 'cfg-'+c.status;
+    const statusLabel = c.status==='custom'?'Custom':c.status==='modified'?'Modified':c.status==='missing'?'Missing':'Default';
+    return `<tr>
+      <td style="color:var(--text);font-family:var(--mono);font-size:12px;">${c.key}</td>
+      <td class="cfg-val ${statusClass}">${c.current}</td>
+      <td class="cfg-val" style="color:var(--text3);">${c.default}</td>
+      <td><span class="${statusClass}" style="font-weight:600;font-size:12px;">${statusLabel}</span></td>
+      <td style="color:var(--text3);font-size:12px;">${c.impact}</td>
+    </tr>`;
+  }).join('');
+
+  // Feature toggles
+  const features = [
+    {name:'Auto Capture',on:true,depends:'—',desc:'Automatically capture memories from conversations'},
+    {name:'Smart Extraction',on:true,depends:'OpenAI API key, captureAssistant=true',desc:'GPT-4.1 intelligent extraction from assistant messages'},
+    {name:'Capture Assistant',on:true,depends:'—',desc:'Include assistant messages in extraction pipeline'},
+    {name:'Auto Recall',on:true,depends:'—',desc:'Automatically recall relevant memories for each query'},
+    {name:'Cross-encoder Rerank',on:true,depends:'Voyage API key',desc:'Voyage rerank-2 for precision ranking'},
+    {name:'Weibull Decay',on:true,depends:'—',desc:'Stretched-exponential forgetting curve'},
+    {name:'Tier Management',on:true,depends:'decay enabled',desc:'Core/Working/Peripheral tier promotion/demotion'},
+    {name:'Graphiti Knowledge Graph',on:true,depends:'Neo4j running, Graphiti service',desc:'Temporal knowledge graph with entity extraction'},
+    {name:'WAL (Write-Ahead Log)',on:true,depends:'Graphiti enabled',desc:'Crash-safe writes to graph'},
+    {name:'MD Mirror',on:true,depends:'—',desc:'Backup memories as markdown files'},
+    {name:'Self Improvement',on:true,depends:'—',desc:'Learning from interaction patterns'},
+    {name:'Session Reflection',on:true,depends:'LanceDB',desc:'Deep reflection at session boundaries'},
+    {name:'Management Tools',on:true,depends:'—',desc:'memory_store/search/delete exposed to agents'},
+    {name:'Scope Isolation',on:true,depends:'—',desc:'Per-bot memory isolation'},
+    {name:'Emotional Salience',on:true,depends:'decay enabled',desc:'Amygdala-modeled emotional memory boosting'},
+    {name:'Contradiction Detection',on:true,depends:'LLM APIs (Haiku+GPT-4.1)',desc:'Three-layer contradiction detection and resolution'},
+    {name:'Date Format Expansion',on:true,depends:'BM25 enabled',desc:'Chinese date expansion for temporal BM25 queries'},
+    {name:'Access Reinforcement',on:true,depends:'decay enabled',desc:'Spaced repetition — recalled memories decay slower'},
+  ];
+  document.getElementById('feature-toggles').innerHTML = features.map(f => `
+    <tr>
+      <td style="color:var(--text);font-weight:500;">${f.name}</td>
+      <td><span class="diag-status ${f.on?'ok':'err'}">${f.on?'ON':'OFF'}</span></td>
+      <td style="font-size:12px;color:var(--text3);">${f.depends}</td>
+      <td style="font-size:12px;color:var(--text3);">${f.desc}</td>
+    </tr>
+  `).join('');
+
+  // Upgrade checklist
+  const checklist = [
+    {done:true,title:'Config validation gate',desc:'validate-config.js checks before auto-sync applies changes'},
+    {done:true,title:'JSON deep-merge auto-sync',desc:'Replaced destructive cp with recursive merge that preserves gateway-written fields'},
+    {done:true,title:'Three-layer contradiction detection',desc:'store.ts regex + Hook Haiku 5-class + Plugin GPT-4.1 dedup'},
+    {done:true,title:'Date format expansion for BM25',desc:'Chinese dates expanded to multiple formats for temporal recall'},
+    {done:true,title:'Graphiti /facts/expire endpoint',desc:'Cascade LanceDB demotion to graph node expiration'},
+    {done:true,title:'Docker-compose one-click deploy',desc:'docker compose up -d for full stack'},
+    {done:true,title:'mnemo init wizard',desc:'Interactive CLI for config generation'},
+    {done:true,title:'Web Dashboard',desc:'This dashboard for monitoring and debug'},
+    {done:false,title:'Live API wiring',desc:'Connect dashboard to real Mnemo API endpoints (currently mock data)'},
+    {done:false,title:'WebSocket real-time updates',desc:'Push write events and health changes to dashboard in real-time'},
+    {done:false,title:'Memory diff viewer',desc:'Side-by-side comparison when contradiction detected'},
+    {done:false,title:'Grafana/Prometheus metrics export',desc:'Expose /metrics endpoint for external monitoring'},
+    {done:false,title:'One-click config rollback',desc:'Snapshot and restore config from dashboard'},
+  ];
+  document.getElementById('upgrade-checklist').innerHTML = checklist.map(c => `
+    <div class="upgrade-item">
+      <div class="upgrade-check ${c.done?'done':''}">${c.done?'&#10003;':''}</div>
+      <div class="upgrade-info">
+        <div class="upgrade-title" style="${c.done?'':'color:var(--text2);'}">${c.title}</div>
+        <div class="upgrade-desc">${c.desc}</div>
+      </div>
+      <span class="badge ${c.done?'badge-core':'badge-peripheral'}">${c.done?'Done':'Todo'}</span>
+    </div>
+  `).join('');
+}
+
+// ===================================================================
 // INIT
 // ===================================================================
 function init(){
   renderOverview();
   filterMemories();
   renderHealth();
+  renderArchitecture();
+  renderPipelineMonitor();
+  renderConfigDiff();
   // Decay will render on tab switch
 }
 
