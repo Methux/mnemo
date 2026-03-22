@@ -1,0 +1,12 @@
+Mnemo Pro — Commercial License
+
+Copyright (c) 2026 Mnemo Contributors. All rights reserved.
+
+The code in this directory (packages/pro/) and its subdirectories,
+as well as packages/hooks/ and packages/tools/, is proprietary software.
+
+You may NOT use, copy, modify, or distribute this code without a valid
+Mnemo Pro license. For licensing inquiries, contact: rex@mnemo.ai
+
+This restriction does NOT apply to packages/core/, which is licensed
+under the MIT License.
