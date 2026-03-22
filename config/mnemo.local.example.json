@@ -1,0 +1,48 @@
+{
+  "_comment": "Mnemo — 100% local deployment (no external API, $0/mo)",
+  "_requires": "Ollama running locally: ollama serve",
+  "_models": "ollama pull nomic-embed-text && ollama pull qwen3:8b && ollama pull bge-reranker-v2-m3",
+
+  "embedding": {
+    "provider": "openai-compatible",
+    "apiKey": "ollama",
+    "baseURL": "http://127.0.0.1:11434/v1",
+    "model": "nomic-embed-text",
+    "dimensions": 768
+  },
+  "dbPath": "~/.mnemo/memory-db",
+  "autoCapture": true,
+  "smartExtraction": true,
+  "autoRecall": true,
+  "autoRecallMinLength": 8,
+  "autoRecallMinRepeated": 3,
+  "captureAssistant": true,
+  "enableManagementTools": true,
+  "llm": {
+    "model": "qwen3:8b",
+    "baseURL": "http://127.0.0.1:11434/v1",
+    "apiKey": "ollama"
+  },
+  "retrieval": {
+    "candidatePoolSize": 40,
+    "rerank": "cross-encoder",
+    "rerankProvider": "ollama",
+    "rerankModel": "bge-reranker-v2-m3",
+    "rerankEndpoint": "http://127.0.0.1:11434/api/rerank"
+  },
+  "decay": {
+    "recencyHalfLifeDays": 30,
+    "recencyWeight": 0.4,
+    "frequencyWeight": 0.3,
+    "intrinsicWeight": 0.3
+  },
+  "tier": {
+    "coreAccessThreshold": 10,
+    "coreImportanceThreshold": 0.8,
+    "peripheralAgeDays": 60
+  },
+  "mdMirror": {
+    "enabled": true,
+    "dir": "~/.mnemo/mirror"
+  }
+}

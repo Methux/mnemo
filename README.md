@@ -107,7 +107,22 @@ docker compose up -d     # starts Neo4j + Graphiti + Dashboard
 
 Dashboard at `http://localhost:18800`
 
-### Option 2: npm
+### Option 2: 100% Local ($0, no external API)
+
+```bash
+# Install Ollama models
+ollama pull nomic-embed-text     # embedding
+ollama pull qwen3:8b             # smart extraction LLM
+ollama pull bge-reranker-v2-m3   # cross-encoder rerank
+
+# Use local config
+cp config/mnemo.local.example.json ~/.mnemo/mnemo.json
+docker compose up -d   # Neo4j + Graphiti
+```
+
+Full Core functionality — embedding, extraction, rerank, graph — all running locally. Zero API cost.
+
+### Option 3: npm
 
 ```bash
 npm install @mnemo/core
@@ -138,13 +153,13 @@ await mnemo.store({
 const results = await mnemo.recall('UI preferences', { limit: 5 });
 ```
 
-### Option 3: Interactive Setup
+### Option 4: Interactive Setup
 
 ```bash
 npm run init    # guided wizard — generates config + .env
 ```
 
-### Option 4: OpenClaw Plugin
+### Option 5: OpenClaw Plugin
 
 ```bash
 openclaw plugins install mnemo

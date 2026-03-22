@@ -171,7 +171,7 @@ export interface RetrievalConfig {
    *  - "siliconflow": same format as jina (alias, for clarity)
    *  - "voyage": Authorization: Bearer, string[] documents, data[].relevance_score
    *  - "pinecone": Api-Key header, {text}[] documents, data[].score */
-  rerankProvider?: "jina" | "siliconflow" | "voyage" | "pinecone";
+  rerankProvider?: "jina" | "siliconflow" | "voyage" | "pinecone" | "ollama";
   /**
    * Length normalization: penalize long entries that dominate via sheer keyword
    * density. Formula: score *= 1 / (1 + log2(charLen / anchor)).
@@ -272,7 +272,7 @@ function clamp01WithFloor(value: number, floor: number): number {
 // Rerank Provider Adapters
 // ============================================================================
 
-type RerankProvider = "jina" | "siliconflow" | "voyage" | "pinecone";
+type RerankProvider = "jina" | "siliconflow" | "voyage" | "pinecone" | "ollama";
 
 interface RerankItem {
   index: number;
@@ -316,6 +316,21 @@ function buildRerankRequest(
           documents,
           // Voyage uses top_k (not top_n) to limit reranked outputs.
           top_k: topN,
+        },
+      };
+    case "ollama":
+      // Ollama rerank API: POST /api/rerank (available since Ollama 0.6+)
+      // Models: jina-reranker-v1-turbo, bge-reranker-v2-m3, etc.
+      // No API key needed for local Ollama
+      return {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          model,
+          query,
+          documents,
+          top_n: topN,
         },
       };
     case "siliconflow":
@@ -367,6 +382,14 @@ function parseRerankResponse(
   };
 
   switch (provider) {
+    case "ollama": {
+      // Ollama: { results: [{ index, relevance_score }] }
+      // Same format as Jina, but also check data[] for compatibility
+      return (
+        parseItems(data.results, ["relevance_score", "score"]) ??
+        parseItems(data.data, ["relevance_score", "score"])
+      );
+    }
     case "pinecone": {
       // Pinecone: usually { data: [{ index, score, ... }] }
       // Also tolerate results[] with score/relevance_score for robustness.
@@ -999,12 +1022,13 @@ export class MemoryRetriever {
 
     // Try cross-encoder rerank via configured provider API
     console.warn(`[rerank-debug] rerank=${this.config.rerank}, hasKey=${!!this.config.rerankApiKey}, keyPrefix=${String(this.config.rerankApiKey || '').substring(0, 8)}, provider=${this.config.rerankProvider}, model=${this.config.rerankModel}`);
-    if (this.config.rerank === "cross-encoder" && this.config.rerankApiKey) {
+    const isLocalRerank = this.config.rerankProvider === "ollama";
+    if (this.config.rerank === "cross-encoder" && (this.config.rerankApiKey || isLocalRerank)) {
       try {
         const provider = this.config.rerankProvider || "jina";
-        const model = this.config.rerankModel || "jina-reranker-v3";
+        const model = this.config.rerankModel || (isLocalRerank ? "bge-reranker-v2-m3" : "jina-reranker-v3");
         const endpoint =
-          this.config.rerankEndpoint || "https://api.jina.ai/v1/rerank";
+          this.config.rerankEndpoint || (isLocalRerank ? "http://127.0.0.1:11434/api/rerank" : "https://api.jina.ai/v1/rerank");
         const documents = results.map((r) => r.entry.text);
 
         // Build provider-specific request
