@@ -16,7 +16,7 @@ Create 3 products at https://app.lemonsqueezy.com:
 
 | Product | Price | Variant |
 |---------|-------|---------|
-| Mnemo Pro Indie | $49/mo or $470/yr | Subscription |
+| Mnemo Pro Indie | $69/mo or $662/yr | Subscription |
 | Mnemo Pro Team | $149/mo or $1,430/yr | Subscription |
 | Mnemo Pro Enterprise | Contact sales | — |
 
@@ -103,6 +103,6 @@ export MNEMO_LICENSE_TOKEN="mnemo_xxxxx"
 | Plan | $/mo | $/yr | Keys | Support |
 |------|------|------|------|---------|
 | Core | Free | Free | — | GitHub Issues |
-| Indie | $49 | $470 | 1 device | Email |
+| Indie | $69 | $662 | 1 device | Email |
 | Team | $149 | $1,430 | 5 devices | Priority + Slack |
 | Enterprise | Custom | Custom | Unlimited | Dedicated |

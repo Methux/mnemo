@@ -182,7 +182,7 @@ Mnemo
 <div class="hero-content">
 <div class="hero-badge">Open-source AI memory framework</div>
 <h1>AI memory that <span>forgets intelligently</span></h1>
-<p class="hero-sub">The first memory framework built on cognitive science. Weibull forgetting curves, triple-path retrieval, 10-stage pipeline.</p>
+<p class="hero-sub">The first memory framework built on cognitive science. Runs 100% local at $0 or with cloud APIs. Weibull forgetting, triple-path retrieval, 10-stage pipeline.</p>
 <div class="cta-group">
 <a href="#quickstart" class="btn btn-primary">Get Started &mdash; Free</a>
 <a href="#pricing" class="btn btn-secondary">Mnemo Pro &mdash; $69/mo</a>
@@ -340,33 +340,62 @@ Mnemo
 <h2 class="section-title">Choose your tier</h2>
 <p class="section-desc">Core is free and open-source. Pro unlocks production-grade capabilities.</p>
 </div>
-<div class="comp-grid">
+<div class="comp-grid" style="grid-template-columns:repeat(4,1fr);">
 <div class="comp-card reveal">
-<div class="comp-badge">Core</div>
-<h3>Mnemo Core</h3>
-<p class="comp-price">Free &middot; MIT License</p>
+<div class="comp-badge" style="background:#4ade8022;color:#4ade80;border-color:#4ade8044;">Local</div>
+<h3>Core Local</h3>
+<p class="comp-price" style="color:#4ade80;font-weight:700;">$0/mo &middot; 100% Offline</p>
 <ul class="comp-list">
-<li>Full storage and retrieval pipeline</li>
-<li>Weibull decay with configurable parameters</li>
-<li>Cross-encoder reranking</li>
-<li>Knowledge graph integration</li>
-<li>Contradiction detection and resolution</li>
-<li>6-channel memory classification</li>
+<li>Ollama embedding (nomic-embed-text)</li>
+<li>Ollama LLM extraction (qwen3:8b)</li>
+<li>Ollama cross-encoder rerank (bge-reranker)</li>
+<li>Weibull decay + tier lifecycle</li>
+<li>Triple-path retrieval (Vec+BM25+Graph)</li>
+<li>Contradiction detection</li>
 </ul>
-<div class="comp-note">Already more capable than most $99+/mo solutions</div>
+<div class="comp-note">Zero API cost. Beats Mem0 ($99) on retrieval quality.</div>
+</div>
+<div class="comp-card reveal">
+<div class="comp-badge">Hybrid</div>
+<h3>Core Hybrid</h3>
+<p class="comp-price">~$20/mo API &middot; MIT License</p>
+<ul class="comp-list">
+<li>Voyage embedding (voyage-3-large)</li>
+<li>GPT-4.1-mini smart extraction</li>
+<li>Voyage rerank-2 cross-encoder</li>
+<li>Everything in Local, better models</li>
+<li>Best quality-to-cost ratio</li>
+<li>Recommended for most users</li>
+</ul>
+<div class="comp-note">Cloud-grade models, self-hosted infrastructure.</div>
+</div>
+<div class="comp-card reveal">
+<div class="comp-badge">Cloud</div>
+<h3>Core Cloud</h3>
+<p class="comp-price">~$45/mo API &middot; MIT License</p>
+<ul class="comp-list">
+<li>Voyage embedding (voyage-3-large)</li>
+<li>GPT-4.1 full extraction</li>
+<li>Voyage rerank-2 cross-encoder</li>
+<li>Maximum extraction quality</li>
+<li>Best for high-volume production</li>
+<li>Near Pro-level retrieval</li>
+</ul>
+<div class="comp-note">Top-tier models. Score 8.8/10 in benchmarks.</div>
 </div>
 <div class="comp-card pro reveal">
 <div class="comp-badge">Pro</div>
 <h3>Mnemo Pro</h3>
-<p class="comp-price">From $69/mo &middot; Commercial License</p>
+<p class="comp-price">From $69/mo + API &middot; Commercial</p>
 <ul class="comp-list">
-<li>WAL crash recovery and durability</li>
-<li>Session reflection and self-improvement</li>
-<li>Memory management tools and dashboard</li>
-<li>MCP server for tool-use agents</li>
-<li>Observability and analytics</li>
-<li>Machine-bound license, priority support</li>
+<li>Everything in Core Cloud</li>
+<li>WAL crash recovery</li>
+<li>Session reflection + self-improvement</li>
+<li>Memory tools + MCP server</li>
+<li>Observability + access tracking</li>
+<li>Machine-bound license + priority support</li>
 </ul>
+<div class="comp-note">Full stack. Score 9.2/10 in benchmarks.</div>
 </div>
 </div>
 </div>
@@ -440,13 +469,37 @@ Mnemo
 <div class="section-label">Quick Start</div>
 <h2 class="section-title">Up and running in 60 seconds</h2>
 </div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
 <div class="code-block reveal">
 <div class="code-header">
 <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
-<span>terminal</span>
+<span>100% Local ($0)</span>
 </div>
-<pre><code><span class="cm"># Install Mnemo</span>
-<span class="fn">npm</span> install @mnemo/core</code></pre>
+<pre><code><span class="cm"># Pull Ollama models</span>
+<span class="fn">ollama</span> pull nomic-embed-text
+<span class="fn">ollama</span> pull qwen3:8b
+<span class="fn">ollama</span> pull bge-reranker-v2-m3
+
+<span class="cm"># Start services</span>
+<span class="fn">git</span> clone https://github.com/Methux/mnemo
+<span class="fn">cp</span> config/mnemo.local.example.json ~/.mnemo/mnemo.json
+<span class="fn">docker</span> compose up -d</code></pre>
+</div>
+<div class="code-block reveal">
+<div class="code-header">
+<div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
+<span>Cloud APIs (recommended)</span>
+</div>
+<pre><code><span class="cm"># Install</span>
+<span class="fn">npm</span> install @mnemo/core
+
+<span class="cm"># Interactive setup wizard</span>
+<span class="fn">npm</span> run init
+
+<span class="cm"># Or use Docker</span>
+<span class="fn">cp</span> .env.example .env  <span class="cm"># add API keys</span>
+<span class="fn">docker</span> compose up -d</code></pre>
+</div>
 </div>
 <div class="code-block reveal" style="margin-top:24px">
 <div class="code-header">
