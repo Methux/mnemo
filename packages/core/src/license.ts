@@ -4,17 +4,28 @@
  *
  * Validates MNEMO_PRO_KEY using Ed25519 signature verification.
  * Free users get full Core functionality; Pro features degrade gracefully.
+ *
+ * Key format: base64(JSON payload).base64(Ed25519 signature)
+ * Payload: { licensee, email, plan, issued, expires }
  */
 
-import { createVerify } from "node:crypto";
+import { verify, createPublicKey } from "node:crypto";
 
-// Ed25519 public key for license verification (base64)
-// The corresponding private key is held by Mnemo team for signing licenses.
+// Ed25519 public key (DER/SPKI, base64) — safe to publish
 const PUBLIC_KEY_B64 =
-  "MCowBQYDK2VwAyEAMnemoProKeyPlaceholder_ReplaceWithRealKey==";
+  "MCowBQYDK2VwAyEAe8cshR0FAlDoILPw0aW1AyUNGbQXSOZaQKEZ7T2mXV8=";
 
 let _cachedResult: boolean | null = null;
+let _cachedPayload: LicensePayload | null = null;
 let _warnedOnce = false;
+
+export interface LicensePayload {
+  licensee: string;   // Company or individual name
+  email: string;      // Contact email
+  plan: "indie" | "team" | "enterprise";
+  issued: string;     // ISO date
+  expires: string;    // ISO date (empty = perpetual)
+}
 
 /**
  * Check whether a valid Mnemo Pro license key is present.
@@ -37,22 +48,50 @@ export function isProLicensed(): boolean {
   }
 
   try {
-    const payload = key.slice(0, dotIdx);
-    const signature = key.slice(dotIdx + 1);
+    const payloadB64 = key.slice(0, dotIdx);
+    const signatureB64 = key.slice(dotIdx + 1);
 
-    const verify = createVerify("Ed25519");
-    verify.update(Buffer.from(payload, "base64"));
-    const pubKey = Buffer.from(PUBLIC_KEY_B64, "base64");
+    const payloadBuf = Buffer.from(payloadB64, "base64");
+    const signatureBuf = Buffer.from(signatureB64, "base64");
 
-    _cachedResult = verify.verify(
-      { key: pubKey, format: "der", type: "spki" },
-      Buffer.from(signature, "base64"),
-    );
+    const pubKeyObj = createPublicKey({
+      key: Buffer.from(PUBLIC_KEY_B64, "base64"),
+      format: "der",
+      type: "spki",
+    });
+
+    const valid = verify(null, payloadBuf, pubKeyObj, signatureBuf);
+    if (!valid) {
+      _cachedResult = false;
+      return false;
+    }
+
+    // Parse and validate payload
+    const payload: LicensePayload = JSON.parse(payloadBuf.toString("utf8"));
+    if (payload.expires) {
+      const expiresAt = new Date(payload.expires).getTime();
+      if (expiresAt < Date.now()) {
+        console.warn(`[mnemo] Pro license expired on ${payload.expires}. Renew at https://mnemo.dev/pro`);
+        _cachedResult = false;
+        return false;
+      }
+    }
+
+    _cachedPayload = payload;
+    _cachedResult = true;
   } catch {
     _cachedResult = false;
   }
 
   return _cachedResult;
+}
+
+/**
+ * Get the decoded license payload (null if unlicensed).
+ */
+export function getLicenseInfo(): LicensePayload | null {
+  isProLicensed(); // ensure cache is populated
+  return _cachedPayload;
 }
 
 /**
@@ -65,7 +104,7 @@ export function requirePro(featureName: string): boolean {
   if (!_warnedOnce) {
     console.warn(
       `[mnemo] Pro features disabled — set MNEMO_PRO_KEY to enable. ` +
-      `Core functionality is fully available.`,
+      `Core functionality is fully available. https://mnemo.dev/pro`,
     );
     _warnedOnce = true;
   }
@@ -80,5 +119,6 @@ export function requirePro(featureName: string): boolean {
  */
 export function _resetLicenseCache(): void {
   _cachedResult = null;
+  _cachedPayload = null;
   _warnedOnce = false;
 }
