@@ -2,57 +2,59 @@
 /**
  * Mnemo Pro License Validation
  *
- * Validates MNEMO_PRO_KEY using Ed25519 signature verification.
- * Free users get full Core functionality; Pro features degrade gracefully.
+ * Two modes:
+ *   1. MNEMO_PRO_KEY — pre-activated key (offline, machine-bound)
+ *   2. MNEMO_LICENSE_TOKEN — auto-activate on first run (online, one-time)
  *
- * Key format: base64(JSON payload).base64(Ed25519 signature)
- * Payload: { licensee, email, plan, issued, expires }
+ * Machine fingerprint: SHA-256(hostname + arch + cpuModel + platform)
+ * Indie keys are bound to one machine. Team/Enterprise keys are per-seat.
  */
 
-import { verify, createPublicKey } from "node:crypto";
+import { verify, createPublicKey, createHash } from "node:crypto";
+import { hostname, arch, cpus, platform } from "node:os";
+import { homedir } from "node:os";
+import { join } from "node:path";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
 // Ed25519 public key (DER/SPKI, base64) — safe to publish
 const PUBLIC_KEY_B64 =
   "MCowBQYDK2VwAyEAe8cshR0FAlDoILPw0aW1AyUNGbQXSOZaQKEZ7T2mXV8=";
+
+const ACTIVATION_URL =
+  process.env.MNEMO_ACTIVATION_URL || "https://activation.mnemo.dev";
+
+const KEY_CACHE_PATH = join(homedir(), ".mnemo", "pro-key.json");
 
 let _cachedResult: boolean | null = null;
 let _cachedPayload: LicensePayload | null = null;
 let _warnedOnce = false;
 
 export interface LicensePayload {
-  licensee: string;   // Company or individual name
-  email: string;      // Contact email
+  licensee: string;
+  email: string;
   plan: "indie" | "team" | "enterprise";
-  issued: string;     // ISO date
-  expires: string;    // ISO date (empty = perpetual)
+  issued: string;
+  expires: string;
+  machine_id?: string;
 }
 
-/**
- * Check whether a valid Mnemo Pro license key is present.
- * Result is cached for the lifetime of the process.
- */
-export function isProLicensed(): boolean {
-  if (_cachedResult !== null) return _cachedResult;
+// ── Machine Fingerprint ──
 
-  const key = process.env.MNEMO_PRO_KEY?.trim();
-  if (!key) {
-    _cachedResult = false;
-    return false;
-  }
+export function getMachineFingerprint(): string {
+  const cpu = cpus()[0]?.model || "unknown";
+  const raw = `${hostname()}:${arch()}:${cpu}:${platform()}`;
+  return createHash("sha256").update(raw).digest("hex");
+}
 
-  // Key format: base64(payload).base64(signature)
+// ── Key Verification (offline) ──
+
+function verifyKey(key: string): LicensePayload | null {
   const dotIdx = key.indexOf(".");
-  if (dotIdx < 1) {
-    _cachedResult = false;
-    return false;
-  }
+  if (dotIdx < 1) return null;
 
   try {
-    const payloadB64 = key.slice(0, dotIdx);
-    const signatureB64 = key.slice(dotIdx + 1);
-
-    const payloadBuf = Buffer.from(payloadB64, "base64");
-    const signatureBuf = Buffer.from(signatureB64, "base64");
+    const payloadBuf = Buffer.from(key.slice(0, dotIdx), "base64");
+    const signatureBuf = Buffer.from(key.slice(dotIdx + 1), "base64");
 
     const pubKeyObj = createPublicKey({
       key: Buffer.from(PUBLIC_KEY_B64, "base64"),
@@ -61,49 +63,184 @@ export function isProLicensed(): boolean {
     });
 
     const valid = verify(null, payloadBuf, pubKeyObj, signatureBuf);
-    if (!valid) {
-      _cachedResult = false;
-      return false;
-    }
+    if (!valid) return null;
 
-    // Parse and validate payload
     const payload: LicensePayload = JSON.parse(payloadBuf.toString("utf8"));
+
+    // Check expiry
     if (payload.expires) {
-      const expiresAt = new Date(payload.expires).getTime();
-      if (expiresAt < Date.now()) {
-        console.warn(`[mnemo] Pro license expired on ${payload.expires}. Renew at https://mnemo.dev/pro`);
-        _cachedResult = false;
-        return false;
-      }
+      if (new Date(payload.expires).getTime() < Date.now()) return null;
     }
 
-    _cachedPayload = payload;
-    _cachedResult = true;
+    // Check machine binding (if present in payload)
+    if (payload.machine_id) {
+      const localFP = getMachineFingerprint();
+      if (payload.machine_id !== localFP) return null;
+    }
+
+    return payload;
   } catch {
-    _cachedResult = false;
+    return null;
+  }
+}
+
+// ── Auto-Activation (online, one-time) ──
+
+async function autoActivate(token: string): Promise<string | null> {
+  try {
+    const machine_id = getMachineFingerprint();
+    const resp = await fetch(`${ACTIVATION_URL}/activate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, machine_id }),
+      signal: AbortSignal.timeout(10000),
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({})) as any;
+      if (resp.status === 409) {
+        console.warn(
+          `[mnemo] License token already activated on another device. ` +
+          `Visit https://mnemo.dev/pro/migrate to transfer.`
+        );
+      } else {
+        console.warn(`[mnemo] Activation failed: ${err.error || resp.status}`);
+      }
+      return null;
+    }
+
+    const { key } = await resp.json() as { key: string };
+
+    // Cache the activated key locally
+    try {
+      mkdirSync(join(homedir(), ".mnemo"), { recursive: true });
+      writeFileSync(KEY_CACHE_PATH, JSON.stringify({ key, token, activated: new Date().toISOString() }));
+    } catch { /* non-fatal */ }
+
+    return key;
+  } catch (err) {
+    console.warn(`[mnemo] Activation request failed (offline?): ${err}`);
+    return null;
+  }
+}
+
+// ── Load cached key from disk ──
+
+function loadCachedKey(): string | null {
+  try {
+    const data = JSON.parse(readFileSync(KEY_CACHE_PATH, "utf8"));
+    return data.key || null;
+  } catch {
+    return null;
+  }
+}
+
+// ── Main entry point ──
+
+export function isProLicensed(): boolean {
+  if (_cachedResult !== null) return _cachedResult;
+
+  // Priority 1: explicit MNEMO_PRO_KEY env var
+  const explicitKey = process.env.MNEMO_PRO_KEY?.trim();
+  if (explicitKey) {
+    const payload = verifyKey(explicitKey);
+    if (payload) {
+      _cachedPayload = payload;
+      _cachedResult = true;
+      return true;
+    }
   }
 
-  return _cachedResult;
+  // Priority 2: cached key from previous activation
+  const cachedKey = loadCachedKey();
+  if (cachedKey) {
+    const payload = verifyKey(cachedKey);
+    if (payload) {
+      _cachedPayload = payload;
+      _cachedResult = true;
+      return true;
+    }
+  }
+
+  // Priority 3: auto-activate with token (async — won't block first call)
+  const token = process.env.MNEMO_LICENSE_TOKEN?.trim();
+  if (token) {
+    // Fire and forget — next process start will pick up cached key
+    autoActivate(token).then((key) => {
+      if (key) {
+        const payload = verifyKey(key);
+        if (payload) {
+          _cachedPayload = payload;
+          _cachedResult = true;
+          console.log(`[mnemo] Pro license activated for ${payload.licensee} (${payload.plan})`);
+        }
+      }
+    }).catch(() => {});
+  }
+
+  _cachedResult = false;
+  return false;
 }
 
 /**
- * Get the decoded license payload (null if unlicensed).
+ * Async version — waits for activation to complete if token is present.
+ * Use this during plugin initialization.
  */
+export async function ensureProLicense(): Promise<boolean> {
+  if (_cachedResult !== null) return _cachedResult;
+
+  // Check explicit key
+  const explicitKey = process.env.MNEMO_PRO_KEY?.trim();
+  if (explicitKey) {
+    const payload = verifyKey(explicitKey);
+    if (payload) {
+      _cachedPayload = payload;
+      _cachedResult = true;
+      return true;
+    }
+  }
+
+  // Check cached key
+  const cachedKey = loadCachedKey();
+  if (cachedKey) {
+    const payload = verifyKey(cachedKey);
+    if (payload) {
+      _cachedPayload = payload;
+      _cachedResult = true;
+      return true;
+    }
+  }
+
+  // Try auto-activate with token
+  const token = process.env.MNEMO_LICENSE_TOKEN?.trim();
+  if (token) {
+    const key = await autoActivate(token);
+    if (key) {
+      const payload = verifyKey(key);
+      if (payload) {
+        _cachedPayload = payload;
+        _cachedResult = true;
+        console.log(`[mnemo] Pro license activated for ${payload.licensee} (${payload.plan})`);
+        return true;
+      }
+    }
+  }
+
+  _cachedResult = false;
+  return false;
+}
+
 export function getLicenseInfo(): LicensePayload | null {
-  isProLicensed(); // ensure cache is populated
+  isProLicensed();
   return _cachedPayload;
 }
 
-/**
- * Guard for Pro features. Returns true if licensed, false if not.
- * Logs a one-time warning when Pro feature is accessed without a license.
- */
 export function requirePro(featureName: string): boolean {
   if (isProLicensed()) return true;
 
   if (!_warnedOnce) {
     console.warn(
-      `[mnemo] Pro features disabled — set MNEMO_PRO_KEY to enable. ` +
+      `[mnemo] Pro features disabled — set MNEMO_PRO_KEY or MNEMO_LICENSE_TOKEN to enable. ` +
       `Core functionality is fully available. https://mnemo.dev/pro`,
     );
     _warnedOnce = true;
@@ -114,9 +251,6 @@ export function requirePro(featureName: string): boolean {
   return false;
 }
 
-/**
- * Reset cached license result (for testing).
- */
 export function _resetLicenseCache(): void {
   _cachedResult = null;
   _cachedPayload = null;

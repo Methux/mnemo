@@ -9,3 +9,7 @@ memory-db/
 *.jsonl
 !config/*.example.json
 .DS_Store
+# Private keys — NEVER commit
+*-private-key
+*.pem
+pro-key.json
