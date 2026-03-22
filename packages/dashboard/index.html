@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mnemo Dashboard</title>
+<style>
+/* ===== RESET & BASE ===== */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0a1a;--bg2:#0f0f2a;--bg3:#151535;--bg4:#1a1a40;
+  --accent:#4ecdc4;--accent2:#45b7aa;--err:#ff6b6b;--warn:#ffd93d;
+  --ok:#4ade80;--purple:#c084fc;--blue:#60a5fa;--orange:#fb923c;
+  --text:#e0e0e0;--text2:#a0a0b0;--text3:#666680;
+  --border:#2a2a4a;--border2:#3a3a5a;
+  --radius:8px;--radius2:12px;
+  --font:-apple-system,'PingFang SC','Segoe UI',sans-serif;
+  --mono:'SF Mono','Fira Code',monospace;
+}
+html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--text);}
+a{color:var(--accent);text-decoration:none;}
+input,textarea,select,button{font-family:var(--font);font-size:14px;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+
+/* ===== LAYOUT ===== */
+.app{display:grid;grid-template-rows:56px 1fr;grid-template-columns:220px 1fr;height:100vh;}
+.header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--bg2);border-bottom:1px solid var(--border);z-index:10;}
+.header .logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;color:#fff;}
+.header .logo svg{width:28px;height:28px;}
+.header .status{display:flex;gap:16px;align-items:center;font-size:13px;color:var(--text2);}
+.header .status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px;}
+.header .status-dot.ok{background:var(--ok);}
+.header .status-dot.err{background:var(--err);}
+
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:16px 0;overflow-y:auto;}
+.sidebar .nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;color:var(--text2);font-size:14px;transition:all .2s;border-left:3px solid transparent;}
+.sidebar .nav-item:hover{background:var(--bg3);color:var(--text);}
+.sidebar .nav-item.active{background:var(--bg3);color:var(--accent);border-left-color:var(--accent);}
+.sidebar .nav-item svg{width:18px;height:18px;flex-shrink:0;}
+.sidebar .nav-label{font-size:11px;color:var(--text3);padding:20px 20px 6px;text-transform:uppercase;letter-spacing:1px;}
+
+.main{overflow-y:auto;padding:24px;background:var(--bg);}
+.tab-content{display:none;animation:fadeIn .3s ease;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== CARDS ===== */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;transition:border-color .2s;}
+.card:hover{border-color:var(--border2);}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.card-title{font-size:14px;font-weight:600;color:var(--text2);}
+.card-value{font-size:32px;font-weight:700;color:#fff;line-height:1.2;}
+.card-sub{font-size:12px;color:var(--text3);margin-top:4px;}
+
+/* ===== GRID HELPERS ===== */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.grid-1-2{display:grid;grid-template-columns:1fr 2fr;gap:16px;margin-bottom:24px;}
+.grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:24px;}
+
+/* ===== BADGE ===== */
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;}
+.badge-core{background:#4ecdc422;color:#4ecdc4;border:1px solid #4ecdc444;}
+.badge-working{background:#60a5fa22;color:#60a5fa;border:1px solid #60a5fa44;}
+.badge-peripheral{background:#fb923c22;color:#fb923c;border:1px solid #fb923c44;}
+.badge-expired{background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b44;}
+
+/* ===== BUTTONS ===== */
+.btn{padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text);cursor:pointer;font-size:13px;transition:all .2s;}
+.btn:hover{background:var(--bg4);border-color:var(--border2);}
+.btn-accent{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600;}
+.btn-accent:hover{background:var(--accent2);}
+.btn-danger{background:transparent;color:var(--err);border-color:var(--err);}
+.btn-danger:hover{background:#ff6b6b22;}
+.btn-sm{padding:4px 10px;font-size:12px;}
+
+/* ===== INPUTS ===== */
+.input{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);outline:none;transition:border-color .2s;}
+.input:focus{border-color:var(--accent);}
+.input::placeholder{color:var(--text3);}
+
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;padding:10px 12px;color:var(--text3);font-weight:500;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);}
+tr:hover td{background:var(--bg3);}
+
+/* ===== SECTION TITLES ===== */
+.section-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:16px;padding-left:12px;border-left:3px solid var(--accent);}
+.section-sub{font-size:14px;color:var(--text2);margin-bottom:20px;}
+
+/* ===== ACTIVITY FEED ===== */
+.feed-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.feed-time{color:var(--text3);white-space:nowrap;min-width:80px;font-family:var(--mono);font-size:12px;}
+.feed-action{color:var(--accent);font-weight:600;min-width:50px;}
+.feed-text{color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+
+/* ===== MEMORY CARD (Browser) ===== */
+.mem-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;margin-bottom:12px;cursor:pointer;transition:all .2s;}
+.mem-card:hover{border-color:var(--accent);transform:translateY(-1px);}
+.mem-card.selected{border-color:var(--accent);background:var(--bg3);}
+.mem-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.mem-card-text{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:10px;}
+.mem-card-meta{display:flex;gap:16px;font-size:12px;color:var(--text3);flex-wrap:wrap;}
+.mem-card-meta span{display:flex;align-items:center;gap:4px;}
+.mem-card-actions{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.mem-card-detail{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text2);}
+.mem-card-detail.show{display:block;}
+.mem-card-detail pre{background:var(--bg);padding:12px;border-radius:6px;font-size:12px;font-family:var(--mono);overflow-x:auto;margin-top:8px;color:var(--text3);}
+
+/* ===== IMPORTANCE BAR ===== */
+.imp-bar{width:60px;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px;}
+.imp-fill{height:100%;border-radius:3px;transition:width .3s;}
+
+/* ===== PIPELINE STAGES ===== */
+.pipeline{display:flex;gap:4px;flex-wrap:wrap;margin:16px 0;}
+.stage{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;min-width:120px;flex:1;text-align:center;transition:all .3s;cursor:default;}
+.stage.active{border-color:var(--accent);background:#4ecdc410;}
+.stage .stage-name{font-size:11px;color:var(--text3);margin-bottom:4px;}
+.stage .stage-value{font-size:14px;font-weight:600;color:var(--text);}
+.stage .stage-time{font-size:10px;color:var(--text3);margin-top:4px;font-family:var(--mono);}
+.stage-arrow{color:var(--text3);display:flex;align-items:center;font-size:14px;}
+
+/* ===== SLIDER ===== */
+.slider-wrap{display:flex;align-items:center;gap:12px;margin:16px 0;}
+.slider-wrap label{font-size:13px;color:var(--text2);min-width:120px;}
+.slider-wrap input[type=range]{flex:1;accent-color:var(--accent);height:4px;}
+.slider-wrap .slider-val{font-size:14px;font-weight:600;color:var(--accent);min-width:50px;text-align:right;font-family:var(--mono);}
+
+/* ===== CANVAS CONTAINER ===== */
+.canvas-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;margin-bottom:16px;}
+.canvas-container canvas{width:100%;border-radius:6px;}
+
+/* ===== LOG VIEWER ===== */
+.log-viewer{background:#050510;border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-family:var(--mono);font-size:12px;max-height:300px;overflow-y:auto;line-height:1.8;}
+.log-line{display:flex;gap:8px;}
+.log-time{color:var(--text3);min-width:70px;}
+.log-level{min-width:45px;font-weight:600;}
+.log-level.info{color:var(--accent);}
+.log-level.warn{color:var(--warn);}
+.log-level.error{color:var(--err);}
+.log-msg{color:var(--text2);}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .grid-4{grid-template-columns:repeat(2,1fr);}
+  .grid-3{grid-template-columns:1fr;}
+  .grid-2{grid-template-columns:1fr;}
+  .grid-1-2,.grid-2-1{grid-template-columns:1fr;}
+}
+
+/* ===== MODAL ===== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:24px;min-width:400px;max-width:90vw;}
+.modal-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:16px;}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;}
+
+/* ===== CHECKBOX ===== */
+.checkbox{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;}
+
+/* ===== PIE CHART (SVG) ===== */
+.pie-container{display:flex;align-items:center;gap:24px;}
+.pie-legend{font-size:13px;}
+.pie-legend-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.pie-legend-dot{width:12px;height:12px;border-radius:3px;}
+.pie-legend-label{color:var(--text2);}
+.pie-legend-value{color:#fff;font-weight:600;margin-left:auto;min-width:40px;text-align:right;}
+
+/* ===== TOOLBAR ===== */
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+.toolbar .input{min-width:200px;}
+.toolbar select.input{min-width:100px;cursor:pointer;}
+
+/* ===== SCORE BREAKDOWN ===== */
+.score-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:13px;}
+.score-label{min-width:80px;color:var(--text3);}
+.score-bar{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;}
+.score-fill{height:100%;border-radius:3px;}
+.score-val{min-width:40px;text-align:right;font-family:var(--mono);color:var(--text2);}
+
+/* ===== DIAG STATUS GRID ===== */
+.diag-card{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.diag-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.diag-icon.ok{background:#4ade8020;color:var(--ok);}
+.diag-icon.err{background:#ff6b6b20;color:var(--err);}
+.diag-icon.warn{background:#ffd93d20;color:var(--warn);}
+.diag-info{flex:1;}
+.diag-name{font-size:14px;font-weight:600;color:var(--text);}
+.diag-detail{font-size:12px;color:var(--text3);margin-top:2px;}
+.diag-status{font-size:12px;font-weight:600;}
+.diag-status.ok{color:var(--ok);}
+.diag-status.err{color:var(--err);}
+.diag-status.warn{color:var(--warn);}
+
+/* ===== RETRIEVAL RESULT CARD ===== */
+.result-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
+.result-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.result-rank{font-size:20px;font-weight:700;color:var(--accent);font-family:var(--mono);min-width:30px;}
+.result-text{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:10px;}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="logo">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#4ecdc4" stroke-width="2"/><path d="M9 14c0-3 2-5 5-5s5 2 5 5-2 5-5 5" stroke="#4ecdc4" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#4ecdc4"/></svg>
+      Mnemo Dashboard
+    </div>
+    <div class="status">
+      <span><span class="status-dot ok"></span>LanceDB</span>
+      <span><span class="status-dot ok"></span>Graphiti</span>
+      <span><span class="status-dot ok"></span>Gateway</span>
+      <span style="color:var(--text3)">v1.1.0-beta.8</span>
+    </div>
+  </header>
+
+  <!-- ===== SIDEBAR ===== -->
+  <nav class="sidebar">
+    <div class="nav-label">Management</div>
+    <div class="nav-item active" data-tab="overview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Overview / 首页
+    </div>
+    <div class="nav-item" data-tab="browser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Browser / 记忆浏览
+    </div>
+    <div class="nav-item" data-tab="decay">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+      Decay / 衰减曲线
+    </div>
+    <div class="nav-label">Testing</div>
+    <div class="nav-item" data-tab="retrieval">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Retrieval / 检索测试
+    </div>
+    <div class="nav-item" data-tab="health">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      Health / 健康诊断
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main">
+
+    <!-- ==================== TAB: OVERVIEW ==================== -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="section-title">Overview / 首页</div>
+
+      <!-- Stats row -->
+      <div class="grid-4" id="overview-stats"></div>
+
+      <!-- Pie + Health -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:16px">Memory Tier Distribution / 记忆分层</div>
+          <div class="pie-container" id="pie-container"></div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:16px">System Health / 系统状态</div>
+          <div id="health-cards"></div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px">Recent Activity / 最近活动</div>
+        <div id="activity-feed"></div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB: BROWSER ==================== -->
+    <div class="tab-content" id="tab-browser">
+      <div class="section-title">Memory Browser / 记忆浏览</div>
+      <div class="toolbar">
+        <input class="input" id="search-box" type="text" placeholder="Search memories... / 搜索记忆" style="flex:1;min-width:200px;">
+        <select class="input" id="filter-scope">
+          <option value="">All Scopes</option>
+          <option value="user">user</option>
+          <option value="project">project</option>
+          <option value="global">global</option>
+        </select>
+        <select class="input" id="filter-tier">
+          <option value="">All Tiers</option>
+          <option value="core">Core</option>
+          <option value="working">Working</option>
+          <option value="peripheral">Peripheral</option>
+        </select>
+        <input class="input" id="filter-importance" type="number" min="0" max="1" step="0.1" placeholder="Min importance" style="width:120px;">
+        <button class="btn btn-accent" onclick="filterMemories()">Search</button>
+        <button class="btn btn-danger" id="bulk-delete-btn" style="display:none" onclick="bulkDelete()">Delete Selected</button>
+      </div>
+      <div id="browser-results"></div>
+      <div style="text-align:center;padding:16px;color:var(--text3);font-size:13px;" id="browser-count"></div>
+    </div>
+
+    <!-- ==================== TAB: DECAY ==================== -->
+    <div class="tab-content" id="tab-decay">
+      <div class="section-title">Decay Visualizer / 衰减曲线</div>
+      <div class="section-sub">Weibull decay model: score = exp(-(t/lambda)^beta) where lambda = halflife / ln(2)^(1/beta)</div>
+
+      <div class="canvas-container">
+        <canvas id="decay-canvas" height="400"></canvas>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="slider-wrap">
+          <label>Halflife (days) 半衰期</label>
+          <input type="range" id="halflife-slider" min="1" max="120" value="30">
+          <span class="slider-val" id="halflife-val">30d</span>
+        </div>
+        <div class="slider-wrap">
+          <label>Time range (days)</label>
+          <input type="range" id="timerange-slider" min="30" max="365" value="120">
+          <span class="slider-val" id="timerange-val">120d</span>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" style="border-left:3px solid var(--accent);">
+          <div class="card-title">Core (beta=0.8)</div>
+          <div class="card-sub">Slow initial decay, long tail retention. Used for high-importance persistent memories.</div>
+        </div>
+        <div class="card" style="border-left:3px solid var(--blue);">
+          <div class="card-title">Working (beta=1.0)</div>
+          <div class="card-sub">Exponential decay. Standard forgetting curve for session-level memories.</div>
+        </div>
+        <div class="card" style="border-left:3px solid var(--orange);">
+          <div class="card-title">Peripheral (beta=1.3)</div>
+          <div class="card-sub">Rapid early decay. Transient context that fades quickly unless reinforced.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB: RETRIEVAL ==================== -->
+    <div class="tab-content" id="tab-retrieval">
+      <div class="section-title">Retrieval Tester / 检索测试</div>
+
+      <div class="toolbar" style="margin-bottom:24px;">
+        <input class="input" id="query-input" type="text" placeholder="Enter test query... / 输入测试查询" style="flex:1;" value="What did we discuss about the investment strategy?">
+        <button class="btn btn-accent" onclick="runRetrieval()">Run Pipeline</button>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title" style="margin-bottom:12px">Pipeline Stages / 管线阶段</div>
+        <div class="pipeline" id="pipeline-stages"></div>
+        <div style="text-align:right;font-size:13px;color:var(--text3);margin-top:8px;">
+          Total latency: <span id="total-latency" style="color:var(--accent);font-weight:600;font-family:var(--mono);">--</span>
+        </div>
+      </div>
+
+      <div id="retrieval-results"></div>
+    </div>
+
+    <!-- ==================== TAB: HEALTH ==================== -->
+    <div class="tab-content" id="tab-health">
+      <div class="section-title">Health & Diagnostics / 健康诊断</div>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px">Service Status / 服务状态</div>
+          <div id="diag-services"></div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px">Config Validation / 配置检查</div>
+          <div id="diag-config"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">mnemo-doctor Results / 诊断报告</div>
+          <button class="btn btn-sm" onclick="runDoctor()">Re-run Doctor</button>
+        </div>
+        <div id="doctor-results"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Error Log / 错误日志</div>
+          <button class="btn btn-sm" onclick="clearLogs()">Clear</button>
+        </div>
+        <div class="log-viewer" id="log-viewer"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===== MODAL: Delete Confirmation ===== -->
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal">
+    <div class="modal-title">Confirm Delete / 确认删除</div>
+    <p style="color:var(--text2);font-size:14px;" id="delete-msg">Are you sure you want to delete this memory?</p>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Cancel / 取消</button>
+      <button class="btn btn-danger" id="confirm-delete-btn">Delete / 删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: Edit Memory ===== -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal" style="min-width:500px;">
+    <div class="modal-title">Edit Memory / 编辑记忆</div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px;">Importance</label>
+      <input class="input" id="edit-importance" type="number" min="0" max="1" step="0.05" style="width:100%;">
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px;">Tier</label>
+      <select class="input" id="edit-tier" style="width:100%;">
+        <option value="core">Core</option>
+        <option value="working">Working</option>
+        <option value="peripheral">Peripheral</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px;">Tags (comma separated)</label>
+      <input class="input" id="edit-tags" type="text" style="width:100%;">
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeEditModal()">Cancel / 取消</button>
+      <button class="btn btn-accent" onclick="saveEdit()">Save / 保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================================================================
+// MOCK DATA
+// ===================================================================
+const NOW = Date.now();
+const DAY = 86400000;
+const HOUR = 3600000;
+
+function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function randFloat(a,b,d=2){return parseFloat((Math.random()*(b-a)+a).toFixed(d));}
+function randChoice(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function ago(ms){
+  if(ms<60000)return Math.floor(ms/1000)+'s ago';
+  if(ms<HOUR)return Math.floor(ms/60000)+'m ago';
+  if(ms<DAY)return Math.floor(ms/HOUR)+'h ago';
+  return Math.floor(ms/DAY)+'d ago';
+}
+function fmtDate(ts){return new Date(ts).toISOString().slice(0,16).replace('T',' ');}
+
+const TEXTS_EN = [
+  "User prefers dark mode across all applications",
+  "Investment thesis: focus on AI infrastructure layer companies",
+  "Meeting with portfolio company CEO scheduled quarterly",
+  "Risk tolerance is moderate-high, prefer asymmetric bets",
+  "Code review standards: always check error handling first",
+  "Preferred communication style: direct, no-nonsense",
+  "Key metric for evaluation: IRR over MOIC for early stage",
+  "Technical stack preference: TypeScript, Rust for performance-critical",
+  "Decision framework: first principles over pattern matching",
+  "Portfolio allocation: 60% AI/ML, 20% crypto infra, 20% biotech",
+  "Reading list includesErta, Mauboussin, and Damodaran",
+  "Weekly review cadence: Monday morning deep work block",
+  "Networking strategy: quality over quantity, max 3 events/month",
+  "Due diligence checklist: team, TAM, timing, tech moat",
+  "Travel preferences: window seat, early flights, minimal luggage",
+];
+const TEXTS_ZH = [
+  "用户偏好：所有应用使用深色模式",
+  "投资论文：聚焦AI基础设施层公司",
+  "每季度与被投公司CEO会面",
+  "风险偏好中高，偏好不对称赌注",
+  "代码审查标准：优先检查错误处理",
+  "沟通风格：直接，零讨好",
+  "评估关键指标：早期阶段IRR优于MOIC",
+  "技术栈偏好：TypeScript，性能敏感用Rust",
+  "决策框架：第一性原理优先于模式匹配",
+  "组合配置：60% AI/ML，20% 加密基础设施，20% 生物技术",
+  "Symphony工作流：配置变更必须通过openclaw-config仓库",
+  "LanceDB向量检索延迟目标：< 50ms p99",
+  "Graphiti知识图谱用于多跳推理场景",
+  "记忆衰减模型采用Weibull分布",
+  "WAL机制确保写入原子性和故障恢复",
+  "自动同步采用JSON深度合并策略",
+  "检索管线10阶段：预处理→共振门→多跳→向量/BM25/Graphiti并行→RRF→重排→衰减→MMR",
+  "核心记忆不参与衰减，永久保留",
+  "用户Rex：94年生，INTJ，投资人",
+  "每次召回自动触发access_count递增和衰减重置",
+];
+const ALL_TEXTS = [...TEXTS_EN, ...TEXTS_ZH];
+const SCOPES = ['user','project','global'];
+const TIERS = ['core','working','peripheral'];
+const TAGS_POOL = ['preference','investment','tech','workflow','meeting','strategy','code','config','memory','pipeline','decision','portfolio','communication','review'];
+
+function generateMemories(n){
+  const mems = [];
+  for(let i=0;i<n;i++){
+    const tier = i<40?'core':i<120?'working':'peripheral';
+    const importance = tier==='core'?randFloat(0.7,1.0):tier==='working'?randFloat(0.3,0.7):randFloat(0.05,0.35);
+    const createdAt = NOW - randInt(1,180)*DAY - randInt(0,23)*HOUR;
+    const agedays = (NOW-createdAt)/DAY;
+    const beta = tier==='core'?0.8:tier==='working'?1.0:1.3;
+    const halflife = tier==='core'?90:tier==='working'?30:7;
+    const lam = halflife/Math.pow(Math.LN2,1/beta);
+    const decayScore = Math.exp(-Math.pow(agedays/lam,beta));
+    const expired = decayScore < 0.05;
+    const tags = [];
+    const tagCount = randInt(1,3);
+    for(let t=0;t<tagCount;t++) tags.push(randChoice(TAGS_POOL));
+    mems.push({
+      id: 'mem_'+String(i).padStart(4,'0'),
+      text: randChoice(ALL_TEXTS),
+      tier, importance,
+      scope: randChoice(SCOPES),
+      tags: [...new Set(tags)],
+      accessCount: tier==='core'?randInt(5,50):tier==='working'?randInt(1,20):randInt(0,5),
+      createdAt, decayScore: parseFloat(decayScore.toFixed(4)),
+      expired,
+      lastAccessed: NOW - randInt(0,30)*DAY,
+      embedding_model: 'text-embedding-3-small',
+      vector_dim: 1536,
+      source: randChoice(['chat','hook:memory-extractor','hook:query-context','api','auto-consolidation']),
+    });
+  }
+  return mems;
+}
+
+const MEMORIES = generateMemories(200);
+
+const ACTIVITY_FEED = [
+  {time:NOW-120000, action:'write', text:'用户偏好：所有应用使用深色模式'},
+  {time:NOW-300000, action:'recall', text:'Investment thesis: focus on AI infrastructure layer companies'},
+  {time:NOW-900000, action:'write', text:'Symphony工作流：配置变更必须通过openclaw-config仓库'},
+  {time:NOW-1800000, action:'recall', text:'决策框架：第一性原理优先于模式匹配'},
+  {time:NOW-3600000, action:'decay', text:'Bulk decay run: 12 memories decayed below threshold'},
+  {time:NOW-5400000, action:'write', text:'LanceDB向量检索延迟目标：< 50ms p99'},
+  {time:NOW-7200000, action:'recall', text:'Portfolio allocation: 60% AI/ML, 20% crypto infra, 20% biotech'},
+  {time:NOW-10800000, action:'delete', text:'Removed duplicate memory: meeting notes 2024-03'},
+  {time:NOW-14400000, action:'write', text:'Graphiti知识图谱用于多跳推理场景'},
+  {time:NOW-18000000, action:'recall', text:'Code review standards: always check error handling first'},
+];
+
+const PIPELINE_STAGES = [
+  {name:'Preprocessing\n预处理', key:'preprocess'},
+  {name:'Resonance Gate\n共振门', key:'resonance'},
+  {name:'Multi-hop\n多跳扩展', key:'multihop'},
+  {name:'Vector Search\n向量检索', key:'vector'},
+  {name:'BM25 Search\nBM25检索', key:'bm25'},
+  {name:'Graphiti\n图谱检索', key:'graphiti'},
+  {name:'RRF Fusion\nRRF融合', key:'rrf'},
+  {name:'Rerank\n重排序', key:'rerank'},
+  {name:'Decay Apply\n衰减应用', key:'decay'},
+  {name:'MMR\n多样性', key:'mmr'},
+];
+
+const MOCK_RETRIEVAL_RESULTS = [
+  {rank:1, text:'投资论文：聚焦AI基础设施层公司', score:0.94, tier:'core', vector:0.88, bm25:0.72, graphiti:0.91, rrf:0.87, rerank:0.95, decay:0.98, mmr:0.94, importance:0.92},
+  {rank:2, text:'Portfolio allocation: 60% AI/ML, 20% crypto infra, 20% biotech', score:0.89, tier:'core', vector:0.85, bm25:0.68, graphiti:0.82, rrf:0.81, rerank:0.90, decay:0.95, mmr:0.89, importance:0.88},
+  {rank:3, text:'Risk tolerance is moderate-high, prefer asymmetric bets', score:0.82, tier:'working', vector:0.79, bm25:0.55, graphiti:0.70, rrf:0.72, rerank:0.84, decay:0.88, mmr:0.82, importance:0.65},
+  {rank:4, text:'决策框架：第一性原理优先于模式匹配', score:0.76, tier:'core', vector:0.72, bm25:0.61, graphiti:0.68, rrf:0.68, rerank:0.78, decay:0.92, mmr:0.76, importance:0.85},
+  {rank:5, text:'Key metric for evaluation: IRR over MOIC for early stage', score:0.71, tier:'working', vector:0.68, bm25:0.58, graphiti:0.55, rrf:0.62, rerank:0.73, decay:0.82, mmr:0.71, importance:0.60},
+];
+
+const STAGE_LATENCIES = {preprocess:3, resonance:8, multihop:22, vector:18, bm25:12, graphiti:35, rrf:5, rerank:28, decay:2, mmr:6};
+
+const ERROR_LOGS = [
+  {time:'14:23:01', level:'info', msg:'LanceDB connection pool initialized (size=4)'},
+  {time:'14:23:02', level:'info', msg:'Graphiti Neo4j driver connected to bolt://localhost:7687'},
+  {time:'14:23:05', level:'warn', msg:'WAL replay: 2 pending entries recovered from crash'},
+  {time:'14:23:05', level:'info', msg:'WAL replay completed successfully'},
+  {time:'14:25:18', level:'info', msg:'Auto-sync: pulled 3 config changes from openclaw-config'},
+  {time:'14:30:00', level:'info', msg:'Decay sweep: processed 200 memories, 15 below threshold'},
+  {time:'14:35:22', level:'warn', msg:'Graphiti query timeout: multi-hop depth 3 exceeded 500ms'},
+  {time:'14:35:23', level:'info', msg:'Graphiti fallback: reduced to depth 2, completed in 180ms'},
+  {time:'14:40:01', level:'error', msg:'BM25 index corruption detected in partition user_project_alpha'},
+  {time:'14:40:02', level:'info', msg:'BM25 index rebuild initiated for partition user_project_alpha'},
+  {time:'14:40:08', level:'info', msg:'BM25 index rebuild completed (1247 docs, 6.2s)'},
+  {time:'14:45:00', level:'info', msg:'Memory consolidation: merged 4 similar peripheral memories'},
+  {time:'15:00:00', level:'info', msg:'Health check: all services operational'},
+];
+
+// ===================================================================
+// API ENDPOINTS (ready to wire up)
+// ===================================================================
+const API_BASE = '/api/v1';
+const API = {
+  listMemories:   (params) => `${API_BASE}/memories?${new URLSearchParams(params)}`,
+  getMemory:      (id) => `${API_BASE}/memories/${id}`,
+  updateMemory:   (id) => `${API_BASE}/memories/${id}`,
+  deleteMemory:   (id) => `${API_BASE}/memories/${id}`,
+  bulkDelete:     () => `${API_BASE}/memories/bulk-delete`,
+  search:         () => `${API_BASE}/memories/search`,
+  retrieve:       () => `${API_BASE}/retrieve`,
+  stats:          () => `${API_BASE}/stats`,
+  health:         () => `${API_BASE}/health`,
+  doctor:         () => `${API_BASE}/doctor`,
+  logs:           (params) => `${API_BASE}/logs?${new URLSearchParams(params)}`,
+};
+
+// ===================================================================
+// STATE
+// ===================================================================
+let selectedMemories = new Set();
+let editingMemoryId = null;
+let deletingMemoryIds = [];
+let filteredMemories = [...MEMORIES];
+
+// ===================================================================
+// TAB NAVIGATION
+// ===================================================================
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    item.classList.add('active');
+    const tab = item.dataset.tab;
+    document.getElementById('tab-'+tab).classList.add('active');
+    if(tab==='decay') drawDecayCurves();
+  });
+});
+
+// ===================================================================
+// OVERVIEW TAB
+// ===================================================================
+function renderOverview(){
+  const total = MEMORIES.length;
+  const core = MEMORIES.filter(m=>m.tier==='core').length;
+  const working = MEMORIES.filter(m=>m.tier==='working').length;
+  const peripheral = MEMORIES.filter(m=>m.tier==='peripheral').length;
+  const expired = MEMORIES.filter(m=>m.expired).length;
+  const active = total - expired;
+
+  // Stats cards
+  document.getElementById('overview-stats').innerHTML = [
+    {label:'Total Memories / 总记忆',value:total,sub:`Active: ${active} | Expired: ${expired}`,color:'#fff'},
+    {label:'Core / 核心',value:core,sub:`${(core/total*100).toFixed(1)}% of total`,color:'var(--accent)'},
+    {label:'Working / 工作',value:working,sub:`${(working/total*100).toFixed(1)}% of total`,color:'var(--blue)'},
+    {label:'Peripheral / 外围',value:peripheral,sub:`${(peripheral/total*100).toFixed(1)}% of total`,color:'var(--orange)'},
+  ].map(s=>`
+    <div class="card">
+      <div class="card-title">${s.label}</div>
+      <div class="card-value" style="color:${s.color}">${s.value}</div>
+      <div class="card-sub">${s.sub}</div>
+    </div>
+  `).join('');
+
+  // Pie chart
+  renderPieChart(core, working, peripheral);
+
+  // Health cards
+  document.getElementById('health-cards').innerHTML = [
+    {icon:'ok',name:'LanceDB',detail:'Connected, 200 vectors indexed',status:'Healthy'},
+    {icon:'ok',name:'Graphiti / Neo4j',detail:'147 nodes, 312 edges',status:'Healthy'},
+    {icon:'ok',name:'Last Write',detail:ago(120000),status:'Active'},
+    {icon:'ok',name:'Last Recall',detail:ago(300000),status:'Active'},
+    {icon:'ok',name:'WAL',detail:'0 pending, last flush 2m ago',status:'Synced'},
+    {icon:'warn',name:'Auto-sync',detail:'Last sync: 15m ago',status:'OK'},
+  ].map(h=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span class="status-dot ${h.icon}"></span>
+      <span style="flex:1;font-size:13px;">${h.name}</span>
+      <span style="font-size:12px;color:var(--text3);">${h.detail}</span>
+      <span class="diag-status ${h.icon}" style="font-size:12px;">${h.status}</span>
+    </div>
+  `).join('');
+
+  // Activity feed
+  document.getElementById('activity-feed').innerHTML = ACTIVITY_FEED.map(a=>{
+    const actionColors = {write:'var(--accent)',recall:'var(--blue)',decay:'var(--orange)',delete:'var(--err)'};
+    return `
+      <div class="feed-item">
+        <span class="feed-time">${ago(NOW-a.time)}</span>
+        <span class="feed-action" style="color:${actionColors[a.action]||'var(--text2)'}">${a.action}</span>
+        <span class="feed-text">${a.text}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderPieChart(core, working, peripheral){
+  const total = core + working + peripheral;
+  const data = [
+    {label:'Core / 核心', value:core, color:'#4ecdc4'},
+    {label:'Working / 工作', value:working, color:'#60a5fa'},
+    {label:'Peripheral / 外围', value:peripheral, color:'#fb923c'},
+  ];
+
+  let cumAngle = -Math.PI/2;
+  const r = 80, cx=90, cy=90;
+  let paths = '';
+  data.forEach(d => {
+    const angle = (d.value/total)*Math.PI*2;
+    const x1 = cx + r*Math.cos(cumAngle);
+    const y1 = cy + r*Math.sin(cumAngle);
+    const x2 = cx + r*Math.cos(cumAngle+angle);
+    const y2 = cy + r*Math.sin(cumAngle+angle);
+    const large = angle > Math.PI ? 1 : 0;
+    paths += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${d.color}" opacity="0.85"/>`;
+    cumAngle += angle;
+  });
+
+  const legend = data.map(d=>`
+    <div class="pie-legend-item">
+      <div class="pie-legend-dot" style="background:${d.color}"></div>
+      <span class="pie-legend-label">${d.label}</span>
+      <span class="pie-legend-value">${d.value} (${(d.value/total*100).toFixed(0)}%)</span>
+    </div>
+  `).join('');
+
+  document.getElementById('pie-container').innerHTML = `
+    <svg width="180" height="180" viewBox="0 0 180 180">${paths}</svg>
+    <div class="pie-legend">${legend}</div>
+  `;
+}
+
+// ===================================================================
+// BROWSER TAB
+// ===================================================================
+function filterMemories(){
+  const q = document.getElementById('search-box').value.toLowerCase();
+  const scope = document.getElementById('filter-scope').value;
+  const tier = document.getElementById('filter-tier').value;
+  const minImp = parseFloat(document.getElementById('filter-importance').value) || 0;
+
+  filteredMemories = MEMORIES.filter(m => {
+    if(q && !m.text.toLowerCase().includes(q) && !m.id.includes(q)) return false;
+    if(scope && m.scope !== scope) return false;
+    if(tier && m.tier !== tier) return false;
+    if(m.importance < minImp) return false;
+    return true;
+  });
+
+  selectedMemories.clear();
+  updateBulkBtn();
+  renderBrowser();
+}
+
+function renderBrowser(){
+  const container = document.getElementById('browser-results');
+  container.innerHTML = filteredMemories.slice(0, 50).map(m => {
+    const impColor = m.importance > 0.7 ? 'var(--accent)' : m.importance > 0.4 ? 'var(--blue)' : 'var(--orange)';
+    return `
+    <div class="mem-card ${selectedMemories.has(m.id)?'selected':''}" id="card-${m.id}">
+      <div class="mem-card-top">
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="checkbox" class="checkbox" ${selectedMemories.has(m.id)?'checked':''} onchange="toggleSelect('${m.id}',this.checked)">
+          <span class="badge badge-${m.tier}">${m.tier}</span>
+          ${m.expired?'<span class="badge badge-expired">expired</span>':''}
+          <span style="font-size:11px;color:var(--text3);font-family:var(--mono);">${m.id}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:13px;">
+          <span style="color:var(--text3);">importance:</span>
+          <span style="color:${impColor};font-weight:600;font-family:var(--mono);">${m.importance.toFixed(2)}</span>
+          <div class="imp-bar"><div class="imp-fill" style="width:${m.importance*100}%;background:${impColor};"></div></div>
+        </div>
+      </div>
+      <div class="mem-card-text">${m.text}</div>
+      <div class="mem-card-meta">
+        <span>Scope: ${m.scope}</span>
+        <span>Access: ${m.accessCount}x</span>
+        <span>Decay: ${m.decayScore.toFixed(3)}</span>
+        <span>Created: ${fmtDate(m.createdAt)}</span>
+        <span>Tags: ${m.tags.join(', ')}</span>
+      </div>
+      <div class="mem-card-actions">
+        <button class="btn btn-sm" onclick="event.stopPropagation();toggleDetail('${m.id}')">Details</button>
+        <button class="btn btn-sm" onclick="event.stopPropagation();openEdit('${m.id}')">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();confirmDelete(['${m.id}'])">Delete</button>
+      </div>
+      <div class="mem-card-detail" id="detail-${m.id}">
+        <pre>${JSON.stringify({
+          id:m.id, tier:m.tier, scope:m.scope, importance:m.importance,
+          decayScore:m.decayScore, accessCount:m.accessCount, expired:m.expired,
+          tags:m.tags, source:m.source, embedding_model:m.embedding_model,
+          vector_dim:m.vector_dim, createdAt:fmtDate(m.createdAt),
+          lastAccessed:fmtDate(m.lastAccessed),
+        }, null, 2)}</pre>
+      </div>
+    </div>
+    `;
+  }).join('');
+
+  document.getElementById('browser-count').textContent =
+    `Showing ${Math.min(50, filteredMemories.length)} of ${filteredMemories.length} memories (${MEMORIES.length} total)`;
+}
+
+function toggleSelect(id, checked){
+  if(checked) selectedMemories.add(id); else selectedMemories.delete(id);
+  const card = document.getElementById('card-'+id);
+  if(card) card.classList.toggle('selected', checked);
+  updateBulkBtn();
+}
+
+function updateBulkBtn(){
+  const btn = document.getElementById('bulk-delete-btn');
+  btn.style.display = selectedMemories.size > 0 ? 'inline-block' : 'none';
+  btn.textContent = `Delete Selected (${selectedMemories.size})`;
+}
+
+function toggleDetail(id){
+  const el = document.getElementById('detail-'+id);
+  if(el) el.classList.toggle('show');
+}
+
+function openEdit(id){
+  const m = MEMORIES.find(x=>x.id===id);
+  if(!m) return;
+  editingMemoryId = id;
+  document.getElementById('edit-importance').value = m.importance;
+  document.getElementById('edit-tier').value = m.tier;
+  document.getElementById('edit-tags').value = m.tags.join(', ');
+  document.getElementById('edit-modal').classList.add('show');
+}
+
+function closeEditModal(){
+  document.getElementById('edit-modal').classList.remove('show');
+  editingMemoryId = null;
+}
+
+function saveEdit(){
+  if(!editingMemoryId) return;
+  const m = MEMORIES.find(x=>x.id===editingMemoryId);
+  if(!m) return;
+  m.importance = parseFloat(document.getElementById('edit-importance').value) || m.importance;
+  m.tier = document.getElementById('edit-tier').value;
+  m.tags = document.getElementById('edit-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  closeEditModal();
+  renderBrowser();
+  // API: fetch(API.updateMemory(editingMemoryId), {method:'PATCH', body:JSON.stringify({importance:m.importance,tier:m.tier,tags:m.tags})})
+}
+
+function confirmDelete(ids){
+  deletingMemoryIds = ids;
+  const n = ids.length;
+  document.getElementById('delete-msg').textContent = n===1
+    ? `Delete memory ${ids[0]}? This cannot be undone.`
+    : `Delete ${n} memories? This cannot be undone.`;
+  document.getElementById('delete-modal').classList.add('show');
+  document.getElementById('confirm-delete-btn').onclick = executeDelete;
+}
+
+function closeModal(){
+  document.getElementById('delete-modal').classList.remove('show');
+  deletingMemoryIds = [];
+}
+
+function executeDelete(){
+  const idsSet = new Set(deletingMemoryIds);
+  for(let i=MEMORIES.length-1;i>=0;i--){
+    if(idsSet.has(MEMORIES[i].id)) MEMORIES.splice(i,1);
+  }
+  deletingMemoryIds.forEach(id => selectedMemories.delete(id));
+  closeModal();
+  updateBulkBtn();
+  filterMemories();
+  renderOverview();
+  // API: fetch(API.bulkDelete(), {method:'POST', body:JSON.stringify({ids:deletingMemoryIds})})
+}
+
+function bulkDelete(){
+  if(selectedMemories.size === 0) return;
+  confirmDelete([...selectedMemories]);
+}
+
+// ===================================================================
+// DECAY VISUALIZER
+// ===================================================================
+function weibull(t, beta, halflife){
+  const lam = halflife / Math.pow(Math.LN2, 1/beta);
+  return Math.exp(-Math.pow(t/lam, beta));
+}
+
+function drawDecayCurves(){
+  const canvas = document.getElementById('decay-canvas');
+  if(!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const w = rect.width - 32;
+  const h = 400;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w+'px';
+  canvas.style.height = h+'px';
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,w,h);
+
+  const halflife = parseInt(document.getElementById('halflife-slider').value);
+  const maxDays = parseInt(document.getElementById('timerange-slider').value);
+  const pad = {top:20,right:30,bottom:50,left:60};
+  const pw = w-pad.left-pad.right;
+  const ph = h-pad.top-pad.bottom;
+
+  // Grid
+  ctx.strokeStyle = '#1a1a40';
+  ctx.lineWidth = 1;
+  for(let i=0;i<=10;i++){
+    const y = pad.top + ph*(1-i/10);
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+pw,y); ctx.stroke();
+  }
+  for(let i=0;i<=10;i++){
+    const x = pad.left + pw*i/10;
+    ctx.beginPath(); ctx.moveTo(x,pad.top); ctx.lineTo(x,pad.top+ph); ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = '#3a3a5a';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(pad.left,pad.top); ctx.lineTo(pad.left,pad.top+ph); ctx.lineTo(pad.left+pw,pad.top+ph);
+  ctx.stroke();
+
+  // Labels
+  ctx.fillStyle = '#666680';
+  ctx.font = '11px -apple-system, sans-serif';
+  ctx.textAlign = 'right';
+  for(let i=0;i<=10;i++){
+    const y = pad.top + ph*(1-i/10);
+    ctx.fillText((i/10).toFixed(1), pad.left-8, y+4);
+  }
+  ctx.textAlign = 'center';
+  for(let i=0;i<=10;i++){
+    const x = pad.left + pw*i/10;
+    const day = Math.round(maxDays*i/10);
+    ctx.fillText(day+'d', x, pad.top+ph+20);
+  }
+  ctx.fillText('Days / 天数', pad.left+pw/2, pad.top+ph+42);
+  ctx.save();
+  ctx.translate(14, pad.top+ph/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.fillText('Score / 分数', 0, 0);
+  ctx.restore();
+
+  // Curves
+  const curves = [
+    {beta:0.8, color:'#4ecdc4', label:'Core (beta=0.8)'},
+    {beta:1.0, color:'#60a5fa', label:'Working (beta=1.0)'},
+    {beta:1.3, color:'#fb923c', label:'Peripheral (beta=1.3)'},
+  ];
+
+  curves.forEach(c => {
+    ctx.strokeStyle = c.color;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for(let px=0;px<=pw;px++){
+      const t = (px/pw)*maxDays;
+      const s = weibull(t, c.beta, halflife);
+      const x = pad.left + px;
+      const y = pad.top + ph*(1-s);
+      if(px===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  });
+
+  // Halflife marker
+  if(halflife <= maxDays){
+    const hx = pad.left + (halflife/maxDays)*pw;
+    ctx.strokeStyle = '#ff6b6b44';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(hx,pad.top); ctx.lineTo(hx,pad.top+ph); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#ff6b6b';
+    ctx.font = '11px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('halflife='+halflife+'d', hx, pad.top-6);
+  }
+
+  // Plot actual memories as dots
+  MEMORIES.forEach(m => {
+    const agedays = (NOW - m.createdAt) / DAY;
+    if(agedays > maxDays) return;
+    const x = pad.left + (agedays/maxDays)*pw;
+    const y = pad.top + ph*(1-m.decayScore);
+    const color = m.tier==='core'?'#4ecdc4':m.tier==='working'?'#60a5fa':'#fb923c';
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.5;
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  });
+
+  // Legend
+  const ly = pad.top + 10;
+  curves.forEach((c,i) => {
+    const lx = pad.left + pw - 180;
+    ctx.fillStyle = c.color;
+    ctx.fillRect(lx, ly+i*20, 14, 3);
+    ctx.fillStyle = '#a0a0b0';
+    ctx.font = '12px -apple-system, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(c.label, lx+20, ly+i*20+5);
+  });
+}
+
+document.getElementById('halflife-slider').addEventListener('input', function(){
+  document.getElementById('halflife-val').textContent = this.value+'d';
+  drawDecayCurves();
+});
+document.getElementById('timerange-slider').addEventListener('input', function(){
+  document.getElementById('timerange-val').textContent = this.value+'d';
+  drawDecayCurves();
+});
+
+// ===================================================================
+// RETRIEVAL TESTER
+// ===================================================================
+function runRetrieval(){
+  const query = document.getElementById('query-input').value;
+  if(!query.trim()) return;
+
+  // Animate stages
+  const stagesEl = document.getElementById('pipeline-stages');
+  stagesEl.innerHTML = '';
+  let totalMs = 0;
+
+  PIPELINE_STAGES.forEach((s,i) => {
+    const ms = STAGE_LATENCIES[s.key] + randInt(-2,5);
+    totalMs += ms;
+    if(i>0 && (i!==4 && i!==5)){
+      stagesEl.innerHTML += `<div class="stage-arrow">&#8594;</div>`;
+    }
+    if(i===4 || i===5){
+      // parallel stages (bm25, graphiti alongside vector)
+      stagesEl.innerHTML += `<div class="stage-arrow" style="font-size:10px;">||</div>`;
+    }
+    stagesEl.innerHTML += `
+      <div class="stage" id="stage-${s.key}">
+        <div class="stage-name">${s.name}</div>
+        <div class="stage-value" style="font-size:12px;">--</div>
+        <div class="stage-time">${ms}ms</div>
+      </div>
+    `;
+  });
+
+  document.getElementById('total-latency').textContent = totalMs+'ms';
+
+  // Animate each stage
+  let delay = 0;
+  PIPELINE_STAGES.forEach((s,i) => {
+    const ms = STAGE_LATENCIES[s.key];
+    delay += ms * 8;
+    setTimeout(()=>{
+      const el = document.getElementById('stage-'+s.key);
+      if(el){
+        el.classList.add('active');
+        const countMap = {
+          preprocess:'1 query', resonance:'passed', multihop:'+3 hops',
+          vector:'24 hits', bm25:'18 hits', graphiti:'12 nodes',
+          rrf:'30 fused', rerank:'top 10', decay:'applied', mmr:'5 final'
+        };
+        el.querySelector('.stage-value').textContent = countMap[s.key]||'--';
+      }
+    }, delay);
+  });
+
+  // Show results after animation
+  setTimeout(()=>{
+    renderRetrievalResults();
+  }, delay + 200);
+
+  // API: fetch(API.retrieve(), {method:'POST', body:JSON.stringify({query, top_k:10})})
+}
+
+function renderRetrievalResults(){
+  const container = document.getElementById('retrieval-results');
+  container.innerHTML = MOCK_RETRIEVAL_RESULTS.map(r => {
+    const scores = [
+      {label:'Vector', value:r.vector, color:'var(--accent)'},
+      {label:'BM25', value:r.bm25, color:'var(--blue)'},
+      {label:'Graphiti', value:r.graphiti, color:'var(--purple)'},
+      {label:'RRF', value:r.rrf, color:'var(--warn)'},
+      {label:'Rerank', value:r.rerank, color:'var(--ok)'},
+      {label:'Decay', value:r.decay, color:'var(--orange)'},
+      {label:'MMR', value:r.mmr, color:'#e0e0e0'},
+    ];
+    return `
+      <div class="result-card">
+        <div class="result-card-header">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="result-rank">#${r.rank}</span>
+            <span class="badge badge-${r.tier}">${r.tier}</span>
+            <span style="font-size:12px;color:var(--text3);">importance: ${r.importance.toFixed(2)}</span>
+          </div>
+          <div style="font-size:18px;font-weight:700;color:var(--accent);font-family:var(--mono);">${r.score.toFixed(3)}</div>
+        </div>
+        <div class="result-text">${r.text}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;">
+          ${scores.map(s=>`
+            <div class="score-row">
+              <span class="score-label">${s.label}</span>
+              <div class="score-bar"><div class="score-fill" style="width:${s.value*100}%;background:${s.color};"></div></div>
+              <span class="score-val">${s.value.toFixed(2)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===================================================================
+// HEALTH & DIAGNOSTICS
+// ===================================================================
+function renderHealth(){
+  // Services
+  document.getElementById('diag-services').innerHTML = [
+    {icon:'ok',name:'Gateway / 网关',detail:'Running on :3000, uptime 14d 6h',status:'Healthy'},
+    {icon:'ok',name:'LanceDB',detail:'/data/mnemo.lance, 200 vectors',status:'Connected'},
+    {icon:'ok',name:'Neo4j / Graphiti',detail:'bolt://localhost:7687, 147 nodes',status:'Connected'},
+    {icon:'ok',name:'WAL Engine',detail:'0 pending entries, last flush 2m ago',status:'Synced'},
+    {icon:'ok',name:'Auto-sync',detail:'openclaw-config @ main, last pull 15m ago',status:'Active'},
+  ].map(s=>`
+    <div class="card diag-card" style="margin-bottom:8px;">
+      <div class="diag-icon ${s.icon}">${s.icon==='ok'?'&#10003;':s.icon==='err'?'&#10007;':'!'}</div>
+      <div class="diag-info">
+        <div class="diag-name">${s.name}</div>
+        <div class="diag-detail">${s.detail}</div>
+      </div>
+      <div class="diag-status ${s.icon}">${s.status}</div>
+    </div>
+  `).join('');
+
+  // Config validation
+  document.getElementById('diag-config').innerHTML = [
+    {ok:true, name:'mnemo.json schema', msg:'Valid, all required fields present'},
+    {ok:true, name:'Embedding model config', msg:'text-embedding-3-small, dim=1536'},
+    {ok:true, name:'Decay parameters', msg:'Core: beta=0.8 hl=90d | Working: beta=1.0 hl=30d | Peripheral: beta=1.3 hl=7d'},
+    {ok:true, name:'LanceDB connection', msg:'Path valid, read/write permissions OK'},
+    {ok:true, name:'Graphiti URI', msg:'bolt://localhost:7687 reachable'},
+    {ok:false, name:'BM25 index', msg:'1 partition needs rebuild (auto-scheduled)'},
+  ].map(c=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">
+      <span style="color:${c.ok?'var(--ok)':'var(--warn)'};font-weight:600;">${c.ok?'PASS':'WARN'}</span>
+      <span style="color:var(--text);flex:1;">${c.name}</span>
+      <span style="color:var(--text3);font-size:12px;">${c.msg}</span>
+    </div>
+  `).join('');
+
+  // Doctor results
+  renderDoctor();
+
+  // Logs
+  renderLogs();
+}
+
+function renderDoctor(){
+  const checks = [
+    {name:'Memory count sanity', result:'pass', detail:'200 memories, within expected range'},
+    {name:'Tier distribution', result:'pass', detail:'Core: 20%, Working: 40%, Peripheral: 40% — balanced'},
+    {name:'Orphaned vectors', result:'pass', detail:'0 orphaned vectors found in LanceDB'},
+    {name:'Graphiti consistency', result:'pass', detail:'All graph nodes have corresponding vector entries'},
+    {name:'Decay score accuracy', result:'pass', detail:'Sampled 50 memories, all decay scores within 0.01 of expected'},
+    {name:'WAL integrity', result:'pass', detail:'WAL checksum verified, no corruption'},
+    {name:'Index freshness', result:'warn', detail:'BM25 index for user_project_alpha is 6h stale (rebuilding)'},
+    {name:'Embedding dimension', result:'pass', detail:'All vectors are 1536-dim, consistent with model config'},
+    {name:'Duplicate detection', result:'pass', detail:'3 near-duplicates found (cosine > 0.98), consolidation suggested'},
+    {name:'Access pattern anomaly', result:'pass', detail:'No anomalous access patterns detected'},
+  ];
+
+  document.getElementById('doctor-results').innerHTML = `
+    <div style="display:flex;gap:12px;margin-bottom:16px;font-size:14px;">
+      <span style="color:var(--ok);font-weight:600;">${checks.filter(c=>c.result==='pass').length} passed</span>
+      <span style="color:var(--warn);font-weight:600;">${checks.filter(c=>c.result==='warn').length} warnings</span>
+      <span style="color:var(--err);font-weight:600;">${checks.filter(c=>c.result==='fail').length} failures</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Status</th><th>Check</th><th>Detail</th></tr></thead>
+        <tbody>
+          ${checks.map(c=>`
+            <tr>
+              <td><span class="diag-status ${c.result==='pass'?'ok':c.result==='warn'?'warn':'err'}">${c.result.toUpperCase()}</span></td>
+              <td style="color:var(--text);">${c.name}</td>
+              <td>${c.detail}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function runDoctor(){
+  // API: fetch(API.doctor()).then(r=>r.json()).then(renderDoctorResults)
+  renderDoctor();
+}
+
+function renderLogs(){
+  document.getElementById('log-viewer').innerHTML = ERROR_LOGS.map(l=>`
+    <div class="log-line">
+      <span class="log-time">${l.time}</span>
+      <span class="log-level ${l.level}">${l.level.toUpperCase()}</span>
+      <span class="log-msg">${l.msg}</span>
+    </div>
+  `).join('');
+}
+
+function clearLogs(){
+  document.getElementById('log-viewer').innerHTML = '<div style="color:var(--text3);padding:8px;">Log cleared.</div>';
+}
+
+// ===================================================================
+// INIT
+// ===================================================================
+function init(){
+  renderOverview();
+  filterMemories();
+  renderHealth();
+  // Decay will render on tab switch
+}
+
+window.addEventListener('resize', ()=>{
+  if(document.getElementById('tab-decay').classList.contains('active')){
+    drawDecayCurves();
+  }
+});
+
+init();
+</script>
+</body>
+</html>

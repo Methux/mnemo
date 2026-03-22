@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mnemo Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+  .header h1 { font-size: 20px; color: #58a6ff; }
+  .header .status { font-size: 13px; padding: 4px 10px; border-radius: 12px; }
+  .status.ok { background: #1b4332; color: #6ee7b7; }
+  .status.degraded { background: #4a3728; color: #fbbf24; }
+  .status.error { background: #4a2828; color: #f87171; }
+  .container { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-size: 16px; color: #8b949e; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .search-box { display: flex; gap: 8px; margin-bottom: 16px; }
+  .search-box input { flex: 1; padding: 10px 14px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; font-size: 14px; outline: none; }
+  .search-box input:focus { border-color: #58a6ff; }
+  .search-box button { padding: 10px 20px; background: #238636; border: none; border-radius: 6px; color: #fff; font-size: 14px; cursor: pointer; }
+  .search-box button:hover { background: #2ea043; }
+  .results { display: flex; flex-direction: column; gap: 8px; }
+  .result-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .result-item .fact { color: #e6edf3; font-size: 14px; line-height: 1.5; }
+  .result-item .meta { color: #8b949e; font-size: 12px; margin-top: 6px; }
+  .result-item .nodes { color: #58a6ff; font-size: 12px; }
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .info-item { text-align: center; }
+  .info-item .value { font-size: 28px; font-weight: 600; color: #58a6ff; }
+  .info-item .label { font-size: 12px; color: #8b949e; margin-top: 4px; }
+  .empty { color: #484f58; text-align: center; padding: 32px; font-style: italic; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Mnemo Dashboard</h1>
+    <span id="status" class="status">loading...</span>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>System Status</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="value" id="graphiti-status">--</div>
+          <div class="label">Graphiti Service</div>
+        </div>
+        <div class="info-item">
+          <div class="value" id="neo4j-uri">--</div>
+          <div class="label">Neo4j Connection</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Knowledge Graph Search</h2>
+      <div class="search-box">
+        <input type="text" id="query" placeholder="Search the knowledge graph..." />
+        <button onclick="doSearch()">Search</button>
+      </div>
+      <div id="results" class="results">
+        <div class="empty">Enter a query to search the knowledge graph</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+async function checkHealth() {
+  const el = document.getElementById('status');
+  const gs = document.getElementById('graphiti-status');
+  const nu = document.getElementById('neo4j-uri');
+  try {
+    const res = await fetch('/api/health');
+    const data = await res.json();
+    el.textContent = data.status;
+    el.className = 'status ' + (data.status === 'ok' ? 'ok' : data.status === 'degraded' ? 'degraded' : 'error');
+    gs.textContent = data.status === 'ok' ? 'Connected' : 'Degraded';
+    nu.textContent = data.neo4j_uri || '--';
+    nu.style.fontSize = '14px';
+  } catch (e) {
+    el.textContent = 'offline';
+    el.className = 'status error';
+    gs.textContent = 'Offline';
+  }
+}
+
+async function doSearch() {
+  const query = document.getElementById('query').value.trim();
+  if (!query) return;
+  const container = document.getElementById('results');
+  container.innerHTML = '<div class="empty">Searching...</div>';
+  try {
+    const res = await fetch('/api/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, limit: 20 }),
+    });
+    const data = await res.json();
+    if (!data.length) {
+      container.innerHTML = '<div class="empty">No results found</div>';
+      return;
+    }
+    container.innerHTML = data.map(r => `
+      <div class="result-item">
+        <div class="fact">${esc(r.fact)}</div>
+        ${r.source_node || r.target_node ? `<div class="nodes">${esc(r.source_node || '?')} &rarr; ${esc(r.target_node || '?')}</div>` : ''}
+        <div class="meta">
+          ${r.score != null ? `score: ${r.score.toFixed(3)}` : ''}
+          ${r.degree != null ? ` | degree: ${r.degree}` : ''}
+          ${r.valid_at ? ` | valid: ${r.valid_at.slice(0,10)}` : ''}
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    container.innerHTML = `<div class="empty">Error: ${esc(e.message)}</div>`;
+  }
+}
+
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+document.getElementById('query').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+checkHealth();
+setInterval(checkHealth, 30000);
+</script>
+</body>
+</html>

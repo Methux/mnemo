@@ -5,6 +5,7 @@
   "description": "Cognitive science-based AI memory framework",
   "workspaces": ["packages/core", "packages/pro"],
   "scripts": {
+    "init": "node packages/tools/mnemo-init.js",
     "doctor": "node packages/tools/mnemo-doctor.js",
     "validate": "node packages/tools/validate-config.js"
   },
