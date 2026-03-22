@@ -125,11 +125,11 @@ Full Core functionality — embedding, extraction, rerank, graph — all running
 ### Option 3: npm
 
 ```bash
-npm install @mnemo/core
+npm install @mnemoai/core
 ```
 
 ```typescript
-import { createMnemo } from '@mnemo/core';
+import { createMnemo } from '@mnemoai/core';
 
 const mnemo = await createMnemo({
   embedding: {

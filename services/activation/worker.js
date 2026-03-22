@@ -87,7 +87,7 @@ async function sendLicenseEmail(email, licensee, token, plan, resendApiKey) {
           <pre style="background:#0a0a1a;color:#e0e0e0;padding:16px;border-radius:8px;font-size:13px;">export MNEMO_LICENSE_TOKEN="${token}"
 npm run activate
 # or
-node -e "require('@mnemo/core').activate()"</pre>
+node -e "require('@mnemoai/core').activate()"</pre>
           <p>This will bind the license to your machine and generate your <code>MNEMO_PRO_KEY</code>.</p>
           <h3>Manual Activation</h3>
           <p>Or visit: <a href="${activationUrl}" style="color:#4ecdc4;">${activationUrl}</a></p>
