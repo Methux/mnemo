@@ -5,7 +5,7 @@
 Creates a Mnemo instance.
 
 ```typescript
-import { createMnemo } from '@mnemo/core';
+import { createMnemo } from '@mnemoai/core';
 
 const mnemo = await createMnemo({
   embedding: {

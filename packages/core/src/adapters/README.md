@@ -18,7 +18,7 @@ Mnemo supports pluggable storage backends via the `StorageAdapter` interface.
 ## Quick Start
 
 ```typescript
-import { createMnemo } from '@mnemo/core';
+import { createMnemo } from '@mnemoai/core';
 
 // Default — LanceDB (embedded, zero config)
 const mnemo = await createMnemo({ storage: 'lancedb' });
@@ -58,7 +58,7 @@ const mnemo = await createMnemo({
 Implement the `StorageAdapter` interface and register it:
 
 ```typescript
-import { StorageAdapter, registerAdapter } from '@mnemo/core/storage-adapter';
+import { StorageAdapter, registerAdapter } from '@mnemoai/core/storage-adapter';
 
 class MyAdapter implements StorageAdapter {
   readonly name = 'my-backend';
