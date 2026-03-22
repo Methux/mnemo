@@ -1,0 +1,16 @@
+{
+  "name": "mnemo",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Cognitive science-based AI memory framework",
+  "workspaces": ["packages/core", "packages/pro"],
+  "scripts": {
+    "doctor": "node packages/tools/mnemo-doctor.js",
+    "validate": "node packages/tools/validate-config.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Methux/mnemo.git"
+  }
+}
