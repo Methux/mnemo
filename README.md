@@ -219,6 +219,24 @@ export MNEMO_LICENSE_TOKEN="mnemo_your_token"
 
 [Get Mnemo Pro →](https://mnemo.dev/pro)
 
+### API Configuration Guide
+
+Mnemo requires external models for embedding, extraction, and reranking. **You bring your own API keys** — Mnemo does not proxy or bundle API costs. Choose a setup that fits your budget:
+
+| Setup | Embedding | LLM Extraction | Rerank | Est. API Cost |
+|:---|:---|:---|:---|:---:|
+| **Local** | Ollama nomic-embed-text | Ollama qwen3:8b | Ollama bge-reranker | **$0/mo** |
+| **Hybrid** | Voyage voyage-3-large | GPT-4.1-mini | Voyage rerank-2 | ~$20/mo |
+| **Cloud** | Voyage voyage-3-large | GPT-4.1 | Voyage rerank-2 | ~$45/mo |
+
+> These are **your own API costs**, not Mnemo subscription fees. All setups use the same Core/Pro features — the difference is model quality.
+>
+> - **Local**: Runs entirely offline via [Ollama](https://ollama.com). Good enough to beat most paid competitors.
+> - **Hybrid**: Best quality-to-cost ratio. Recommended for most users.
+> - **Cloud**: Maximum extraction quality for high-volume production.
+>
+> See `config/mnemo.local.example.json` for the $0 local setup, or `config/mnemo.example.json` for the cloud setup.
+
 ---
 
 ## Cognitive Science
