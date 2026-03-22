@@ -21,6 +21,7 @@ import {
 } from "./smart-metadata.js";
 import { appendSelfImprovementEntry, ensureSelfImprovementLearningFiles } from "./self-improvement-files.js";
 import { getDisplayCategoryTag } from "./reflection-metadata.js";
+import { log } from "./logger.js";
 
 // ============================================================================
 // Types
@@ -603,8 +604,8 @@ export function registerMemoryStoreTool(
               targetScope,
             ]);
           } catch (err) {
-            console.warn(
-              `mnemo: duplicate pre-check failed, continue store: ${String(err)}`,
+            log.warn(
+              `duplicate pre-check failed, continue store: ${String(err)}`,
             );
           }
 

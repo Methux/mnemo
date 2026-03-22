@@ -9,6 +9,7 @@ import { join } from "node:path";
 import fs from "node:fs/promises";
 import type { MemoryStore, MemoryEntry } from "./store.js";
 import { loadLanceDB } from "./store.js";
+import { log } from "./logger.js";
 
 // ============================================================================
 // Types
@@ -93,7 +94,7 @@ export class MemoryMigrator {
         return result;
       }
 
-      console.log(`Migrating from: ${sourceDbPath}`);
+      log.info(`Migrating from: ${sourceDbPath}`);
 
       // Load legacy data
       const legacyEntries = await this.loadLegacyData(sourceDbPath);
@@ -103,7 +104,7 @@ export class MemoryMigrator {
         return result;
       }
 
-      console.log(`Found ${legacyEntries.length} entries to migrate`);
+      log.info(`Found ${legacyEntries.length} entries to migrate`);
 
       // Migrate entries
       if (!options.dryRun) {
@@ -176,7 +177,7 @@ export class MemoryMigrator {
         scope: row.scope as string | undefined,
       }));
     } catch (error) {
-      console.warn(`Failed to load legacy data: ${error}`);
+      log.warn(`Failed to load legacy data: ${error}`);
       return [];
     }
   }
@@ -229,7 +230,7 @@ export class MemoryMigrator {
         migrated++;
 
         if (migrated % 100 === 0) {
-          console.log(`Migrated ${migrated}/${legacyEntries.length} entries...`);
+          log.info(`Migrated ${migrated}/${legacyEntries.length} entries...`);
         }
 
       } catch (error) {

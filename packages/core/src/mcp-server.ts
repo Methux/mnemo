@@ -24,6 +24,7 @@ import { z } from "zod";
 import { join } from "node:path";
 import { mkdir, appendFile } from "node:fs/promises";
 
+import { log } from "./logger.js";
 import { loadConfigFromOpenClaw, getDefaultDbPath } from "./config.js";
 import { MemoryStore, validateStoragePath } from "./store.js";
 import { createEmbedder, getVectorDimensions } from "./embedder.js";
@@ -43,7 +44,7 @@ const dbPath = config.dbPath || getDefaultDbPath();
 try {
   validateStoragePath(dbPath);
 } catch (err) {
-  console.error(`mnemo mcp: storage path issue — ${String(err)}`);
+  log.error(`mnemo mcp: storage path issue — ${String(err)}`);
 }
 
 const vectorDim = getVectorDimensions(
@@ -62,8 +63,8 @@ const embedder = createEmbedder({
   taskPassage: config.embedding.taskPassage,
   normalized: config.embedding.normalized,
 });
-console.warn(`[config-debug] config.retrieval keys: ${JSON.stringify(Object.keys(config.retrieval || {}))}`);
-console.warn(`[config-debug] config.retrieval.rerankApiKey: ${config.retrieval?.rerankApiKey ? 'SET(' + String(config.retrieval.rerankApiKey).substring(0, 8) + ')' : 'EMPTY'}`);
+log.warn(`[config-debug] config.retrieval keys: ${JSON.stringify(Object.keys(config.retrieval || {}))}`);
+log.warn(`[config-debug] config.retrieval.rerankApiKey: ${config.retrieval?.rerankApiKey ? 'SET(' + String(config.retrieval.rerankApiKey).substring(0, 8) + ')' : 'EMPTY'}`);
 const retriever = createRetriever(store, embedder, {
   ...DEFAULT_RETRIEVAL_CONFIG,
   ...config.retrieval,
@@ -76,7 +77,7 @@ store.setSemanticGate(semanticGate);
 
 // WAL recovery: fire-and-forget on startup
 recoverPendingWrites().catch((err) => {
-  console.error(`mnemo mcp: WAL recovery failed — ${String(err)}`);
+  log.error(`mnemo mcp: WAL recovery failed — ${String(err)}`);
 });
 
 // ============================================================================
@@ -406,10 +407,10 @@ server.tool(
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("mnemo MCP server started (stdio)");
+  log.error("mnemo MCP server started (stdio)");
 }
 
 main().catch((err) => {
-  console.error("Fatal:", err);
+  log.error("Fatal:", err);
   process.exit(1);
 });

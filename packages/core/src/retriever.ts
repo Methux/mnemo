@@ -13,12 +13,14 @@ import type { TierManager } from "./tier-manager.js";
 import { toLifecycleMemory, getDecayableFromEntry } from "./smart-metadata.js";
 import { getAdaptiveThreshold, recordResonanceScore } from "./resonance-state.js";
 import { requirePro } from "./license.js";
+import { log } from "./logger.js";
 
 // Pro: Access tracking & query tracking — graceful degradation without license
 type AccessTracker = { bumpAccess: (id: string) => Promise<void> };
-let _parseAccessMetadata: ((m: any) => { accessCount: number; lastAccessedAt: number }) | null = null;
+let _parseAccessMetadata: ((m: unknown) => { accessCount: number; lastAccessedAt: number }) | null = null;
 let _computeEffectiveHalfLife: ((hl: number, ac: number, la: number, rf?: number, mx?: number) => number) | null = null;
-let _recordQuery: ((...args: any[]) => void) | null = null;
+// TODO: type this with actual query-tracker signature
+let _recordQuery: ((...args: unknown[]) => void) | null = null;
 
 if (requirePro("access-tracking")) {
   import("./access-tracker.js").then((mod) => {
@@ -33,7 +35,7 @@ if (requirePro("query-tracking")) {
 }
 
 // Fallbacks for Core mode (no access reinforcement)
-function parseAccessMetadata(m: any): { accessCount: number; lastAccessedAt: number } {
+function parseAccessMetadata(m: unknown): { accessCount: number; lastAccessedAt: number } {
   if (_parseAccessMetadata) return _parseAccessMetadata(m);
   return { accessCount: 0, lastAccessedAt: 0 };
 }
@@ -41,7 +43,7 @@ function computeEffectiveHalfLife(hl: number, _ac: number, _la: number, _rf?: nu
   if (_computeEffectiveHalfLife) return _computeEffectiveHalfLife(hl, _ac, _la, _rf, _mx);
   return hl; // Core: use fixed half-life without reinforcement
 }
-function recordQuery(data: any): void {
+function recordQuery(data: unknown): void {
   _recordQuery?.(data);
 }
 import { appendFile } from "node:fs/promises";
@@ -1021,7 +1023,7 @@ export class MemoryRetriever {
     }
 
     // Try cross-encoder rerank via configured provider API
-    console.warn(`[rerank-debug] rerank=${this.config.rerank}, hasKey=${!!this.config.rerankApiKey}, keyPrefix=${String(this.config.rerankApiKey || '').substring(0, 8)}, provider=${this.config.rerankProvider}, model=${this.config.rerankModel}`);
+    log.warn(`[rerank-debug] rerank=${this.config.rerank}, hasKey=${!!this.config.rerankApiKey}, keyPrefix=${String(this.config.rerankApiKey || '').substring(0, 8)}, provider=${this.config.rerankProvider}, model=${this.config.rerankModel}`);
     const isLocalRerank = this.config.rerankProvider === "ollama";
     if (this.config.rerank === "cross-encoder" && (this.config.rerankApiKey || isLocalRerank)) {
       try {
@@ -1061,7 +1063,7 @@ export class MemoryRetriever {
           const parsed = parseRerankResponse(provider, data);
 
           if (!parsed) {
-            console.warn(
+            log.warn(
               "Rerank API: invalid response shape, falling back to cosine",
             );
           } else {
@@ -1105,15 +1107,15 @@ export class MemoryRetriever {
           }
         } else {
           const errText = await response.text().catch(() => "");
-          console.warn(
+          log.warn(
             `Rerank API returned ${response.status}: ${errText.slice(0, 200)}, falling back to cosine`,
           );
         }
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") {
-          console.warn("Rerank API timed out (5s), falling back to cosine");
+          log.warn("Rerank API timed out (5s), falling back to cosine");
         } else {
-          console.warn("Rerank API failed, falling back to cosine:", error);
+          log.warn("Rerank API failed, falling back to cosine:", error);
         }
       }
     }
@@ -1136,7 +1138,7 @@ export class MemoryRetriever {
 
       return reranked.sort((a, b) => b.score - a.score);
     } catch (error) {
-      console.warn("Reranking failed, returning original results:", error);
+      log.warn("Reranking failed, returning original results:", error);
       return results;
     }
   }

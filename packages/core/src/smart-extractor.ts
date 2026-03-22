@@ -30,6 +30,7 @@ import {
 import { isNoise } from "./noise-filter.js";
 import type { NoisePrototypeBank } from "./noise-prototypes.js";
 import { buildSmartMetadata, parseSmartMetadata, stringifySmartMetadata, parseSupportInfo, updateSupportStats } from "./smart-metadata.js";
+import { log as _log } from "./logger.js";
 
 // ============================================================================
 // Constants
@@ -96,7 +97,7 @@ export class SmartExtractor {
     private llm: LlmClient,
     private config: SmartExtractorConfig = {},
   ) {
-    this.log = config.log ?? ((msg: string) => console.log(msg));
+    this.log = config.log ?? ((msg: string) => _log.info(msg));
     this.debugLog = config.debugLog ?? (() => { });
   }
 
@@ -470,6 +471,7 @@ export class SmartExtractor {
         decision: string;
         reason: string;
         match_index?: number;
+        context_label?: string;
       }>(prompt, "dedup-decision");
 
       if (!data) {
@@ -499,7 +501,7 @@ export class SmartExtractor {
         decision,
         reason: data.reason ?? "",
         matchId: ["merge", "support", "contextualize", "contradict"].includes(decision) ? matchEntry?.entry.id : undefined,
-        contextLabel: typeof (data as any).context_label === "string" ? (data as any).context_label : undefined,
+        contextLabel: typeof data.context_label === "string" ? data.context_label : undefined,
       };
     } catch (err) {
       this.log(

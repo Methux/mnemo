@@ -11,6 +11,7 @@ import { appendFile, readFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, dirname } from "node:path";
+import { log } from "./logger.js";
 
 // ============================================================================
 // WAL Path
@@ -164,8 +165,8 @@ export async function recoverPendingWrites(): Promise<{ recovered: number; faile
     }
   }
 
-  console.log(
-    `mnemo: WAL recovery — recovered=${recovered}, failed=${failed}, total_pending=${pending.length}`,
+  log.info(
+    `WAL recovery — recovered=${recovered}, failed=${failed}, total_pending=${pending.length}`,
   );
 
   return { recovered, failed };

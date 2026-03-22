@@ -15,6 +15,7 @@ import { hostname, arch, cpus, platform } from "node:os";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { log } from "./logger.js";
 
 // Ed25519 public key (DER/SPKI, base64) — safe to publish
 const PUBLIC_KEY_B64 =
@@ -99,12 +100,12 @@ async function autoActivate(token: string): Promise<string | null> {
     if (!resp.ok) {
       const err = await resp.json().catch(() => ({})) as any;
       if (resp.status === 409) {
-        console.warn(
-          `[mnemo] License token already activated on another device. ` +
+        log.warn(
+          `License token already activated on another device. ` +
           `Visit https://m-nemo.ai/pro/migrate to transfer.`
         );
       } else {
-        console.warn(`[mnemo] Activation failed: ${err.error || resp.status}`);
+        log.warn(`Activation failed: ${err.error || resp.status}`);
       }
       return null;
     }
@@ -119,7 +120,7 @@ async function autoActivate(token: string): Promise<string | null> {
 
     return key;
   } catch (err) {
-    console.warn(`[mnemo] Activation request failed (offline?): ${err}`);
+    log.warn(`Activation request failed (offline?): ${err}`);
     return null;
   }
 }
@@ -172,7 +173,7 @@ export function isProLicensed(): boolean {
         if (payload) {
           _cachedPayload = payload;
           _cachedResult = true;
-          console.log(`[mnemo] Pro license activated for ${payload.licensee} (${payload.plan})`);
+          log.info(`Pro license activated for ${payload.licensee} (${payload.plan})`);
         }
       }
     }).catch(() => {});
@@ -220,7 +221,7 @@ export async function ensureProLicense(): Promise<boolean> {
       if (payload) {
         _cachedPayload = payload;
         _cachedResult = true;
-        console.log(`[mnemo] Pro license activated for ${payload.licensee} (${payload.plan})`);
+        log.info(`Pro license activated for ${payload.licensee} (${payload.plan})`);
         return true;
       }
     }
@@ -239,14 +240,14 @@ export function requirePro(featureName: string): boolean {
   if (isProLicensed()) return true;
 
   if (!_warnedOnce) {
-    console.warn(
-      `[mnemo] Pro features disabled — set MNEMO_PRO_KEY or MNEMO_LICENSE_TOKEN to enable. ` +
+    log.warn(
+      `Pro features disabled — set MNEMO_PRO_KEY or MNEMO_LICENSE_TOKEN to enable. ` +
       `Core functionality is fully available. https://m-nemo.ai/pro`,
     );
     _warnedOnce = true;
   }
   if (process.env.MNEMO_DEBUG) {
-    console.debug(`[mnemo] Pro feature skipped: ${featureName}`);
+    log.debug(`Pro feature skipped: ${featureName}`);
   }
   return false;
 }

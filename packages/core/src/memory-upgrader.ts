@@ -19,6 +19,7 @@ import type { LlmClient } from "./llm-client.js";
 import type { MemoryCategory } from "./memory-categories.js";
 import type { MemoryTier } from "./memory-categories.js";
 import { buildSmartMetadata, stringifySmartMetadata } from "./smart-metadata.js";
+import { log } from "./logger.js";
 
 // ============================================================================
 // Types
@@ -166,7 +167,7 @@ export class MemoryUpgrader {
     private llm: LlmClient | null,
     private options: UpgradeOptions = {},
   ) {
-    this.log = options.log ?? console.log;
+    this.log = options.log ?? ((msg: string) => log.info(msg));
   }
 
   /**

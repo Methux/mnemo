@@ -17,12 +17,14 @@ import { dirname } from "node:path";
 import { buildSmartMetadata, parseSmartMetadata, stringifySmartMetadata } from "./smart-metadata.js";
 import type { SemanticGate } from "./semantic-gate.js";
 import { requirePro } from "./license.js";
+import { log } from "./logger.js";
 
 // Pro: Audit log — record all CRUD operations for GDPR/compliance
-let _auditCreate: any = null;
-let _auditUpdate: any = null;
-let _auditDelete: any = null;
-let _auditExpire: any = null;
+// TODO: type these with actual audit function signatures from audit-log.ts
+let _auditCreate: ((...args: unknown[]) => void) | null = null;
+let _auditUpdate: ((...args: unknown[]) => void) | null = null;
+let _auditDelete: ((...args: unknown[]) => void) | null = null;
+let _auditExpire: ((...args: unknown[]) => void) | null = null;
 
 if (requirePro("audit-log")) {
   import("./audit-log.js").then((mod) => {
@@ -34,9 +36,10 @@ if (requirePro("audit-log")) {
 }
 
 // Pro: WAL (Write-Ahead Log) — graceful degradation without license
-let walAppend: ((...args: any[]) => Promise<void>) | null = null;
-let walMarkCommitted: ((...args: any[]) => Promise<void>) | null = null;
-let walMarkFailed: ((...args: any[]) => Promise<void>) | null = null;
+// TODO: type these with actual WAL function signatures from wal-recovery.ts
+let walAppend: ((...args: unknown[]) => Promise<void>) | null = null;
+let walMarkCommitted: ((...args: unknown[]) => Promise<void>) | null = null;
+let walMarkFailed: ((...args: unknown[]) => Promise<void>) | null = null;
 
 if (requirePro("wal")) {
   import("./wal-recovery.js").then((mod) => {
@@ -100,10 +103,10 @@ async function ensureAdaptersLoaded(): Promise<void> {
   _adaptersLoaded = true;
   // Dynamic imports — only loads the adapter that's actually needed
   const dbg = !!process.env.MNEMO_DEBUG;
-  try { await import("./adapters/lancedb.js"); } catch (e) { if (dbg) console.debug("[mnemo] adapter lancedb not available:", e); }
-  try { await import("./adapters/qdrant.js"); } catch (e) { if (dbg) console.debug("[mnemo] adapter qdrant not available:", e); }
-  try { await import("./adapters/chroma.js"); } catch (e) { if (dbg) console.debug("[mnemo] adapter chroma not available:", e); }
-  try { await import("./adapters/pgvector.js"); } catch (e) { if (dbg) console.debug("[mnemo] adapter pgvector not available:", e); }
+  try { await import("./adapters/lancedb.js"); } catch (e) { if (dbg) log.debug("adapter lancedb not available:", e); }
+  try { await import("./adapters/qdrant.js"); } catch (e) { if (dbg) log.debug("adapter qdrant not available:", e); }
+  try { await import("./adapters/chroma.js"); } catch (e) { if (dbg) log.debug("adapter chroma not available:", e); }
+  try { await import("./adapters/pgvector.js"); } catch (e) { if (dbg) log.debug("adapter pgvector not available:", e); }
 }
 
 // ============================================================================
@@ -187,21 +190,23 @@ export function validateStoragePath(dbPath: string): string {
     if (stats.isSymbolicLink()) {
       try {
         resolvedPath = realpathSync(dbPath);
-      } catch (err: any) {
+      } catch (err: unknown) {
+        const e = err as NodeJS.ErrnoException;
         throw new Error(
           `dbPath "${dbPath}" is a symlink whose target does not exist.\n` +
           `  Fix: Create the target directory, or update the symlink to point to a valid path.\n` +
-          `  Details: ${err.code || ""} ${err.message}`,
+          `  Details: ${e.code || ""} ${e.message}`,
         );
       }
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as NodeJS.ErrnoException;
     // Missing path is OK (it will be created below)
-    if (err?.code === "ENOENT") {
+    if (e?.code === "ENOENT") {
       // no-op
     } else if (
-      typeof err?.message === "string" &&
-      err.message.includes("symlink whose target does not exist")
+      typeof e?.message === "string" &&
+      e.message.includes("symlink whose target does not exist")
     ) {
       throw err;
     } else {
@@ -213,12 +218,13 @@ export function validateStoragePath(dbPath: string): string {
   if (!existsSync(resolvedPath)) {
     try {
       mkdirSync(resolvedPath, { recursive: true });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const e = err as NodeJS.ErrnoException;
       throw new Error(
         `Failed to create dbPath directory "${resolvedPath}".\n` +
         `  Fix: Ensure the parent directory "${dirname(resolvedPath)}" exists and is writable,\n` +
         `       or create it manually: mkdir -p "${resolvedPath}"\n` +
-        `  Details: ${err.code || ""} ${err.message}`,
+        `  Details: ${e.code || ""} ${e.message}`,
       );
     }
   }
@@ -226,12 +232,13 @@ export function validateStoragePath(dbPath: string): string {
   // Check write permissions
   try {
     accessSync(resolvedPath, constants.W_OK);
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as NodeJS.ErrnoException;
     throw new Error(
       `dbPath directory "${resolvedPath}" is not writable.\n` +
       `  Fix: Check permissions with: ls -la "${dirname(resolvedPath)}"\n` +
       `       Or grant write access: chmod u+w "${resolvedPath}"\n` +
-      `  Details: ${err.code || ""} ${err.message}`,
+      `  Details: ${e.code || ""} ${e.message}`,
     );
   }
 
@@ -320,9 +327,10 @@ export class MemoryStore {
     let db: LanceDB.Connection;
     try {
       db = await lancedb.connect(this.config.dbPath);
-    } catch (err: any) {
-      const code = err.code || "";
-      const message = err.message || String(err);
+    } catch (err: unknown) {
+      const e = err as NodeJS.ErrnoException;
+      const code = e.code || "";
+      const message = e.message || String(err);
       throw new Error(
         `Failed to open LanceDB at "${this.config.dbPath}": ${code} ${message}\n` +
         `  Fix: Verify the path exists and is writable. Check parent directory permissions.`,
@@ -341,12 +349,12 @@ export class MemoryStore {
       try {
         const sample = await table.query().limit(1).toArray();
         if (sample.length > 0 && !("scope" in sample[0])) {
-          console.warn(
+          log.warn(
             "Adding scope column for backward compatibility with existing data",
           );
         }
       } catch (err) {
-        console.warn("Could not check table schema:", err);
+        log.warn("Could not check table schema:", err);
       }
     } catch (_openErr) {
       // Table doesn't exist yet — create it
@@ -395,7 +403,7 @@ export class MemoryStore {
       await this.createFtsIndex(table);
       this.ftsIndexCreated = true;
     } catch (err) {
-      console.warn(
+      log.warn(
         "Failed to create FTS index, falling back to vector-only search:",
         err,
       );
@@ -411,6 +419,7 @@ export class MemoryStore {
       // Check if FTS index already exists
       const indices = await table.listIndices();
       const hasFtsIndex = indices?.some(
+        // TODO: type this — LanceDB index type lacks proper typings for indexType/columns
         (idx: any) => idx.indexType === "FTS" || idx.columns?.includes("text"),
       );
 
@@ -418,6 +427,7 @@ export class MemoryStore {
         // LanceDB @lancedb/lancedb >=0.26: use Index.fts() config
         const lancedb = await loadLanceDB();
         await table.createIndex("text", {
+          // TODO: type this — LanceDB dynamic import doesn't expose Index type
           config: (lancedb as any).Index.fts(),
         });
       }
@@ -567,13 +577,15 @@ export class MemoryStore {
 
     try {
       if (this._adapter) {
+        // TODO: type this — adapter.add signature doesn't match MemoryEntry exactly
         await this._adapter.add([fullEntry as any]);
       } else {
         await this.table!.add([fullEntry]);
       }
-    } catch (err: any) {
-      const code = err.code || "";
-      const message = err.message || String(err);
+    } catch (err: unknown) {
+      const e = err as NodeJS.ErrnoException;
+      const code = e.code || "";
+      const message = e.message || String(err);
       throw new Error(
         `Failed to store memory in "${this.config.dbPath}": ${code} ${message}`,
       );
@@ -684,7 +696,7 @@ export class MemoryStore {
       const results = await this._adapter.query({ where: `id = '${escapeSqlLiteral(id)}'`, limit: 1 });
       if (results.length === 0) return null;
       const r = results[0];
-      return { id: r.id, text: r.text, vector: r.vector, category: r.category as any, scope: r.scope, importance: r.importance, timestamp: r.timestamp, metadata: r.metadata } as MemoryEntry;
+      return { id: r.id, text: r.text, vector: r.vector, category: r.category as MemoryEntry["category"], scope: r.scope, importance: r.importance, timestamp: r.timestamp, metadata: r.metadata } as MemoryEntry;
     }
 
     const safeId = escapeSqlLiteral(id);
@@ -721,7 +733,7 @@ export class MemoryStore {
     if (this._adapter) {
       const results = await this._adapter.vectorSearch(vector, limit, minScore, scopeFilter);
       return results.map(r => ({
-        entry: { id: r.record.id, text: r.record.text, vector: r.record.vector, category: r.record.category as any, scope: r.record.scope, importance: r.record.importance, timestamp: r.record.timestamp, metadata: r.record.metadata } as MemoryEntry,
+        entry: { id: r.record.id, text: r.record.text, vector: r.record.vector, category: r.record.category as MemoryEntry["category"], scope: r.record.scope, importance: r.record.importance, timestamp: r.record.timestamp, metadata: r.record.metadata } as MemoryEntry,
         score: r.score,
       }));
     }
@@ -790,7 +802,7 @@ export class MemoryStore {
     if (this._adapter) {
       const results = await this._adapter.fullTextSearch(query, limit, scopeFilter);
       return results.map(r => ({
-        entry: { id: r.record.id, text: r.record.text, vector: r.record.vector, category: r.record.category as any, scope: r.record.scope, importance: r.record.importance, timestamp: r.record.timestamp, metadata: r.record.metadata } as MemoryEntry,
+        entry: { id: r.record.id, text: r.record.text, vector: r.record.vector, category: r.record.category as MemoryEntry["category"], scope: r.record.scope, importance: r.record.importance, timestamp: r.record.timestamp, metadata: r.record.metadata } as MemoryEntry,
         score: r.score,
       }));
     }
@@ -856,7 +868,7 @@ export class MemoryStore {
       }
       return this.lexicalFallbackSearch(query, safeLimit, scopeFilter);
     } catch (err) {
-      console.warn("BM25 search failed, falling back to empty results:", err);
+      log.warn("BM25 search failed, falling back to empty results:", err);
       return this.lexicalFallbackSearch(query, safeLimit, scopeFilter);
     }
   }
@@ -934,7 +946,7 @@ export class MemoryStore {
       throw new Error(`Invalid memory ID format: ${id}`);
     }
 
-    let candidates: any[];
+    let candidates: Record<string, unknown>[];
     if (isFullId) {
       candidates = await this.table!.query()
         .where(`id = '${id}'`)
@@ -946,7 +958,7 @@ export class MemoryStore {
         .select(["id", "scope"])
         .limit(1000)
         .toArray();
-      candidates = all.filter((r: any) => (r.id as string).startsWith(id));
+      candidates = all.filter((r: Record<string, unknown>) => (r.id as string).startsWith(id));
       if (candidates.length > 1) {
         throw new Error(
           `Ambiguous prefix "${id}" matches ${candidates.length} memories. Use a longer prefix or full ID.`,
@@ -1099,7 +1111,7 @@ export class MemoryStore {
         throw new Error(`Invalid memory ID format: ${id}`);
       }
 
-      let rows: any[];
+      let rows: Record<string, unknown>[];
       if (isFullId) {
         const safeId = escapeSqlLiteral(id);
         rows = await this.table!.query()
@@ -1121,7 +1133,7 @@ export class MemoryStore {
           ])
           .limit(1000)
           .toArray();
-        rows = all.filter((r: any) => (r.id as string).startsWith(id));
+        rows = all.filter((r: Record<string, unknown>) => (r.id as string).startsWith(id));
         if (rows.length > 1) {
           throw new Error(
             `Ambiguous prefix "${id}" matches ${rows.length} memories. Use a longer prefix or full ID.`,
@@ -1309,9 +1321,11 @@ export class MemoryStore {
       for (const idx of indices) {
         if (idx.indexType === "FTS" || idx.columns?.includes("text")) {
           try {
+            // TODO: type this — LanceDB index type lacks .name property in typings
             await this.table!.dropIndex((idx as any).name || "text");
           } catch (err) {
-            console.warn(`mnemo: dropIndex(${(idx as any).name || "text"}) failed:`, err);
+            // TODO: type this — LanceDB index type lacks .name property in typings
+            log.warn(`dropIndex(${(idx as any).name || "text"}) failed:`, err);
           }
         }
       }

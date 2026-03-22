@@ -4,6 +4,8 @@
  * Manages memory isolation and access permissions
  */
 
+import { log } from "./logger.js";
+
 // ============================================================================
 // Types & Configuration
 // ============================================================================
@@ -94,7 +96,7 @@ export class MemoryScopeManager implements ScopeManager {
     for (const [agentId, scopes] of Object.entries(this.config.agentAccess)) {
       for (const scope of scopes) {
         if (!this.config.definitions[scope] && !this.isBuiltInScope(scope)) {
-          console.warn(`Agent '${agentId}' has access to undefined scope '${scope}'`);
+          log.warn(`Agent '${agentId}' has access to undefined scope '${scope}'`);
         }
       }
     }
