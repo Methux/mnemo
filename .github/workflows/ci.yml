@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20, 22]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install --workspaces --include-workspace-root
+        continue-on-error: true
+
+      - name: Run core tests
+        run: node --test packages/core/test/core.test.mjs
+
+      - name: Validate config examples
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('config/mnemo.example.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('config/mnemo.local.example.json'))"
+
+      - name: Check SPDX headers
+        run: |
+          MISSING=$(find packages/core/src -name "*.ts" -exec sh -c 'head -1 "{}" | grep -qL "SPDX" && echo "{}"' \;)
+          if [ -n "$MISSING" ]; then
+            echo "Files missing SPDX header:"
+            echo "$MISSING"
+            exit 1
+          fi
+          echo "All source files have SPDX headers ✅"
+
+      - name: Check for leaked secrets
+        run: |
+          LEAKED=$(grep -rn "sk-ant-\|sk-proj-\|pa-[a-zA-Z0-9]\{20\}" packages/ config/ services/ docs/ --include="*.ts" --include="*.js" --include="*.json" || true)
+          if [ -n "$LEAKED" ]; then
+            echo "Potential secrets found:"
+            echo "$LEAKED"
+            exit 1
+          fi
+          echo "No leaked secrets ✅"
+
+      - name: Check for personal data
+        run: |
+          PERSONAL=$(grep -rn "Rex\|94年\|INTJ\|零讨好\|光轮\|bot3\|bot5" packages/ docs/ config/ services/ --include="*.ts" --include="*.js" --include="*.json" --include="*.md" --include="*.html" || true)
+          if [ -n "$PERSONAL" ]; then
+            echo "Personal data found in open source code:"
+            echo "$PERSONAL"
+            exit 1
+          fi
+          echo "No personal data leaks ✅"
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check JSON validity
+        run: |
+          for f in package.json packages/core/package.json config/*.json; do
+            node -e "JSON.parse(require('fs').readFileSync('$f'))" && echo "✅ $f" || echo "❌ $f"
+          done
+
+      - name: Check for old pricing ($49)
+        run: |
+          OLD=$(grep -rn '\$49' README.md docs/ packages/ services/ --include="*.md" --include="*.html" --include="*.json" || true)
+          if [ -n "$OLD" ]; then
+            echo "Old pricing found:"
+            echo "$OLD"
+            exit 1
+          fi
+          echo "Pricing is current ✅"
+
+      - name: Check trademark disclaimer exists
+        run: |
+          grep -q "not affiliated" README.md || (echo "Missing trademark disclaimer in README" && exit 1)
+          echo "Trademark disclaimer present ✅"

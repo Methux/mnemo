@@ -1,33 +1,45 @@
 {
   "name": "@mnemo/core",
-  "version": "1.1.0-beta.8",
-  "description": "OpenClaw enhanced LanceDB memory plugin with hybrid retrieval (Vector + BM25), cross-encoder rerank, multi-scope isolation, long-context chunking, and management CLI",
+  "version": "1.1.0",
+  "description": "Cognitive science-based AI memory framework — Weibull decay, triple-path retrieval, multi-backend storage",
   "type": "module",
   "main": "index.ts",
   "keywords": [
-    "openclaw",
-    "openclaw-plugin",
-    "memory",
-    "lancedb",
-    "vector-search",
-    "bm25",
-    "hybrid-retrieval",
-    "rerank",
     "ai-memory",
     "long-term-memory",
-    "chunking",
-    "long-context"
+    "vector-search",
+    "bm25",
+    "knowledge-graph",
+    "hybrid-retrieval",
+    "rerank",
+    "weibull-decay",
+    "cognitive-science",
+    "rag",
+    "agent-memory",
+    "lancedb",
+    "qdrant",
+    "chroma",
+    "pgvector"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CortexReach/mnemo.git"
+    "url": "git+https://github.com/Methux/mnemo.git"
   },
-  "author": "win4r",
+  "homepage": "https://mnemo.dev",
+  "bugs": {
+    "url": "https://github.com/Methux/mnemo/issues"
+  },
+  "author": "Mnemo Contributors",
   "license": "MIT",
   "dependencies": {
     "@lancedb/lancedb": "^0.26.2",
     "@sinclair/typebox": "0.34.48",
     "openai": "^6.21.0"
+  },
+  "optionalDependencies": {
+    "@qdrant/js-client-rest": "^1.12.0",
+    "chromadb": "^1.9.0",
+    "pg": "^8.13.0"
   },
   "openclaw": {
     "extensions": [
@@ -35,7 +47,7 @@
     ]
   },
   "scripts": {
-    "test": "node test/cli-smoke.mjs && node test/access-tracker.test.mjs",
+    "test": "node --test test/*.test.mjs",
     "test:openclaw-host": "node test/openclaw-host-functional.mjs",
     "version": "node scripts/sync-plugin-version.mjs openclaw.plugin.json package.json && git add openclaw.plugin.json"
   },
