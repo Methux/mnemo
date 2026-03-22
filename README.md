@@ -13,7 +13,7 @@
   <a href="#quick-start">Quick Start</a> ·
   <a href="#architecture">Architecture</a> ·
   <a href="#core-vs-pro">Core vs Pro</a> ·
-  <a href="https://mnemo.dev">Website</a> ·
+  <a href="https://m-nemo.ai">Website</a> ·
   <a href="docs/api-reference.md">API</a>
 </p>
 
@@ -217,7 +217,7 @@ export MNEMO_LICENSE_TOKEN="mnemo_your_token"
 | **Team** | $199/mo · $1,990/yr | 5 | Priority + Slack |
 | **Enterprise** | Custom | Unlimited | Dedicated + SLA |
 
-[Get Mnemo Pro →](https://mnemo.dev/pro)
+[Get Mnemo Pro →](https://m-nemo.ai/pro)
 
 ### API Configuration Guide
 

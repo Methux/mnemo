@@ -51,19 +51,19 @@ wrangler deploy
 
 Worker URL will be: `https://mnemo-activation.<your-account>.workers.dev`
 
-Set up custom domain: `activation.mnemo.dev` → Worker route.
+Set up custom domain: `activation.m-nemo.ai` → Worker route.
 
 ## Step 3: LemonSqueezy Webhook
 
 In LemonSqueezy dashboard → Settings → Webhooks:
-- URL: `https://activation.mnemo.dev/webhook/lemonsqueezy`
+- URL: `https://activation.m-nemo.ai/webhook/lemonsqueezy`
 - Events: `order_created`, `subscription_expired`, `subscription_cancelled`
 - Copy the signing secret → set as `LEMONSQUEEZY_SECRET` in Worker
 
 ## Step 4: Email (Resend)
 
 1. Sign up at https://resend.com
-2. Verify domain: `mnemo.dev`
+2. Verify domain: `m-nemo.ai`
 3. Create API key → set as `RESEND_API_KEY` in Worker
 
 ## User Flow
@@ -89,7 +89,7 @@ Done. No activation server needed.
 User wants to move to a new machine:
 ```bash
 # On old machine (or via API)
-curl -X POST https://activation.mnemo.dev/deactivate \
+curl -X POST https://activation.m-nemo.ai/deactivate \
   -H "Content-Type: application/json" \
   -d '{"token":"mnemo_xxxxx","machine_id":"<old-fingerprint>"}'
 

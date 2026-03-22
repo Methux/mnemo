@@ -21,7 +21,7 @@ const PUBLIC_KEY_B64 =
   "MCowBQYDK2VwAyEAe8cshR0FAlDoILPw0aW1AyUNGbQXSOZaQKEZ7T2mXV8=";
 
 const ACTIVATION_URL =
-  process.env.MNEMO_ACTIVATION_URL || "https://activation.mnemo.dev";
+  process.env.MNEMO_ACTIVATION_URL || "https://activation.m-nemo.ai";
 
 const KEY_CACHE_PATH = join(homedir(), ".mnemo", "pro-key.json");
 
@@ -101,7 +101,7 @@ async function autoActivate(token: string): Promise<string | null> {
       if (resp.status === 409) {
         console.warn(
           `[mnemo] License token already activated on another device. ` +
-          `Visit https://mnemo.dev/pro/migrate to transfer.`
+          `Visit https://m-nemo.ai/pro/migrate to transfer.`
         );
       } else {
         console.warn(`[mnemo] Activation failed: ${err.error || resp.status}`);
@@ -241,7 +241,7 @@ export function requirePro(featureName: string): boolean {
   if (!_warnedOnce) {
     console.warn(
       `[mnemo] Pro features disabled — set MNEMO_PRO_KEY or MNEMO_LICENSE_TOKEN to enable. ` +
-      `Core functionality is fully available. https://mnemo.dev/pro`,
+      `Core functionality is fully available. https://m-nemo.ai/pro`,
     );
     _warnedOnce = true;
   }

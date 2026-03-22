@@ -64,7 +64,7 @@ async function verifyWebhookSignature(body, signature, secret) {
 // ── Email delivery via Resend ──
 
 async function sendLicenseEmail(email, licensee, token, plan, resendApiKey) {
-  const activationUrl = `https://mnemo.dev/activate?token=${token}`;
+  const activationUrl = `https://m-nemo.ai/activate?token=${token}`;
   await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -72,7 +72,7 @@ async function sendLicenseEmail(email, licensee, token, plan, resendApiKey) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "Mnemo Pro <license@mnemo.dev>",
+      from: "Mnemo Pro <license@m-nemo.ai>",
       to: [email],
       subject: `Your Mnemo Pro License (${plan})`,
       html: `
@@ -94,7 +94,7 @@ node -e "require('@mnemo/core').activate()"</pre>
           <hr style="border:1px solid #2a2a4a;margin:20px 0;">
           <p style="color:#666;font-size:12px;">
             Plan: ${plan} | Token: ${token.slice(0, 12)}...<br>
-            Questions? Reply to this email or visit <a href="https://mnemo.dev/pro" style="color:#4ecdc4;">mnemo.dev/pro</a>
+            Questions? Reply to this email or visit <a href="https://m-nemo.ai/pro" style="color:#4ecdc4;">m-nemo.ai/pro</a>
           </p>
         </div>
       `,
