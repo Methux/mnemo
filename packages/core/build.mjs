@@ -34,7 +34,7 @@ await build({
   format: "esm",
   platform: "node",
   target: "node20",
-  sourcemap: true,
+  sourcemap: false,
   outExtension: { ".js": ".js" },
   // Don't bundle — keep individual files for tree shaking
   bundle: false,
@@ -46,7 +46,7 @@ console.log("✅ JavaScript compiled");
 
 // Step 2: Generate .d.ts type declarations (tsc, ignore errors)
 try {
-  execSync("npx tsc --emitDeclarationOnly --declaration --outDir dist 2>/dev/null || true", {
+  execSync("npx tsc --emitDeclarationOnly --declaration --declarationMap false --outDir dist 2>/dev/null || true", {
     stdio: "pipe",
   });
   console.log("✅ Type declarations generated");

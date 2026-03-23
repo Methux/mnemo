@@ -3,16 +3,25 @@
   "version": "1.1.0",
   "private": true,
   "description": "Cognitive science-based AI memory framework",
-  "workspaces": ["packages/core", "packages/pro"],
+  "workspaces": [
+    "packages/core",
+    "packages/pro"
+  ],
   "scripts": {
     "init": "node packages/tools/mnemo-init.js",
     "doctor": "node packages/tools/mnemo-doctor.js",
     "validate": "node packages/tools/validate-config.js",
-    "reembed": "node packages/tools/mnemo-reembed.js"
+    "reembed": "node packages/tools/mnemo-reembed.js",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Methux/mnemo.git"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
   }
 }

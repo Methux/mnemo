@@ -239,15 +239,12 @@ export function getLicenseInfo(): LicensePayload | null {
 export function requirePro(featureName: string): boolean {
   if (isProLicensed()) return true;
 
-  if (!_warnedOnce) {
-    log.warn(
+  if (!_warnedOnce && process.env.MNEMO_DEBUG) {
+    log.info(
       `Pro features disabled — set MNEMO_PRO_KEY or MNEMO_LICENSE_TOKEN to enable. ` +
       `Core functionality is fully available. https://m-nemo.ai/pro`,
     );
     _warnedOnce = true;
-  }
-  if (process.env.MNEMO_DEBUG) {
-    log.debug(`Pro feature skipped: ${featureName}`);
   }
   return false;
 }

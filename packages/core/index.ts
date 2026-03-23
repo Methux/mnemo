@@ -3,7 +3,15 @@
  * Cognitive memory framework with hybrid retrieval, multi-scope isolation, and management CLI
  */
 
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+// OpenClaw plugin API type — inlined to avoid npm users needing the openclaw package
+interface OpenClawPluginApi {
+  pluginConfig: unknown;
+  registerMemoryProvider(provider: any): void;
+  registerHook(event: string, handler: (...args: any[]) => any): void;
+  registerCommand?(cmd: any): void;
+  getWorkspacePath?(): string;
+  [key: string]: any;
+}
 import { homedir, tmpdir } from "node:os";
 import { join, dirname, basename } from "node:path";
 import { readFile, readdir, writeFile, mkdir, appendFile, unlink, stat } from "node:fs/promises";
@@ -954,7 +962,7 @@ async function readSessionConversationForReflection(filePath: string, messageCou
   }
 }
 
-export async function readSessionConversationWithResetFallback(sessionFilePath: string, messageCount: number): Promise<string | null> {
+async function readSessionConversationWithResetFallback(sessionFilePath: string, messageCount: number): Promise<string | null> {
   const primary = await readSessionConversationForReflection(sessionFilePath, messageCount);
   if (primary) return primary;
 
@@ -1307,7 +1315,7 @@ const CAPTURE_EXCLUDE_PATTERNS = [
   /(删除|刪除|清理|清除).{0,12}(记忆|記憶|memory)/i,
 ];
 
-export function shouldCapture(text: string): boolean {
+function shouldCapture(text: string): boolean {
   let s = text.trim();
 
   // Strip OpenClaw metadata headers (Conversation info or Sender)
@@ -1345,7 +1353,7 @@ export function shouldCapture(text: string): boolean {
   return MEMORY_TRIGGERS.some((r) => r.test(s));
 }
 
-export function detectCategory(
+function detectCategory(
   text: string,
 ): "preference" | "fact" | "decision" | "entity" | "other" {
   const lower = text.toLowerCase();
@@ -3208,7 +3216,7 @@ const memoryLanceDBProPlugin = {
   },
 };
 
-export function parsePluginConfig(value: unknown): PluginConfig {
+function parsePluginConfig(value: unknown): PluginConfig {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     throw new Error("mnemo config required");
   }
@@ -3393,3 +3401,14 @@ export function parsePluginConfig(value: unknown): PluginConfig {
 }
 
 export default memoryLanceDBProPlugin;
+
+// ── Public API for npm users ──
+// These are the exports that `import { createMnemo } from "@mnemoai/core"` provides
+export { createMnemo } from "./src/mnemo.js";
+export type { MnemoConfig, MnemoInstance, MemoryCategory, StorageBackend } from "./src/mnemo.js";
+export { MemoryStore } from "./src/store.js";
+export type { MemoryEntry, MemorySearchResult, StoreConfig } from "./src/store.js";
+export type { StorageAdapter } from "./src/storage-adapter.js";
+export { registerAdapter, createAdapter, listAdapters } from "./src/storage-adapter.js";
+export { log, setLogger } from "./src/logger.js";
+export type { Logger } from "./src/logger.js";

@@ -2,8 +2,10 @@ src/
 test/
 *.ts
 !dist/**
+build.mjs
 tsconfig.json
 openclaw.plugin.json
+scripts/
 .github/
 examples/
 docs/
