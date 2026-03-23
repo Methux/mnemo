@@ -14,4 +14,4 @@ from mnemo.client import MnemoClient
 from mnemo.types import Memory, RecallResult, Stats, MemoryCategory
 
 __all__ = ["MnemoClient", "Memory", "RecallResult", "Stats", "MemoryCategory"]
-__version__ = "0.1.0"
+__version__ = "0.1.1"

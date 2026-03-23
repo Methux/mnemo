@@ -78,8 +78,7 @@ class MnemoClient:
         if scope is not None:
             body["scope"] = scope
 
-        resp = self._client.post("/store", json=body)
-        self._check(resp)
+        resp = self._request("post", "/store", json=body)
         return StoreResult(**resp.json())
 
     def recall(
@@ -110,8 +109,7 @@ class MnemoClient:
         if category is not None:
             body["category"] = category
 
-        resp = self._client.post("/recall", json=body)
-        self._check(resp)
+        resp = self._request("post", "/recall", json=body)
         return RecallResult(**resp.json())
 
     def delete(self, memory_id: str) -> bool:
@@ -124,8 +122,7 @@ class MnemoClient:
         Returns:
             True if deleted, False if not found.
         """
-        resp = self._client.delete(f"/memories/{memory_id}")
-        self._check(resp)
+        resp = self._request("delete", f"/memories/{memory_id}")
         return resp.json().get("deleted", False)
 
     def stats(self) -> Stats:
@@ -135,8 +132,7 @@ class MnemoClient:
         Returns:
             Stats with totalEntries, scopeCounts, categoryCounts.
         """
-        resp = self._client.get("/stats")
-        self._check(resp)
+        resp = self._request("get", "/stats")
         return Stats(**resp.json())
 
     def health(self) -> HealthStatus:
@@ -146,8 +142,7 @@ class MnemoClient:
         Returns:
             HealthStatus with status and version.
         """
-        resp = self._client.get("/health")
-        self._check(resp)
+        resp = self._request("get", "/health")
         return HealthStatus(**resp.json())
 
     def close(self):
@@ -159,6 +154,31 @@ class MnemoClient:
 
     def __exit__(self, *args):
         self.close()
+
+    def _request(self, method: str, path: str, **kwargs):
+        """Make an HTTP request with proper error handling."""
+        try:
+            resp = getattr(self._client, method)(path, **kwargs)
+        except (httpx.ConnectError, httpx.ConnectTimeout, OSError):
+            raise MnemoError(
+                f"Connection refused — is mnemo-server running? "
+                f"(expected at {self.base_url})\n"
+                f"Start it with: npx @mnemoai/server"
+            )
+        except httpx.TimeoutException:
+            raise MnemoError(f"Request timed out")
+
+        # Check if response is JSON (not a proxy error page)
+        content_type = resp.headers.get("content-type", "")
+        if "application/json" not in content_type:
+            raise MnemoError(
+                f"Connection refused — is mnemo-server running? "
+                f"(expected at {self.base_url})\n"
+                f"Start it with: npx @mnemoai/server"
+            )
+
+        self._check(resp)
+        return resp
 
     def _check(self, resp: httpx.Response):
         if resp.status_code >= 400:
