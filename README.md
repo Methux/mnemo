@@ -6,29 +6,31 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@mnemoai/core"><img src="https://img.shields.io/npm/v/@mnemoai/core?color=4ecdc4&label=npm" alt="npm"></a>
+  <a href="https://pypi.org/project/mnemo-memory/"><img src="https://img.shields.io/pypi/v/mnemo-memory?color=4ecdc4&label=pypi" alt="PyPI"></a>
   <a href="https://github.com/Methux/mnemo/actions"><img src="https://github.com/Methux/mnemo/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://docs.m-nemo.ai"><img src="https://img.shields.io/badge/docs-m--nemo.ai-blue" alt="Docs"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
 </p>
 
 <p align="center">
   <strong>AI memory that forgets intelligently.</strong><br>
-  The first memory framework built on cognitive science.
+  A cognitive science-based memory framework for AI agents.
 </p>
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> ·
+  <a href="https://docs.m-nemo.ai">Docs</a> ·
   <a href="#architecture">Architecture</a> ·
   <a href="#core-vs-pro">Core vs Pro</a> ·
-  <a href="https://m-nemo.ai">Website</a> ·
-  <a href="docs/api-reference.md">API</a>
+  <a href="https://m-nemo.ai">Website</a>
 </p>
 
 ---
 
 ## Why Mnemo?
 
-Every AI memory solution stores memories. **Mnemo is the first to forget intelligently.**
+Every AI memory solution stores memories. **Mnemo forgets intelligently.**
 
 Humans don't remember everything equally — important memories consolidate, trivial ones fade, frequently recalled knowledge strengthens. Mnemo models this with:
 
@@ -39,27 +41,23 @@ Humans don't remember everything equally — important memories consolidate, tri
 
 The result: your AI agent's memory stays relevant instead of drowning in noise.
 
-## Mnemo vs Paid Competitors
+## Feature Highlights
 
-| Capability | Mem0 $249 | Zep (usage) | Letta $20 | Cognee OSS | **Mnemo Core** FREE | **Mnemo Pro** $69 |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| Vector search | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| BM25 keyword search | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Knowledge graph | Pro | ✅ | ❌ | ✅ | ✅ | ✅ |
-| Forgetting model | ❌ | Basic | Basic | ❌ | **Weibull** | **Weibull** |
-| Memory tiers | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Cross-encoder rerank | ❌ | Basic | ❌ | ❌ | ✅ | ✅ |
-| Contradiction detection | ❌ | ✅ | ❌ | Partial | ✅ | ✅ |
-| Triple-path fusion | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Scope isolation | Basic | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Emotional salience | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| WAL crash recovery | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Session reflection | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ |
-| Self-improvement | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Observability | Partial | ✅ | ❌ | ❌ | ❌ | ✅ |
-| Self-hosted | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
-
-> Mnemo Core (free) already outperforms most $99+/mo paid solutions on retrieval quality.
+| Capability | Core (Free) | Pro |
+|:---|:---:|:---:|
+| Vector + BM25 + Knowledge Graph | ✅ | ✅ |
+| Weibull forgetting model | ✅ | ✅ |
+| Memory tiers (Core/Working/Peripheral) | ✅ | ✅ |
+| Cross-encoder rerank | ✅ | ✅ |
+| Contradiction detection | ✅ | ✅ |
+| Multi-backend (LanceDB, Qdrant, Chroma, PGVector) | ✅ | ✅ |
+| Scope isolation (multi-agent) | ✅ | ✅ |
+| $0 local deployment (Ollama) | ✅ | ✅ |
+| WAL crash recovery | — | ✅ |
+| Session reflection | — | ✅ |
+| Access reinforcement (spaced repetition) | — | ✅ |
+| Self-improvement | — | ✅ |
+| Observability & audit log | — | ✅ |
 
 ---
 
@@ -103,33 +101,7 @@ The result: your AI agent's memory stays relevant instead of drowning in noise.
 
 ## Quick Start
 
-### Option 1: Docker (recommended)
-
-```bash
-git clone https://github.com/Methux/mnemo.git
-cd mnemo
-cp .env.example .env     # add your API keys
-docker compose up -d     # starts Neo4j + Graphiti + Dashboard
-```
-
-Dashboard at `http://localhost:18800`
-
-### Option 2: 100% Local ($0, no external API)
-
-```bash
-# Install Ollama models
-ollama pull nomic-embed-text     # embedding
-ollama pull qwen3:8b             # smart extraction LLM
-ollama pull bge-reranker-v2-m3   # cross-encoder rerank
-
-# Use local config
-cp config/mnemo.local.example.json ~/.mnemo/mnemo.json
-docker compose up -d   # Neo4j + Graphiti
-```
-
-Full Core functionality — embedding, extraction, rerank, graph — all running locally. Zero API cost.
-
-### Option 3: npm
+### Option 1: npm (simplest)
 
 ```bash
 npm install @mnemoai/core
@@ -138,15 +110,11 @@ npm install @mnemoai/core
 ```typescript
 import { createMnemo } from '@mnemoai/core';
 
-const mnemo = await createMnemo({
-  embedding: {
-    provider: 'openai-compatible',
-    apiKey: process.env.OPENAI_API_KEY,  // or 'ollama' for local
-    model: 'text-embedding-3-small',
-    dimensions: 1536,
-  },
-  dbPath: './memory-db',
-});
+// Auto-detect: uses OPENAI_API_KEY from env
+const mnemo = await createMnemo({ dbPath: './memory-db' });
+
+// Or use a preset for Ollama ($0, fully local)
+// const mnemo = await createMnemo({ preset: 'ollama', dbPath: './memory-db' });
 
 // Store a memory
 await mnemo.store({
@@ -159,17 +127,56 @@ await mnemo.store({
 const results = await mnemo.recall('UI preferences', { limit: 5 });
 ```
 
-### Option 4: Interactive Setup
+**Available presets:** `openai`, `ollama`, `voyage`, `jina` — [see docs](https://docs.m-nemo.ai/guide/configuration)
+
+### Option 2: Python
 
 ```bash
-npm run init    # guided wizard — generates config + .env
+pip install mnemo-memory
+npx @mnemoai/server   # start the REST API
 ```
 
-### Option 5: OpenClaw Plugin
+```python
+from mnemo import MnemoClient
+
+client = MnemoClient()
+client.store("User prefers dark mode", category="preference")
+results = client.recall("UI preferences")
+```
+
+### Option 3: 100% Local ($0, no external API)
 
 ```bash
-openclaw plugins install mnemo
+ollama pull bge-m3               # embedding
+ollama pull qwen3:8b             # smart extraction LLM
+ollama pull bge-reranker-v2-m3   # cross-encoder rerank
 ```
+
+```typescript
+const mnemo = await createMnemo({ preset: 'ollama', dbPath: './memory-db' });
+```
+
+Full Core functionality — embedding, extraction, rerank — all running locally. Zero API cost.
+
+### Option 4: Docker (full stack)
+
+```bash
+git clone https://github.com/Methux/mnemo.git
+cd mnemo
+cp .env.example .env     # add your API keys
+docker compose up -d     # starts Neo4j + Graphiti + Dashboard
+```
+
+---
+
+## Packages
+
+| Package | Platform | Install |
+|:---|:---|:---|
+| [@mnemoai/core](https://www.npmjs.com/package/@mnemoai/core) | npm | `npm install @mnemoai/core` |
+| [@mnemoai/server](https://www.npmjs.com/package/@mnemoai/server) | npm | `npx @mnemoai/server` |
+| [@mnemoai/vercel-ai](https://www.npmjs.com/package/@mnemoai/vercel-ai) | npm | `npm install @mnemoai/vercel-ai` |
+| [mnemo-memory](https://pypi.org/project/mnemo-memory/) | PyPI | `pip install mnemo-memory` |
 
 ---
 
@@ -183,20 +190,18 @@ The open-source foundation. Full retrieval engine, no restrictions.
 |:---|:---|
 | Storage | Pluggable backend — LanceDB (default), Qdrant, Chroma, PGVector |
 | Retrieval | Triple-path (Vector + BM25 + Graphiti) with RRF fusion |
-| Rerank | Cross-encoder (Voyage rerank-2) |
+| Rerank | Cross-encoder (configurable provider) |
 | Decay | Weibull stretched-exponential, tier-specific β |
 | Tiers | Core (β=0.8) / Working (β=1.0) / Peripheral (β=1.3) |
 | Contradiction | Three-layer detection (regex + LLM + dedup) |
-| Extraction | Smart extraction with GPT-4.1 |
+| Extraction | Smart extraction (configurable LLM) |
 | Graph | Graphiti/Neo4j knowledge graph |
 | Scopes | Multi-agent isolation |
-| Emotional salience | Amygdala-modeled half-life adjustment |
 | Noise filtering | Embedding-based noise bank + regex |
-| Temporal queries | Date format expansion (中/EN) |
 
 ### Mnemo Pro — From $69/mo
 
-Everything in Core, plus enterprise features:
+Everything in Core, plus production features:
 
 | Feature | Details |
 |:---|:---|
@@ -207,11 +212,11 @@ Everything in Core, plus enterprise features:
 | MCP Server | Model Context Protocol integration |
 | Observability | Query tracking, latency monitoring, health checks |
 | Access tracking | Spaced repetition with reinforcement |
+| Audit log | GDPR-compliant append-only JSONL |
 
 ```bash
 # Activate Pro
-export MNEMO_LICENSE_TOKEN="mnemo_your_token"
-# Auto-activates on first run, binds to this machine
+export MNEMO_PRO_KEY="your_license_key"
 ```
 
 ### Pricing
@@ -223,25 +228,19 @@ export MNEMO_LICENSE_TOKEN="mnemo_your_token"
 | **Team** | $199/mo · $1,990/yr | 5 | Priority + Slack |
 | **Enterprise** | Custom | Unlimited | Dedicated + SLA |
 
-[Get Mnemo Pro →](https://m-nemo.ai/pro)
+[Get Mnemo Pro →](https://m-nemo.ai)
 
 ### API Configuration Guide
 
-Mnemo requires external models for embedding, extraction, and reranking. **You bring your own API keys** — Mnemo does not proxy or bundle API costs. Choose a setup that fits your budget:
+Mnemo is a framework — **you bring your own models**. Choose a setup that fits your budget:
 
 | Setup | Embedding | LLM Extraction | Rerank | Est. API Cost |
 |:---|:---|:---|:---|:---:|
-| **Local** | Ollama nomic-embed-text | Ollama qwen3:8b | Ollama bge-reranker | **$0/mo** |
-| **Hybrid** | Voyage voyage-3-large | GPT-4.1-mini | Voyage rerank-2 | ~$20/mo |
+| **Local** | Ollama bge-m3 | Ollama qwen3:8b | Ollama bge-reranker | **$0/mo** |
+| **Hybrid** | OpenAI text-embedding-3-small | GPT-4.1-mini | Jina reranker | ~$5/mo |
 | **Cloud** | Voyage voyage-3-large | GPT-4.1 | Voyage rerank-2 | ~$45/mo |
 
 > These are **your own API costs**, not Mnemo subscription fees. All setups use the same Core/Pro features — the difference is model quality.
->
-> - **Local**: Runs entirely offline via [Ollama](https://ollama.com). Good enough to beat most paid competitors.
-> - **Hybrid**: Best quality-to-cost ratio. Recommended for most users.
-> - **Cloud**: Maximum extraction quality for high-volume production.
->
-> See `config/mnemo.local.example.json` for the $0 local setup, or `config/mnemo.example.json` for the cloud setup.
 
 ---
 
@@ -263,6 +262,19 @@ Mnemo's design maps directly to established memory research:
 
 ---
 
+## Documentation
+
+Full documentation at **[docs.m-nemo.ai](https://docs.m-nemo.ai)**
+
+- [Quick Start](https://docs.m-nemo.ai/guide/quickstart)
+- [Local Setup ($0 Ollama)](https://docs.m-nemo.ai/guide/ollama)
+- [Configuration Reference](https://docs.m-nemo.ai/guide/configuration)
+- [Storage Backends](https://docs.m-nemo.ai/guide/backends)
+- [Retrieval Pipeline](https://docs.m-nemo.ai/guide/retrieval)
+- [API Reference](https://docs.m-nemo.ai/api/)
+
+---
+
 ## Tools
 
 | Tool | Description | Run |
@@ -271,17 +283,6 @@ Mnemo's design maps directly to established memory research:
 | `mnemo-doctor` | One-command health check | `npm run doctor` |
 | `validate-config` | Config validation gate | `npm run validate` |
 | Dashboard | Web UI for browsing, debugging, monitoring | `http://localhost:18800` |
-
----
-
-## Documentation
-
-- [Architecture Deep Dive](docs/architecture.md)
-- [Configuration Reference](docs/configuration.md)
-- [Retrieval Pipeline](docs/retrieval-pipeline.md)
-- [Cognitive Science Model](docs/cognitive-science.md)
-- [API Reference](docs/api-reference.md)
-- [OpenClaw Integration](docs/openclaw-integration.md)
 
 ---
 
@@ -302,9 +303,8 @@ We welcome contributions to Mnemo Core (MIT-licensed files). See [CONTRIBUTING.m
 
 Areas where we'd love help:
 - Benchmark evaluation (LOCOMO, MemBench)
-- New embedding provider adapters
+- New storage adapters and embedding providers
 - Retrieval pipeline optimizations
-- Language-specific SDKs (Python, Go)
 - Documentation and examples
 
 ---
