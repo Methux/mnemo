@@ -16,6 +16,7 @@ import {
   buildDedupPrompt,
   buildMergePrompt,
 } from "./extraction-prompts.js";
+import { buildLearningsContext } from "./self-improvement-files.js";
 import {
   type CandidateMemory,
   type DedupDecision,
@@ -78,6 +79,8 @@ export interface SmartExtractorConfig {
   debugLog?: (msg: string) => void;
   /** Optional embedding-based noise prototype bank for language-agnostic noise filtering. */
   noiseBank?: NoisePrototypeBank;
+  /** Base directory for self-improvement learnings (enables feedback loop). */
+  learningsDir?: string;
 }
 
 export interface ExtractPersistOptions {
@@ -234,9 +237,22 @@ export class SmartExtractor {
         : conversationText;
 
     const user = this.config.user ?? "User";
-    const prompt = isCjkDominant(truncated)
+    let prompt = isCjkDominant(truncated)
       ? buildChineseExtractionPrompt(truncated, user)
       : buildExtractionPrompt(truncated, user);
+
+    // ── Feedback loop: inject past learnings into extraction prompt ──
+    if (this.config.learningsDir) {
+      try {
+        const learningsCtx = await buildLearningsContext(this.config.learningsDir, 5);
+        if (learningsCtx) {
+          prompt = `${learningsCtx}\n\n${prompt}`;
+          this.debugLog(`mnemo: smart-extractor: injected ${learningsCtx.split("\n").length - 1} learnings into prompt`);
+        }
+      } catch {
+        // Learnings unavailable — continue without
+      }
+    }
 
     const result = await this.llm.completeJson<{
       memories: Array<{

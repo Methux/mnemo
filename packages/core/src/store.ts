@@ -567,7 +567,7 @@ export class MemoryStore {
       }
     }
 
-    // ── Step 2: Normal write ──
+    // ── Step 2: Normal write (with WAL for crash recovery) ──
     const fullEntry: MemoryEntry = {
       ...entry,
       id: randomUUID(),
@@ -575,14 +575,33 @@ export class MemoryStore {
       metadata: entry.metadata || "{}",
     };
 
+    const walTs = new Date(fullEntry.timestamp).toISOString();
+
+    // WAL: log pending before write (Pro feature)
+    if (walAppend) {
+      await walAppend({
+        ts: walTs,
+        action: "write",
+        text: fullEntry.text,
+        scope: fullEntry.scope || "default",
+        category: fullEntry.category || "fact",
+        groupId: "lancedb",
+        importance: fullEntry.importance ?? 0.7,
+        status: "pending",
+      }).catch(() => {});
+    }
+
     try {
       if (this._adapter) {
-        // TODO: type this — adapter.add signature doesn't match MemoryEntry exactly
         await this._adapter.add([fullEntry as any]);
       } else {
         await this.table!.add([fullEntry]);
       }
+      // WAL: mark committed after successful write
+      walMarkCommitted?.(walTs).catch(() => {});
     } catch (err: unknown) {
+      // WAL: mark failed
+      walMarkFailed?.(walTs, String(err)).catch(() => {});
       const e = err as NodeJS.ErrnoException;
       const code = e.code || "";
       const message = e.message || String(err);
@@ -594,30 +613,29 @@ export class MemoryStore {
     // Audit: record creation
     _auditCreate?.(fullEntry.id, fullEntry.scope, fullEntry.scope, "store", fullEntry.text?.slice(0, 200));
 
-    // ── Step 3: Graphiti 时序图谱双写 with WAL ──
+    // ── Step 3: Graphiti 时序图谱双写 ──
     const textLen = (fullEntry.text || "").length;
-    const importance = typeof fullEntry.importance === "number" ? fullEntry.importance : 0.7;
-    if (process.env.GRAPHITI_ENABLED === "true" && importance >= 0.5 && textLen >= 20) {
+    const entryImportance = typeof fullEntry.importance === "number" ? fullEntry.importance : 0.7;
+    if (process.env.GRAPHITI_ENABLED === "true" && entryImportance >= 0.5 && textLen >= 20) {
       const graphitiBase = process.env.GRAPHITI_BASE_URL || "http://127.0.0.1:18799";
       const scope = fullEntry.scope || "default";
       const groupId = scope.startsWith("agent:") ? scope.split(":")[1] || "default" : "default";
-      const walTs = new Date(fullEntry.timestamp).toISOString();
+      const graphitiWalTs = `graphiti-${walTs}`;
 
-      // Write WAL pending entry before Graphiti call (Pro feature)
+      // WAL for Graphiti write (separate from LanceDB WAL entry)
       if (walAppend) {
         walAppend({
-          ts: walTs,
+          ts: graphitiWalTs,
           action: "write",
           text: fullEntry.text,
           scope,
           category: fullEntry.category || "fact",
           groupId,
-          importance,
+          importance: entryImportance,
           status: "pending",
         }).catch(() => {});
       }
 
-      // Async Graphiti write (WAL tracking is Pro, Graphiti write is Core)
       fetch(`${graphitiBase}/episodes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -631,10 +649,10 @@ export class MemoryStore {
         signal: AbortSignal.timeout(15000),
       })
         .then(() => {
-          walMarkCommitted?.(walTs).catch(() => {});
+          walMarkCommitted?.(graphitiWalTs).catch(() => {});
         })
         .catch((err) => {
-          walMarkFailed?.(walTs, String(err)).catch(() => {});
+          walMarkFailed?.(graphitiWalTs, String(err)).catch(() => {});
         });
     }
 

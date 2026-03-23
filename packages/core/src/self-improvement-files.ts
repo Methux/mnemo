@@ -84,6 +84,113 @@ export interface AppendSelfImprovementEntryParams {
   source?: string;
 }
 
+// ============================================================================
+// Feedback Loop — load learnings for runtime use
+// ============================================================================
+
+export interface LearningEntry {
+  id: string;
+  type: "learning" | "error";
+  summary: string;
+  details: string;
+  suggestedAction: string;
+  area: string;
+  priority: string;
+  status: string;
+  loggedAt: string;
+}
+
+/**
+ * Load all learnings/errors from the .learnings directory.
+ * Returns structured entries that can be injected into extraction prompts
+ * or used to adjust retrieval behavior.
+ */
+export async function loadLearnings(baseDir: string): Promise<LearningEntry[]> {
+  const learningsDir = join(baseDir, ".learnings");
+  const entries: LearningEntry[] = [];
+
+  for (const [type, fileName] of [["learning", "LEARNINGS.md"], ["error", "ERRORS.md"]] as const) {
+    let content: string;
+    try {
+      content = await readFile(join(learningsDir, fileName), "utf-8");
+    } catch {
+      continue;
+    }
+
+    // Parse markdown entries: ## [LRN-YYYYMMDD-XXX] ...
+    const sections = content.split(/^## \[/m).slice(1);
+    for (const section of sections) {
+      const idMatch = section.match(/^([A-Z]+-\d{8}-\d{3})\]/);
+      if (!idMatch) continue;
+
+      const id = idMatch[1];
+      const extractField = (heading: string): string => {
+        const re = new RegExp(`### ${heading}\\s*\\n([\\s\\S]*?)(?=###|---|\$)`, "m");
+        const m = section.match(re);
+        return m ? m[1].trim() : "";
+      };
+
+      const loggedMatch = section.match(/\*\*Logged\*\*:\s*(.+)/);
+      const priorityMatch = section.match(/\*\*Priority\*\*:\s*(.+)/);
+      const statusMatch = section.match(/\*\*Status\*\*:\s*(.+)/);
+      const areaMatch = section.match(/\*\*Area\*\*:\s*(.+)/);
+
+      entries.push({
+        id,
+        type,
+        summary: extractField("Summary"),
+        details: extractField("Details"),
+        suggestedAction: extractField("Suggested Action"),
+        area: areaMatch?.[1]?.trim() || "",
+        priority: priorityMatch?.[1]?.trim() || "medium",
+        status: statusMatch?.[1]?.trim() || "pending",
+        loggedAt: loggedMatch?.[1]?.trim() || "",
+      });
+    }
+  }
+
+  return entries;
+}
+
+/**
+ * Build a context string from recent learnings that can be injected into
+ * LLM extraction prompts. This closes the feedback loop — past mistakes
+ * and best practices directly influence future memory extraction.
+ *
+ * @param baseDir - Base directory containing .learnings/
+ * @param maxEntries - Maximum entries to include (most recent first)
+ * @returns A formatted string for prompt injection, or empty string if no learnings
+ */
+export async function buildLearningsContext(
+  baseDir: string,
+  maxEntries: number = 5,
+): Promise<string> {
+  const entries = await loadLearnings(baseDir);
+  if (entries.length === 0) return "";
+
+  // Filter to actionable entries (not resolved/dismissed)
+  const actionable = entries.filter(
+    e => e.status !== "resolved" && e.status !== "dismissed" && e.suggestedAction !== "-",
+  );
+
+  // Most recent first, limit
+  const recent = actionable.slice(-maxEntries).reverse();
+  if (recent.length === 0) return "";
+
+  const lines = recent.map(e =>
+    `- [${e.id}] ${e.summary}${e.suggestedAction ? ` → Action: ${e.suggestedAction}` : ""}`,
+  );
+
+  return [
+    "Past learnings (apply these when extracting memories):",
+    ...lines,
+  ].join("\n");
+}
+
+// ============================================================================
+// Original append function
+// ============================================================================
+
 export async function appendSelfImprovementEntry(params: AppendSelfImprovementEntryParams): Promise<{
   id: string;
   filePath: string;
