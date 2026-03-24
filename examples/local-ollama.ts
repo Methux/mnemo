@@ -4,7 +4,7 @@
  * Prerequisites:
  *   1. Install Ollama: https://ollama.com
  *   2. Pull models:
- *      ollama pull nomic-embed-text
+ *      ollama pull bge-m3
  *      ollama pull qwen3:8b
  *      ollama pull bge-reranker-v2-m3
  *   3. npm install @mnemoai/core
@@ -16,13 +16,13 @@ import { createMnemo } from "@mnemoai/core";
 
 async function main() {
   const mnemo = await createMnemo({
-    // Ollama embedding — runs locally, 768 dimensions
+    // Ollama embedding — runs locally, 1024 dimensions
     embedding: {
       provider: "openai-compatible",
       apiKey: "ollama", // Ollama doesn't need a real key
       baseURL: "http://127.0.0.1:11434/v1",
-      model: "nomic-embed-text",
-      dimensions: 768,
+      model: "bge-m3",
+      dimensions: 1024,
     },
     dbPath: "./local-memory-db",
 

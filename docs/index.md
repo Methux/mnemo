@@ -3,7 +3,7 @@ layout: home
 hero:
   name: Mnemo
   text: AI memory that forgets intelligently
-  tagline: The first memory framework built on cognitive science — Weibull decay, triple-path retrieval, multi-backend storage.
+  tagline: A cognitive science-based memory framework — Weibull decay, triple-path retrieval, multi-backend storage.
   image:
     src: /logo.svg
     alt: Mnemo

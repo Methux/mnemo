@@ -61,7 +61,7 @@ curl -X DELETE http://localhost:18100/memories/mem_abc123
 
 ```bash
 MNEMO_EMBEDDING_BASE_URL=http://localhost:11434/v1 \
-MNEMO_EMBEDDING_MODEL=nomic-embed-text \
-MNEMO_EMBEDDING_DIMENSIONS=768 \
+MNEMO_EMBEDDING_MODEL=bge-m3 \
+MNEMO_EMBEDDING_DIMENSIONS=1024 \
 npx @mnemoai/server
 ```

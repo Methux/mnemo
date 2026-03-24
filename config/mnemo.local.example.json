@@ -1,14 +1,14 @@
 {
   "_comment": "Mnemo — 100% local deployment (no external API, $0/mo)",
   "_requires": "Ollama running locally: ollama serve",
-  "_models": "ollama pull nomic-embed-text && ollama pull qwen3:8b && ollama pull bge-reranker-v2-m3",
+  "_models": "ollama pull bge-m3 && ollama pull qwen3:8b && ollama pull bge-reranker-v2-m3",
 
   "embedding": {
     "provider": "openai-compatible",
     "apiKey": "ollama",
     "baseURL": "http://127.0.0.1:11434/v1",
-    "model": "nomic-embed-text",
-    "dimensions": 768
+    "model": "bge-m3",
+    "dimensions": 1024
   },
   "dbPath": "~/.mnemo/memory-db",
   "autoCapture": true,
