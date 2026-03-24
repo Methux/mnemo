@@ -102,3 +102,30 @@ jobs:
         run: |
           grep -q "not affiliated" README.md || (echo "Missing trademark disclaimer in README" && exit 1)
           echo "Trademark disclaimer present ✅"
+
+      - name: Check docs consistency
+        run: |
+          FAIL=0
+          # nomic-embed-text should not appear in docs/examples/config (only allowed in src/ code compatibility layers)
+          BAD=$(grep -rn "nomic-embed-text" docs/ examples/ config/ packages/server/ README.md --include="*.md" --include="*.html" --include="*.json" --include="*.ts" || true)
+          if [ -n "$BAD" ]; then
+            echo "❌ nomic-embed-text found in docs (should be bge-m3):"
+            echo "$BAD"
+            FAIL=1
+          fi
+          # "The first memory framework" is an unverifiable claim
+          BAD2=$(grep -rn "The first memory framework" docs/ README.md --include="*.md" --include="*.html" || true)
+          if [ -n "$BAD2" ]; then
+            echo "❌ 'The first memory framework' claim found:"
+            echo "$BAD2"
+            FAIL=1
+          fi
+          # old API pattern "new Mnemo(" should not appear in docs/examples
+          BAD3=$(grep -rn "new Mnemo(" docs/ examples/ README.md --include="*.md" --include="*.html" --include="*.ts" || true)
+          if [ -n "$BAD3" ]; then
+            echo "❌ Old 'new Mnemo()' API found (should be createMnemo()):"
+            echo "$BAD3"
+            FAIL=1
+          fi
+          if [ "$FAIL" -eq 1 ]; then exit 1; fi
+          echo "Docs consistency check passed ✅"
