@@ -1,7 +1,7 @@
 {
   "name": "@mnemoai/server",
-  "version": "0.1.0",
-  "description": "Mnemo REST API server — expose memory store/recall/delete over HTTP",
+  "version": "0.2.0",
+  "description": "Mnemo REST API server + Dashboard — expose memory store/recall/delete over HTTP with built-in web UI",
   "type": "module",
   "main": "src/index.js",
   "bin": {
