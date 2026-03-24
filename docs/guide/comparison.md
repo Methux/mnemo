@@ -1,55 +1,34 @@
-# Mnemo vs Competitors
+# Comparison
 
 ## Feature Comparison
 
-| Capability | Mem0 $249 | Zep (usage) | Letta $20 | Cognee OSS | **Mnemo Core** FREE | **Mnemo Pro** $69 |
+| Capability | Mem0 | Zep | Letta | Cognee | **Mnemo Core** | **Mnemo Pro** |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| Vector search | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| BM25 keyword search | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Knowledge graph | $249/mo | ✅ | ❌ | ✅ | ✅ | ✅ |
-| Forgetting model | ❌ | Basic | Basic | ❌ | **Weibull** | **Weibull** |
-| Memory tiers | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Cross-encoder rerank | ❌ | Basic | ❌ | ❌ | ✅ | ✅ |
-| Contradiction detection | ❌ | ✅ | ❌ | Partial | ✅ | ✅ |
-| Triple-path fusion | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Scope isolation | Basic | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Multi-backend | 20+ | Neo4j only | Postgres | 7+ | 4 | 4 |
-| Self-hosted | Hard | ❌ | Docker | ✅ | ✅ | ✅ |
-| $0 local (Ollama) | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| TypeScript SDK | ✅ | ✅ | ✅ | Partial | ✅ | ✅ |
+| Vector search | Yes | Yes | Yes | Yes | Yes | Yes |
+| BM25 keyword search | No | No | No | Yes | Yes | Yes |
+| Knowledge graph | Paid tier | Yes | No | Yes | Yes | Yes |
+| Forgetting model | No | Basic | Basic | No | **Weibull** | **Weibull** |
+| Memory tiers | No | No | No | No | Yes | Yes |
+| Cross-encoder rerank | No | Basic | No | No | Yes | Yes |
+| Contradiction detection | No | Yes | No | Partial | Yes | Yes |
+| Triple-path fusion | No | No | No | No | Yes | Yes |
+| Scope isolation | Basic | No | No | No | Yes | Yes |
+| Self-hosted | Yes | Cloud only | Docker | Yes | Yes | Yes |
+| $0 local (Ollama) | No | No | No | No | Yes | Yes |
+| TypeScript SDK | Yes | Yes | Yes | No | Yes | Yes |
+| Python SDK | Yes | Yes | Yes | Yes | Yes | Yes |
+
+Note: Features and pricing may change. Check each project's official site for current information.
 
 ## Architecture Differences
 
-### Mem0
-- Cloud-first SaaS with open-source self-hosted option
-- Graph features locked behind $249/mo Pro tier
-- 50k+ GitHub stars, largest community
-- AWS exclusive memory partner
+Each framework takes a different approach:
 
-### Zep
-- Built around Graphiti temporal knowledge graph
-- Usage-based pricing ($1.25/1K messages)
-- Self-hosted Community Edition deprecated
-- Requires Neo4j
-
-### Letta (formerly MemGPT)
-- Full agent platform, not just memory
-- Agents manage their own memory
-- Requires running a Letta server
-- Heavier adoption cost if you just need memory
-
-### Cognee
-- Python-first knowledge engine
-- Batch processing (cognify step)
-- Best for document-heavy structured data
-- TypeScript is secondary
-
-### Mnemo
-- **Cognitive science-first** — Weibull decay, not just storage
-- **Lightweight** — npm install, 4 lines to start, 142KB
-- **Fully local** — Ollama + LanceDB, $0, no cloud
-- **Triple-path retrieval** — Vector + BM25 + Graph fused with RRF
-- **Multi-backend** — LanceDB, Qdrant, Chroma, PGVector
+- **Mem0** — Cloud-first SaaS with open-source option. Simple API, large community.
+- **Zep** — Built around Graphiti temporal knowledge graph. Optimized for voice AI latency.
+- **Letta** — Full agent platform where agents manage their own memory (virtual memory paradigm).
+- **Cognee** — Python-first knowledge engine with auto-generated ontologies and pipeline architecture.
+- **Mnemo** — Cognitive science-first. Weibull decay, triple-path retrieval, lightweight and embeddable.
 
 ## When to Choose Mnemo
 
@@ -58,3 +37,7 @@
 - You want to run locally for free with Ollama
 - You care about retrieval quality (triple-path + rerank + decay)
 - You're building in TypeScript/Node.js
+
+## Benchmark
+
+See [LOCOMO Benchmark](/guide/benchmark) for retrieval accuracy comparison tested under identical conditions.

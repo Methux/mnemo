@@ -173,84 +173,15 @@ memoryReflection · inheritance+derived · 会话间摘要写入 LanceDB
 
 ### 对比对象
 
-| 方案 | 类型 | 定位 |
-|------|------|------|
-| **Mem0** | 开源/SaaS | Memory layer for AI apps |
-| **Zep** | 开源/商用 | Long-term memory for assistants |
-| **Letta (MemGPT)** | 开源 | Memory-augmented agent framework |
-| **LangMem** | 开源 (LangChain) | Memory management toolkit |
-| **Cognee** | 开源 | Knowledge management + RAG |
-| **OpenClaw** | 自研 | 全栈 agent 记忆系统 |
+See [Comparison](/guide/comparison) for feature-by-feature analysis and [LOCOMO Benchmark](/guide/benchmark) for retrieval accuracy data.
 
-### 评分（满分 10）
+### Mnemo Differentiators
 
-| 维度 | Mem0 | Zep | Letta | LangMem | Cognee | **OpenClaw** |
-|------|:----:|:---:|:-----:|:-------:|:------:|:------------:|
-| 写入通道丰富度 | 4 | 5 | 6 | 3 | 4 | **9** |
-| 提取智能度 | 6 | 5 | 7 | 4 | 5 | **9** |
-| 检索精度 | 6 | 7 | 5 | 5 | 6 | **9** |
-| 知识图谱集成 | 3 | 4 | 2 | 2 | 7 | **8** |
-| 记忆生命周期 | 4 | 5 | 7 | 3 | 3 | **9** |
-| 多 Agent 隔离 | 5 | 3 | 4 | 3 | 3 | **9** |
-| 自动化程度 | 5 | 5 | 6 | 3 | 4 | **9** |
-| 可观测性 | 4 | 6 | 5 | 3 | 4 | **7** |
-| 易用性 | 8 | 8 | 6 | 7 | 6 | **4** |
-| 社区/生态 | 8 | 7 | 7 | 8 | 5 | **2** |
-| **综合** | **5.3** | **5.5** | **5.5** | **4.1** | **4.7** | **7.5** |
-
-### 逐维度分析
-
-**写入通道丰富度**
-- Mem0: 主要靠 `add()` API 单入口 + 简单 auto-capture → 4
-- Letta: 内置 archival/recall + agent 自主管理 → 6
-- **OpenClaw**: 6 条独立通道，从实时到定时到文件监听全覆盖 → 9
-
-**提取智能度**
-- Mem0: GPT-4 提取但只有单层文本，无结构化分类 → 6
-- Letta: agent 自主决定但无多模型多层次 → 7
-- **OpenClaw**: 双模型(Sonnet4 + GPT-4.1) · 6分类 · 三层结构 · noise bank · importance · 情景上下文 → 9
-
-**检索精度**
-- Zep: hybrid search + MMR + 时序感知 → 7
-- Mem0: 向量检索为主，rerank 有限 → 6
-- **OpenClaw**: 10级流水线 · 三路并行 · RRF融合 · cross-encoder rerank · 共振门控 · BM25保护地板 → 9
-
-**知识图谱集成**
-- Cognee: 原生图谱支持但融合度一般 → 7
-- Mem0/Letta: 基本无图谱 → 2-3
-- **OpenClaw**: Graphiti/Neo4j 深度双写 + WAL + 检索三路并行 + 跨源rerank + spread/search双模式 + 时序 valid_at/expired_at → 8
-
-**记忆生命周期**
-- Letta: archival 分层概念 → 7
-- Mem0: 基本没有生命周期 → 4
-- **OpenClaw**: tier三级 + 多维decay + access reinforcement + session reflection + cron维护矩阵(巩固/整合/去重/review) → 9
-
-**多 Agent 隔离**
-- 大多数: 单agent或简单namespace → 3-5
-- **OpenClaw**: 6 bot 独立 scope · agentAccess 精细控制 · 写入/检索均隔离 → 9
-
-**自动化程度**
-- **OpenClaw**: 几乎零人工——对话自动提取 · 定时回扫 · 文件监听 · daily归档 · tier自动转换 · decay自动 · session自动反思 · auto-recall自动注入 → 9
-
-**可观测性**
-- Zep: 有 dashboard → 6
-- **OpenClaw**: retrieval log + management tools + WAL，但缺统一 dashboard → 7
-
-**易用性**
-- Mem0/Zep: pip install + 几行代码 → 8
-- **OpenClaw**: 自研系统，配置复杂 → 4
-
-**社区/生态**
-- Mem0/LangMem: GitHub star 多，社区活跃 → 8
-- **OpenClaw**: 私有项目 → 2
-
-### 独特优势
-
-1. **6 通道写入 coverage** — 几乎不可能漏掉有价值的信息
-2. **双引擎存储** — LanceDB(语义) + Graphiti(关系/时序)，互补
-3. **10 级检索流水线** — 每级有明确职责，可独立调优
-4. **完整生命周期** — tier分级 + 多维衰减 + 定时维护，记忆库健康演进
-5. **多 Agent scope 隔离** — 6 bot 各自独立又共享全局
+1. **6-channel write coverage** — Hook, SmartExtractor, L1 Distiller, daily archiver, file watcher, manual store
+2. **Dual-engine storage** — LanceDB (semantic) + Graphiti (relational/temporal)
+3. **10-stage retrieval pipeline** — Each stage has a clear responsibility, independently tunable
+4. **Complete lifecycle** — Tier system + Weibull decay + access reinforcement + session reflection
+5. **Multi-agent scope isolation** — Per-bot namespaces with configurable cross-access
 
 ### 主要短板
 

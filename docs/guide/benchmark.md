@@ -74,9 +74,9 @@ All frameworks tested under identical conditions using our [open-source benchmar
 
 **Key observations**:
 - Mnemo Pro's full pipeline (triple-path retrieval + rerank) is the primary driver of the 85.2% score
-- Mnemo Core with basic vector search still outperforms Mem0 by ~15pp
-- Mem0's LLM-based memory extraction is 15x slower than Mnemo's direct embedding approach
-- The gap between Core (46%) and Pro (85%) shows the value of BM25 fusion and cross-encoder reranking
+- Mnemo Core with basic vector search scores ~15pp higher than Mem0's default configuration
+- Mem0 uses LLM-based memory extraction which increases ingestion time significantly
+- The gap between Core (46%) and Pro (85%) demonstrates the value of BM25 fusion and cross-encoder reranking
 
 ## Notes
 
