@@ -32,6 +32,7 @@ export default defineConfig({
             { text: 'Retrieval Pipeline', link: '/guide/retrieval' },
             { text: 'Weibull Decay', link: '/guide/decay' },
             { text: 'Comparison', link: '/guide/comparison' },
+            { text: 'Ablation Tests', link: '/guide/ablation' },
           ],
         },
       ],
