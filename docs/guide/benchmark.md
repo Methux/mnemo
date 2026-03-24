@@ -59,9 +59,9 @@ cd mnemo
 # Contact us for access to the evaluation harness
 ```
 
-## Comparison Notes
+## Notes
 
-- Mem0 reports ~54% on LOCOMO in their published benchmarks
-- Mnemo achieves 85.2% — a **31 percentage point improvement**
-- Direct comparison is approximate since evaluation methodology may differ
+- Mnemo's evaluation uses GPT-4.1 as the judge model with LOCOMO's standard scoring rubric
+- Results may vary depending on embedding model, LLM judge, and extraction quality
+- We did not benchmark other frameworks under identical conditions, so we do not publish comparative numbers
 - We encourage independent benchmarking and welcome reproducibility efforts
