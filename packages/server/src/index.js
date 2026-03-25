@@ -65,6 +65,18 @@ config.storageConfig = process.env.MNEMO_STORAGE_CONFIG
   ? JSON.parse(process.env.MNEMO_STORAGE_CONFIG)
   : undefined;
 
+// Retrieval pipeline config (BM25, rerank, pool size)
+if (process.env.MNEMO_RERANK || process.env.MNEMO_RERANK_API_KEY) {
+  config.retrieval = {
+    candidatePoolSize: parseInt(process.env.MNEMO_CANDIDATE_POOL_SIZE || "20", 10),
+    rerank: process.env.MNEMO_RERANK || "none",
+    rerankApiKey: process.env.MNEMO_RERANK_API_KEY || undefined,
+    rerankModel: process.env.MNEMO_RERANK_MODEL || undefined,
+    rerankEndpoint: process.env.MNEMO_RERANK_ENDPOINT || undefined,
+    rerankProvider: process.env.MNEMO_RERANK_PROVIDER || undefined,
+  };
+}
+
 // ── Init ──
 console.log(`[mnemo-server] Initializing with dbPath=${DB_PATH}...`);
 const mnemo = await createMnemo(config);
