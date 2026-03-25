@@ -47,7 +47,7 @@ const EMBEDDING_PRESETS: Record<EmbeddingPreset, {
   voyage: {
     apiKeyEnv: "VOYAGE_API_KEY",
     baseURL: "https://api.voyageai.com/v1",
-    model: "voyage-3-large",
+    model: "voyage-4",
     dimensions: 1024,
   },
   jina: {

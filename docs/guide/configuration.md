@@ -19,7 +19,7 @@ const mnemo = await createMnemo({ embedding: { ... }, dbPath: './db' });
 |--------|----------|-------|-----------|---------|------|
 | `openai` | OpenAI | text-embedding-3-small | 1536 | `OPENAI_API_KEY` | ~$0.02/1K |
 | `ollama` | Ollama (local) | bge-m3 | 1024 | none | $0 |
-| `voyage` | Voyage AI | voyage-3-large | 1024 | `VOYAGE_API_KEY` | ~$0.06/1K |
+| `voyage` | Voyage AI | voyage-4 | 1024 | `VOYAGE_API_KEY` | ~$0.06/1K |
 | `jina` | Jina AI | jina-embeddings-v3 | 1024 | `JINA_API_KEY` | ~$0.02/1K |
 
 ## Full Config Reference
@@ -97,6 +97,6 @@ const mnemo = await createMnemo({
 |----------|---------|---------------|
 | OpenAI | `https://api.openai.com/v1` (default) | `text-embedding-3-small` |
 | Ollama | `http://localhost:11434/v1` | `bge-m3` |
-| Voyage | `https://api.voyageai.com/v1` | `voyage-3-large` |
+| Voyage | `https://api.voyageai.com/v1` | `voyage-4` |
 | Jina | `https://api.jina.ai/v1` | `jina-embeddings-v3` |
 | Any OpenAI-compatible | Your endpoint | Your model |

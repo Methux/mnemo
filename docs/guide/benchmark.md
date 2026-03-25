@@ -4,7 +4,7 @@ Mnemo is evaluated on [LOCOMO](https://github.com/snap-research/locomo), a bench
 
 ## Results
 
-**Best configuration: Voyage voyage-3-large + candidatePoolSize=40**
+**Best configuration: Voyage voyage-4 + candidatePoolSize=40**
 
 | Category | Accuracy | Description |
 |----------|----------|-------------|
@@ -26,7 +26,7 @@ Mnemo's accuracy improved significantly through systematic architecture iteratio
 | + All-facts extraction | 76.1% | Better memory extraction from conversations |
 | + Improved extraction | 80.3% | Refined LLM extraction prompts |
 | + BM25 fusion | 82.4% | Added keyword search path |
-| + Voyage voyage-3-large | 84.4% | Upgraded embedding model |
+| + Voyage voyage-4 | 84.4% | Upgraded embedding model |
 | + Pool size 40 + tuning | **85.2%** | Increased candidate pool, optimized RRF |
 
 ## How We Test
@@ -65,7 +65,7 @@ All frameworks tested under identical conditions using our [open-source benchmar
 
 | Framework | Accuracy | Ingestion Time | Config |
 |-----------|----------|---------------|--------|
-| **Mnemo Pro** | **85.2%** | — | Voyage voyage-3-large, BM25, rerank-2, pool=40 |
+| **Mnemo Pro** | **85.2%** | — | Voyage voyage-4, BM25, rerank-2, pool=40 |
 | **Mnemo Core** | **46.4%** | 4.7 min | OpenAI text-embedding-3-small, vector only |
 | **Mem0** (default config) | **~31.7%** | 73 min | `Memory()` default — OpenAI embedding + LLM extraction |
 | Baseline (no memory) | 0% | 0s | Control — no retrieval |

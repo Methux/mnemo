@@ -65,7 +65,7 @@ const mnemo = await createMnemo({
 |--------|----------|-------|-----------|---------|
 | `openai` | OpenAI | text-embedding-3-small | 1536 | `OPENAI_API_KEY` |
 | `ollama` | Ollama (local) | bge-m3 | 1024 | none needed |
-| `voyage` | Voyage AI | voyage-3-large | 1024 | `VOYAGE_API_KEY` |
+| `voyage` | Voyage AI | voyage-4 | 1024 | `VOYAGE_API_KEY` |
 | `jina` | Jina AI | jina-embeddings-v3 | 1024 | `JINA_API_KEY` |
 
 ## Using a Different Backend

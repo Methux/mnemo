@@ -437,7 +437,7 @@ tr:hover td{background:var(--bg3);}
           <div class="card-sub">vectors indexed | p99 latency: 18ms</div>
           <div style="margin-top:8px;font-size:12px;color:var(--text3);">
             <div>Table: memories | Dim: 1024</div>
-            <div>Model: voyage-3-large</div>
+            <div>Model: voyage-4</div>
             <div>BM25 partitions: 6 (1 rebuilding)</div>
           </div>
         </div>
@@ -1605,7 +1605,7 @@ function renderArchitecture(){
     {name:'S0 Preprocess',sub:'query expand',status:'ok'},
     {name:'S1 Resonance',sub:'gate check',status:'ok'},
     {name:'S2 Multi-hop',sub:'query expand',status:'ok'},
-    {name:'S3a Vector',sub:'voyage-3-large',status:'ok'},
+    {name:'S3a Vector',sub:'voyage-4',status:'ok'},
     {name:'S3b BM25',sub:'date expand',status:'ok'},
     {name:'S3c Graphiti',sub:'search+spread',status:'ok'},
     {name:'S4 RRF',sub:'k=60 fusion',status:'ok'},
@@ -1633,7 +1633,7 @@ function renderArchitecture(){
     {comp:'LanceDB',current:'0.15.0',required:'>=0.12.0',ok:true,notes:'Vector + BM25 hybrid'},
     {comp:'Neo4j',current:'5.26-community',required:'>=5.0',ok:true,notes:'APOC plugin enabled'},
     {comp:'Graphiti Service',current:'1.0.2',required:'>=1.0.0',ok:true,notes:'5 endpoints active'},
-    {comp:'Voyage Embeddings',current:'voyage-3-large',required:'-',ok:true,notes:'1024 dim, dual-task'},
+    {comp:'Voyage Embeddings',current:'voyage-4',required:'-',ok:true,notes:'1024 dim, dual-task'},
     {comp:'Voyage Rerank',current:'rerank-2',required:'-',ok:true,notes:'Cross-encoder'},
     {comp:'GPT-4.1 (extraction)',current:'gpt-4.1',required:'-',ok:true,notes:'SmartExtractor LLM'},
     {comp:'Haiku 4.5 (hook)',current:'claude-haiku-4-5',required:'-',ok:true,notes:'Contradiction classifier'},

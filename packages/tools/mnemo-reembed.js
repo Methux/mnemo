@@ -2,7 +2,7 @@
 /**
  * mnemo-reembed — Embedding Model Migration Tool
  *
- * When you change embedding models (e.g. voyage-3-large → text-embedding-3-large),
+ * When you change embedding models (e.g. voyage-4 → text-embedding-3-large),
  * all existing vectors become incompatible. This tool re-embeds every memory
  * with the new model, preserving all metadata.
  *

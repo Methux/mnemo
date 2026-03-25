@@ -238,7 +238,7 @@ Mnemo is a framework — **you bring your own models**. Choose a setup that fits
 |:---|:---|:---|:---|:---:|
 | **Local** | Ollama bge-m3 | Ollama qwen3:8b | Ollama bge-reranker | **$0/mo** |
 | **Hybrid** | OpenAI text-embedding-3-small | GPT-4.1-mini | Jina reranker | ~$5/mo |
-| **Cloud** | Voyage voyage-3-large | GPT-4.1 | Voyage rerank-2 | ~$45/mo |
+| **Cloud** | Voyage voyage-4 | GPT-4.1 | Voyage rerank-2 | ~$45/mo |
 
 > These are **your own API costs**, not Mnemo subscription fees. All setups use the same Core/Pro features — the difference is model quality.
 

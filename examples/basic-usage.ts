@@ -15,7 +15,7 @@ async function main() {
       provider: "openai-compatible",
       apiKey: process.env.VOYAGE_API_KEY!,
       baseURL: "https://api.voyageai.com/v1",
-      model: "voyage-3-large",
+      model: "voyage-4",
       dimensions: 1024,
     },
     dbPath: "./my-memory-db",

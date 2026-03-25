@@ -103,7 +103,7 @@ OpenClaw 的记忆系统采用 **双引擎存储 + 多通道写入 + 10级检索
 
 ### LanceDB（向量数据库）
 
-- voyage-3-large 1024d · hybrid (vector + BM25 FTS)
+- voyage-4 1024d · hybrid (vector + BM25 FTS)
 - 10,000 条 · scope 隔离 (6 bot)
 - tier: core / working / peripheral
 - 每日 JSONL 全量备份 + MD Mirror 镜像

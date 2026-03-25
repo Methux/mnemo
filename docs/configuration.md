@@ -7,7 +7,7 @@
   "embedding": {
     "provider": "openai-compatible",
     "apiKey": "${VOYAGE_API_KEY}",
-    "model": "voyage-3-large"
+    "model": "voyage-4"
   },
   "dbPath": "./memory-db"
 }
@@ -25,7 +25,7 @@ See [config/mnemo.example.json](../config/mnemo.example.json) for a full example
 | provider | string | "openai-compatible" | Embedding provider |
 | apiKey | string | — | API key (supports `${ENV_VAR}` syntax) |
 | baseURL | string | — | API base URL |
-| model | string | "voyage-3-large" | Model name |
+| model | string | "voyage-4" | Model name |
 | dimensions | integer | 1024 | Vector dimensions |
 
 ### decay
