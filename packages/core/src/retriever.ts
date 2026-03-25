@@ -22,13 +22,9 @@ let _computeEffectiveHalfLife: ((hl: number, ac: number, la: number, rf?: number
 let _recordQuery: ((...args: unknown[]) => void) | null = null;
 
 if (requirePro("access-tracking")) {
-  import("./access-tracker.js").then((mod) => {
+  import("@mnemoai/" + "pro").then((mod) => {
     _parseAccessMetadata = mod.parseAccessMetadata;
     _computeEffectiveHalfLife = mod.computeEffectiveHalfLife;
-  }).catch(() => {});
-}
-if (requirePro("query-tracking")) {
-  import("./query-tracker.js").then((mod) => {
     _recordQuery = mod.recordQuery;
   }).catch(() => {});
 }

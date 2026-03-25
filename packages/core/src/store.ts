@@ -26,26 +26,24 @@ let _auditUpdate: ((...args: unknown[]) => void) | null = null;
 let _auditDelete: ((...args: unknown[]) => void) | null = null;
 let _auditExpire: ((...args: unknown[]) => void) | null = null;
 
-if (requirePro("audit-log")) {
-  import("./audit-log.js").then((mod) => {
-    _auditCreate = mod.auditCreate;
-    _auditUpdate = mod.auditUpdate;
-    _auditDelete = mod.auditDelete;
-    _auditExpire = mod.auditExpire;
-  }).catch(() => {});
-}
-
-// Pro: WAL (Write-Ahead Log) — graceful degradation without license
-// TODO: type these with actual WAL function signatures from wal-recovery.ts
+// Pro: audit log + WAL — loaded from @mnemoai/pro if available
 let walAppend: ((...args: unknown[]) => Promise<void>) | null = null;
 let walMarkCommitted: ((...args: unknown[]) => Promise<void>) | null = null;
 let walMarkFailed: ((...args: unknown[]) => Promise<void>) | null = null;
 
-if (requirePro("wal")) {
-  import("./wal-recovery.js").then((mod) => {
-    walAppend = mod.walAppend;
-    walMarkCommitted = mod.walMarkCommitted;
-    walMarkFailed = mod.walMarkFailed;
+if (requirePro("audit-log") || requirePro("wal")) {
+  import("@mnemoai/" + "pro").then((mod) => {
+    if (mod.auditCreate) {
+      _auditCreate = mod.auditCreate;
+      _auditUpdate = mod.auditUpdate;
+      _auditDelete = mod.auditDelete;
+      _auditExpire = mod.auditExpire;
+    }
+    if (mod.walAppend) {
+      walAppend = mod.walAppend;
+      walMarkCommitted = mod.walMarkCommitted;
+      walMarkFailed = mod.walMarkFailed;
+    }
   }).catch(() => {});
 }
 
