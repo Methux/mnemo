@@ -35,8 +35,8 @@ Most memory frameworks claim features without proving they help. Mnemo takes a d
 
 Compared current parameters against a proposed optimization using 12 realistic memories across 4 time horizons:
 
-**Config A (Current):** `importanceModulation=1.5, salienceCoeff=0.5, intrinsicCoeff=0.3`
-**Config B (Candidate):** `importanceModulation=1.0, salienceCoeff=0.65, intrinsicCoeff=0.4`
+**Config A (Current):** Production parameters
+**Config B (Candidate):** Alternative with lower importance modulation, higher salience weight
 
 | Metric | A | B | Winner |
 |--------|---|---|--------|
@@ -51,7 +51,7 @@ Compared current parameters against a proposed optimization using 12 realistic m
 
 ## Key Findings
 
-1. **`importanceModulation` is the strongest factor** — `exp(1.5 × 0.7) ≈ 2.86x` half-life amplification dominates the decay formula
+1. **Importance modulation is the strongest factor** — exponential half-life amplification dominates the decay formula
 2. **Salience is a secondary but essential signal** — its value is greatest at 60d+ horizons and for peripheral-tier memories
 3. **Every module is load-bearing** — no component can be safely removed without measurable quality loss
 4. **Parameters are at the sweet spot** — A/B testing confirmed no adjustment needed
