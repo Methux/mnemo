@@ -84,13 +84,13 @@ We also tested on [LongMemEval](https://github.com/xiaowu0162/LongMemEval), a 50
 
 **Preliminary results** (20 questions, single-session-user category):
 
-| Framework | Accuracy | Sample |
-|-----------|----------|--------|
-| **Mnemo Core** | **90.0%** | 20 QA (single-session-user) |
+| Framework | Accuracy | Sample | Notes |
+|-----------|----------|--------|-------|
+| **Mnemo Core** | **90.0%** | 20 QA (single-session-user) | OpenAI text-embedding-3-small, vector only |
+| **Mnemo Pro** | Pending | — | Requires full pipeline (BM25 + rerank) in server; see LOCOMO results above |
+| **Zep** (self-reported) | "up to 18.5% over baseline" | 500 QA | No absolute accuracy published; tested on their cloud platform |
 
-Zep reports "aggregate accuracy improvement of up to 18.5% over baseline" on LongMemEval but does not publish absolute accuracy numbers.
-
-Note: This is a partial result covering only one category. Full 500-question evaluation across all categories is in progress.
+Note: Mnemo results are preliminary, covering only the single-session-user category. Full 500-question evaluation across all 6 categories is in progress. Zep's numbers are self-reported from their product page — we have not independently verified them.
 
 ## Notes
 

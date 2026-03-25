@@ -43,7 +43,7 @@ if (process.env.MNEMO_PRESET) {
 } else if (process.env.OPENAI_API_KEY || process.env.MNEMO_API_KEY) {
   config.embedding = {
     provider: "openai-compatible",
-    apiKey: process.env.OPENAI_API_KEY || process.env.MNEMO_API_KEY,
+    apiKey: process.env.MNEMO_API_KEY || process.env.OPENAI_API_KEY,
     baseURL: process.env.MNEMO_EMBEDDING_BASE_URL || undefined,
     model: process.env.MNEMO_EMBEDDING_MODEL || "text-embedding-3-small",
     dimensions: parseInt(process.env.MNEMO_EMBEDDING_DIMENSIONS || "1536", 10),
