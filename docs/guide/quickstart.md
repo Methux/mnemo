@@ -81,9 +81,20 @@ const mnemo = await createMnemo({
 
 See [Storage Backends](/guide/backends) for all options.
 
+## Upgrading to Pro
+
+```bash
+npm install @mnemoai/pro
+export MNEMO_PRO_KEY="your-license-key"
+# Pro features activate automatically — no code changes needed
+```
+
+See [Mnemo Pro](/pro) for features and pricing.
+
 ## Next Steps
 
 - [Local Setup ($0)](/guide/ollama) — Run everything locally with Ollama
 - [Configuration](/guide/configuration) — All config options explained
 - [API Reference](/api/) — Full API documentation
 - [Storage Backends](/guide/backends) — LanceDB, Qdrant, Chroma, PGVector
+- [Mnemo Pro](/pro) — WAL, reflection, MCP, self-improvement

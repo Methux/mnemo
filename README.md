@@ -174,6 +174,7 @@ docker compose up -d     # starts Neo4j + Graphiti + Dashboard
 | Package | Platform | Install |
 |:---|:---|:---|
 | [@mnemoai/core](https://www.npmjs.com/package/@mnemoai/core) | npm | `npm install @mnemoai/core` |
+| @mnemoai/pro | npm (private) | `npm install @mnemoai/pro` (requires license) |
 | [@mnemoai/server](https://www.npmjs.com/package/@mnemoai/server) | npm | `npx @mnemoai/server` |
 | [@mnemoai/vercel-ai](https://www.npmjs.com/package/@mnemoai/vercel-ai) | npm | `npm install @mnemoai/vercel-ai` |
 | [mnemo-memory](https://pypi.org/project/mnemo-memory/) | PyPI | `pip install mnemo-memory` |
@@ -215,7 +216,10 @@ Everything in Core, plus production features:
 | Audit log | GDPR-compliant append-only JSONL |
 
 ```bash
-# Activate Pro
+# Install Pro (requires license — get one at m-nemo.ai/pro)
+npm install @mnemoai/pro
+
+# Activate
 export MNEMO_PRO_KEY="your_license_key"
 ```
 
