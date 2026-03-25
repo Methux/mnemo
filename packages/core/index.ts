@@ -52,18 +52,20 @@ let createMemoryUpgrader: any = () => null;
 type MdMirrorWriter = any;
 
 if (isProLicensed()) {
-  // Load all Pro modules — these are available but license-gated
+  // Load Pro modules dynamically — these are distributed separately via @mnemoai/pro
+  // Using string concatenation to prevent bundlers from statically analyzing these imports
+  const _p = (name: string) => import(/* @vite-ignore */ "./src/" + name + ".js");
   Promise.all([
-    import("./src/tools.js"),
-    import("./src/self-improvement-files.js"),
-    import("./src/reflection-retry.js"),
-    import("./src/session-recovery.js"),
-    import("./src/reflection-store.js"),
-    import("./src/reflection-slices.js"),
-    import("./src/reflection-event-store.js"),
-    import("./src/reflection-mapped-metadata.js"),
-    import("./src/wal-recovery.js"),
-    import("./src/memory-upgrader.js"),
+    _p("tools"),
+    _p("self-improvement-files"),
+    _p("reflection-retry"),
+    _p("session-recovery"),
+    _p("reflection-store"),
+    _p("reflection-slices"),
+    _p("reflection-event-store"),
+    _p("reflection-mapped-metadata"),
+    _p("wal-recovery"),
+    _p("memory-upgrader"),
   ]).then(([tools, selfImprove, reflRetry, sessRecov, reflStore, reflSlices, reflEvent, reflMapped, wal, upgrader]) => {
     registerAllMemoryTools = tools.registerAllMemoryTools;
     appendSelfImprovementEntry = selfImprove.appendSelfImprovementEntry;

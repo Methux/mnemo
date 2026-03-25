@@ -16,7 +16,11 @@ import {
   buildDedupPrompt,
   buildMergePrompt,
 } from "./extraction-prompts.js";
-import { buildLearningsContext } from "./self-improvement-files.js";
+// Pro feature: self-improvement feedback loop (loaded dynamically if available)
+let buildLearningsContext: ((baseDir: string, maxEntries?: number) => Promise<string>) | null = null;
+import("./self-improvement-" + "files.js").then(mod => {
+  buildLearningsContext = mod.buildLearningsContext;
+}).catch(() => { /* Pro module not available */ });
 import {
   type CandidateMemory,
   type DedupDecision,
