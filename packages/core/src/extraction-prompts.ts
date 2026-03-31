@@ -124,9 +124,11 @@ Return JSON:
 
 Notes:
 - Output language should match the dominant language in the conversation
-- Only extract truly valuable personalized information
+- Extract ALL specific personal facts: names, numbers, dates, places, preferences, decisions, plans
+- Preserve exact details — never generalize a specific value (e.g., keep "$800" not "expensive")
+- If facts change or update in the conversation, extract the LATEST value
 - If nothing worth recording, return {"memories": []}
-- Maximum 5 memories per extraction
+- Maximum 10 memories per extraction
 - Preferences should be aggregated by topic`;
 }
 
@@ -249,9 +251,11 @@ ${conversationText}
 
 注意：
 - 输出语言应与对话中的主要语言一致
-- 只提取真正有价值的个性化信息
+- 提取所有具体的个人事实：名字、数字、日期、地点、偏好、决定、计划
+- 保留精确细节——不要将具体值泛化（如保留"$800"而非"很贵"）
+- 如果对话中事实有变更，提取最新值
 - 如果没有值得记录的内容，返回 {"memories": []}
-- 每次提取最多5条记忆
+- 每次提取最多10条记忆
 - 偏好应按主题聚合`;
 }
 

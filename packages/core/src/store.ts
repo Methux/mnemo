@@ -16,6 +16,7 @@ import {
 import { dirname } from "node:path";
 import { buildSmartMetadata, parseSmartMetadata, stringifySmartMetadata } from "./smart-metadata.js";
 import type { SemanticGate } from "./semantic-gate.js";
+import type { LlmClient } from "./llm-client.js";
 import { requirePro } from "./license.js";
 import { log } from "./logger.js";
 
@@ -81,7 +82,7 @@ export interface StoreConfig {
 }
 
 const DEDUP_SIMILARITY_THRESHOLD = 0.92;
-const CONFLICT_SIMILARITY_THRESHOLD = 0.70;
+const CONFLICT_SIMILARITY_THRESHOLD = 0.55;
 
 export interface MetadataPatch {
   [key: string]: unknown;
@@ -268,6 +269,12 @@ export class MemoryStore {
   /** Inject a SemanticGate instance (created externally with an Embedder). */
   setSemanticGate(gate: SemanticGate): void {
     this.semanticGateInstance = gate;
+  }
+
+  /** Inject an LLM client for intelligent contradiction detection. */
+  private llmClient: LlmClient | null = null;
+  setLlmClient(client: LlmClient): void {
+    this.llmClient = client;
   }
 
   get dbPath(): string {
@@ -536,9 +543,23 @@ export class MemoryStore {
             // 1. Both mention the same entity but with different numbers
             // 2. Negation patterns (不/没/no/not + similar keywords)
             // 3. New text explicitly says "changed to" / "改成" / "updated"
-            const hasContradictionSignal =
+            // Fast path: regex for explicit update language
+            let hasContradictionSignal =
               /改成|变成|更新为|换成|不再|取消了|changed to|updated to|no longer|switched to/i.test(newText) ||
               (oldText.match(/\d+/) && newText.match(/\d+/) && cosineSim > 0.80);
+
+            // Store-level LLM contradiction detection (conservative: cosine > 0.70)
+            if (!hasContradictionSignal && this.llmClient && cosineSim > 0.70) {
+              try {
+                const result = await this.llmClient.completeJson<{ contradiction: boolean }>(
+                  `Do these two memories contradict each other? Answer {"contradiction": true} or {"contradiction": false}.\n\nOLD: "${oldText.slice(0, 300)}"\nNEW: "${newText.slice(0, 300)}"`,
+                  "contradiction-detect",
+                );
+                if (result?.contradiction === true) {
+                  hasContradictionSignal = true;
+                }
+              } catch { /* LLM failure: fall back to regex only */ }
+            }
 
             if (hasContradictionSignal) {
               // Audit: record contradiction-based expiration (version history)
@@ -550,6 +571,8 @@ export class MemoryStore {
               const oldImportance = match.entry.importance ?? 0.7;
               existingMeta.expired_at = new Date().toISOString();
               existingMeta.expired_reason = `superseded: ${newText.slice(0, 80)}`;
+              existingMeta.tier = "peripheral";
+              existingMeta.confidence = Math.max(0.05, (existingMeta.confidence ?? 0.7) * 0.15);
               await this.update(
                 match.entry.id,
                 {
@@ -557,6 +580,25 @@ export class MemoryStore {
                   metadata: stringifySmartMetadata(existingMeta),
                 },
               );
+
+              // Contradiction cascade: demote neighbors of the contradicted memory
+              try {
+                if (match.entry.vector?.length) {
+                  const neighbors = await this.vectorSearch(match.entry.vector, 5, 0.3);
+                  for (const neighbor of neighbors) {
+                    if (neighbor.entry.id === match.entry.id) continue;
+                    const neighborSim = 2 - 1 / neighbor.score;
+                    if (neighborSim < 0.80) continue;
+                    const neighborMeta = parseSmartMetadata(neighbor.entry.metadata, neighbor.entry);
+                    if (neighborMeta.tier === "core" && (neighborMeta.confidence ?? 0.7) > 0.8) continue;
+                    neighborMeta.confidence = Math.max(0.1, (neighborMeta.confidence ?? 0.7) * 0.5);
+                    await this.update(neighbor.entry.id, {
+                      importance: Math.max(0.1, (neighbor.entry.importance ?? 0.7) * 0.5),
+                      metadata: stringifySmartMetadata(neighborMeta),
+                    });
+                  }
+                }
+              } catch { /* cascade failure is non-critical */ }
             }
           }
         }

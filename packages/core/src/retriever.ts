@@ -220,6 +220,8 @@ export interface RetrievalResult extends MemorySearchResult {
     fused?: { score: number };
     reranked?: { score: number };
   };
+  /** Enriched text with L1 overview for precision. Prefer over entry.text when detail is needed. */
+  detail?: string;
 }
 
 // ============================================================================
@@ -232,7 +234,7 @@ export const DEFAULT_RETRIEVAL_CONFIG: RetrievalConfig = {
   bm25Weight: 0.3,
   minScore: 0.3,
   rerank: "cross-encoder",
-  candidatePoolSize: 20,
+  candidatePoolSize: 30,
   recencyHalfLifeDays: 14,
   recencyWeight: 0.1,
   filterNoise: true,
@@ -686,18 +688,39 @@ export class MemoryRetriever {
     const tLanceMs = Math.round(performance.now() - tLance0);
     const tGraphitiMs = Math.round(performance.now() - tGraphiti0);
 
-    // Merge: LanceDB results first, append non-duplicate Graphiti facts
+    // ── Adaptive Graphiti fusion ──
+    // Strategy: LanceDB is the primary source. Graphiti supplements based on
+    // LanceDB confidence. When LanceDB top scores are high, Graphiti adds little;
+    // when LanceDB is uncertain, Graphiti can fill gaps.
     const lanceTexts = new Set(lanceResults.map(r => r.entry.text.slice(0, 80)));
     const uniqueGraphiti = graphitiResults.filter(
       r => !lanceTexts.has(r.entry.text.slice(0, 80))
     );
 
+    // Compute LanceDB confidence: median score of top results
+    const lanceConfidence = lanceResults.length > 0
+      ? lanceResults[Math.min(2, lanceResults.length - 1)].score  // 3rd-best score
+      : 0;
+
+    // Adaptive Graphiti budget: fewer slots when LanceDB is confident
+    // High confidence (>0.7) → 1 Graphiti slot; Low confidence (<0.3) → up to 4 slots
+    const graphitiBudget = Math.max(0, Math.round((1 - lanceConfidence) * 5));
+    const cappedGraphiti = uniqueGraphiti.slice(0, graphitiBudget);
+
+    // Merge: LanceDB fills primary slots, Graphiti fills remaining
+    // LanceDB gets at least (limit - graphitiBudget) guaranteed slots
+    const lanceSlots = Math.max(safeLimit - cappedGraphiti.length, Math.ceil(safeLimit * 0.7));
+    const combined = [
+      ...lanceResults.slice(0, lanceSlots),
+      ...cappedGraphiti,
+    ];
+
     // ── 跨源统一 Rerank（所有结果都过 reranker）──
     let merged: RetrievalResult[];
     let rerankCount = 0;
     const tRerank0 = performance.now();
-    const combined = [...lanceResults, ...uniqueGraphiti];
-    if (this.config.rerank !== "none" && this.config.rerankApiKey && combined.length > 0) {
+    // Adaptive: skip rerank when candidate set is small — reranker adds noise at low N
+    if (this.config.rerank !== "none" && this.config.rerankApiKey && combined.length >= 20) {
       const queryVector = await this.embedder.embedQuery(query);
       merged = await this.rerankResults(query, queryVector, combined);
       rerankCount = merged.length;
@@ -707,11 +730,18 @@ export class MemoryRetriever {
     }
     const tRerankMs = Math.round(performance.now() - tRerank0);
 
-    // Record access for reinforcement (manual recall only)
+    // Record access for reinforcement — top-1 only to prevent stale memories from
+    // accumulating access counts by co-retrieval proximity
     if (this.accessTracker && source === "manual" && merged.length > 0) {
-      this.accessTracker.recordAccess(
-        merged.filter(r => !r.entry.id.startsWith("graphiti-")).map(r => r.entry.id)
-      );
+      const top = merged[0];
+      if (!top.entry.id.startsWith("graphiti-") && top.score >= 0.5) {
+        this.accessTracker.recordAccess([top.entry.id]);
+      }
+    }
+
+    // Tier promotion/demotion based on access patterns (Pro only)
+    if (source === "manual" && merged.length > 0) {
+      this.recordAccessAndMaybeTransition(merged).catch(() => {});
     }
 
     // ── Fire-and-forget tracking log ──
@@ -744,6 +774,16 @@ export class MemoryRetriever {
       resonancePass: true,
     });
 
+    // Enrich results with L1 overview for precision (optional field, entry.text unchanged)
+    for (const r of merged) {
+      try {
+        const meta = JSON.parse(r.entry.metadata || "{}");
+        if (meta.l1_overview) {
+          (r as RetrievalResult).detail = `${r.entry.text}\n${meta.l1_overview}`;
+        }
+      } catch { /* ignore */ }
+    }
+
     return merged;
   }
 
@@ -762,9 +802,17 @@ export class MemoryRetriever {
     );
 
     // Filter by category if specified
-    const filtered = category
+    const catFiltered = category
       ? results.filter((r) => r.entry.category === category)
       : results;
+
+    // Filter expired/contradicted memories (fail-open on parse errors)
+    const filtered = catFiltered.filter((r) => {
+      try {
+        const meta = JSON.parse(r.entry.metadata || "{}");
+        return !meta.expired_at;
+      } catch { return true; }
+    });
 
     const mapped = filtered.map(
       (result, index) =>
@@ -806,8 +854,8 @@ export class MemoryRetriever {
     // Compute query embedding once, reuse for vector search + reranking
     const queryVector = await this.embedder.embedQuery(query);
 
-    // Run vector, BM25, and Graphiti searches in parallel (3-way)
-    const [vectorResults, bm25Results, graphitiResults] = await Promise.all([
+    // Run vector + BM25 in parallel (Graphiti handled in outer retrieve())
+    const [vectorResults, bm25Results] = await Promise.all([
       this.runVectorSearch(
         queryVector,
         candidatePoolSize,
@@ -815,17 +863,23 @@ export class MemoryRetriever {
         category,
       ),
       this.runBM25Search(query, candidatePoolSize, scopeFilter, category),
-      graphitiSpreadSearch(query, "default", 3, 3),
     ]);
 
     // Fuse results using RRF (async: validates BM25-only entries exist in store)
-    // Graphiti results merged as 3rd signal
-    const fusedResults = await this.fuseResults(vectorResults, bm25Results, graphitiResults);
+    const fusedResults = await this.fuseResults(vectorResults, bm25Results);
 
     // Apply minimum score threshold
-    const filtered = fusedResults.filter(
+    const scoreFiltered = fusedResults.filter(
       (r) => r.score >= this.config.minScore,
     );
+
+    // Filter expired/contradicted memories (fail-open on parse errors)
+    const filtered = scoreFiltered.filter((r) => {
+      try {
+        const meta = JSON.parse(r.entry.metadata || "{}");
+        return !meta.expired_at;
+      } catch { return true; }
+    });
 
     // Rerank if enabled
     const reranked =
@@ -913,7 +967,6 @@ export class MemoryRetriever {
   private async fuseResults(
     vectorResults: Array<MemorySearchResult & { rank: number }>,
     bm25Results: Array<MemorySearchResult & { rank: number }>,
-    graphitiResults: Array<MemorySearchResult & { rank: number }> = [],
   ): Promise<RetrievalResult[]> {
     // Create maps for quick lookup
     const vectorMap = new Map<string, MemorySearchResult & { rank: number }>();
@@ -986,21 +1039,7 @@ export class MemoryRetriever {
       });
     }
 
-    // Inject Graphiti graph traversal results as 3rd signal.
-    // Synthetic entries (not in LanceDB) — scored slightly lower to avoid dominating,
-    // but provide coverage for relational queries (e.g. "Alice's clients", "who did Bob meet?").
-    for (const gr of graphitiResults) {
-      fusedResults.push({
-        entry: gr.entry,
-        score: gr.score * 0.85,
-        sources: {
-          graphiti: { score: gr.score, rank: gr.rank },
-          fused: { score: gr.score * 0.85 },
-        },
-      });
-    }
-
-    // Sort by fused score descending
+    // Sort by fused score descending (Graphiti handled in outer retrieve())
     return fusedResults.sort((a, b) => b.score - a.score);
   }
 
@@ -1028,7 +1067,16 @@ export class MemoryRetriever {
         const model = this.config.rerankModel || (isLocalRerank ? "bge-reranker-v2-m3" : "jina-reranker-v3");
         const endpoint =
           this.config.rerankEndpoint || (isLocalRerank ? "http://127.0.0.1:11434/api/rerank" : "https://api.jina.ai/v1/rerank");
-        const documents = results.map((r) => r.entry.text);
+        // Feed L0+L1 to reranker for better semantic matching
+        const documents = results.map((r) => {
+          try {
+            const meta = JSON.parse(r.entry.metadata || "{}");
+            const overview = meta.l1_overview || "";
+            return overview ? `${r.entry.text}\n${overview}` : r.entry.text;
+          } catch {
+            return r.entry.text;
+          }
+        });
 
         // Build provider-specific request
         const { headers, body } = buildRerankRequest(
@@ -1120,6 +1168,10 @@ export class MemoryRetriever {
     // Fallback: lightweight cosine similarity rerank
     try {
       const reranked = results.map((result) => {
+        // Skip cosine for entries without valid vectors (e.g. Graphiti facts)
+        if (!result.entry.vector || result.entry.vector.length === 0 || !queryVector || queryVector.length === 0) {
+          return result;
+        }
         const cosineScore = cosineSimilarity(queryVector, result.entry.vector);
         const combinedScore = result.score * 0.7 + cosineScore * 0.3;
 
@@ -1209,11 +1261,18 @@ export class MemoryRetriever {
       score: result.score,
     }));
 
+    // Adaptive: blend decay influence based on corpus size.
+    // /500 ensures decay is gentle at small corpora (14% at ~140 memories)
+    // and dominant at large corpora (80% at ~1000 memories).
+    const alpha = Math.max(0, 1 - results.length / 500);
     this.decayEngine.applySearchBoost(scored);
 
     const reranked = results.map((result, index) => ({
       ...result,
-      score: clamp01(scored[index].score, result.score * 0.3),
+      score: clamp01(
+        alpha * result.score + (1 - alpha) * scored[index].score,
+        result.score * 0.3,
+      ),
     }));
 
     return reranked.sort((a, b) => b.score - a.score);
@@ -1346,7 +1405,12 @@ export class MemoryRetriever {
     const scored = pairs.map(p => ({ memory: p.memory, score: p.r.score }));
     this.decayEngine.applySearchBoost(scored, now);
 
-    const boosted = pairs.map((p, i) => ({ ...p.r, score: scored[i].score }));
+    // Adaptive blend: at small N, trust base score more; at large N, trust decay more
+    const alpha = Math.max(0, 1 - results.length / 200);
+    const boosted = pairs.map((p, i) => ({
+      ...p.r,
+      score: alpha * p.r.score + (1 - alpha) * scored[i].score,
+    }));
     return boosted.sort((a, b) => b.score - a.score);
   }
 
@@ -1360,7 +1424,7 @@ export class MemoryRetriever {
     if (!this.decayEngine && !this.tierManager) return;
 
     const now = Date.now();
-    const toUpdate = results.slice(0, 3);
+    const toUpdate = results.slice(0, 1);
 
     for (const r of toUpdate) {
       const { memory, meta } = getDecayableFromEntry(r.entry);

@@ -356,12 +356,20 @@ export class Embedder {
   }
 
   /**
-   * Call embeddings.create with automatic key rotation on rate-limit errors.
-   * Tries each key in the pool at most once before giving up.
+   * Detect transient network errors that are safe to retry.
+   */
+  private isTransientError(error: unknown): boolean {
+    const msg = error instanceof Error ? error.message : String(error);
+    return /ECONNRESET|ECONNREFUSED|ETIMEDOUT|ENETUNREACH|fetch failed|socket disconnected|Connection error|network/i.test(msg);
+  }
+
+  /**
+   * Call embeddings.create with automatic key rotation on rate-limit errors
+   * and retry on transient network errors (ECONNRESET, timeout, etc.).
    */
   // TODO: type payload as OpenAI.EmbeddingCreateParams & extra provider fields; type return as CreateEmbeddingResponse
   private async embedWithRetry(payload: any): Promise<any> {
-    const maxAttempts = this.clients.length;
+    const maxAttempts = Math.max(this.clients.length, 3);
     let lastError: Error | undefined;
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
@@ -378,16 +386,26 @@ export class Embedder {
           continue;
         }
 
-        // Non-rate-limit error → don't retry, let caller handle (e.g. chunking)
-        if (!this.isRateLimitError(error)) {
+        // Transient network error → wait and retry with same or next client
+        if (this.isTransientError(error) && attempt < maxAttempts - 1) {
+          const backoffMs = Math.min(1000 * 2 ** attempt, 8000);
+          log.info(
+            `Attempt ${attempt + 1}/${maxAttempts} hit transient error (${lastError.message.slice(0, 60)}), retrying in ${backoffMs}ms...`
+          );
+          await new Promise(r => setTimeout(r, backoffMs));
+          continue;
+        }
+
+        // Non-retryable error → don't retry, let caller handle (e.g. chunking)
+        if (!this.isRateLimitError(error) && !this.isTransientError(error)) {
           throw error;
         }
       }
     }
 
-    // All keys exhausted with rate-limit errors
+    // All attempts exhausted
     throw new Error(
-      `All ${maxAttempts} API keys exhausted (rate limited). Last error: ${lastError?.message || "unknown"}`,
+      `All ${maxAttempts} embedding attempts exhausted. Last error: ${lastError?.message || "unknown"}`,
       { cause: lastError }
     );
   }

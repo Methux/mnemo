@@ -222,7 +222,8 @@ export function createDecayEngine(
     applySearchBoost(results, now = Date.now()) {
       for (const r of results) {
         const ds = scoreOne(r.memory, now);
-        const tierFloor = Math.max(getTierFloor(r.memory.tier), ds.composite);
+        const confidenceGatedFloor = getTierFloor(r.memory.tier) * (r.memory.confidence ?? 0.7);
+        const tierFloor = Math.max(confidenceGatedFloor, ds.composite);
         const multiplier = boostMin + ((1 - boostMin) * tierFloor);
         r.score *= Math.min(1, Math.max(boostMin, multiplier));
       }

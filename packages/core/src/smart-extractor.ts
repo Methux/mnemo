@@ -10,6 +10,8 @@
 import type { MemoryStore, MemorySearchResult } from "./store.js";
 import type { Embedder } from "./embedder.js";
 import type { LlmClient } from "./llm-client.js";
+import { appendFile, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import {
   buildExtractionPrompt,
   buildChineseExtractionPrompt,
@@ -41,9 +43,9 @@ import { log as _log } from "./logger.js";
 // Constants
 // ============================================================================
 
-const SIMILARITY_THRESHOLD = 0.7;
+const SIMILARITY_THRESHOLD = 0.50;
 const MAX_SIMILAR_FOR_PROMPT = 3;
-const MAX_MEMORIES_PER_EXTRACTION = 5;
+const MAX_MEMORIES_PER_EXTRACTION = 10;
 const VALID_DECISIONS = new Set<string>(["create", "merge", "skip", "support", "contextualize", "contradict"]);
 
 // ============================================================================
@@ -128,10 +130,27 @@ export class SmartExtractor {
         ? options.scopeFilter
         : [targetScope];
 
-    // Step 1: LLM extraction
-    const candidates = await this.extractCandidates(conversationText);
+    // Step 1: LLM extraction (chunked for long conversations)
+    const maxChars = this.config.extractMaxChars ?? 8000;
+    let allCandidates: CandidateMemory[] = [];
 
-    if (candidates.length === 0) {
+    if (conversationText.length <= maxChars) {
+      // Short conversation — single extraction
+      allCandidates = await this.extractCandidates(conversationText);
+    } else {
+      // Long conversation — extract from each chunk independently
+      const chunks: string[] = [];
+      for (let i = 0; i < conversationText.length; i += maxChars) {
+        chunks.push(conversationText.slice(i, i + maxChars));
+      }
+      this.debugLog(`mnemo: smart-extractor: splitting ${conversationText.length} chars into ${chunks.length} chunks`);
+      for (const chunk of chunks) {
+        const chunkCandidates = await this.extractCandidates(chunk);
+        allCandidates.push(...chunkCandidates);
+      }
+    }
+
+    if (allCandidates.length === 0) {
       this.log("memory-pro: smart-extractor: no memories extracted");
       // LLM returned zero candidates → strongest noise signal → feedback to noise bank
       this.learnAsNoise(conversationText);
@@ -139,11 +158,11 @@ export class SmartExtractor {
     }
 
     this.log(
-      `memory-pro: smart-extractor: extracted ${candidates.length} candidate(s)`,
+      `memory-pro: smart-extractor: extracted ${allCandidates.length} candidate(s)`,
     );
 
     // Step 2: Process each candidate through dedup pipeline
-    for (const candidate of candidates.slice(0, MAX_MEMORIES_PER_EXTRACTION)) {
+    for (const candidate of allCandidates.slice(0, MAX_MEMORIES_PER_EXTRACTION * (Math.ceil(conversationText.length / maxChars) || 1))) {
       try {
         await this.processCandidate(
           candidate,
@@ -156,6 +175,8 @@ export class SmartExtractor {
         this.log(
           `memory-pro: smart-extractor: failed to process candidate [${candidate.category}]: ${String(err)}`,
         );
+        // Save to pending queue so the memory isn't permanently lost
+        await this.appendPending(candidate, targetScope, sessionKey).catch(() => {});
       }
     }
 
@@ -234,11 +255,8 @@ export class SmartExtractor {
   private async extractCandidates(
     conversationText: string,
   ): Promise<CandidateMemory[]> {
-    const maxChars = this.config.extractMaxChars ?? 8000;
-    const truncated =
-      conversationText.length > maxChars
-        ? conversationText.slice(-maxChars)
-        : conversationText;
+    // Chunking is now handled by extractAndPersist; this receives pre-chunked text
+    const truncated = conversationText;
 
     const user = this.config.user ?? "User";
     let prompt = isCjkDominant(truncated)
@@ -941,5 +959,76 @@ export class SmartExtractor {
       default:
         return 0.5;
     }
+  }
+
+  // --------------------------------------------------------------------------
+  // Pending Queue — saves failed candidates for later retry
+  // --------------------------------------------------------------------------
+
+  private get pendingPath(): string {
+    return join(this.store.dbPath, "pending-memories.jsonl");
+  }
+
+  private async appendPending(
+    candidate: CandidateMemory,
+    scope: string,
+    sessionKey: string,
+  ): Promise<void> {
+    const entry = JSON.stringify({
+      candidate,
+      scope,
+      sessionKey,
+      failedAt: new Date().toISOString(),
+    });
+    await appendFile(this.pendingPath, entry + "\n");
+    this.log(`memory-pro: smart-extractor: queued failed candidate for retry [${candidate.category}]`);
+  }
+
+  /**
+   * Process any candidates that previously failed embedding.
+   * Call this when the embedding API is likely healthy (e.g. start of new extraction).
+   * Returns the number of successfully recovered memories.
+   */
+  async repairPending(scopeFilter?: string[]): Promise<number> {
+    let raw: string;
+    try {
+      raw = await readFile(this.pendingPath, "utf8");
+    } catch {
+      return 0; // No pending file = nothing to repair
+    }
+
+    const lines = raw.trim().split("\n").filter(Boolean);
+    if (lines.length === 0) return 0;
+
+    this.log(`memory-pro: smart-extractor: repairing ${lines.length} pending memories`);
+
+    const remaining: string[] = [];
+    let recovered = 0;
+
+    for (const line of lines) {
+      try {
+        const { candidate, scope, sessionKey } = JSON.parse(line);
+        const filter = scopeFilter ?? [scope];
+        const stats: ExtractionStats = { created: 0, merged: 0, skipped: 0 };
+        await this.processCandidate(candidate, sessionKey, stats, scope, filter);
+        recovered += stats.created + stats.merged;
+      } catch {
+        // Still failing — keep in queue for next repair
+        remaining.push(line);
+      }
+    }
+
+    // Rewrite file with only the still-failing entries (or delete if empty)
+    if (remaining.length > 0) {
+      await writeFile(this.pendingPath, remaining.join("\n") + "\n");
+    } else {
+      await writeFile(this.pendingPath, "");
+    }
+
+    if (recovered > 0) {
+      this.log(`memory-pro: smart-extractor: recovered ${recovered} pending memories, ${remaining.length} still pending`);
+    }
+
+    return recovered;
   }
 }
