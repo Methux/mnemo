@@ -171,10 +171,12 @@ export function createDecayEngine(
    * For memories with >1 access, a recentness bonus is applied.
    */
   function frequency(memory: DecayableMemory): number {
-    // Cap effective access count to prevent runaway frequency advantage.
-    // Without cap: accessCount=50 → base≈1.0, overwhelming relevance signal.
-    // With cap=5: max base=0.632, keeping relevance as dominant factor.
-    const effectiveCount = Math.min(memory.accessCount, 5);
+    // Soft cap: logarithmic dampening beyond threshold=5.
+    // Prevents runaway frequency (count=50 → base≈1.0) while preserving
+    // discriminating power at large scale (count=50 → effective≈10.5 → base≈0.88).
+    const effectiveCount = memory.accessCount <= 5
+      ? memory.accessCount
+      : 5 + Math.log2(memory.accessCount - 4);
     const base = 1 - Math.exp(-effectiveCount / 5);
     if (effectiveCount <= 1) return base;
 
