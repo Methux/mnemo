@@ -863,9 +863,11 @@ export class MemoryRetriever {
     scopeFilter?: string[],
     category?: string,
   ): Promise<RetrievalResult[]> {
+    // Ensure candidate pool is large enough for quality reranking.
+    // At 400+ memories, pool=50 only covers 12.5% — too narrow for precision.
     const candidatePoolSize = Math.max(
       this.config.candidatePoolSize,
-      limit * 2,
+      limit * 4,
     );
 
     // Compute query embedding once, reuse for vector search + reranking

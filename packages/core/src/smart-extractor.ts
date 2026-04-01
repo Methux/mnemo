@@ -137,7 +137,7 @@ export class SmartExtractor {
     try {
       const queryText = conversationText.slice(-2000); // tail for recency
       const queryVector = await this.embedder.embedQuery(queryText);
-      const preResults = await this.store.vectorSearch(queryVector, 5, 0.3, scopeFilter);
+      const preResults = await this.store.vectorSearch(queryVector, 10, 0.25, scopeFilter);
       preSearchContext = preResults.map(r => ({
         id: r.entry.id,
         text: r.entry.text,
