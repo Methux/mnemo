@@ -447,6 +447,8 @@ const RETRIEVAL_LOG_PATH = join(homedir(), ".openclaw", "memory", "retrieval-log
 export class MemoryRetriever {
   private accessTracker: AccessTracker | null = null;
   private tierManager: TierManager | null = null;
+  /** Session-level dedup: memories already surfaced won't be re-injected. */
+  private surfacedIds: Set<string> = new Set();
 
   constructor(
     private store: MemoryStore,
@@ -784,7 +786,18 @@ export class MemoryRetriever {
       } catch { /* ignore */ }
     }
 
-    return merged;
+    // Session-level dedup: filter out memories already surfaced in this session
+    const deduped = merged.filter(r => !this.surfacedIds.has(r.entry.id));
+    for (const r of deduped) {
+      this.surfacedIds.add(r.entry.id);
+    }
+
+    return deduped;
+  }
+
+  /** Reset surfaced IDs (call when session resets). */
+  resetSurfaced(): void {
+    this.surfacedIds.clear();
   }
 
   private async vectorOnlyRetrieval(
