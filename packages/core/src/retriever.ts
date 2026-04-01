@@ -786,13 +786,17 @@ export class MemoryRetriever {
       } catch { /* ignore */ }
     }
 
-    // Session-level dedup: filter out memories already surfaced in this session
-    const deduped = merged.filter(r => !this.surfacedIds.has(r.entry.id));
-    for (const r of deduped) {
-      this.surfacedIds.add(r.entry.id);
+    // Session-level dedup: only for auto-recall (prevents same memory being
+    // injected into context multiple times). Manual queries always return full results.
+    if (source === "auto-recall") {
+      const deduped = merged.filter(r => !this.surfacedIds.has(r.entry.id));
+      for (const r of deduped) {
+        this.surfacedIds.add(r.entry.id);
+      }
+      return deduped;
     }
 
-    return deduped;
+    return merged;
   }
 
   /** Reset surfaced IDs (call when session resets). */
