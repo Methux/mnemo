@@ -130,22 +130,37 @@ export class SmartExtractor {
         ? options.scopeFilter
         : [targetScope];
 
+    // Step 0: Pre-search for existing related memories (contradiction detection context).
+    // The LLM sees these during extraction and can flag contradictions directly —
+    // much more reliable than post-extraction cosine similarity matching.
+    let preSearchContext: Array<{ id: string; text: string; daysAgo: number }> = [];
+    try {
+      const queryText = conversationText.slice(-2000); // tail for recency
+      const queryVector = await this.embedder.embedQuery(queryText);
+      const preResults = await this.store.vectorSearch(queryVector, 5, 0.3, scopeFilter);
+      preSearchContext = preResults.map(r => ({
+        id: r.entry.id,
+        text: r.entry.text,
+        daysAgo: Math.max(0, Math.floor((Date.now() - (r.entry.timestamp || Date.now())) / 86_400_000)),
+      }));
+    } catch {
+      // Pre-search is best-effort; extraction still works without it
+    }
+
     // Step 1: LLM extraction (chunked for long conversations)
     const maxChars = this.config.extractMaxChars ?? 8000;
     let allCandidates: CandidateMemory[] = [];
 
     if (conversationText.length <= maxChars) {
-      // Short conversation — single extraction
-      allCandidates = await this.extractCandidates(conversationText);
+      allCandidates = await this.extractCandidates(conversationText, preSearchContext);
     } else {
-      // Long conversation — extract from each chunk independently
       const chunks: string[] = [];
       for (let i = 0; i < conversationText.length; i += maxChars) {
         chunks.push(conversationText.slice(i, i + maxChars));
       }
       this.debugLog(`mnemo: smart-extractor: splitting ${conversationText.length} chars into ${chunks.length} chunks`);
       for (const chunk of chunks) {
-        const chunkCandidates = await this.extractCandidates(chunk);
+        const chunkCandidates = await this.extractCandidates(chunk, preSearchContext);
         allCandidates.push(...chunkCandidates);
       }
     }
@@ -170,6 +185,7 @@ export class SmartExtractor {
           stats,
           targetScope,
           scopeFilter,
+          preSearchContext,
         );
       } catch (err) {
         this.log(
@@ -254,14 +270,22 @@ export class SmartExtractor {
    */
   private async extractCandidates(
     conversationText: string,
+    existingContext: Array<{ id: string; text: string; daysAgo: number }> = [],
   ): Promise<CandidateMemory[]> {
-    // Chunking is now handled by extractAndPersist; this receives pre-chunked text
     const truncated = conversationText;
 
     const user = this.config.user ?? "User";
     let prompt = isCjkDominant(truncated)
       ? buildChineseExtractionPrompt(truncated, user)
       : buildExtractionPrompt(truncated, user);
+
+    // ── Inject existing memories for contradiction detection ──
+    if (existingContext.length > 0) {
+      const contextBlock = existingContext
+        .map((m, i) => `[${i + 1}] "${m.text.slice(0, 150)}" (${m.daysAgo === 0 ? "today" : m.daysAgo === 1 ? "yesterday" : `${m.daysAgo} days ago`})`)
+        .join("\n");
+      prompt += `\n\n## Existing related memories (for contradiction detection):\n${contextBlock}\n\nIMPORTANT: If any extracted memory UPDATES, REPLACES, or CONTRADICTS an existing memory above (e.g. a number changed, a status changed, a preference changed), add "contradicts": <number> to that memory in your output, where <number> is the [number] of the contradicted existing memory. Only flag genuine value changes — not supplements or elaborations.`;
+    }
 
     // ── Feedback loop: inject past learnings into extraction prompt ──
     if (this.config.learningsDir) {
@@ -282,6 +306,7 @@ export class SmartExtractor {
         abstract: string;
         overview: string;
         content: string;
+        contradicts?: number;
       }>;
     }>(prompt, "extract-candidates");
 
@@ -337,7 +362,8 @@ export class SmartExtractor {
         continue;
       }
 
-      candidates.push({ category, abstract, overview, content });
+      const contradicts = typeof raw.contradicts === "number" ? raw.contradicts : undefined;
+      candidates.push({ category, abstract, overview, content, contradicts });
     }
 
     this.debugLog(
@@ -360,6 +386,7 @@ export class SmartExtractor {
     stats: ExtractionStats,
     targetScope: string,
     scopeFilter: string[],
+    preSearchContext: Array<{ id: string; text: string; daysAgo: number }> = [],
   ): Promise<void> {
     // Profile always merges (skip dedup)
     if (ALWAYS_MERGE_CATEGORIES.has(candidate.category)) {
@@ -383,7 +410,20 @@ export class SmartExtractor {
       return;
     }
 
-    // Dedup pipeline
+    // Fast-path: LLM flagged this candidate as contradicting an existing memory
+    // during extraction (it had the existing memory in context and detected a value change).
+    // Skip the unreliable vector-similarity dedup and go straight to handleContradict.
+    if (candidate.contradicts && candidate.contradicts >= 1 && candidate.contradicts <= preSearchContext.length) {
+      const contradictedId = preSearchContext[candidate.contradicts - 1].id;
+      this.log(
+        `memory-pro: smart-extractor: LLM flagged contradiction with memory ${contradictedId.slice(0, 8)} — bypassing dedup`,
+      );
+      await this.handleContradict(candidate, vector, contradictedId, sessionKey, targetScope, scopeFilter);
+      stats.created++;
+      return;
+    }
+
+    // Dedup pipeline (normal path — no contradiction flagged)
     const dedupResult = await this.deduplicate(candidate, vector, scopeFilter);
 
     switch (dedupResult.decision) {

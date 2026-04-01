@@ -42,6 +42,8 @@ export type CandidateMemory = {
   abstract: string; // L0: one-sentence index
   overview: string; // L1: structured markdown summary
   content: string; // L2: full narrative
+  /** If set, this candidate contradicts existing memory at this index (1-based) in the pre-search context. */
+  contradicts?: number;
 };
 
 /** Dedup decision from LLM. */
