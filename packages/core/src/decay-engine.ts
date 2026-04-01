@@ -171,8 +171,12 @@ export function createDecayEngine(
    * For memories with >1 access, a recentness bonus is applied.
    */
   function frequency(memory: DecayableMemory): number {
-    const base = 1 - Math.exp(-memory.accessCount / 5);
-    if (memory.accessCount <= 1) return base;
+    // Cap effective access count to prevent runaway frequency advantage.
+    // Without cap: accessCount=50 → base≈1.0, overwhelming relevance signal.
+    // With cap=5: max base=0.632, keeping relevance as dominant factor.
+    const effectiveCount = Math.min(memory.accessCount, 5);
+    const base = 1 - Math.exp(-effectiveCount / 5);
+    if (effectiveCount <= 1) return base;
 
     const lastActive =
       memory.accessCount > 0 ? memory.lastAccessedAt : memory.createdAt;
@@ -180,7 +184,7 @@ export function createDecayEngine(
       1,
       (lastActive - memory.createdAt) / MS_PER_DAY,
     );
-    const avgGapDays = accessSpanDays / Math.max(memory.accessCount - 1, 1);
+    const avgGapDays = accessSpanDays / Math.max(effectiveCount - 1, 1);
     const recentnessBonus = Math.exp(-avgGapDays / 30);
     return base * (0.5 + 0.5 * recentnessBonus);
   }
