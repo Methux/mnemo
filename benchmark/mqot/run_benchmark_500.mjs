@@ -32,7 +32,7 @@ const VOYAGE_KEY = process.env.MNEMO_API_KEY;
 const MODE = (process.env.MODE || "pro").toLowerCase();
 const BENCH_GROUP = `mqot500-${MODE}-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}`;
 const DB_PATH = `/tmp/mnemo-mqot500-${MODE}`;
-const PROD_DB = join(homedir(), ".openclaw", "memory", "lancedb-pro-voyage");
+const PROD_DB = join(homedir(), ".mnemo", "data", "lancedb");
 
 if (!OPENAI_KEY || !VOYAGE_KEY) { console.error("OPENAI_API_KEY and MNEMO_API_KEY required"); process.exit(1); }
 
@@ -321,7 +321,7 @@ async function main() {
     try {
       await fetch("http://localhost:7474/db/neo4j/tx/commit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": "Basic " + Buffer.from("neo4j:openclaw2026").toString("base64") },
+        headers: { "Content-Type": "application/json", "Authorization": "Basic " + Buffer.from(`neo4j:${process.env.NEO4J_PASSWORD || "neo4j"}`).toString("base64") },
         body: JSON.stringify({ statements: [{ statement: `MATCH (n) WHERE n.group_id STARTS WITH '${BENCH_GROUP}' DETACH DELETE n RETURN count(n)` }] }),
       });
       console.log(`  Neo4j cleanup done`);

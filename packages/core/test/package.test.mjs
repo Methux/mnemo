@@ -34,14 +34,14 @@ describe("Package exports", async () => {
     assert.equal(typeof mod.setLogger, "function");
   });
 
-  it("does NOT export internal OpenClaw functions", () => {
+  it("does NOT export internal host functions", () => {
     assert.equal(mod.detectCategory, undefined);
     assert.equal(mod.parsePluginConfig, undefined);
     assert.equal(mod.shouldCapture, undefined);
     assert.equal(mod.readSessionConversationWithResetFallback, undefined);
   });
 
-  it("has a default export (OpenClaw plugin compat)", () => {
+  it("has a default export (plugin compat)", () => {
     assert.ok(mod.default);
   });
 });

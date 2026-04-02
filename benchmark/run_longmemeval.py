@@ -18,6 +18,7 @@ Requires: longmemeval_s.json in benchmark/data/
 
 import json, time, os, sys, argparse, urllib.request, urllib.error
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 DATA_FILE = Path(__file__).parent / "data" / "longmemeval_s.json"
 RESULTS_DIR = Path(__file__).parent / "results"
@@ -161,6 +162,7 @@ def main():
     parser.add_argument("--adapter", choices=["mnemo-core", "mnemo-pro"], required=True)
     parser.add_argument("--max-questions", type=int, default=500)
     parser.add_argument("--server-url", type=str, default="http://localhost:18100")
+    parser.add_argument("--max-turns-per-scope", type=int, default=150, help="Max turns to ingest per scope")
     args = parser.parse_args()
 
     if not OPENAI_KEY:
@@ -184,27 +186,26 @@ def main():
     print(f"Judge: {JUDGE_MODEL}, Questions: {len(questions)}")
     print(f"{'='*60}")
 
-    # Phase 1: Ingest all conversation histories
-    print(f"\n--- Phase 1: Ingestion ---")
-    ingested_scopes = set()
+    # Phase 1: Ingest all conversation histories (parallel)
+    WORKERS = int(os.environ.get("INGEST_WORKERS", "32"))
+    print(f"\n--- Phase 1: Ingestion ({WORKERS} workers) ---")
     t0 = time.time()
 
-    for qi, q in enumerate(questions):
+    # Collect all store tasks (capped per scope)
+    max_per_scope = args.max_turns_per_scope
+    store_tasks = []  # (text, scope)
+    seen_scopes = set()
+    for q in questions:
         qid = q["question_id"]
         scope = f"lme-{qid}"
-
-        if scope in ingested_scopes:
+        if scope in seen_scopes:
             continue
-
         sessions = q.get("haystack_sessions") or []
         if not sessions:
             continue
-
-        count = 0
+        scope_turns = []
         for session in sessions:
-            # Each session is a list of {"role": "...", "content": "..."} dicts
             turns = session if isinstance(session, list) else session.get("turns", session.get("messages", []))
-
             for turn in turns:
                 if isinstance(turn, dict):
                     role = turn.get("role", "")
@@ -214,23 +215,36 @@ def main():
                     role = ""
                 else:
                     continue
-
                 if not text or len(text.strip()) < 10:
                     continue
-
                 prefix = f"{role}: " if role else ""
-                try:
-                    adapter.store(f"{prefix}{text}", scope)
-                    count += 1
-                except:
-                    pass
+                scope_turns.append((f"{prefix}{text}", scope))
+        # Evenly sample if over limit
+        if len(scope_turns) > max_per_scope:
+            step = len(scope_turns) / max_per_scope
+            scope_turns = [scope_turns[int(i * step)] for i in range(max_per_scope)]
+        store_tasks.extend(scope_turns)
+        seen_scopes.add(scope)
 
-        ingested_scopes.add(scope)
-        if (qi + 1) % 50 == 0:
-            print(f"  Ingested {qi+1}/{len(questions)} question histories ({count} turns for {scope})")
+    print(f"  {len(store_tasks)} turns across {len(seen_scopes)} scopes")
+
+    stored = [0]
+    failed = [0]
+    def do_store(item):
+        text, scope = item
+        try:
+            adapter.store(text, scope)
+            stored[0] += 1
+            if stored[0] % 200 == 0:
+                print(f"  Stored {stored[0]}/{len(store_tasks)} ({stored[0]*100//len(store_tasks)}%)")
+        except:
+            failed[0] += 1
+
+    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        list(pool.map(do_store, store_tasks))
 
     ingest_time = time.time() - t0
-    print(f"  Ingestion complete: {len(ingested_scopes)} scopes, {ingest_time:.1f}s")
+    print(f"  Ingestion complete: {stored[0]} stored, {failed[0]} failed, {ingest_time:.1f}s")
 
     # Phase 2: Evaluate
     print(f"\n--- Phase 2: Evaluation ---")

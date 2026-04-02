@@ -68,7 +68,7 @@ async function writeToGraphiti(params: {
           group_id: params.agentId,
           reference_time: refTime,
           category: params.category,
-          source: `openclaw-memory-${params.agentId}`,
+          source: `mnemo-${params.agentId}`,
         }),
       });
 
@@ -90,8 +90,8 @@ const log = (msg: string, data?: unknown) => {
 
 // ─── Config ────────────────────────────────────────────────────────────────
 
-const GATEWAY_PORT = parseInt(process.env.OPENCLAW_GATEWAY_PORT ?? "18789", 10);
-const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN ?? "";
+const GATEWAY_PORT = parseInt(process.env.MNEMO_GATEWAY_PORT ?? process.env.OPENCLAW_GATEWAY_PORT ?? "18789", 10);
+const GATEWAY_TOKEN = process.env.MNEMO_GATEWAY_TOKEN ?? process.env.OPENCLAW_GATEWAY_TOKEN ?? "";
 const MIN_IMPORTANCE = 0.55;       // 降低阈值，让操作细节（数字/版本号）进入
 const DEDUP_THRESHOLD = 0.88;      // recall score above this → skip (duplicate)
 const CONFLICT_THRESHOLD = 0.70;   // recall score above this → LLM contradiction check
@@ -124,7 +124,7 @@ async function getAnthropicKey(): Promise<string | null> {
   try {
     const profilesPath = path.join(
       os.homedir(),
-      ".openclaw/agents/default/agent/auth-profiles.json"
+      ".mnemo/agents/default/agent/auth-profiles.json"
     );
     const raw = await fs.readFile(profilesPath, "utf-8");
     const profiles = JSON.parse(raw) as {
@@ -147,11 +147,11 @@ interface EntityDef {
 
 /**
  * 动态加载 entity-map.json（与 prepare-context.js 共享同一份词典）
- * 文件位于 ~/.openclaw/workspace/entity-map.json
+ * 文件位于 ~/.mnemo/workspace/entity-map.json
  */
 function loadEntityMap(): Record<string, EntityDef> {
   try {
-    const mapPath = path.join(os.homedir(), ".openclaw/workspace/entity-map.json");
+    const mapPath = path.join(os.homedir(), ".mnemo/workspace/entity-map.json");
     const raw = require("fs").readFileSync(mapPath, "utf-8");
     return JSON.parse(raw);
   } catch {
@@ -366,7 +366,7 @@ async function extractMemories(
 
 // ─── Active-state snapshot (time-awareness across compaction) ─────────────
 
-const ACTIVE_STATE_PATH = path.join(os.homedir(), ".openclaw/workspace/active-state.json");
+const ACTIVE_STATE_PATH = path.join(os.homedir(), ".mnemo/workspace/active-state.json");
 
 interface ActiveStateFrame {
   generatedAt: string;
@@ -722,7 +722,7 @@ const handler = async (event: {
         const agentId = event.sessionKey.startsWith("agent:")
           ? event.sessionKey.split(":")[1] ?? "default"
           : "default";
-        const scriptPath = path.join(os.homedir(), ".openclaw/workspace/prepare-context.js");
+        const scriptPath = path.join(os.homedir(), ".mnemo/workspace/prepare-context.js");
         const child = spawn("node", [scriptPath, "--agent", agentId], { detached: true, stdio: "ignore" });
         child.unref();
         log(`Triggered prepare-context.js refresh for agent: ${agentId}`);

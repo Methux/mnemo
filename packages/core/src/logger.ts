@@ -55,7 +55,7 @@ export const log: Logger = {
 
 /**
  * Replace the default logger with a custom implementation.
- * Useful for integrating with OpenClaw's api.logger or external logging services.
+ * Useful for integrating with the host platform's api.logger or external logging services.
  */
 export function setLogger(logger: Logger): void {
   _logger = logger;

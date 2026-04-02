@@ -3,8 +3,8 @@
  * Cognitive memory framework with hybrid retrieval, multi-scope isolation, and management CLI
  */
 
-// OpenClaw plugin API type — inlined to avoid npm users needing the openclaw package
-interface OpenClawPluginApi {
+// Host plugin API type — inlined to avoid npm users needing the host package
+interface PluginApi {
   pluginConfig: unknown;
   registerMemoryProvider(provider: any): void;
   registerHook(event: string, handler: (...args: any[]) => any): void;
@@ -203,12 +203,20 @@ type ReflectionInjectMode = "inheritance-only" | "inheritance+derived";
 
 function getDefaultDbPath(): string {
   const home = homedir();
-  return join(home, ".openclaw", "memory", "lancedb-pro");
+  if (process.env.MNEMO_DB_PATH) return process.env.MNEMO_DB_PATH;
+  const mnemoPath = join(home, ".mnemo", "data", "lancedb");
+  const openclawPath = join(home, ".openclaw", "memory", "lancedb-pro");
+  try {
+    const { existsSync } = require("fs");
+    if (existsSync(openclawPath) && !existsSync(mnemoPath)) return openclawPath;
+  } catch {}
+  return mnemoPath;
 }
 
 function getDefaultWorkspaceDir(): string {
   const home = homedir();
-  return join(home, ".openclaw", "workspace");
+  return process.env.MNEMO_WORKSPACE_DIR
+    || join(home, ".mnemo", "workspace");
 }
 
 function resolveWorkspaceDirFromContext(context: Record<string, unknown> | undefined): string {
@@ -349,20 +357,21 @@ function toImportSpecifier(value: string): string {
   return trimmed;
 }
 function getExtensionApiImportSpecifiers(): string[] {
-  const envPath = process.env.OPENCLAW_EXTENSION_API_PATH?.trim();
+  const envPath = (process.env.MNEMO_EXTENSION_API_PATH || process.env.OPENCLAW_EXTENSION_API_PATH)?.trim();
   const specifiers: string[] = [];
 
   if (envPath) specifiers.push(toImportSpecifier(envPath));
-  specifiers.push("openclaw/dist/extensionAPI.js");
-
-  try {
-    specifiers.push(toImportSpecifier(requireFromHere.resolve("openclaw/dist/extensionAPI.js")));
-  } catch {
-    // ignore resolve failures and continue fallback probing
+  // Try mnemo first, then legacy openclaw package
+  for (const pkg of ["mnemo", "openclaw"]) {
+    specifiers.push(`${pkg}/dist/extensionAPI.js`);
+    try {
+      specifiers.push(toImportSpecifier(requireFromHere.resolve(`${pkg}/dist/extensionAPI.js`)));
+    } catch {
+      // ignore resolve failures and continue fallback probing
+    }
+    specifiers.push(toImportSpecifier(`/usr/lib/node_modules/${pkg}/dist/extensionAPI.js`));
+    specifiers.push(toImportSpecifier(`/usr/local/lib/node_modules/${pkg}/dist/extensionAPI.js`));
   }
-
-  specifiers.push(toImportSpecifier("/usr/lib/node_modules/openclaw/dist/extensionAPI.js"));
-  specifiers.push(toImportSpecifier("/usr/local/lib/node_modules/openclaw/dist/extensionAPI.js"));
 
   return [...new Set(specifiers.filter(Boolean))];
 }
@@ -382,8 +391,8 @@ async function loadEmbeddedPiRunner(): Promise<EmbeddedPiRunner> {
         }
       }
       throw new Error(
-        `Unable to load OpenClaw embedded runtime API. ` +
-        `Set OPENCLAW_EXTENSION_API_PATH if runtime layout differs. ` +
+        `Unable to load embedded runtime API. ` +
+        `Set MNEMO_EXTENSION_API_PATH if runtime layout differs. ` +
         `Attempts: ${importErrors.join(" | ")}`
       );
     })();
@@ -473,7 +482,7 @@ async function runReflectionViaCli(params: {
   timeoutMs: number;
   thinkLevel: ReflectionThinkLevel;
 }): Promise<string> {
-  const cliBin = process.env.OPENCLAW_CLI_BIN?.trim() || "openclaw";
+  const cliBin = (process.env.MNEMO_CLI_BIN || process.env.OPENCLAW_CLI_BIN)?.trim() || "mnemo";
   const outerTimeoutMs = Math.max(params.timeoutMs + 5000, 15000);
   const agentTimeoutSec = Math.max(1, Math.ceil(params.timeoutMs / 1000));
   const sessionId = `memory-reflection-cli-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -1299,7 +1308,7 @@ const MEMORY_TRIGGERS = [
 const CAPTURE_EXCLUDE_PATTERNS = [
   // Memory management / meta-ops: do not store as long-term memory
   /\b(memory-pro|memory_store|memory_recall|memory_forget|memory_update)\b/i,
-  /\bopenclaw\s+memory-pro\b/i,
+  /\bmnemo\s+memory-pro\b/i,
   /\b(delete|remove|forget|purge|cleanup|clean up|clear)\b.*\b(memory|memories|entry|entries)\b/i,
   /\b(memory|memories)\b.*\b(delete|remove|forget|purge|cleanup|clean up|clear)\b/i,
   /\bhow do i\b.*\b(delete|remove|forget|purge|cleanup|clear)\b/i,
@@ -1309,7 +1318,7 @@ const CAPTURE_EXCLUDE_PATTERNS = [
 function shouldCapture(text: string): boolean {
   let s = text.trim();
 
-  // Strip OpenClaw metadata headers (Conversation info or Sender)
+  // Strip host metadata headers (Conversation info or Sender)
   const metadataPattern = /^(Conversation info|Sender) \(untrusted metadata\):[\s\S]*?\n\s*\n/gim;
   s = s.replace(metadataPattern, "");
 
@@ -1507,7 +1516,7 @@ async function findPreviousSessionFile(
 
 type AgentWorkspaceMap = Record<string, string>;
 
-function resolveAgentWorkspaceMap(api: OpenClawPluginApi): AgentWorkspaceMap {
+function resolveAgentWorkspaceMap(api: PluginApi): AgentWorkspaceMap {
   const map: AgentWorkspaceMap = {};
 
   // Try api.config first (runtime config)
@@ -1521,11 +1530,14 @@ function resolveAgentWorkspaceMap(api: OpenClawPluginApi): AgentWorkspaceMap {
     }
   }
 
-  // Fallback: read from openclaw.json (respect OPENCLAW_HOME if set)
+  // Fallback: read from config file (respect MNEMO_HOME / OPENCLAW_HOME if set)
   if (Object.keys(map).length === 0) {
     try {
-      const openclawHome = process.env.OPENCLAW_HOME || join(homedir(), ".openclaw");
-      const configPath = join(openclawHome, "openclaw.json");
+      const mnemoHome = process.env.MNEMO_HOME || process.env.OPENCLAW_HOME || join(homedir(), ".mnemo");
+      const { existsSync: ex } = require("fs");
+      const mnemoJson = join(mnemoHome, "mnemo.json");
+      const openclawJson = join(mnemoHome, "openclaw.json");
+      const configPath = ex(mnemoJson) ? mnemoJson : openclawJson;
       const raw = readFileSync(configPath, "utf8");
       const parsed = JSON.parse(raw);
       const list = parsed?.agents?.list;
@@ -1545,7 +1557,7 @@ function resolveAgentWorkspaceMap(api: OpenClawPluginApi): AgentWorkspaceMap {
 }
 
 function createMdMirrorWriter(
-  api: OpenClawPluginApi,
+  api: PluginApi,
   config: PluginConfig,
 ): MdMirrorWriter | null {
   if (config.mdMirror?.enabled !== true) return null;
@@ -1610,13 +1622,13 @@ const pluginVersion = getPluginVersion();
 // ============================================================================
 
 const memoryLanceDBProPlugin = {
-  id: "memory-lancedb-pro",
+  id: "mnemo",
   name: "Mnemo Memory",
   description:
     "Cognitive memory framework with hybrid retrieval, multi-scope isolation, and management CLI",
   kind: "memory" as const,
 
-  register(api: OpenClawPluginApi) {
+  register(api: PluginApi) {
     // Parse and validate configuration
     const config = parsePluginConfig(api.pluginConfig);
 
@@ -2754,7 +2766,7 @@ const memoryLanceDBProPlugin = {
           const reflectionText = reflectionGenerated.text;
           if (reflectionGenerated.runner === "cli") {
             api.logger.warn(
-              `memory-reflection: embedded runner unavailable, used openclaw CLI fallback for session ${currentSessionId}` +
+              `memory-reflection: embedded runner unavailable, used CLI fallback for session ${currentSessionId}` +
               (reflectionGenerated.error ? ` (${reflectionGenerated.error})` : "")
             );
           } else if (reflectionGenerated.usedFallback) {
@@ -3109,7 +3121,7 @@ const memoryLanceDBProPlugin = {
     // ========================================================================
 
     api.registerService({
-      id: "memory-lancedb-pro",
+      id: "mnemo",
       start: async () => {
         // IMPORTANT: Do not block gateway startup on external network calls.
         // If embedding/retrieval tests hang (bad network / slow provider), the gateway
@@ -3184,7 +3196,7 @@ const memoryLanceDBProPlugin = {
             if (counts.legacy > 0) {
               api.logger.info(
                 `mnemo: found ${counts.legacy} legacy memories (of ${counts.total} total) that can be upgraded to the new smart memory format. ` +
-                `Run 'openclaw memory-pro upgrade' to convert them.`
+                `Run 'mnemo memory-pro upgrade' to convert them.`
               );
             }
           } catch {

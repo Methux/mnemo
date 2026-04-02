@@ -1,23 +1,23 @@
-# OpenClaw Integration
+# Host Gateway Integration
 
-Mnemo integrates natively with OpenClaw gateway as a plugin.
+Mnemo integrates natively with a compatible gateway as a plugin.
 
 ## Installation
 
 ```bash
-openclaw plugins install mnemo
+mnemo plugins install mnemo
 ```
 
 ## What Gets Configured
 
-- Plugin: `memory-lancedb-pro` registered in openclaw.json (plugin id kept for backwards compatibility)
+- Plugin: `mnemo` registered in the host config file (`memory-lancedb-pro` accepted as legacy fallback)
 - Hooks: memory-extractor, query-context, memory-watcher
 - Cron: L1 distillers, daily-md-extractor, maintenance tasks
 - Services: Graphiti (launchd)
 
 ## Multi-Agent Scopes
 
-Configure per-bot memory isolation in openclaw.json:
+Configure per-agent memory isolation in `mnemo.json`:
 
 ```json
 {

@@ -2,7 +2,7 @@
 /**
  * Noise Filter
  * Filters out low-quality memories (meta-questions, agent denials, session boilerplate)
- * Inspired by openclaw-plugin-continuity's noise filtering approach.
+ * Inspired by continuity filtering approaches.
  */
 
 // Agent-side denial patterns

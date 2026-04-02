@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 /**
  * Migration Utilities
- * Migrates data from old memory-lancedb plugin to memory-lancedb-pro
+ * Migrates data from legacy storage format to the current LanceDB layout
  */
 
 import { homedir } from "node:os";
@@ -63,6 +63,7 @@ function normalizeLegacyVector(value: unknown): number[] {
 function getDefaultLegacyPaths(): string[] {
   const home = homedir();
   return [
+    join(home, ".mnemo", "data", "lancedb-legacy"),
     join(home, ".openclaw", "memory", "lancedb"),
     join(home, ".claude", "memory", "lancedb"),
     // Add more legacy paths as needed

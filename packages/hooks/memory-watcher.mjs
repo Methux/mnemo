@@ -2,8 +2,8 @@
  * memory-watcher - 常驻后台进程
  * 监听 workspace 关键文件变动，自动提取 facts → upsert LanceDB
  *
- * 启动：node ~/.openclaw/memory-watcher/watcher.mjs
- * 日志：~/.openclaw/logs/memory-watcher.log
+ * 启动：node ~/.mnemo/memory-watcher/watcher.mjs
+ * 日志：~/.mnemo/logs/memory-watcher.log
  */
 
 import fs from "node:fs";
@@ -14,15 +14,15 @@ import os from "node:os";
 // ─── Config ──────────────────────────────────────────────────────────────────
 
 const HOME = os.homedir();
-const WORKSPACE = path.join(HOME, ".openclaw", "workspace");
-const LOG_PATH = path.join(HOME, ".openclaw", "logs", "memory-watcher.log");
-const PID_PATH = path.join(HOME, ".openclaw", "memory-watcher", "watcher.pid");
-const HASH_PATH = path.join(HOME, ".openclaw", "memory-watcher", "file-hashes.json");
+const WORKSPACE = path.join(HOME, ".mnemo", "workspace");
+const LOG_PATH = path.join(HOME, ".mnemo", "logs", "memory-watcher.log");
+const PID_PATH = path.join(HOME, ".mnemo", "memory-watcher", "watcher.pid");
+const HASH_PATH = path.join(HOME, ".mnemo", "memory-watcher", "file-hashes.json");
 
 const GATEWAY_PORT = 18789;
-const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || "";
+const GATEWAY_TOKEN = process.env.MNEMO_GATEWAY_TOKEN || process.env.OPENCLAW_GATEWAY_TOKEN || "";
 const SESSION_KEY = process.env.MNEMO_SESSION_KEY || "agent:default:local:watcher";
-const ANTHROPIC_KEY_PATH = path.join(HOME, ".openclaw", "agents", "default", "agent", "auth-profiles.json");
+const ANTHROPIC_KEY_PATH = path.join(HOME, ".mnemo", "agents", "default", "agent", "auth-profiles.json");
 
 const WATCH_FILES = ["USER.md", "AGENTS.md", "IDENTITY.md", "TOOLS.md", "MEMORY.md"];
 const DEBOUNCE_MS = 3000;

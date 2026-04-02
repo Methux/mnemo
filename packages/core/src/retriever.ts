@@ -49,7 +49,7 @@ import { join } from "node:path";
 // Graphiti Graph Search Integration (3rd retrieval path)
 // ============================================================================
 
-/** Lazy-read env at call time — openclaw.json env may inject after module load. */
+/** Lazy-read env at call time — host config env may inject after module load. */
 function getGraphitiConfig() {
   return {
     enabled: process.env.GRAPHITI_ENABLED === "true",
@@ -448,7 +448,7 @@ function cosineSimilarity(a: number[], b: number[]): number {
 // Memory Retriever
 // ============================================================================
 
-const RETRIEVAL_LOG_PATH = join(homedir(), ".openclaw", "memory", "retrieval-log.jsonl");
+const RETRIEVAL_LOG_PATH = join(homedir(), ".mnemo", "data", "retrieval-log.jsonl");
 
 export class MemoryRetriever {
   private accessTracker: AccessTracker | null = null;
@@ -512,7 +512,7 @@ export class MemoryRetriever {
 
   /**
    * Strip metadata blocks from auto-recall queries.
-   * OpenClaw core may pass the full message including Conversation info,
+   * Host may pass the full message including Conversation info,
    * Replied message, and Sender metadata JSON blocks. We only want the
    * actual user text for semantic search.
    */

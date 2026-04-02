@@ -37,18 +37,19 @@ const fixes = [];
 
 // ─── Known field renames ────────────────────────────────────────────────────
 
-const pluginConfig = config?.plugins?.entries?.["memory-lancedb-pro"]?.config;
+const pluginConfig = config?.plugins?.entries?.["mnemo"]?.config
+  ?? config?.plugins?.entries?.["memory-lancedb-pro"]?.config;
 
 if (!pluginConfig) {
   // No memory plugin config — might be valid for other reasons
-  console.log(JSON.stringify({ valid: true, errors, warnings: ["memory-lancedb-pro plugin config not found"], fixes }));
+  console.log(JSON.stringify({ valid: true, errors, warnings: ["mnemo plugin config not found"], fixes }));
   process.exit(0);
 }
 
 // Check "scoping" → "scopes" (most common mistake)
 if ("scoping" in pluginConfig) {
   errors.push('config key "scoping" should be "scopes" — gateway will reject this');
-  fixes.push('rename: plugins.entries.memory-lancedb-pro.config.scoping → scopes');
+  fixes.push('rename: plugins.entries.mnemo.config.scoping → scopes');
 }
 
 // Check root-level temp keys
@@ -187,7 +188,7 @@ const KNOWN_KEYS = new Set([
 for (const key of Object.keys(pluginConfig)) {
   if (!KNOWN_KEYS.has(key)) {
     errors.push(`unknown config key "${key}" — plugin schema has additionalProperties:false, gateway will reject`);
-    fixes.push(`remove or rename: plugins.entries.memory-lancedb-pro.config.${key}`);
+    fixes.push(`remove or rename: plugins.entries.mnemo.config.${key}`);
   }
 }
 

@@ -2,7 +2,7 @@
 name: query-context
 description: "First-message vector rerank: on the first user message of a session, regenerate session-context.md with query-aware ranking via Voyage embeddings"
 metadata:
-  openclaw:
+  mnemo:
     emoji: "🎯"
     events: ["message:received"]
     requires:

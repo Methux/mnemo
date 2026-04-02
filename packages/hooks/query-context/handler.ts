@@ -55,7 +55,7 @@ const handler = async (event: {
   // fire-and-forget：异步重新生成 session-context.md
   void (async () => {
     try {
-      const scriptPath = path.join(os.homedir(), ".openclaw/workspace/prepare-context.js");
+      const scriptPath = path.join(os.homedir(), ".mnemo/workspace/prepare-context.js");
       const child = spawn(
         "node",
         [scriptPath, "--agent", agentId, "--query", content.slice(0, 200)],

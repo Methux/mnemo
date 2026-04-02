@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * mnemo-doctor.js — Mnemo 记忆架构一键诊断
- * Usage: node ~/.openclaw/workspace/mnemo-doctor.js
+ * Usage: node ~/.mnemo/workspace/mnemo-doctor.js
  */
 
 const http = require("node:http");
@@ -11,9 +11,9 @@ const os = require("node:os");
 const { execSync } = require("node:child_process");
 
 const HOME = os.homedir();
-const OPENCLAW = path.join(HOME, ".openclaw");
+const MNEMO_HOME = path.join(HOME, ".mnemo");
 const GATEWAY_PORT = 18789;
-const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || "";
+const GATEWAY_TOKEN = process.env.MNEMO_GATEWAY_TOKEN || process.env.OPENCLAW_GATEWAY_TOKEN || "";
 const GRAPHITI_PORT = 18799;
 
 // ─── Styling ────────────────────────────────────────────────────────────────
@@ -114,7 +114,7 @@ async function checkGateway() {
   }
 
   // launchd
-  const launchd = safeExec("launchctl list ai.openclaw.gateway 2>/dev/null");
+  const launchd = safeExec("launchctl list ai.mnemo.gateway 2>/dev/null");
   if (launchd.includes("PID")) {
     ok("launchd service", "loaded, KeepAlive active");
   } else {
@@ -127,11 +127,11 @@ async function checkGateway() {
 async function checkConfig() {
   section("Config Validation");
 
-  const cfg = readJson(path.join(OPENCLAW, "openclaw.json"));
-  if (!cfg) { fail("openclaw.json", "cannot parse"); return; }
+  const cfg = readJson(path.join(MNEMO_HOME, "mnemo.json"));
+  if (!cfg) { fail("mnemo.json", "cannot parse"); return; }
 
-  const pluginCfg = cfg?.plugins?.entries?.["memory-lancedb-pro"]?.config;
-  if (!pluginCfg) { fail("plugin config", "memory-lancedb-pro not found"); return; }
+  const pluginCfg = cfg?.plugins?.entries?.["mnemo"]?.config ?? cfg?.plugins?.entries?.["memory-lancedb-pro"]?.config;
+  if (!pluginCfg) { fail("plugin config", "mnemo plugin config not found"); return; }
 
   // Check known pitfalls
   if ("scoping" in pluginCfg) {
@@ -199,7 +199,7 @@ async function checkConfig() {
 async function checkLanceDB() {
   section("LanceDB");
 
-  const dbPath = path.join(OPENCLAW, "memory", "lancedb-pro-voyage");
+  const dbPath = path.join(MNEMO_HOME, "data", "lancedb");
   if (dirExists(dbPath)) {
     ok("Database", dbPath);
   } else {
@@ -225,7 +225,7 @@ async function checkLanceDB() {
   }
 
   // Backup check
-  const backupDir = path.join(OPENCLAW, "memory", "backups");
+  const backupDir = path.join(MNEMO_HOME, "data", "backups");
   if (dirExists(backupDir)) {
     const files = fs.readdirSync(backupDir).filter(f => f.endsWith(".jsonl")).sort().reverse();
     if (files.length > 0) {
@@ -241,7 +241,7 @@ async function checkLanceDB() {
   }
 
   // MD Mirror check
-  const mirrorDir = path.join(OPENCLAW, "memory", "lancedb-pro-mirror");
+  const mirrorDir = path.join(MNEMO_HOME, "data", "lancedb-mirror");
   if (dirExists(mirrorDir)) {
     const files = fs.readdirSync(mirrorDir).filter(f => f.endsWith(".md")).sort().reverse();
     if (files.length > 0) {
@@ -275,7 +275,7 @@ async function checkGraphiti() {
   }
 
   // WAL check (dedup by ts — later entries override earlier ones)
-  const walPath = path.join(OPENCLAW, "memory", "graphiti-wal.jsonl");
+  const walPath = path.join(MNEMO_HOME, "data", "graphiti-wal.jsonl");
   if (fileExists(walPath)) {
     try {
       const lines = fs.readFileSync(walPath, "utf8").trim().split("\n");
@@ -312,7 +312,7 @@ async function checkGraphiti() {
   }
 
   // GRAPHITI_ENABLED check
-  const plist = safeExec("grep -A1 GRAPHITI_ENABLED ~/Library/LaunchAgents/ai.openclaw.gateway.plist 2>/dev/null");
+  const plist = safeExec("grep -A1 GRAPHITI_ENABLED ~/Library/LaunchAgents/ai.mnemo.gateway.plist 2>/dev/null");
   if (plist.includes("true")) {
     ok("GRAPHITI_ENABLED", "true (in launchd)");
   } else {
@@ -324,7 +324,7 @@ async function checkWriteChannels() {
   section("Write Channels");
 
   // Hook memory-extractor
-  const hookPath = path.join(OPENCLAW, "workspace", "hooks", "memory-extractor", "handler.ts");
+  const hookPath = path.join(MNEMO_HOME, "workspace", "hooks", "memory-extractor", "handler.ts");
   if (fileExists(hookPath)) {
     ok("Hook extractor", "handler.ts present");
   } else {
@@ -332,7 +332,7 @@ async function checkWriteChannels() {
   }
 
   // SmartExtractor — check recent log
-  const logLines = safeExec('grep -o \'"1":"[^"]*"\' /tmp/openclaw/openclaw-$(date -u +%Y-%m-%d).log 2>/dev/null | grep "smart extraction enabled" | tail -1');
+  const logLines = safeExec('grep -o \'"1":"[^"]*"\' /tmp/mnemo/mnemo-$(date -u +%Y-%m-%d).log 2>/dev/null | grep "smart extraction enabled" | tail -1');
   if (logLines.includes("smart extraction enabled")) {
     const model = logLines.match(/LLM model: ([^,]+)/)?.[1] || "?";
     ok("SmartExtractor", `enabled, model: ${model}`);
@@ -341,7 +341,7 @@ async function checkWriteChannels() {
   }
 
   // memory-watcher
-  const watcherPid = safeExec("cat ~/.openclaw/memory-watcher/watcher.pid 2>/dev/null");
+  const watcherPid = safeExec("cat ~/.mnemo/memory-watcher/watcher.pid 2>/dev/null");
   if (watcherPid) {
     const alive = safeExec(`ps -p ${watcherPid} -o pid= 2>/dev/null`);
     if (alive) {
@@ -354,7 +354,7 @@ async function checkWriteChannels() {
   }
 
   // L1 cron jobs
-  const cronOutput = safeExec("openclaw cron list 2>/dev/null | grep -i '记忆提炼\\|L1' || true");
+  const cronOutput = safeExec("mnemo cron list 2>/dev/null | grep -i '记忆提炼\\|L1' || true");
   const cronLines = cronOutput.split("\n").filter(Boolean);
   for (const line of cronLines) {
     const name = line.match(/[^\s]+\s+(\S.*?)\s{2,}/)?.[1] || line.slice(0, 40);
@@ -369,7 +369,7 @@ async function checkWriteChannels() {
 
   // Check recent extraction activity
   const recentExtract = safeExec(
-    'grep -o \'"1":"[^"]*"\' /tmp/openclaw/openclaw-$(date -u +%Y-%m-%d).log 2>/dev/null | grep -c "auto-captured\\|smart-extracted\\|smart-extractor.*created" 2>/dev/null || echo 0'
+    'grep -o \'"1":"[^"]*"\' /tmp/mnemo/mnemo-$(date -u +%Y-%m-%d).log 2>/dev/null | grep -c "auto-captured\\|smart-extracted\\|smart-extractor.*created" 2>/dev/null || echo 0'
   );
   info("Extractions today", `${recentExtract} successful captures`);
 }
@@ -378,7 +378,7 @@ async function checkRetrieval() {
   section("Retrieval Pipeline");
 
   // Rerank
-  const rerankLog = safeExec('grep "rerank-debug" ~/.openclaw/logs/gateway.err.log 2>/dev/null | tail -1');
+  const rerankLog = safeExec('grep "rerank-debug" ~/.mnemo/logs/gateway.err.log 2>/dev/null | tail -1');
   if (rerankLog.includes("hasKey=true")) {
     const provider = rerankLog.match(/provider=(\w+)/)?.[1] || "?";
     const model = rerankLog.match(/model=([\w-]+)/)?.[1] || "?";
@@ -390,21 +390,21 @@ async function checkRetrieval() {
   }
 
   // Rerank failures — check since last gateway start (current session only)
-  const lastStart = safeExec('grep "listening on ws://" ~/.openclaw/logs/gateway.err.log 2>/dev/null | tail -1 | grep -o "2026[^Z]*"');
+  const lastStart = safeExec('grep "listening on ws://" ~/.mnemo/logs/gateway.err.log 2>/dev/null | tail -1 | grep -o "2026[^Z]*"');
   const rerankFailCmd = lastStart
-    ? `grep "Reranking failed" ~/.openclaw/logs/gateway.err.log 2>/dev/null | grep -c "$(echo '${lastStart}' | cut -c1-13)" 2>/dev/null || echo 0`
-    : 'grep -c "Reranking failed" ~/.openclaw/logs/gateway.err.log 2>/dev/null || echo 0';
+    ? `grep "Reranking failed" ~/.mnemo/logs/gateway.err.log 2>/dev/null | grep -c "$(echo '${lastStart}' | cut -c1-13)" 2>/dev/null || echo 0`
+    : 'grep -c "Reranking failed" ~/.mnemo/logs/gateway.err.log 2>/dev/null || echo 0';
   const rerankTotalCmd = lastStart
-    ? `grep "rerank-debug" ~/.openclaw/logs/gateway.err.log 2>/dev/null | grep -c "$(echo '${lastStart}' | cut -c1-13)" 2>/dev/null || echo 0`
-    : 'grep -c "rerank-debug" ~/.openclaw/logs/gateway.err.log 2>/dev/null || echo 0';
+    ? `grep "rerank-debug" ~/.mnemo/logs/gateway.err.log 2>/dev/null | grep -c "$(echo '${lastStart}' | cut -c1-13)" 2>/dev/null || echo 0`
+    : 'grep -c "rerank-debug" ~/.mnemo/logs/gateway.err.log 2>/dev/null || echo 0';
   // Simpler: just count failures since last gateway boot via PID
   const gwPid = safeExec("lsof -i :18789 -t 2>/dev/null").split("\n")[0];
   const gwStartTime = gwPid ? safeExec(`ps -p ${gwPid} -o lstart= 2>/dev/null`).trim() : "";
-  const nFails = parseInt(safeExec('grep -c "Reranking failed" ~/.openclaw/logs/gateway.err.log 2>/dev/null || echo 0')) || 0;
-  const nTotal = parseInt(safeExec('grep -c "rerank-debug" ~/.openclaw/logs/gateway.err.log 2>/dev/null || echo 0')) || 0;
+  const nFails = parseInt(safeExec('grep -c "Reranking failed" ~/.mnemo/logs/gateway.err.log 2>/dev/null || echo 0')) || 0;
+  const nTotal = parseInt(safeExec('grep -c "rerank-debug" ~/.mnemo/logs/gateway.err.log 2>/dev/null || echo 0')) || 0;
   // Use a simpler heuristic: if last 20 rerank calls have 0 failures, it's healthy
-  const recent20 = safeExec('tail -100 ~/.openclaw/logs/gateway.err.log 2>/dev/null | grep -c "Reranking failed" || echo 0');
-  const recent20Total = safeExec('tail -100 ~/.openclaw/logs/gateway.err.log 2>/dev/null | grep -c "rerank-debug" || echo 0');
+  const recent20 = safeExec('tail -100 ~/.mnemo/logs/gateway.err.log 2>/dev/null | grep -c "Reranking failed" || echo 0');
+  const recent20Total = safeExec('tail -100 ~/.mnemo/logs/gateway.err.log 2>/dev/null | grep -c "rerank-debug" || echo 0');
   const rFails = parseInt(recent20) || 0;
   const rTotal = parseInt(recent20Total) || 0;
   if (rTotal > 0) {
@@ -424,10 +424,10 @@ async function checkRetrieval() {
 
   // Resonance gate
   const gatedOut = safeExec(
-    'grep -o \'"1":"[^"]*"\' /tmp/openclaw/openclaw-$(date -u +%Y-%m-%d).log 2>/dev/null | grep -c "gated-out" 2>/dev/null || echo 0'
+    'grep -o \'"1":"[^"]*"\' /tmp/mnemo/mnemo-$(date -u +%Y-%m-%d).log 2>/dev/null | grep -c "gated-out" 2>/dev/null || echo 0'
   );
   const injected = safeExec(
-    'grep -o \'"1":"[^"]*"\' /tmp/openclaw/openclaw-$(date -u +%Y-%m-%d).log 2>/dev/null | grep -c "injecting" 2>/dev/null || echo 0'
+    'grep -o \'"1":"[^"]*"\' /tmp/mnemo/mnemo-$(date -u +%Y-%m-%d).log 2>/dev/null | grep -c "injecting" 2>/dev/null || echo 0'
   );
   info("Resonance gate", `${injected} injections, ${gatedOut} gated-out`);
 
@@ -443,8 +443,8 @@ async function checkRetrieval() {
 async function checkAutoSync() {
   section("Auto-Sync");
 
-  const syncScript = path.join(HOME, "openclaw-config", "scripts", "auto-sync.sh");
-  const mergeScript = path.join(HOME, "openclaw-config", "scripts", "json-deep-merge.js");
+  const syncScript = path.join(HOME, "mnemo-config", "scripts", "auto-sync.sh");
+  const mergeScript = path.join(HOME, "mnemo-config", "scripts", "json-deep-merge.js");
 
   if (fileExists(syncScript)) {
     const content = fs.readFileSync(syncScript, "utf8");
@@ -472,7 +472,7 @@ async function checkAutoSync() {
   }
 
   // Last sync
-  const logPath = path.join(HOME, "openclaw-config", "auto-apply.log");
+  const logPath = path.join(HOME, "mnemo-config", "auto-apply.log");
   if (fileExists(logPath)) {
     const last = safeExec(`tail -1 "${logPath}"`);
     if (last.includes("auto-sync complete")) {

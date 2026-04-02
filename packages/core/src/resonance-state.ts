@@ -4,14 +4,14 @@
  *
  * Maintains a sliding window of recent auto-recall top-1 cosine scores
  * to compute an adaptive resonance gate threshold (P25 of the window).
- * Persisted to ~/.openclaw/memory/resonance-state.json.
+ * Persisted to ~/.mnemo/data/resonance-state.json.
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, dirname } from "node:path";
 
-const STATE_PATH = join(homedir(), ".openclaw", "memory", "resonance-state.json");
+const STATE_PATH = join(homedir(), ".mnemo", "data", "resonance-state.json");
 const WINDOW_SIZE = 100;
 const COLD_START_MIN = 20;
 const DEFAULT_THRESHOLD = 0.45;

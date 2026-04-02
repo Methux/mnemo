@@ -2,7 +2,7 @@
 name: memory-extractor
 description: "Post-turn memory extraction: after each agent reply, extract and store memorable info via structured LLM output"
 metadata:
-  openclaw:
+  mnemo:
     emoji: "🧠"
     events: ["message:sent", "compact:before"]
     requires:

@@ -44,7 +44,7 @@ function cosineSimilarity(a: number[], b: number[]): number {
 // Semantic Gate
 // ============================================================================
 
-const FILTER_LOG_PATH = join(homedir(), ".openclaw", "memory", "store-filtered.log");
+const FILTER_LOG_PATH = join(homedir(), ".mnemo", "data", "store-filtered.log");
 
 export class SemanticGate {
   private anchorEmbeddings: number[][] | null = null;
