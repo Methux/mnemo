@@ -99,6 +99,8 @@ export interface ExtractPersistOptions {
 export class SmartExtractor {
   private log: (msg: string) => void;
   private debugLog: (msg: string) => void;
+  /** Optional lifecycle manager — runs decay-based tier transitions and archival after extraction. */
+  private lifecycle?: { run(scopeFilter: string[]): Promise<unknown> };
 
   constructor(
     private store: MemoryStore,
@@ -108,6 +110,11 @@ export class SmartExtractor {
   ) {
     this.log = config.log ?? ((msg: string) => _log.info(msg));
     this.debugLog = config.debugLog ?? (() => { });
+  }
+
+  /** Attach a lifecycle manager for decay-based tier transitions and archival. */
+  setLifecycle(lifecycle: { run(scopeFilter: string[]): Promise<unknown> }): void {
+    this.lifecycle = lifecycle;
   }
 
   // --------------------------------------------------------------------------
@@ -194,6 +201,12 @@ export class SmartExtractor {
         // Save to pending queue so the memory isn't permanently lost
         await this.appendPending(candidate, targetScope, sessionKey).catch(() => {});
       }
+    }
+
+    // Fire-and-forget lifecycle: tier transitions + stale archival.
+    // Throttled internally (max once/hour), safe to call every extraction.
+    if (this.lifecycle) {
+      this.lifecycle.run(scopeFilter).catch(() => {});
     }
 
     return stats;
