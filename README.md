@@ -38,6 +38,9 @@ Humans don't remember everything equally — important memories consolidate, tri
 - **Triple-path retrieval** — Vector + BM25 + Knowledge Graph fused with RRF
 - **Three-layer contradiction detection** — regex signal → LLM 5-class → dedup pipeline
 - **10-stage retrieval pipeline** — from preprocessing to context injection
+- **Strategy pattern** — Core provides hooks (`candidatePoolFn`, `frequencyTransformFn`, `minScoreFn`, `preSearchHook`, `sessionDedup`); Pro injects adaptive implementations
+- **Adaptive retrieval** — candidate pool scales with store size: `min(200, max(50, sqrt(N)*4))`
+- **Memory lifecycle** — automatic tier transitions (working/peripheral/core) with JSONL archival
 
 The result: your AI agent's memory stays relevant instead of drowning in noise.
 
@@ -53,6 +56,9 @@ The result: your AI agent's memory stays relevant instead of drowning in noise.
 | Multi-backend (LanceDB, Qdrant, Chroma, PGVector) | ✅ | ✅ |
 | Scope isolation (multi-agent) | ✅ | ✅ |
 | $0 local deployment (Ollama) | ✅ | ✅ |
+| Adaptive retrieval (pool/score/frequency) | — | ✅ |
+| Extraction-time context injection | — | ✅ |
+| Session deduplication (surfacedIds) | — | ✅ |
 | Pro production features | — | ✅ ([details](https://m-nemo.ai)) |
 
 ---
@@ -60,11 +66,23 @@ The result: your AI agent's memory stays relevant instead of drowning in noise.
 ## Architecture
 
 ```
-  Store ──→ Embedding ──→ Vector DB (LanceDB / Qdrant / Chroma / PGVector)
-                              │
-  Recall ──→ Multi-path retrieval ──→ Rerank ──→ Decay ──→ Top-K results
-                              │
-  Lifecycle: Weibull decay + memory tiers + contradiction detection
+  ┌─────────────────────────────────────────────────────────────┐
+  │  @mnemoai/core (MIT)                                        │
+  │                                                             │
+  │  Store ──→ Embedding ──→ Vector DB (LanceDB/Qdrant/Chroma) │
+  │                              │                              │
+  │  Recall ──→ Multi-path ──→ Rerank ──→ Decay ──→ Top-K      │
+  │               │                                             │
+  │  Hooks:  candidatePoolFn · minScoreFn · frequencyTransformFn│
+  │          preSearchHook · sessionDedup                       │
+  │               │                                             │
+  │  Lifecycle: tier transitions + JSONL archival               │
+  └───────────────┼─────────────────────────────────────────────┘
+                  │ Pro injects strategies (no code changes)
+  ┌───────────────┴─────────────────────────────────────────────┐
+  │  @mnemoai/pro (commercial)                                  │
+  │  Adaptive pool · Log frequency cap · Context injection      │
+  └─────────────────────────────────────────────────────────────┘
 ```
 
 ---

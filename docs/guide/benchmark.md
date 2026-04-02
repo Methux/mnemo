@@ -78,6 +78,31 @@ All frameworks tested under identical conditions using our [open-source benchmar
 - Mem0 uses LLM-based memory extraction which increases ingestion time significantly
 - The gap between Core (46%) and Pro (85%) demonstrates the value of BM25 fusion and cross-encoder reranking
 
+## MQoT (Mnemo Quality-of-Thought)
+
+MQoT is Mnemo's internal benchmark designed to test memory quality in realistic agent workflows. Unlike LOCOMO (which tests conversational recall), MQoT focuses on whether the right memories surface at the right time during multi-turn agent tasks.
+
+### MQoT-500
+
+500 evaluation queries against a moderate-size memory store:
+
+| Configuration | Accuracy |
+|:---|:---:|
+| **Mnemo Pro** | **91.5%** |
+| **Mnemo Core** | **85.5%** |
+
+The 6pp gap demonstrates the value of Pro's adaptive retrieval strategies (candidate pool sizing, soft frequency cap, extraction-time context injection) even at moderate scale.
+
+### MQoT-3K
+
+A stress test with 509 stored memories and 3,000 evaluation queries, designed to test retrieval quality at scale:
+
+| Configuration | Accuracy |
+|:---|:---:|
+| **Mnemo Pro** | **80.5%** |
+
+The 11pp drop from MQoT-500 reflects the harder retrieval challenge of a larger, noisier memory store. Pro's adaptive `minScore` (0.25 at N > 1000) and sqrt-based candidate pool scaling are specifically designed for this regime.
+
 ## LongMemEval (Zep's preferred benchmark)
 
 We also tested on [LongMemEval](https://github.com/xiaowu0162/LongMemEval), a 500-question benchmark across 6 categories.

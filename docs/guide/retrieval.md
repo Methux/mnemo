@@ -54,6 +54,41 @@ Removes low-quality fragments using an embedding-based noise bank.
 ### Stage 10: Context Assembly
 Final results are assembled with metadata for injection into the LLM context.
 
+## Adaptive Candidate Pool & Minimum Score (Pro)
+
+When Mnemo Pro is installed, the candidate pool size and minimum score threshold adapt to the size of the memory store.
+
+### Candidate Pool
+
+```
+candidatePool = min(200, max(50, sqrt(N) * 4))
+```
+
+| Store Size (N) | Candidate Pool |
+|:--------------:|:--------------:|
+| 100 | 50 (floor) |
+| 500 | 89 |
+| 1,000 | 126 |
+| 2,500 | 200 (cap) |
+
+`N` is obtained from `store.countRows()` and cached for 60 seconds to avoid repeated table scans.
+
+Without Pro, the pool is a fixed `candidatePoolSize` (default: 20) as set in config.
+
+### Minimum Score
+
+```
+minScore = N > 1000 ? 0.25 : 0.3
+```
+
+Larger stores contain more diverse memories. Lowering the threshold from 0.3 to 0.25 when the store exceeds 1,000 rows prevents relevant long-tail memories from being discarded by an overly aggressive filter.
+
+### surfacedIds (Session Deduplication)
+
+Pro tracks which memory IDs have been returned during a retrieval session. On subsequent `recall` calls within the same session, previously surfaced memories are filtered out. This prevents the same high-scoring memory from appearing in every response.
+
+Without Pro, no cross-call deduplication is applied — each `recall` call is independent.
+
 ## Configuration
 
 ```typescript
