@@ -126,11 +126,11 @@ async function main() {
   let retrieverConfig = { ...DEFAULT_RETRIEVAL_CONFIG, candidatePoolSize: 30 };
   let retrieverOpts = {};
 
-  // Pro strategy functions
-  const proAdaptivePool = (n) => Math.min(200, Math.max(50, Math.floor(Math.sqrt(n) * 4)));
-  const proAdaptiveMinScore = (n) => n > 1000 ? 0.25 : 0.3;
-  const proSoftLogCap = (c) => c <= 5 ? c : 5 + Math.log2(c - 4);
-  const proPreSearch = async (store, embedder, text, scopeFilter) => {
+  // Custom strategy functions for enhanced mode
+  const scaledPool = (n) => Math.min(200, Math.max(50, Math.floor(Math.sqrt(n) * 4)));
+  const scaledMinScore = (n) => n > 1000 ? 0.25 : 0.3;
+  const freqTransform = (c) => c <= 5 ? c : 5 + Math.log2(c - 4);
+  const contextSearch = async (store, embedder, text, scopeFilter) => {
     const queryText = text.slice(-2000);
     const queryVector = await embedder.embedQuery(queryText);
     const results = await store.vectorSearch(queryVector, 5, 0.3, scopeFilter);
@@ -141,16 +141,16 @@ async function main() {
   };
 
   if (MODE === "pro") {
-    // Pro: LLM contradiction + rerank + decay + Graphiti + adaptive strategies
+    // Enhanced: LLM + rerank + decay + Graphiti + custom strategies
     const llmForStore = createLlmClient({ apiKey: OPENAI_KEY, model: "gpt-4.1", baseURL: "https://api.openai.com/v1" });
     store.setLlmClient(llmForStore);
 
-    const decayEngine = createDecayEngine({ ...DEFAULT_DECAY_CONFIG, frequencyTransformFn: proSoftLogCap });
+    const decayEngine = createDecayEngine({ ...DEFAULT_DECAY_CONFIG, frequencyTransformFn: freqTransform });
     retrieverConfig = {
       ...retrieverConfig,
       candidatePoolSize: 50,
-      candidatePoolFn: proAdaptivePool,
-      minScoreFn: proAdaptiveMinScore,
+      candidatePoolFn: scaledPool,
+      minScoreFn: scaledMinScore,
       sessionDedup: true,
       rerank: "cross-encoder",
       rerankProvider: "voyage",
@@ -171,7 +171,7 @@ async function main() {
   const smartExtractor = new SmartExtractor(store, embedder, llm, {
     defaultScope: scope,
     extractMaxChars: 128000,
-    preSearchHook: MODE === "pro" ? proPreSearch : undefined,
+    preSearchHook: MODE === "pro" ? contextSearch : undefined,
   });
 
   const pipelineDesc = MODE === "pro"
