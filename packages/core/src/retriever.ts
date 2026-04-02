@@ -201,6 +201,12 @@ export interface RetrievalConfig {
   /** Enable multi-hop query routing: detected multi-hop queries skip Graphiti
    *  spread and rely on LanceDB secondary retrieval instead. (default: true) */
   multiHopRouting: boolean;
+  /** Optional: adaptive candidate pool size based on memory count (Pro). */
+  candidatePoolFn?: (memoryCount: number) => number;
+  /** Optional: adaptive min score based on memory count (Pro). */
+  minScoreFn?: (memoryCount: number) => number;
+  /** Enable session-level dedup for auto-recall (Pro). */
+  sessionDedup?: boolean;
 }
 
 export interface RetrievalContext {
@@ -786,9 +792,8 @@ export class MemoryRetriever {
       } catch { /* ignore */ }
     }
 
-    // Session-level dedup: only for auto-recall (prevents same memory being
-    // injected into context multiple times). Manual queries always return full results.
-    if (source === "auto-recall") {
+    // Pro enables session-level dedup for auto-recall via config.sessionDedup.
+    if (this.config.sessionDedup && source === "auto-recall") {
       const deduped = merged.filter(r => !this.surfacedIds.has(r.entry.id));
       for (const r of deduped) {
         this.surfacedIds.add(r.entry.id);
@@ -811,13 +816,14 @@ export class MemoryRetriever {
     category?: string,
   ): Promise<RetrievalResult[]> {
     const queryVector = await this.embedder.embedQuery(query);
-    // Adaptive minScore for vector-only path
-    const memCount = await this.store.countRows(scopeFilter);
-    const adaptiveMinScore = memCount > 1000 ? Math.min(this.config.minScore, 0.25) : this.config.minScore;
+    // Pro injects minScoreFn; core uses fixed value.
+    const effectiveMinScore = this.config.minScoreFn
+      ? this.config.minScoreFn(await this.store.countRows(scopeFilter))
+      : this.config.minScore;
     const results = await this.store.vectorSearch(
       queryVector,
       limit,
-      adaptiveMinScore,
+      effectiveMinScore,
       scopeFilter,
     );
 
@@ -866,11 +872,12 @@ export class MemoryRetriever {
     scopeFilter?: string[],
     category?: string,
   ): Promise<RetrievalResult[]> {
-    // Adaptive candidate pool: scales with memory count via sqrt(N)*4.
-    // 500→89, 1000→126, 2000→179, 5000+→cap 200 (reranker cost limit).
-    const memCount = await this.store.countRows(scopeFilter);
-    const adaptivePool = Math.min(200, Math.max(50, Math.floor(Math.sqrt(memCount) * 4)));
-    const candidatePoolSize = Math.max(this.config.candidatePoolSize, adaptivePool);
+    // Pro injects candidatePoolFn for adaptive scaling; core uses fixed config value.
+    const memCount = this.config.candidatePoolFn || this.config.minScoreFn
+      ? await this.store.countRows(scopeFilter) : 0;
+    const candidatePoolSize = this.config.candidatePoolFn
+      ? this.config.candidatePoolFn(memCount)
+      : this.config.candidatePoolSize;
 
     // Compute query embedding once, reuse for vector search + reranking
     const queryVector = await this.embedder.embedQuery(query);
@@ -889,8 +896,10 @@ export class MemoryRetriever {
     // Fuse results using RRF (async: validates BM25-only entries exist in store)
     const fusedResults = await this.fuseResults(vectorResults, bm25Results);
 
-    // Adaptive minScore: lower threshold at larger scale (similarity scores compress).
-    const adaptiveMinScore = memCount > 1000 ? Math.min(this.config.minScore, 0.25) : this.config.minScore;
+    // Pro injects minScoreFn for adaptive threshold; core uses fixed config value.
+    const adaptiveMinScore = this.config.minScoreFn
+      ? this.config.minScoreFn(memCount)
+      : this.config.minScore;
     const scoreFiltered = fusedResults.filter(
       (r) => r.score >= adaptiveMinScore,
     );

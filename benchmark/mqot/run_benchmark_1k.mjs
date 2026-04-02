@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * MQoT-500 Benchmark Runner
+ * MQoT-1K Benchmark Runner
  *
  * Usage:
  *   MODE=pro  node run_benchmark_500.mjs   # Pro: rerank + Graphiti + decay + LLM contradiction
@@ -23,15 +23,15 @@ import { homedir } from "os";
 import { execSync } from "child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_FILE = join(__dirname, "dataset_500.json");
+const DATA_FILE = join(__dirname, "dataset_1k.json");
 const RESULTS_DIR = join(__dirname, "results");
 mkdirSync(RESULTS_DIR, { recursive: true });
 
 const OPENAI_KEY = process.env.OPENAI_API_KEY;
 const VOYAGE_KEY = process.env.MNEMO_API_KEY;
 const MODE = (process.env.MODE || "pro").toLowerCase();
-const BENCH_GROUP = `mqot500-${MODE}-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}`;
-const DB_PATH = `/tmp/mnemo-mqot500-${MODE}`;
+const BENCH_GROUP = `mqot1k-${MODE}-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}`;
+const DB_PATH = `/tmp/mnemo-mqot1k-${MODE}`;
 const PROD_DB = join(homedir(), ".openclaw", "memory", "lancedb-pro-voyage");
 
 if (!OPENAI_KEY || !VOYAGE_KEY) { console.error("OPENAI_API_KEY and MNEMO_API_KEY required"); process.exit(1); }
@@ -106,7 +106,7 @@ async function workerPool(items, fn, concurrency) {
 }
 
 async function main() {
-  console.log(`Loading MQoT-500 dataset...`);
+  console.log(`Loading MQoT-1K dataset...`);
   const dataset = JSON.parse(readFileSync(DATA_FILE, "utf8"));
   console.log(`  ${dataset.conversations.length} conversations, ${dataset.questions.length} questions`);
   console.log(`  Important: ${dataset.important_facts?.length || 0}, Updates: ${dataset.fact_updates?.length || 0}`);
@@ -126,7 +126,7 @@ async function main() {
   let retrieverConfig = { ...DEFAULT_RETRIEVAL_CONFIG, candidatePoolSize: 30 };
   let retrieverOpts = {};
 
-  // Pro strategy functions (injected via config, not hardcoded in core)
+  // Pro strategy functions
   const proAdaptivePool = (n) => Math.min(200, Math.max(50, Math.floor(Math.sqrt(n) * 4)));
   const proAdaptiveMinScore = (n) => n > 1000 ? 0.25 : 0.3;
   const proSoftLogCap = (c) => c <= 5 ? c : 5 + Math.log2(c - 4);
@@ -135,8 +135,7 @@ async function main() {
     const queryVector = await embedder.embedQuery(queryText);
     const results = await store.vectorSearch(queryVector, 5, 0.3, scopeFilter);
     return results.map(r => ({
-      id: r.entry.id,
-      text: r.entry.text,
+      id: r.entry.id, text: r.entry.text,
       daysAgo: Math.max(0, Math.floor((Date.now() - (r.entry.timestamp || Date.now())) / 86_400_000)),
     }));
   };
@@ -180,7 +179,7 @@ async function main() {
     : "SmartExtract + Vector + BM25 (Core)";
 
   console.log(`\n${"=".repeat(60)}`);
-  console.log(`MQoT-500 Benchmark — ${MODE.toUpperCase()}`);
+  console.log(`MQoT-1K Benchmark — ${MODE.toUpperCase()}`);
   console.log(`Pipeline: ${pipelineDesc}`);
   console.log(`Scope: ${scope}`);
   console.log(`${"=".repeat(60)}`);
@@ -283,7 +282,7 @@ async function main() {
   const totalQ = results.length;
 
   console.log(`\n${"=".repeat(60)}`);
-  console.log(`MQoT-500 RESULTS (${MODE.toUpperCase()})`);
+  console.log(`MQoT-1K RESULTS (${MODE.toUpperCase()})`);
   console.log(`${"=".repeat(60)}`);
   console.log(`\n  Overall: ${(totalCorrect / totalQ * 100).toFixed(1)}% (${totalCorrect}/${totalQ})`);
   console.log(`  Memories: ${totalMemories}\n`);
@@ -295,7 +294,7 @@ async function main() {
   }
 
   const output = {
-    benchmark: "MQoT-500", version: "3.0",
+    benchmark: "MQoT-1K", version: "3.0",
     mode: MODE, pipeline: pipelineDesc,
     total_memories: totalMemories,
     accuracy: parseFloat((totalCorrect / totalQ * 100).toFixed(1)),
@@ -309,7 +308,7 @@ async function main() {
       correct: d.correct, total: d.total,
     };
   }
-  const outFile = join(RESULTS_DIR, `mqot500_${MODE}_${new Date().toISOString().slice(0, 10)}.json`);
+  const outFile = join(RESULTS_DIR, `mqot1k_${MODE}_${new Date().toISOString().slice(0, 10)}.json`);
   writeFileSync(outFile, JSON.stringify(output, null, 2));
   console.log(`\nSaved to ${outFile}`);
 

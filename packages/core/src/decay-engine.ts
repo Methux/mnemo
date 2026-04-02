@@ -44,6 +44,8 @@ export interface DecayConfig {
   workingDecayFloor: number;
   /** Decay floor for Peripheral memories (default: 0.5) */
   peripheralDecayFloor: number;
+  /** Optional transform for access count before frequency scoring (Pro: soft log cap). */
+  frequencyTransformFn?: (accessCount: number) => number;
 }
 
 // NOTE: These weights are initial values pending grid-search optimization.
@@ -171,12 +173,10 @@ export function createDecayEngine(
    * For memories with >1 access, a recentness bonus is applied.
    */
   function frequency(memory: DecayableMemory): number {
-    // Soft cap: logarithmic dampening beyond threshold=5.
-    // Prevents runaway frequency (count=50 → base≈1.0) while preserving
-    // discriminating power at large scale (count=50 → effective≈10.5 → base≈0.88).
-    const effectiveCount = memory.accessCount <= 5
-      ? memory.accessCount
-      : 5 + Math.log2(memory.accessCount - 4);
+    // Pro injects frequencyTransformFn (e.g. soft log cap); core uses raw count.
+    const effectiveCount = config.frequencyTransformFn
+      ? config.frequencyTransformFn(memory.accessCount)
+      : memory.accessCount;
     const base = 1 - Math.exp(-effectiveCount / 5);
     if (effectiveCount <= 1) return base;
 

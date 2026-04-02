@@ -87,6 +87,13 @@ export interface SmartExtractorConfig {
   noiseBank?: NoisePrototypeBank;
   /** Base directory for self-improvement learnings (enables feedback loop). */
   learningsDir?: string;
+  /** Optional pre-search hook for contradiction detection context (Pro). */
+  preSearchHook?: (
+    store: MemoryStore,
+    embedder: Embedder,
+    conversationText: string,
+    scopeFilter: string[],
+  ) => Promise<Array<{ id: string; text: string; daysAgo: number }>>;
 }
 
 export interface ExtractPersistOptions {
@@ -137,21 +144,16 @@ export class SmartExtractor {
         ? options.scopeFilter
         : [targetScope];
 
-    // Step 0: Pre-search for existing related memories (contradiction detection context).
-    // The LLM sees these during extraction and can flag contradictions directly —
-    // much more reliable than post-extraction cosine similarity matching.
+    // Step 0: Pre-search for contradiction detection context (Pro feature).
+    // Core: no pre-search, extraction works fine without it.
+    // Pro: injects preSearchHook that searches existing memories and returns context.
     let preSearchContext: Array<{ id: string; text: string; daysAgo: number }> = [];
-    try {
-      const queryText = conversationText.slice(-2000); // tail for recency
-      const queryVector = await this.embedder.embedQuery(queryText);
-      const preResults = await this.store.vectorSearch(queryVector, 5, 0.3, scopeFilter);
-      preSearchContext = preResults.map(r => ({
-        id: r.entry.id,
-        text: r.entry.text,
-        daysAgo: Math.max(0, Math.floor((Date.now() - (r.entry.timestamp || Date.now())) / 86_400_000)),
-      }));
-    } catch {
-      // Pre-search is best-effort; extraction still works without it
+    if (this.config.preSearchHook) {
+      try {
+        preSearchContext = await this.config.preSearchHook(this.store, this.embedder, conversationText, scopeFilter);
+      } catch {
+        // Pre-search is best-effort; extraction still works without it
+      }
     }
 
     // Step 1: LLM extraction (chunked for long conversations)
