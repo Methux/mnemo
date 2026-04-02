@@ -52,16 +52,6 @@ Mnemo uses a strategy pattern to separate framework from intelligence. Core defi
 
 **Core works fully without Pro.** When no hook is registered, fixed defaults apply (e.g., `candidatePoolSize = 20`, `minScore = 0.3`). Pro strategies activate automatically when `@mnemoai/pro` is installed — no code changes required.
 
-## Three-Repo Architecture
-
-| Repository | Visibility | License | Purpose |
-|:---|:---:|:---:|:---|
-| `@mnemoai/core` | Public | MIT | Framework, retrieval pipeline, hooks |
-| `@mnemoai/pro` | Private | Commercial | Strategy implementations, production features |
-| `openclaw-config` | Private | — | Production deployment config, auto-synced |
-
-Core owns the retrieval pipeline and defines hooks. Pro owns the strategies that plug into those hooks. Config lives in a separate repo and syncs to production via git push.
-
 ## Memory Lifecycle
 
 The `MemoryLifecycle` class manages tier transitions based on composite decay scores:
