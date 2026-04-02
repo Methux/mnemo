@@ -1108,6 +1108,25 @@ export class MemoryStore {
       .slice(offset, offset + limit);
   }
 
+  /** Lightweight scoped row count with 60-second TTL cache. */
+  private _countCache = new Map<string, { count: number; ts: number }>();
+  async countRows(scopeFilter?: string[]): Promise<number> {
+    await this.ensureInitialized();
+    const cacheKey = scopeFilter ? scopeFilter.sort().join("|") : "__all__";
+    const cached = this._countCache.get(cacheKey);
+    if (cached && Date.now() - cached.ts < 60_000) return cached.count;
+
+    let query = this.table!.query().select(["id"]);
+    if (scopeFilter && scopeFilter.length > 0) {
+      const cond = scopeFilter.map(s => `scope = '${escapeSqlLiteral(s)}'`).join(" OR ");
+      query = query.where(`((${cond}) OR scope IS NULL)`);
+    }
+    const rows = await query.toArray();
+    const count = rows.length;
+    this._countCache.set(cacheKey, { count, ts: Date.now() });
+    return count;
+  }
+
   async stats(scopeFilter?: string[]): Promise<{
     totalCount: number;
     scopeCounts: Record<string, number>;

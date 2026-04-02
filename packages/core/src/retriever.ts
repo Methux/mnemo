@@ -811,10 +811,13 @@ export class MemoryRetriever {
     category?: string,
   ): Promise<RetrievalResult[]> {
     const queryVector = await this.embedder.embedQuery(query);
+    // Adaptive minScore for vector-only path
+    const memCount = await this.store.countRows(scopeFilter);
+    const adaptiveMinScore = memCount > 1000 ? Math.min(this.config.minScore, 0.25) : this.config.minScore;
     const results = await this.store.vectorSearch(
       queryVector,
       limit,
-      this.config.minScore,
+      adaptiveMinScore,
       scopeFilter,
     );
 
@@ -863,12 +866,11 @@ export class MemoryRetriever {
     scopeFilter?: string[],
     category?: string,
   ): Promise<RetrievalResult[]> {
-    // Ensure candidate pool is large enough for quality reranking.
-    // At 400+ memories, pool=50 only covers 12.5% — too narrow for precision.
-    const candidatePoolSize = Math.max(
-      this.config.candidatePoolSize,
-      limit * 4,
-    );
+    // Adaptive candidate pool: scales with memory count via sqrt(N)*4.
+    // 500→89, 1000→126, 2000→179, 5000+→cap 200 (reranker cost limit).
+    const memCount = await this.store.countRows(scopeFilter);
+    const adaptivePool = Math.min(200, Math.max(50, Math.floor(Math.sqrt(memCount) * 4)));
+    const candidatePoolSize = Math.max(this.config.candidatePoolSize, adaptivePool);
 
     // Compute query embedding once, reuse for vector search + reranking
     const queryVector = await this.embedder.embedQuery(query);
@@ -887,9 +889,10 @@ export class MemoryRetriever {
     // Fuse results using RRF (async: validates BM25-only entries exist in store)
     const fusedResults = await this.fuseResults(vectorResults, bm25Results);
 
-    // Apply minimum score threshold
+    // Adaptive minScore: lower threshold at larger scale (similarity scores compress).
+    const adaptiveMinScore = memCount > 1000 ? Math.min(this.config.minScore, 0.25) : this.config.minScore;
     const scoreFiltered = fusedResults.filter(
-      (r) => r.score >= this.config.minScore,
+      (r) => r.score >= adaptiveMinScore,
     );
 
     // Filter expired/contradicted memories (fail-open on parse errors)
