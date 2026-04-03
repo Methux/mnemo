@@ -211,9 +211,6 @@ function isCacheValid(cached: CachedLicense): boolean {
 // ── Main entry point (sync) ──
 
 export function isProLicensed(): boolean {
-  // BENCHMARK BYPASS — remove after testing
-  if (process.env.MNEMO_BENCH_BYPASS === "1") return true;
-
   if (_cachedResult !== null) return _cachedResult;
 
   const licenseKey = process.env.MNEMO_PRO_KEY?.trim();
