@@ -14,82 +14,21 @@
 </p>
 
 <p align="center">
-  <strong>AI memory that forgets intelligently.</strong><br>
-  A cognitive science-based memory framework for AI agents.
+  <strong>Long-term memory for AI agents.</strong><br>
+  Store, recall, and forget — just like humans do.
 </p>
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> ·
   <a href="https://docs.m-nemo.ai">Docs</a> ·
-  <a href="#architecture">Architecture</a> ·
+  <a href="#why-mnemo">Why Mnemo</a> ·
   <a href="#core-vs-pro">Core vs Pro</a> ·
   <a href="https://m-nemo.ai">Website</a>
 </p>
 
 ---
 
-## Why Mnemo?
-
-Every AI memory solution stores memories. **Mnemo forgets intelligently.**
-
-Humans don't remember everything equally — important memories consolidate, trivial ones fade, frequently recalled knowledge strengthens. Mnemo models this with:
-
-- **Weibull decay** — stretched-exponential forgetting: `exp(-(t/λ)^β)` with tier-specific β
-- **Triple-path retrieval** — Vector + BM25 + Knowledge Graph fused with RRF
-- **Three-layer contradiction detection** — regex signal → LLM 5-class → dedup pipeline
-- **10-stage retrieval pipeline** — from preprocessing to context injection
-- **Strategy pattern** — Core provides hooks (`candidatePoolFn`, `frequencyTransformFn`, `minScoreFn`, `preSearchHook`, `sessionDedup`); Pro injects adaptive implementations
-- **Adaptive retrieval** — candidate pool scales with store size: `min(200, max(50, sqrt(N)*4))`
-- **Memory lifecycle** — automatic tier transitions (working/peripheral/core) with JSONL archival
-
-The result: your AI agent's memory stays relevant instead of drowning in noise.
-
-## Feature Highlights
-
-| Capability | Core (Free) | Pro |
-|:---|:---:|:---:|
-| Vector + BM25 + Knowledge Graph | ✅ | ✅ |
-| Weibull forgetting model | ✅ | ✅ |
-| Memory tiers (Core/Working/Peripheral) | ✅ | ✅ |
-| Cross-encoder rerank | ✅ | ✅ |
-| Contradiction detection | ✅ | ✅ |
-| Multi-backend (LanceDB, Qdrant, Chroma, PGVector) | ✅ | ✅ |
-| Scope isolation (multi-agent) | ✅ | ✅ |
-| $0 local deployment (Ollama) | ✅ | ✅ |
-| Adaptive retrieval (pool/score/frequency) | — | ✅ |
-| Extraction-time context injection | — | ✅ |
-| Session deduplication (surfacedIds) | — | ✅ |
-| Pro production features | — | ✅ ([details](https://m-nemo.ai)) |
-
----
-
-## Architecture
-
-```
-  ┌─────────────────────────────────────────────────────────────┐
-  │  @mnemoai/core (MIT)                                        │
-  │                                                             │
-  │  Store ──→ Embedding ──→ Vector DB (LanceDB/Qdrant/Chroma) │
-  │                              │                              │
-  │  Recall ──→ Multi-path ──→ Rerank ──→ Decay ──→ Top-K      │
-  │               │                                             │
-  │  Hooks:  candidatePoolFn · minScoreFn · frequencyTransformFn│
-  │          preSearchHook · sessionDedup                       │
-  │               │                                             │
-  │  Lifecycle: tier transitions + JSONL archival               │
-  └───────────────┼─────────────────────────────────────────────┘
-                  │ Pro injects strategies (no code changes)
-  ┌───────────────┴─────────────────────────────────────────────┐
-  │  @mnemoai/pro (commercial)                                  │
-  │  Adaptive pool · Log frequency cap · Context injection      │
-  └─────────────────────────────────────────────────────────────┘
-```
-
----
-
 ## Quick Start
-
-### Option 1: npm (simplest)
 
 ```bash
 npm install @mnemoai/core
@@ -98,26 +37,29 @@ npm install @mnemoai/core
 ```typescript
 import { createMnemo } from '@mnemoai/core';
 
-// Auto-detect: uses OPENAI_API_KEY from env
 const mnemo = await createMnemo({ dbPath: './memory-db' });
 
-// Or use a preset for Ollama ($0, fully local)
-// const mnemo = await createMnemo({ preset: 'ollama', dbPath: './memory-db' });
+// Store
+await mnemo.store({ text: 'User prefers dark mode and minimal UI' });
 
-// Store a memory
-await mnemo.store({
-  text: 'User prefers dark mode and minimal UI',
-  category: 'preference',
-  importance: 0.8,
-});
+// Recall — vector search + BM25 + rerank + decay scoring
+const results = await mnemo.recall('What does the user like?');
+// → [{ text: "User prefers dark mode and minimal UI", score: 0.92 }]
 
-// Recall — automatically applies decay, rerank, MMR
-const results = await mnemo.recall('UI preferences', { limit: 5 });
+// Old memories fade automatically. Important ones stick around.
 ```
 
-**Available presets:** `openai`, `ollama`, `voyage`, `jina` — [see docs](https://docs.m-nemo.ai/guide/configuration)
+Auto-detects `OPENAI_API_KEY` from env. Or use a preset:
 
-### Option 2: Python
+```typescript
+// 100% local, $0 API cost
+const mnemo = await createMnemo({ preset: 'ollama', dbPath: './memory-db' });
+```
+
+**Available presets:** `openai` · `ollama` · `voyage` · `jina` — [configuration guide](https://docs.m-nemo.ai/guide/configuration)
+
+<details>
+<summary><strong>Python</strong></summary>
 
 ```bash
 pip install mnemo-memory
@@ -132,7 +74,10 @@ client.store("User prefers dark mode", category="preference")
 results = client.recall("UI preferences")
 ```
 
-### Option 3: 100% Local ($0, no external API)
+</details>
+
+<details>
+<summary><strong>100% Local with Ollama ($0)</strong></summary>
 
 ```bash
 ollama pull bge-m3               # embedding
@@ -144,9 +89,12 @@ ollama pull bge-reranker-v2-m3   # cross-encoder rerank
 const mnemo = await createMnemo({ preset: 'ollama', dbPath: './memory-db' });
 ```
 
-Full Core functionality — embedding, extraction, rerank — all running locally. Zero API cost.
+Full Core functionality — embedding, extraction, rerank — all running locally.
 
-### Option 4: Docker (full stack)
+</details>
+
+<details>
+<summary><strong>Docker (full stack with Neo4j + Dashboard)</strong></summary>
 
 ```bash
 git clone https://github.com/Methux/mnemo.git
@@ -154,6 +102,116 @@ cd mnemo
 cp .env.example .env     # add your API keys
 docker compose up -d     # starts Neo4j + Graphiti + Dashboard
 ```
+
+</details>
+
+---
+
+## Why Mnemo?
+
+Most AI memory systems are glorified vector databases — they store everything and retrieve by similarity. That breaks at scale: your agent drowns in stale, contradictory, and irrelevant memories.
+
+**Mnemo is different.** It models memory the way cognitive science says humans actually remember:
+
+- **Old memories fade.** A Weibull decay model naturally deprioritizes stale information — no manual cleanup needed.
+- **Important memories consolidate.** Frequently accessed, high-importance memories promote to a "core" tier with slower decay.
+- **Contradictions resolve automatically.** When a user says "I moved to Tokyo" after previously saying "I live in NYC", Mnemo detects the contradiction and expires the old fact.
+- **Noise gets filtered.** Debug logs, API errors, meta-questions — automatically excluded from long-term storage.
+
+The result: your agent's memory stays sharp at 100 memories or 10,000.
+
+### How it compares
+
+| | Mnemo | mem0 | Zep | LangMem |
+|:---|:---:|:---:|:---:|:---:|
+| Local-first (no SaaS lock-in) | **Yes** | No | No | Partial |
+| Forgetting model | **Weibull decay** | None | Time window | None |
+| Contradiction detection | **Auto** | Manual | Manual | None |
+| Multi-backend (LanceDB/Qdrant/Chroma/PGVector) | **Yes** | Qdrant only | Postgres only | Varies |
+| Provider agnostic (BYO embedding/LLM) | **Yes** | Limited | No | LangChain only |
+| Fully offline ($0 with Ollama) | **Yes** | No | No | No |
+
+---
+
+## Architecture
+
+```
+  User message
+       │
+       ▼
+  ┌─── Store ───────────────────────────────────────┐
+  │  Embed → Noise filter → Dedup → Contradiction   │
+  │  detection → LanceDB (vector + BM25 index)      │
+  └──────────────────────────────────────────────────┘
+       │
+       ▼
+  ┌─── Recall ──────────────────────────────────────┐
+  │  Vector search + BM25 → RRF fusion → Rerank     │
+  │  → Decay scoring → MMR diversity → Top-K         │
+  └──────────────────────────────────────────────────┘
+       │
+       ▼
+  ┌─── Lifecycle ───────────────────────────────────┐
+  │  Working → Core (consolidate)                    │
+  │  Working → Peripheral → Archive (fade out)       │
+  │  Driven by composite score, no manual tuning     │
+  └──────────────────────────────────────────────────┘
+```
+
+Every parameter adapts to your store size. No magic numbers to tune.
+
+---
+
+## Feature Highlights
+
+| Capability | Core (Free) | Pro |
+|:---|:---:|:---:|
+| Vector + BM25 + Knowledge Graph | Yes | Yes |
+| Weibull forgetting model | Yes | Yes |
+| Memory tiers (Core/Working/Peripheral) | Yes | Yes |
+| Cross-encoder rerank | Yes | Yes |
+| Contradiction detection | Yes | Yes |
+| Multi-backend (LanceDB, Qdrant, Chroma, PGVector) | Yes | Yes |
+| Scope isolation (multi-agent) | Yes | Yes |
+| $0 local deployment (Ollama) | Yes | Yes |
+| Adaptive retrieval (pool/score/frequency) | — | Yes |
+| Extraction-time context injection | — | Yes |
+| Session deduplication | — | Yes |
+
+---
+
+## Core vs Pro
+
+**Core** is the full framework — MIT licensed, no restrictions. Store, recall, decay, rerank, contradiction detection, multi-backend, multi-agent scopes. Everything you need to ship.
+
+**Pro** adds adaptive intelligence on top. Candidate pools scale with store size. Frequency scoring uses soft logarithmic caps. Extraction-time context injection catches contradictions that post-hoc detection misses. [Benchmarked at 90.5% vs Core's 85.5%](https://github.com/Methux/mnemo/tree/main/benchmark) on MQoT-500.
+
+```bash
+npm install @mnemoai/pro
+export MNEMO_PRO_KEY="your_license_key"
+# That's it — Pro strategies activate automatically.
+```
+
+| Plan | Price | Devices | Support |
+|:---|:---|:---:|:---|
+| **Core** | Free forever | Unlimited | GitHub Issues |
+| **Indie** | $69/mo | 1 | Email |
+| **Team** | $199/mo | 5 | Priority + Slack |
+| **Enterprise** | Custom | Unlimited | Dedicated + SLA |
+
+[Get Mnemo Pro →](https://m-nemo.ai)
+
+### API Configuration Guide
+
+Mnemo is a framework — **you bring your own models**. Choose a setup that fits your budget:
+
+| Setup | Embedding | LLM Extraction | Rerank | Est. API Cost |
+|:---|:---|:---|:---|:---:|
+| **Local** | Ollama bge-m3 | Ollama qwen3:8b | Ollama bge-reranker | **$0/mo** |
+| **Hybrid** | OpenAI text-embedding-3-small | GPT-4.1-mini | Jina reranker | ~$5/mo |
+| **Cloud** | Voyage voyage-4 | GPT-4.1 | Voyage rerank-2 | ~$45/mo |
+
+> These are **your own API costs**, not Mnemo subscription fees.
 
 ---
 
@@ -169,59 +227,6 @@ docker compose up -d     # starts Neo4j + Graphiti + Dashboard
 
 ---
 
-## Core vs Pro
-
-### Mnemo Core — Free, MIT License
-
-The open-source foundation. Full retrieval engine, no restrictions.
-
-| Feature | Details |
-|:---|:---|
-| Storage | Pluggable backend — LanceDB (default), Qdrant, Chroma, PGVector |
-| Retrieval | Triple-path (Vector + BM25 + Graphiti) with RRF fusion |
-| Rerank | Cross-encoder (configurable provider) |
-| Decay | Weibull stretched-exponential, tier-specific β |
-| Tiers | Core (β=0.8) / Working (β=1.0) / Peripheral (β=1.3) |
-| Contradiction | Three-layer detection (regex + LLM + dedup) |
-| Extraction | Smart extraction (configurable LLM) |
-| Graph | Graphiti/Neo4j knowledge graph |
-| Scopes | Multi-agent isolation |
-| Noise filtering | Embedding-based noise bank + regex |
-
-### Mnemo Pro — From $69/mo
-
-Everything in Core, plus production features. [Learn more →](https://m-nemo.ai)
-
-```bash
-npm install @mnemoai/pro
-export MNEMO_PRO_KEY="your_license_key"
-```
-
-### Pricing
-
-| Plan | Price | Devices | Support |
-|:---|:---|:---:|:---|
-| **Core** | Free forever | Unlimited | GitHub Issues |
-| **Indie** | $69/mo · $690/yr | 1 | Email |
-| **Team** | $199/mo · $1,990/yr | 5 | Priority + Slack |
-| **Enterprise** | Custom | Unlimited | Dedicated + SLA |
-
-[Get Mnemo Pro →](https://m-nemo.ai)
-
-### API Configuration Guide
-
-Mnemo is a framework — **you bring your own models**. Choose a setup that fits your budget:
-
-| Setup | Embedding | LLM Extraction | Rerank | Est. API Cost |
-|:---|:---|:---|:---|:---:|
-| **Local** | Ollama bge-m3 | Ollama qwen3:8b | Ollama bge-reranker | **$0/mo** |
-| **Hybrid** | OpenAI text-embedding-3-small | GPT-4.1-mini | Jina reranker | ~$5/mo |
-| **Cloud** | Voyage voyage-4 | GPT-4.1 | Voyage rerank-2 | ~$45/mo |
-
-> These are **your own API costs**, not Mnemo subscription fees. All setups use the same Core/Pro features — the difference is model quality.
-
----
-
 ## Cognitive Science
 
 Mnemo's design maps directly to established memory research:
@@ -233,11 +238,13 @@ Mnemo's design maps directly to established memory research:
 | Interference / false memories | Deduplication + noise filtering |
 | Metamemory | mnemo-doctor + Web Dashboard |
 
+Read more: [Architecture →](https://docs.m-nemo.ai/architecture) · [Retrieval Pipeline →](https://docs.m-nemo.ai/guide/retrieval) · [Ablation Tests →](https://docs.m-nemo.ai/guide/ablation)
+
 ---
 
 ## Documentation
 
-Full documentation at **[docs.m-nemo.ai](https://docs.m-nemo.ai)**
+Full docs at **[docs.m-nemo.ai](https://docs.m-nemo.ai)**
 
 - [Quick Start](https://docs.m-nemo.ai/guide/quickstart)
 - [Local Setup ($0 Ollama)](https://docs.m-nemo.ai/guide/ollama)
@@ -259,17 +266,6 @@ Full documentation at **[docs.m-nemo.ai](https://docs.m-nemo.ai)**
 
 ---
 
-## License
-
-This project uses a dual-license model:
-
-- **MIT** — Files marked `SPDX-License-Identifier: MIT` (Core features)
-- **Commercial** — Files marked `SPDX-License-Identifier: LicenseRef-Mnemo-Pro` (Pro features)
-
-See [LICENSE](LICENSE) and [packages/pro/LICENSE](packages/pro/LICENSE) for details.
-
----
-
 ## Contributing
 
 We welcome contributions to Mnemo Core (MIT-licensed files). See [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -279,6 +275,17 @@ Areas where we'd love help:
 - New storage adapters and embedding providers
 - Retrieval pipeline optimizations
 - Documentation and examples
+
+---
+
+## License
+
+Dual-license model:
+
+- **MIT** — Core features (`SPDX-License-Identifier: MIT`)
+- **Commercial** — Pro features (`SPDX-License-Identifier: LicenseRef-Mnemo-Pro`)
+
+See [LICENSE](LICENSE) and [packages/pro/LICENSE](packages/pro/LICENSE) for details.
 
 ---
 
