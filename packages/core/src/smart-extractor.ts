@@ -12,12 +12,19 @@ import type { Embedder } from "./embedder.js";
 import type { LlmClient } from "./llm-client.js";
 import { appendFile, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import {
-  buildExtractionPrompt,
-  buildChineseExtractionPrompt,
-  buildDedupPrompt,
-  buildMergePrompt,
-} from "./extraction-prompts.js";
+// ── Default stub prompts (basic extraction without 6-category intelligence) ──
+
+function stubExtractionPrompt(conversationText: string, user: string): string {
+  return `Extract key facts about ${user} from this conversation. Return JSON: {"memories": [{"category": "fact", "abstract": "one-line summary", "overview": "details", "content": "full text"}]}. If nothing worth remembering, return {"memories": []}.\n\nConversation:\n${conversationText}`;
+}
+
+function stubDedupPrompt(candidateAbstract: string, _overview: string, _content: string, existingMemories: string): string {
+  return `Is this memory a duplicate?\n\nCandidate: ${candidateAbstract}\n\nExisting:\n${existingMemories}\n\nReturn JSON: {"decision": "skip" or "create", "reason": "..."}`;
+}
+
+function stubMergePrompt(existingAbstract: string, _eo: string, existingContent: string, newAbstract: string, _no: string, newContent: string, _cat: string): string {
+  return `Merge these two memories:\n\nExisting: ${existingAbstract}\n${existingContent}\n\nNew: ${newAbstract}\n${newContent}\n\nReturn JSON: {"abstract": "...", "overview": "...", "content": "..."}`;
+}
 // Pro feature: self-improvement feedback loop (loaded from @mnemoai/pro if available)
 let buildLearningsContext: ((baseDir: string, maxEntries?: number) => Promise<string>) | null = null;
 import("@mnemoai/" + "pro").then(mod => {
@@ -87,6 +94,11 @@ export interface SmartExtractorConfig {
   noiseBank?: NoisePrototypeBank;
   /** Base directory for self-improvement learnings (enables feedback loop). */
   learningsDir?: string;
+  /** Optional prompt builders — override stubs with full-featured prompts. */
+  buildExtractionPrompt?: (conversationText: string, user: string) => string;
+  buildChineseExtractionPrompt?: (conversationText: string, user: string) => string;
+  buildDedupPrompt?: (candidateAbstract: string, candidateOverview: string, candidateContent: string, existingMemories: string) => string;
+  buildMergePrompt?: (existingAbstract: string, existingOverview: string, existingContent: string, newAbstract: string, newOverview: string, newContent: string, category: string) => string;
   /** Optional pre-search hook for contradiction detection context (Pro). */
   preSearchHook?: (
     store: MemoryStore,
@@ -290,9 +302,10 @@ export class SmartExtractor {
     const truncated = conversationText;
 
     const user = this.config.user ?? "User";
-    let prompt = isCjkDominant(truncated)
-      ? buildChineseExtractionPrompt(truncated, user)
-      : buildExtractionPrompt(truncated, user);
+    const extPrompt = isCjkDominant(truncated)
+      ? (this.config.buildChineseExtractionPrompt ?? this.config.buildExtractionPrompt ?? stubExtractionPrompt)
+      : (this.config.buildExtractionPrompt ?? stubExtractionPrompt);
+    let prompt = extPrompt(truncated, user);
 
     // ── Inject existing memories for contradiction detection ──
     if (existingContext.length > 0) {
@@ -552,7 +565,8 @@ export class SmartExtractor {
       })
       .join("\n");
 
-    const prompt = buildDedupPrompt(
+    const dedupFn = this.config.buildDedupPrompt ?? stubDedupPrompt;
+    const prompt = dedupFn(
       candidate.abstract,
       candidate.overview,
       candidate.content,
@@ -690,7 +704,8 @@ export class SmartExtractor {
     }
 
     // Call LLM to merge
-    const prompt = buildMergePrompt(
+    const mergeFn = this.config.buildMergePrompt ?? stubMergePrompt;
+    const prompt = mergeFn(
       existingAbstract,
       existingOverview,
       existingContent,
