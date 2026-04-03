@@ -70,7 +70,7 @@
     "build": "node build.mjs",
     "prepublishOnly": "npm run build",
     "test": "node --test test/core.test.mjs test/package.test.mjs",
-    "test:host": "node test/openclaw-host-functional.mjs",
+    "test:host": "node test/host-functional.mjs",
     "version": "node scripts/sync-plugin-version.mjs mnemo.plugin.json package.json && git add mnemo.plugin.json"
   },
   "devDependencies": {

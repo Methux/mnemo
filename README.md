@@ -180,26 +180,26 @@ Every parameter adapts to your store size. No magic numbers to tune.
 
 ---
 
-## Core vs Pro
+## Self-hosted vs Cloud
 
-**Core** is the full framework — MIT licensed, no restrictions. Store, recall, decay, rerank, contradiction detection, multi-backend, multi-agent scopes. Everything you need to ship.
+**Self-hosted (Core)** — the full framework, MIT licensed, no restrictions. `npm install @mnemoai/core` and run it yourself. You bring your own embedding/LLM keys.
 
-**Pro** adds adaptive intelligence on top. Candidate pools scale with store size. Frequency scoring uses soft logarithmic caps. Extraction-time context injection catches contradictions that post-hoc detection misses. [Benchmarked at 90.5% vs Core's 85.5%](https://github.com/Methux/mnemo/tree/main/benchmark) on MQoT-500.
+**Mnemo Cloud** — hosted API, zero setup. Adaptive retrieval, intelligent extraction, and contradiction detection built in. No keys to manage, no infrastructure to run.
 
 ```bash
-npm install @mnemoai/pro
-export MNEMO_PRO_KEY="your_license_key"
-# That's it — Pro strategies activate automatically.
+# Cloud: one API call, done
+curl -X POST https://api.m-nemo.ai/v1/store \
+  -H "Authorization: Bearer mn_your_key" \
+  -d '{"text": "User prefers dark mode"}'
 ```
 
-| Plan | Price | Devices | Support |
-|:---|:---|:---:|:---|
-| **Core** | Free forever | Unlimited | GitHub Issues |
-| **Indie** | $69/mo | 1 | Email |
-| **Team** | $199/mo | 5 | Priority + Slack |
-| **Enterprise** | Custom | Unlimited | Dedicated + SLA |
+| Plan | Price | What you get |
+|:---|:---|:---|
+| **Core** | Free forever | Full framework, self-hosted, MIT |
+| **Cloud Free** | $0 | 1,000 memories, 5,000 recalls/mo |
+| **Cloud Pro** | Coming soon | Unlimited, priority support |
 
-[Get Mnemo Pro →](https://m-nemo.ai)
+[Try Mnemo Cloud →](https://m-nemo.ai)
 
 ### API Configuration Guide
 
@@ -220,7 +220,7 @@ Mnemo is a framework — **you bring your own models**. Choose a setup that fits
 | Package | Platform | Install |
 |:---|:---|:---|
 | [@mnemoai/core](https://www.npmjs.com/package/@mnemoai/core) | npm | `npm install @mnemoai/core` |
-| @mnemoai/pro | npm (private) | `npm install @mnemoai/pro` (requires license) |
+| [Mnemo Cloud](https://m-nemo.ai) | REST API | `https://api.m-nemo.ai` |
 | [@mnemoai/server](https://www.npmjs.com/package/@mnemoai/server) | npm | `npx @mnemoai/server` |
 | [@mnemoai/vercel-ai](https://www.npmjs.com/package/@mnemoai/vercel-ai) | npm | `npm install @mnemoai/vercel-ai` |
 | [mnemo-memory](https://pypi.org/project/mnemo-memory/) | PyPI | `pip install mnemo-memory` |

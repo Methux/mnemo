@@ -1,0 +1,2019 @@
+{
+  "metadata": {
+    "name": "Mnemo 30-Day Longterm Benchmark",
+    "version": "1.0",
+    "created": "2026-03-26T21:12:45.851Z",
+    "user_profile": "Alex, 32, software engineer, San Francisco",
+    "total_days": 30,
+    "total_conversations": 89
+  },
+  "days": [
+    {
+      "day": 1,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Hey, can you remind me to call my mom later today?"
+            },
+            {
+              "role": "assistant",
+              "content": "Absolutely, Alex! What time should I remind you to call your mom?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Let’s do 7pm. By the way, do you know any good sushi places near Russian Hill?"
+            },
+            {
+              "role": "assistant",
+              "content": "Sure! Akiko’s Sushi is a great spot in Russian Hill, and there’s also Sushi Groove nearby. Want me to make a reservation for you?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "No need to book, I just wanted to try somewhere new with Emily tonight."
+            },
+            {
+              "role": "assistant",
+              "content": "Sounds fun! Let me know if you want menu recommendations. Hope you and Emily have a great evening."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you add almond milk to my grocery list? I ran out this morning making my latte."
+            },
+            {
+              "role": "assistant",
+              "content": "Almond milk added! Anything else you need for your morning lattes?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Nope, just that. And can you check if my gym class is at 6:30 or 7 today?"
+            },
+            {
+              "role": "assistant",
+              "content": "Your HIIT class at Equinox is at 6:30pm tonight."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Remind me to update the README for our API before standup."
+            },
+            {
+              "role": "assistant",
+              "content": "Will do, Alex. Standup with the Platform team is at 9:30am, right?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Yeah, and I want to finish before my manager, Priya, checks in."
+            },
+            {
+              "role": "assistant",
+              "content": "Understood! I’ll remind you to update the README by 9am."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you order my usual from Sightglass for pickup?"
+            },
+            {
+              "role": "assistant",
+              "content": "Of course! One oat milk cappuccino from Sightglass on 7th Street coming up. Want anything else?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "No, that’s all. I’m walking to work today since it’s sunny."
+            },
+            {
+              "role": "assistant",
+              "content": "Great choice! Enjoy the walk to your office in SoMa."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you book a checkup with Dr. Lee next week?"
+            },
+            {
+              "role": "assistant",
+              "content": "Sure thing, Alex. Do you prefer mornings or afternoons for your appointment with Dr. Lee?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Morning works best. Also, remind me to avoid shellfish—my allergy’s been acting up lately."
+            },
+            {
+              "role": "assistant",
+              "content": "Got it. Morning appointment with Dr. Lee, and a reminder about your shellfish allergy."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you check if my Honda CR-V is due for service soon?"
+            },
+            {
+              "role": "assistant",
+              "content": "Your Honda CR-V’s next service is in 2 weeks. Would you like me to schedule it at the usual garage near North Beach?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Yeah, let’s do that. I’ll need it for our Tahoe trip next month."
+            },
+            {
+              "role": "assistant",
+              "content": "Service appointment scheduled. That Tahoe vacation with Emily and Luna should be a blast!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you order more dog food for Luna? She’s almost out."
+            },
+            {
+              "role": "assistant",
+              "content": "Ordering more Blue Buffalo for Luna the golden retriever now. Anything else for her?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Nope, just that. By the way, what’s the ETA on my new headphones?"
+            },
+            {
+              "role": "assistant",
+              "content": "Your Sony WH-1000XM5 headphones should arrive by Friday."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you recommend a vegetarian-friendly spot for lunch near my office?"
+            },
+            {
+              "role": "assistant",
+              "content": "Vegan Picnic on Market Street is a great option, and so is Little Gem. Both have lots of vegetarian choices."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Thanks! I’m trying to eat less meat lately."
+            },
+            {
+              "role": "assistant",
+              "content": "Great to hear! Let me know if you want more meal ideas or recipes."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you reserve the rooftop lounge in my building for Saturday night?"
+            },
+            {
+              "role": "assistant",
+              "content": "Absolutely! Reserving the rooftop lounge at 1234 Vallejo Street for this Saturday. Is it for a special occasion?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "It’s my birthday! Just having my sister and a few friends over."
+            },
+            {
+              "role": "assistant",
+              "content": "Happy early birthday, Alex! I’ll make sure the lounge is booked and send out reminders."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you set a reminder for my dad’s call on Sunday?"
+            },
+            {
+              "role": "assistant",
+              "content": "Sure! I'll remind you to call your dad on Sunday afternoon."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "And don’t let me forget my guitar lesson tomorrow evening."
+            },
+            {
+              "role": "assistant",
+              "content": "Guitar lesson reminder set for Thursday at 6pm. Have fun practicing!"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Thanks! I’ve got to squeeze it in before trivia night at Zeitgeist."
+            },
+            {
+              "role": "assistant",
+              "content": "Sounds like a busy evening! Enjoy your lesson and good luck at trivia."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 11,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Do you remember which neighborhood I live in?"
+            },
+            {
+              "role": "assistant",
+              "content": "Yes, you live in Russian Hill, San Francisco."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I went to trivia night again yesterday. I think our team is getting better!"
+            },
+            {
+              "role": "assistant",
+              "content": "That's great! Trivia nights at Zeitgeist sound like a lot of fun. Did Luna get to join you this time?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you remind me what kind of dog food I usually order for Luna?"
+            },
+            {
+              "role": "assistant",
+              "content": "You usually order Blue Buffalo dog food for Luna."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What's my manager's name again?"
+            },
+            {
+              "role": "assistant",
+              "content": "Your manager's name is Priya."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Emily just accepted a new job at UCSF! We're celebrating tonight."
+            },
+            {
+              "role": "assistant",
+              "content": "That's fantastic news for Emily! Congratulations to her on the new job at UCSF. How are you both celebrating?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What was my favorite cuisine again?"
+            },
+            {
+              "role": "assistant",
+              "content": "Your favorite cuisine includes sushi."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 13,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Remember how I always started my day with coffee? I've actually switched to matcha lately."
+            },
+            {
+              "role": "assistant",
+              "content": "Thanks for letting me know! I'll remember that you now start your day with matcha instead of coffee."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you recall what kind of milk I prefer in my lattes?"
+            },
+            {
+              "role": "assistant",
+              "content": "You prefer almond milk in your lattes."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Sightglass still makes a great matcha, by the way."
+            },
+            {
+              "role": "assistant",
+              "content": "That's good to hear! Nice that Sightglass has good matcha options for you."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 14,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I got promoted to Senior Engineer on the Platform team!"
+            },
+            {
+              "role": "assistant",
+              "content": "Congratulations on your promotion to Senior Engineer! That's a huge accomplishment."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you remind me which gym I go to?"
+            },
+            {
+              "role": "assistant",
+              "content": "You go to Equinox gym."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I need to update my gym schedule soon, since work hours are changing."
+            },
+            {
+              "role": "assistant",
+              "content": "That makes sense, especially with your new role. Let me know when your schedule changes so I can keep track."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 15,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I started pottery classes last weekend! It's a lot harder than it looks."
+            },
+            {
+              "role": "assistant",
+              "content": "That's awesome! Pottery can be challenging but really rewarding. What have you made so far?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Do you remember what kind of car I drive?"
+            },
+            {
+              "role": "assistant",
+              "content": "You drive a Honda CR-V."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I might make a bowl for Luna's food as my first project."
+            },
+            {
+              "role": "assistant",
+              "content": "That's such a thoughtful idea! I'm sure Luna will love her handmade bowl."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 16,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Hey, do you remember what allergies I have?"
+            },
+            {
+              "role": "assistant",
+              "content": "Yes, you're allergic to shellfish."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I found a new HIIT instructor at Equinox who does early morning classes."
+            },
+            {
+              "role": "assistant",
+              "content": "That sounds like a great way to start your day! Will you be switching to morning HIIT classes now?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Yeah, I'm moving my workouts to the mornings starting next week."
+            },
+            {
+              "role": "assistant",
+              "content": "Got it! I'll remember that your Equinox HIIT classes will now be in the mornings."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 17,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Can you recall where I work?"
+            },
+            {
+              "role": "assistant",
+              "content": "You work in SoMa, San Francisco."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Emily's new job at UCSF is keeping her super busy, but she's loving it so far."
+            },
+            {
+              "role": "assistant",
+              "content": "I'm glad to hear Emily is enjoying her new job at UCSF, even if it's keeping her busy!"
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "We're thinking of taking Luna for a hike at Fort Funston this weekend."
+        },
+        {
+          "role": "assistant",
+          "content": "Fort Funston is a great spot for dogs! Luna will have a blast exploring the trails."
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "By the way, I'm moving to Pacific Heights next week."
+            },
+            {
+              "role": "assistant",
+              "content": "That's exciting! Moving to Pacific Heights is a big change. Have you found a new place already?"
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What's my street address again? I need to update it soon."
+            },
+            {
+              "role": "assistant",
+              "content": "Your current address is 1234 Vallejo Street."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I'll send you the new address once I'm settled in."
+            },
+            {
+              "role": "assistant",
+              "content": "Sounds good! Let me know when you’re ready for me to update your address."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 19,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Do you remember my doctor's name?"
+            },
+            {
+              "role": "assistant",
+              "content": "Yes, your doctor's name is Dr. Lee."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Trying a new vegetarian recipe tonight—chickpea curry. Still working on eating less meat."
+            },
+            {
+              "role": "assistant",
+              "content": "That sounds delicious! It's great that you're sticking to your goal of eating less meat."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Do you remember when my birthday is?"
+        },
+        {
+          "role": "assistant",
+          "content": "Yes, your birthday is in March."
+        }
+      ]
+    },
+    {
+      "day": 20,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I just signed up for a 5K charity run next month!"
+            },
+            {
+              "role": "assistant",
+              "content": "That's awesome! Running a 5K for charity is a great way to give back and stay active."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Have I ever mentioned where my partner works?"
+            },
+            {
+              "role": "assistant",
+              "content": "Yes, you mentioned that Emily recently started a new job at UCSF."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Oh, and Luna has started learning a new trick—she can roll over now!"
+            },
+            {
+              "role": "assistant",
+              "content": "That's so cute! Luna is a smart golden retriever. Rolling over is a fun trick."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 21,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "I want to try a new brunch spot near Pacific Heights. Any recommendations that fit my favorite cuisine?"
+            },
+            {
+              "role": "assistant",
+              "content": "Since you love sushi and now live in Pacific Heights, you might enjoy Akiko’s Restaurant. They offer excellent sushi and are not far from your new neighborhood."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Did I mention if I prefer almond milk or regular milk in my lattes?"
+            },
+            {
+              "role": "assistant",
+              "content": "You prefer almond milk in your lattes."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "How is Luna's training going? Any progress?"
+            },
+            {
+              "role": "assistant",
+              "content": "Luna is currently learning to roll over. How’s she doing with her new trick?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 22,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Remind me, what’s Emily’s job now?"
+            },
+            {
+              "role": "assistant",
+              "content": "Emily works at UCSF."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What time do I usually take my HIIT classes these days?"
+            },
+            {
+              "role": "assistant",
+              "content": "You’ve switched your HIIT classes at Equinox to the mornings."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Did I finish Luna’s pottery bowl yet?"
+        },
+        {
+          "role": "assistant",
+          "content": "You planned to make a pottery bowl for Luna, but you haven’t mentioned finishing it yet. How is it coming along?"
+        }
+      ]
+    },
+    {
+      "day": 23,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What’s the difference between my current and previous job titles?"
+            },
+            {
+              "role": "assistant",
+              "content": "You were previously a Software Engineer on the Platform team. Now you’re a Senior Engineer on the same team."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Where do I usually go for morning drinks now?"
+            },
+            {
+              "role": "assistant",
+              "content": "You start your day with matcha from Sightglass."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "What’s my current address?"
+        },
+        {
+          "role": "assistant",
+          "content": "You recently moved and now live in Pacific Heights. Your previous address was 1234 Vallejo Street in Russian Hill."
+        }
+      ]
+    },
+    {
+      "day": 24,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Do I still work in Russian Hill?"
+            },
+            {
+              "role": "assistant",
+              "content": "You’ve moved to Pacific Heights, but you still work in SoMa, San Francisco."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Do I have any dietary restrictions to watch out for at restaurants?"
+            },
+            {
+              "role": "assistant",
+              "content": "Yes, you’re allergic to shellfish and you’re trying to eat less meat, preferring vegetarian options."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Is Luna still on Blue Buffalo dog food?"
+        },
+        {
+          "role": "assistant",
+          "content": "Yes, you order Blue Buffalo dog food for Luna."
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Who’s my manager at work?"
+            },
+            {
+              "role": "assistant",
+              "content": "Your manager is Priya."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What headphones did I get recently?"
+            },
+            {
+              "role": "assistant",
+              "content": "You recently bought the Sony WH-1000XM5 headphones."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "What’s the name of my dog and what breed is she?"
+        },
+        {
+          "role": "assistant",
+          "content": "Your dog’s name is Luna and she’s a golden retriever."
+        }
+      ]
+    },
+    {
+      "day": 26,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Where do I usually go hiking with Luna?"
+            },
+            {
+              "role": "assistant",
+              "content": "You enjoy hiking with Luna at Fort Funston."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Who do I call regularly in my family?"
+        },
+        {
+          "role": "assistant",
+          "content": "You call both your mom and your dad regularly."
+        }
+      ]
+    },
+    {
+      "day": 27,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Do I still go to trivia nights? Where?"
+            },
+            {
+              "role": "assistant",
+              "content": "Yes, you go to trivia nights at Zeitgeist."
+            }
+          ]
+        },
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What’s the status of the Tahoe vacation?"
+            },
+            {
+              "role": "assistant",
+              "content": "You’re planning a vacation to Tahoe with Emily and Luna."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": 28,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "How do I get to work now? Do I still drive the same car?"
+            },
+            {
+              "role": "assistant",
+              "content": "You drive a Honda CR-V and commute from your new home in Pacific Heights to your work in SoMa."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Am I still taking guitar lessons?"
+        },
+        {
+          "role": "assistant",
+          "content": "Yes, you’re still taking guitar lessons."
+        }
+      ]
+    },
+    {
+      "day": 29,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "What’s new about my morning routine compared to when I first started this dataset?"
+            },
+            {
+              "role": "assistant",
+              "content": "Initially, you started your day with coffee from Sightglass, but now you have matcha from Sightglass and take your HIIT classes in the morning."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Remind me, when’s my birthday?"
+        },
+        {
+          "role": "assistant",
+          "content": "Your birthday is in March."
+        }
+      ]
+    },
+    {
+      "day": 30,
+      "conversations": [
+        {
+          "turns": [
+            {
+              "role": "user",
+              "content": "Am I still on the Platform team? What’s my title?"
+            },
+            {
+              "role": "assistant",
+              "content": "Yes, you’re still on the Platform team and your current title is Senior Engineer."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Who’s my doctor again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Your doctor’s name is Dr. Lee."
+        },
+        {
+          "role": "user",
+          "content": "Do I have any siblings?"
+        },
+        {
+          "role": "assistant",
+          "content": "Yes, you have a sister."
+        }
+      ]
+    }
+  ],
+  "facts_established": [
+    {
+      "fact": "Alex's mom is alive and he calls her regularly",
+      "day_mentioned": 1,
+      "category": "family"
+    },
+    {
+      "fact": "Alex's partner's name is Emily",
+      "day_mentioned": 1,
+      "category": "personal"
+    },
+    {
+      "fact": "Alex lives in Russian Hill, San Francisco",
+      "day_mentioned": 1,
+      "category": "home"
+    },
+    {
+      "fact": "Alex's favorite cuisine includes sushi",
+      "day_mentioned": 1,
+      "category": "food"
+    },
+    {
+      "fact": "Alex prefers almond milk in his lattes",
+      "day_mentioned": 2,
+      "category": "food"
+    },
+    {
+      "fact": "Alex takes HIIT classes at Equinox gym",
+      "day_mentioned": 2,
+      "category": "fitness"
+    },
+    {
+      "fact": "Alex is on the Platform team at work",
+      "day_mentioned": 3,
+      "category": "job"
+    },
+    {
+      "fact": "Alex's manager's name is Priya",
+      "day_mentioned": 3,
+      "category": "job"
+    },
+    {
+      "fact": "Alex starts his day with coffee from Sightglass",
+      "day_mentioned": 4,
+      "category": "routine"
+    },
+    {
+      "fact": "Alex works in SoMa, San Francisco",
+      "day_mentioned": 4,
+      "category": "job/home"
+    },
+    {
+      "fact": "Alex's doctor's name is Dr. Lee",
+      "day_mentioned": 5,
+      "category": "medical"
+    },
+    {
+      "fact": "Alex is allergic to shellfish",
+      "day_mentioned": 5,
+      "category": "medical"
+    },
+    {
+      "fact": "Alex drives a Honda CR-V",
+      "day_mentioned": 6,
+      "category": "transportation"
+    },
+    {
+      "fact": "Alex is planning a vacation to Tahoe with Emily and Luna",
+      "day_mentioned": 6,
+      "category": "vacation"
+    },
+    {
+      "fact": "Alex has a golden retriever named Luna",
+      "day_mentioned": 7,
+      "category": "pets"
+    },
+    {
+      "fact": "Alex orders Blue Buffalo dog food for Luna",
+      "day_mentioned": 7,
+      "category": "pets"
+    },
+    {
+      "fact": "Alex recently bought Sony WH-1000XM5 headphones",
+      "day_mentioned": 7,
+      "category": "purchases"
+    },
+    {
+      "fact": "Alex is trying to eat less meat / prefers vegetarian options",
+      "day_mentioned": 8,
+      "category": "diet"
+    },
+    {
+      "fact": "Alex lives at 1234 Vallejo Street",
+      "day_mentioned": 9,
+      "category": "home"
+    },
+    {
+      "fact": "Alex's birthday is in March",
+      "day_mentioned": 9,
+      "category": "personal"
+    },
+    {
+      "fact": "Alex has a sister",
+      "day_mentioned": 9,
+      "category": "family"
+    },
+    {
+      "fact": "Alex's dad is alive and he calls him",
+      "day_mentioned": 10,
+      "category": "family"
+    },
+    {
+      "fact": "Alex takes guitar lessons",
+      "day_mentioned": 10,
+      "category": "hobby"
+    },
+    {
+      "fact": "Alex goes to trivia nights at Zeitgeist",
+      "day_mentioned": 10,
+      "category": "hobby"
+    }
+  ],
+  "facts_updated": [
+    {
+      "old_fact": "Alex starts his day with coffee from Sightglass",
+      "new_fact": "Alex starts his day with matcha from Sightglass",
+      "day_updated": 13
+    },
+    {
+      "old_fact": "Alex is a Software Engineer on the Platform team",
+      "new_fact": "Alex is a Senior Engineer on the Platform team",
+      "day_updated": 14
+    },
+    {
+      "old_fact": "Emily works at previous job (unspecified)",
+      "new_fact": "Emily works at UCSF",
+      "day_updated": 12
+    },
+    {
+      "old_fact": "Alex lives in Russian Hill",
+      "new_fact": "Alex lives in Pacific Heights",
+      "day_updated": 18
+    },
+    {
+      "old_fact": "Alex does HIIT classes at Equinox in the evenings",
+      "new_fact": "Alex does HIIT classes at Equinox in the mornings",
+      "day_updated": 16
+    }
+  ],
+  "facts_new": [
+    {
+      "fact": "Alex started pottery classes",
+      "day_mentioned": 15,
+      "category": "hobby"
+    },
+    {
+      "fact": "Emily works at UCSF",
+      "day_mentioned": 12,
+      "category": "partner_career"
+    },
+    {
+      "fact": "Alex is now a Senior Engineer",
+      "day_mentioned": 14,
+      "category": "career"
+    },
+    {
+      "fact": "Alex is moving to Pacific Heights",
+      "day_mentioned": 18,
+      "category": "residence"
+    },
+    {
+      "fact": "Alex is running a 5K charity run next month",
+      "day_mentioned": 20,
+      "category": "event"
+    },
+    {
+      "fact": "Luna is learning to roll over",
+      "day_mentioned": 20,
+      "category": "pet"
+    },
+    {
+      "fact": "Alex plans to make a pottery bowl for Luna",
+      "day_mentioned": 15,
+      "category": "hobby/pet"
+    },
+    {
+      "fact": "Alex switched his HIIT classes to mornings",
+      "day_mentioned": 16,
+      "category": "fitness"
+    },
+    {
+      "fact": "Alex enjoys hiking with Luna at Fort Funston",
+      "day_mentioned": 17,
+      "category": "leisure"
+    }
+  ],
+  "recall_queries": [
+    {
+      "query": "Do you remember which neighborhood I live in?",
+      "day": 11,
+      "expected_answer": "Russian Hill"
+    },
+    {
+      "query": "Can you remind me what kind of dog food I usually order for Luna?",
+      "day": 11,
+      "expected_answer": "Blue Buffalo"
+    },
+    {
+      "query": "What's my manager's name again?",
+      "day": 12,
+      "expected_answer": "Priya"
+    },
+    {
+      "query": "What was my favorite cuisine again?",
+      "day": 12,
+      "expected_answer": "Sushi"
+    },
+    {
+      "query": "Can you recall what kind of milk I prefer in my lattes?",
+      "day": 13,
+      "expected_answer": "Almond milk"
+    },
+    {
+      "query": "Can you remind me which gym I go to?",
+      "day": 14,
+      "expected_answer": "Equinox"
+    },
+    {
+      "query": "Do you remember what kind of car I drive?",
+      "day": 15,
+      "expected_answer": "Honda CR-V"
+    },
+    {
+      "query": "Hey, do you remember what allergies I have?",
+      "day": 16,
+      "expected_answer": "Shellfish"
+    },
+    {
+      "query": "Can you recall where I work?",
+      "day": 17,
+      "expected_answer": "SoMa, San Francisco"
+    },
+    {
+      "query": "What's my street address again? I need to update it soon.",
+      "day": 18,
+      "expected_answer": "1234 Vallejo Street"
+    },
+    {
+      "query": "Do you remember my doctor's name?",
+      "day": 19,
+      "expected_answer": "Dr. Lee"
+    },
+    {
+      "query": "Do you remember when my birthday is?",
+      "day": 19,
+      "expected_answer": "March"
+    },
+    {
+      "query": "Have I ever mentioned where my partner works?",
+      "day": 20,
+      "expected_answer": "UCSF"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "basic_recall",
+      "question": "What is Alex's birthday?",
+      "gold_answer": "March",
+      "difficulty": "easy"
+    },
+    {
+      "id": 2,
+      "category": "basic_recall",
+      "question": "What neighborhood does Alex currently live in?",
+      "gold_answer": "Pacific Heights",
+      "difficulty": "easy"
+    },
+    {
+      "id": 3,
+      "category": "basic_recall",
+      "question": "What is the name of Alex's partner?",
+      "gold_answer": "Emily",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4,
+      "category": "basic_recall",
+      "question": "What breed is Alex's dog?",
+      "gold_answer": "Golden Retriever",
+      "difficulty": "easy"
+    },
+    {
+      "id": 5,
+      "category": "basic_recall",
+      "question": "What food does Alex order for Luna?",
+      "gold_answer": "Blue Buffalo dog food",
+      "difficulty": "easy"
+    },
+    {
+      "id": 6,
+      "category": "basic_recall",
+      "question": "Where does Alex work?",
+      "gold_answer": "Platform team",
+      "difficulty": "easy"
+    },
+    {
+      "id": 7,
+      "category": "basic_recall",
+      "question": "Who is Alex's manager?",
+      "gold_answer": "Priya",
+      "difficulty": "easy"
+    },
+    {
+      "id": 8,
+      "category": "basic_recall",
+      "question": "What kind of milk does Alex prefer in his lattes?",
+      "gold_answer": "Almond milk",
+      "difficulty": "easy"
+    },
+    {
+      "id": 9,
+      "category": "basic_recall",
+      "question": "What is the name of Alex's doctor?",
+      "gold_answer": "Dr. Lee",
+      "difficulty": "easy"
+    },
+    {
+      "id": 10,
+      "category": "basic_recall",
+      "question": "What is Alex allergic to?",
+      "gold_answer": "Shellfish",
+      "difficulty": "easy"
+    },
+    {
+      "id": 11,
+      "category": "basic_recall",
+      "question": "What type of headphones did Alex recently buy?",
+      "gold_answer": "Sony WH-1000XM5",
+      "difficulty": "easy"
+    },
+    {
+      "id": 12,
+      "category": "basic_recall",
+      "question": "Where does Alex get his morning beverage?",
+      "gold_answer": "Sightglass",
+      "difficulty": "easy"
+    },
+    {
+      "id": 13,
+      "category": "basic_recall",
+      "question": "What is Emily's workplace?",
+      "gold_answer": "UCSF",
+      "difficulty": "easy"
+    },
+    {
+      "id": 14,
+      "category": "basic_recall",
+      "question": "What car does Alex drive?",
+      "gold_answer": "Honda CR-V",
+      "difficulty": "easy"
+    },
+    {
+      "id": 15,
+      "category": "basic_recall",
+      "question": "What is Alex planning to make in pottery class for Luna?",
+      "gold_answer": "A pottery bowl",
+      "difficulty": "easy"
+    },
+    {
+      "id": 16,
+      "category": "basic_recall",
+      "question": "What kind of cuisine does Alex enjoy?",
+      "gold_answer": "Sushi",
+      "difficulty": "easy"
+    },
+    {
+      "id": 17,
+      "category": "basic_recall",
+      "question": "What is the name of Alex's dog?",
+      "gold_answer": "Luna",
+      "difficulty": "easy"
+    },
+    {
+      "id": 18,
+      "category": "basic_recall",
+      "question": "What gym does Alex attend HIIT classes at?",
+      "gold_answer": "Equinox",
+      "difficulty": "easy"
+    },
+    {
+      "id": 19,
+      "category": "basic_recall",
+      "question": "Where does Alex work (neighborhood)?",
+      "gold_answer": "SoMa, San Francisco",
+      "difficulty": "easy"
+    },
+    {
+      "id": 20,
+      "category": "basic_recall",
+      "question": "What is Alex's street address?",
+      "gold_answer": "1234 Vallejo Street",
+      "difficulty": "easy"
+    },
+    {
+      "id": 21,
+      "category": "basic_recall",
+      "question": "Who does Alex call regularly?",
+      "gold_answer": "His mom and dad",
+      "difficulty": "easy"
+    },
+    {
+      "id": 22,
+      "category": "basic_recall",
+      "question": "What is Alex's current job title?",
+      "gold_answer": "Senior Engineer",
+      "difficulty": "easy"
+    },
+    {
+      "id": 23,
+      "category": "basic_recall",
+      "question": "What activity does Alex do at Zeitgeist?",
+      "gold_answer": "Trivia nights",
+      "difficulty": "easy"
+    },
+    {
+      "id": 24,
+      "category": "basic_recall",
+      "question": "What class did Alex start recently?",
+      "gold_answer": "Pottery classes",
+      "difficulty": "easy"
+    },
+    {
+      "id": 25,
+      "category": "basic_recall",
+      "question": "What is the name of Alex's sister?",
+      "gold_answer": "I don't know",
+      "difficulty": "easy"
+    },
+    {
+      "id": 26,
+      "category": "basic_recall",
+      "question": "Where does Alex go hiking with Luna?",
+      "gold_answer": "Fort Funston",
+      "difficulty": "easy"
+    },
+    {
+      "id": 27,
+      "category": "basic_recall",
+      "question": "Is Alex trying to eat less meat?",
+      "gold_answer": "Yes",
+      "difficulty": "easy"
+    },
+    {
+      "id": 28,
+      "category": "basic_recall",
+      "question": "What is the name of Alex's partner's employer?",
+      "gold_answer": "UCSF",
+      "difficulty": "easy"
+    },
+    {
+      "id": 29,
+      "category": "basic_recall",
+      "question": "What charity event is Alex running next month?",
+      "gold_answer": "A 5K charity run",
+      "difficulty": "easy"
+    },
+    {
+      "id": 30,
+      "category": "basic_recall",
+      "question": "Who is Luna?",
+      "gold_answer": "Alex's golden retriever",
+      "difficulty": "easy"
+    },
+    {
+      "id": 31,
+      "category": "updated_knowledge",
+      "question": "Where does Alex currently live?",
+      "gold_answer": "Pacific Heights",
+      "difficulty": "medium"
+    },
+    {
+      "id": 32,
+      "category": "updated_knowledge",
+      "question": "What is Alex's current job title?",
+      "gold_answer": "Senior Engineer",
+      "difficulty": "medium"
+    },
+    {
+      "id": 33,
+      "category": "updated_knowledge",
+      "question": "When does Alex do his HIIT classes?",
+      "gold_answer": "In the mornings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 34,
+      "category": "updated_knowledge",
+      "question": "Where does Emily work now?",
+      "gold_answer": "UCSF",
+      "difficulty": "medium"
+    },
+    {
+      "id": 35,
+      "category": "updated_knowledge",
+      "question": "What does Alex get from Sightglass to start his day?",
+      "gold_answer": "Matcha",
+      "difficulty": "medium"
+    },
+    {
+      "id": 36,
+      "category": "updated_knowledge",
+      "question": "What is Alex's current neighborhood?",
+      "gold_answer": "Pacific Heights",
+      "difficulty": "medium"
+    },
+    {
+      "id": 37,
+      "category": "updated_knowledge",
+      "question": "What time of day does Alex take HIIT classes?",
+      "gold_answer": "Morning",
+      "difficulty": "medium"
+    },
+    {
+      "id": 38,
+      "category": "updated_knowledge",
+      "question": "What is Alex's updated drink order from Sightglass?",
+      "gold_answer": "Matcha",
+      "difficulty": "medium"
+    },
+    {
+      "id": 39,
+      "category": "updated_knowledge",
+      "question": "What position does Alex hold on the Platform team?",
+      "gold_answer": "Senior Engineer",
+      "difficulty": "medium"
+    },
+    {
+      "id": 40,
+      "category": "updated_knowledge",
+      "question": "What is Emily's current employer?",
+      "gold_answer": "UCSF",
+      "difficulty": "medium"
+    },
+    {
+      "id": 41,
+      "category": "updated_knowledge",
+      "question": "Has Alex's morning beverage changed recently?",
+      "gold_answer": "Yes, from coffee to matcha",
+      "difficulty": "medium"
+    },
+    {
+      "id": 42,
+      "category": "updated_knowledge",
+      "question": "What was Alex's previous neighborhood?",
+      "gold_answer": "Russian Hill",
+      "difficulty": "medium"
+    },
+    {
+      "id": 43,
+      "category": "updated_knowledge",
+      "question": "What was Alex's previous job title?",
+      "gold_answer": "Software Engineer",
+      "difficulty": "medium"
+    },
+    {
+      "id": 44,
+      "category": "updated_knowledge",
+      "question": "Where did Emily work before UCSF?",
+      "gold_answer": "I don't know",
+      "difficulty": "medium"
+    },
+    {
+      "id": 45,
+      "category": "updated_knowledge",
+      "question": "What time of day did Alex previously take HIIT classes?",
+      "gold_answer": "Evenings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 46,
+      "category": "updated_knowledge",
+      "question": "What was Alex's previous morning drink from Sightglass?",
+      "gold_answer": "Coffee",
+      "difficulty": "medium"
+    },
+    {
+      "id": 47,
+      "category": "updated_knowledge",
+      "question": "Did Alex change his HIIT class schedule?",
+      "gold_answer": "Yes, from evenings to mornings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 48,
+      "category": "updated_knowledge",
+      "question": "What is the latest update about Alex's living situation?",
+      "gold_answer": "He moved to Pacific Heights",
+      "difficulty": "medium"
+    },
+    {
+      "id": 49,
+      "category": "updated_knowledge",
+      "question": "What is Alex's morning routine beverage?",
+      "gold_answer": "Matcha from Sightglass",
+      "difficulty": "medium"
+    },
+    {
+      "id": 50,
+      "category": "updated_knowledge",
+      "question": "What team is Alex on at work?",
+      "gold_answer": "Platform team",
+      "difficulty": "medium"
+    },
+    {
+      "id": 51,
+      "category": "temporal",
+      "question": "When did Alex switch from coffee to matcha in the morning?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 52,
+      "category": "temporal",
+      "question": "When did Alex move to Pacific Heights?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 53,
+      "category": "temporal",
+      "question": "When did Alex become a Senior Engineer?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 54,
+      "category": "temporal",
+      "question": "When did Emily start working at UCSF?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 55,
+      "category": "temporal",
+      "question": "When did Alex start taking pottery classes?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 56,
+      "category": "temporal",
+      "question": "When did Alex switch his HIIT classes to mornings?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 57,
+      "category": "temporal",
+      "question": "When did Alex buy his Sony WH-1000XM5 headphones?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "easy"
+    },
+    {
+      "id": 58,
+      "category": "temporal",
+      "question": "When is Alex running a 5K charity run?",
+      "gold_answer": "Next month",
+      "difficulty": "easy"
+    },
+    {
+      "id": 59,
+      "category": "temporal",
+      "question": "When did Luna start learning to roll over?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 60,
+      "category": "temporal",
+      "question": "When did Alex plan a vacation to Tahoe?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 61,
+      "category": "temporal",
+      "question": "How often does Alex call his mom?",
+      "gold_answer": "Regularly",
+      "difficulty": "easy"
+    },
+    {
+      "id": 62,
+      "category": "temporal",
+      "question": "How frequently does Alex attend HIIT classes at Equinox?",
+      "gold_answer": "Regularly",
+      "difficulty": "easy"
+    },
+    {
+      "id": 63,
+      "category": "temporal",
+      "question": "When did Alex start trying to eat less meat?",
+      "gold_answer": "Recently (within the last 30 days)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 64,
+      "category": "temporal",
+      "question": "When did Alex begin guitar lessons?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 65,
+      "category": "temporal",
+      "question": "When did Alex become allergic to shellfish?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 66,
+      "category": "cross_reference",
+      "question": "Is Alex's commute to work longer now that he lives in Pacific Heights instead of Russian Hill?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 67,
+      "category": "cross_reference",
+      "question": "Who are Alex's travel companions for the Tahoe vacation?",
+      "gold_answer": "Emily and Luna",
+      "difficulty": "easy"
+    },
+    {
+      "id": 68,
+      "category": "cross_reference",
+      "question": "Who does Alex plan to make a pottery bowl for?",
+      "gold_answer": "Luna",
+      "difficulty": "easy"
+    },
+    {
+      "id": 69,
+      "category": "cross_reference",
+      "question": "What is the connection between Alex's hiking hobby and his pet?",
+      "gold_answer": "He enjoys hiking with Luna at Fort Funston",
+      "difficulty": "easy"
+    },
+    {
+      "id": 70,
+      "category": "cross_reference",
+      "question": "What did Alex change about his HIIT routine after moving?",
+      "gold_answer": "He switched HIIT classes to mornings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 71,
+      "category": "cross_reference",
+      "question": "Who does Alex call regularly and where do they live?",
+      "gold_answer": "His mom and dad; their locations are unknown",
+      "difficulty": "medium"
+    },
+    {
+      "id": 72,
+      "category": "cross_reference",
+      "question": "What dietary preferences does Alex have when eating out?",
+      "gold_answer": "He prefers vegetarian options and enjoys sushi",
+      "difficulty": "medium"
+    },
+    {
+      "id": 73,
+      "category": "cross_reference",
+      "question": "What is the relationship between Alex's new job title and his team?",
+      "gold_answer": "He is now a Senior Engineer on the Platform team",
+      "difficulty": "easy"
+    },
+    {
+      "id": 74,
+      "category": "cross_reference",
+      "question": "What connects Alex's new morning routine and his favorite café?",
+      "gold_answer": "He now gets matcha from Sightglass to start his day",
+      "difficulty": "easy"
+    },
+    {
+      "id": 75,
+      "category": "cross_reference",
+      "question": "Who works in healthcare among Alex and his close relations?",
+      "gold_answer": "Emily, who works at UCSF",
+      "difficulty": "easy"
+    },
+    {
+      "id": 76,
+      "category": "cross_reference",
+      "question": "What dietary restriction must Alex consider at sushi restaurants?",
+      "gold_answer": "He is allergic to shellfish",
+      "difficulty": "easy"
+    },
+    {
+      "id": 77,
+      "category": "cross_reference",
+      "question": "Which classes does Alex currently take?",
+      "gold_answer": "HIIT classes and pottery classes",
+      "difficulty": "easy"
+    },
+    {
+      "id": 78,
+      "category": "cross_reference",
+      "question": "What does Alex do for fun at Zeitgeist?",
+      "gold_answer": "He attends trivia nights",
+      "difficulty": "easy"
+    },
+    {
+      "id": 79,
+      "category": "cross_reference",
+      "question": "What is Alex's dog's current training goal?",
+      "gold_answer": "Luna is learning to roll over",
+      "difficulty": "easy"
+    },
+    {
+      "id": 80,
+      "category": "cross_reference",
+      "question": "What connects Alex's new neighborhood and his current job?",
+      "gold_answer": "He now commutes from Pacific Heights to SoMa for his Senior Engineer role on the Platform team",
+      "difficulty": "medium"
+    },
+    {
+      "id": 81,
+      "category": "frequency",
+      "question": "How often does Alex mention calling his mom?",
+      "gold_answer": "Frequently/Regularly",
+      "difficulty": "easy"
+    },
+    {
+      "id": 82,
+      "category": "frequency",
+      "question": "How often does Alex mention Luna?",
+      "gold_answer": "Frequently",
+      "difficulty": "easy"
+    },
+    {
+      "id": 83,
+      "category": "frequency",
+      "question": "How often does Alex mention his preference for almond milk?",
+      "gold_answer": "Frequently",
+      "difficulty": "easy"
+    },
+    {
+      "id": 84,
+      "category": "frequency",
+      "question": "How often has Alex discussed his work on the Platform team?",
+      "gold_answer": "Frequently",
+      "difficulty": "easy"
+    },
+    {
+      "id": 85,
+      "category": "frequency",
+      "question": "How often does Alex mention his HIIT classes?",
+      "gold_answer": "Frequently",
+      "difficulty": "easy"
+    },
+    {
+      "id": 86,
+      "category": "frequency",
+      "question": "How often has Alex mentioned his favorite cuisine?",
+      "gold_answer": "Several times",
+      "difficulty": "easy"
+    },
+    {
+      "id": 87,
+      "category": "frequency",
+      "question": "How often does Alex mention Emily?",
+      "gold_answer": "Frequently",
+      "difficulty": "easy"
+    },
+    {
+      "id": 88,
+      "category": "frequency",
+      "question": "How often does Alex talk about his new headphones?",
+      "gold_answer": "Recently, but not frequently",
+      "difficulty": "medium"
+    },
+    {
+      "id": 89,
+      "category": "frequency",
+      "question": "How often does Alex mention his car?",
+      "gold_answer": "Occasionally",
+      "difficulty": "medium"
+    },
+    {
+      "id": 90,
+      "category": "frequency",
+      "question": "How often does Alex mention eating less meat?",
+      "gold_answer": "Recently, not frequently",
+      "difficulty": "medium"
+    },
+    {
+      "id": 91,
+      "category": "abstention",
+      "question": "What is the name of Alex's childhood best friend?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 92,
+      "category": "abstention",
+      "question": "What is Emily's favorite book?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 93,
+      "category": "abstention",
+      "question": "What is Alex's mother's first name?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 94,
+      "category": "abstention",
+      "question": "Where did Alex and Emily meet?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 95,
+      "category": "abstention",
+      "question": "What is Luna's favorite toy?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 96,
+      "category": "abstention",
+      "question": "What is the color of Alex's Honda CR-V?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 97,
+      "category": "abstention",
+      "question": "Did Alex attend college in California?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 98,
+      "category": "abstention",
+      "question": "What is the name of Alex's sister?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 99,
+      "category": "abstention",
+      "question": "What instrument does Emily play?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    },
+    {
+      "id": 100,
+      "category": "abstention",
+      "question": "What was Alex's first job?",
+      "gold_answer": "I don't know",
+      "difficulty": "hard"
+    }
+  ]
+}

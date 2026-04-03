@@ -1,0 +1,4175 @@
+{
+  "metadata": {
+    "name": "MQoT-500 — Large-scale Memory Quality Over Time",
+    "version": "3.0",
+    "created": "2026-03-30T23:04:51.827Z",
+    "scale": "500+ memories, 180 days, 200 questions",
+    "philosophy": "Tests intelligent memory at scale: topic disambiguation, temporal reasoning, noise filtering"
+  },
+  "conversations": [
+    {
+      "day": 1,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey, can you remind me to send the updated logo files to Priya at Lunar Creative? She wants them by tomorrow."
+        },
+        {
+          "role": "assistant",
+          "content": "Of course! I'll remind you to send the updated logo files to Priya at Lunar Creative by tomorrow. Anything specific she asked for in the revisions?"
+        },
+        {
+          "role": "user",
+          "content": "She just wants the color palette changed to match the new brand guidelines."
+        },
+        {
+          "role": "assistant",
+          "content": "Got it—update the color palette to match the brand guidelines before sending to Priya. Do you want me to set a specific time for the reminder?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, remind me at 10 AM, please. Also, it's supposed to rain all day, so I'll probably be working from home."
+        },
+        {
+          "role": "assistant",
+          "content": "Reminder set for 10 AM tomorrow. Enjoy working from home—sounds like a cozy day for design work!"
+        },
+        {
+          "role": "user",
+          "content": "Thanks! I might squeeze in some time to water my houseplants, too. Pixel's already napping on my keyboard."
+        },
+        {
+          "role": "assistant",
+          "content": "Pixel sounds like the perfect work-from-home buddy. Let me know if you want tips for indoor plant care during these gloomy Seattle days."
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you help me plan a birthday gift for my sister Maya? She's a nurse in Portland and her birthday is next week."
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely! What kind of things does Maya like?"
+        },
+        {
+          "role": "user",
+          "content": "She loves coffee and hiking. Last year I got her a nice travel mug."
+        },
+        {
+          "role": "assistant",
+          "content": "Maybe a gift card to a local Portland coffee shop or some hiking gear?"
+        },
+        {
+          "role": "user",
+          "content": "A coffee shop gift card sounds great. She mentioned trying Good Coffee last time I visited."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect! I can help you order a Good Coffee gift card online. Want to include a note?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please help me write something funny—she always jokes about needing caffeine to survive her shifts."
+        },
+        {
+          "role": "assistant",
+          "content": "How about: 'Fuel for the world's best nurse—may your coffee be strong and your shifts be short! Happy birthday, Maya!'"
+        },
+        {
+          "role": "user",
+          "content": "That's perfect. Go ahead and save that message for when I order."
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I need help tracking my running mileage this month. My goal is 70 miles in June."
+        },
+        {
+          "role": "assistant",
+          "content": "Great goal! Want to log your runs here, or do you use an app?"
+        },
+        {
+          "role": "user",
+          "content": "I use Strava, but I'd like you to keep a backup log."
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely. Just tell me each time you complete a run and I’ll update your total. How much have you run so far?"
+        },
+        {
+          "role": "user",
+          "content": "I've done 18 miles so far—ran with Alex yesterday, 6 miles at Green Lake."
+        },
+        {
+          "role": "assistant",
+          "content": "Logged 18 miles for June. Running with Alex at Green Lake sounds fun! Next run scheduled?"
+        },
+        {
+          "role": "user",
+          "content": "Planning a solo 5-miler tomorrow morning before work."
+        },
+        {
+          "role": "assistant",
+          "content": "I'll remind you about your 5-mile run tomorrow morning. Good luck reaching your 70-mile goal!"
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I need to update my freelance portfolio. I just finished a project for Lena's bakery—logo and menu redesign."
+        },
+        {
+          "role": "assistant",
+          "content": "Congratulations on finishing the bakery project for Lena! Would you like to add screenshots or mockups to your portfolio?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, and I want to highlight the new color scheme I developed for her brand."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted. I'll help you organize the screenshots and write a brief description about the color work."
+        },
+        {
+          "role": "user",
+          "content": "Also, Lena said she’d give me a testimonial—remind me to ask her next time I stop by."
+        },
+        {
+          "role": "assistant",
+          "content": "Will do! Do you want to schedule a visit to Lena's bakery this week?"
+        },
+        {
+          "role": "user",
+          "content": "Maybe Friday morning—I usually stop in for a croissant before work."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll remind you to ask Lena for a testimonial when you visit on Friday morning."
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m thinking about asking Priya for a raise at Lunar Creative. Can you help me prep for the conversation?"
+        },
+        {
+          "role": "assistant",
+          "content": "Of course! What’s your current salary and how long have you been at Lunar Creative?"
+        },
+        {
+          "role": "user",
+          "content": "I make $68,000 and I’ve been there for just over two years."
+        },
+        {
+          "role": "assistant",
+          "content": "You’ve built up a solid case. Any recent achievements you want to highlight?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I led the branding project for the yoga studio client, and I’ve taken on more project management lately."
+        },
+        {
+          "role": "assistant",
+          "content": "Great points. I can help you draft talking points. Do you know what salary range you’ll ask for?"
+        },
+        {
+          "role": "user",
+          "content": "I’m thinking $75,000."
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds reasonable given your accomplishments. Want to practice the conversation together?"
+        }
+      ]
+    },
+    {
+      "day": 21,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you find me a new running watch? My old Garmin just died, and I need something reliable for tracking distance."
+        },
+        {
+          "role": "assistant",
+          "content": "Sorry to hear about your Garmin. Do you want to stick with Garmin or try another brand?"
+        },
+        {
+          "role": "user",
+          "content": "I’m open to switching—maybe Coros or Polar?"
+        },
+        {
+          "role": "assistant",
+          "content": "Both brands are great for runners. Any must-have features?"
+        },
+        {
+          "role": "user",
+          "content": "Accurate GPS, long battery life, and easy syncing with Strava."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll shortlist models from Coros and Polar that fit those needs. Want price comparisons, too?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please. I want to stay under $250 if possible."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll get the info for you. Hope the weather clears up so you can get back to running soon!"
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I might visit Sam in NYC this fall. Can you help me look for flights from Seattle in October?"
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds exciting! Do you have specific dates in mind?"
+        },
+        {
+          "role": "user",
+          "content": "Ideally October 12-16. I want to keep it under $400 round trip."
+        },
+        {
+          "role": "assistant",
+          "content": "I'll search for flights from Seattle to NYC for October 12-16, under $400. Any airline preferences?"
+        },
+        {
+          "role": "user",
+          "content": "No preference, just want a direct flight if possible."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted. Would you like hotel recommendations or just flights for now?"
+        },
+        {
+          "role": "user",
+          "content": "Just flights—I'll stay with Sam."
+        },
+        {
+          "role": "assistant",
+          "content": "Got it! I'll update you with the best options soon. Have you told Sam yet?"
+        },
+        {
+          "role": "user",
+          "content": "Not yet—I'll let him know once I book."
+        }
+      ]
+    },
+    {
+      "day": 29,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you help me remember to repot my monstera this weekend? It’s outgrowing its pot."
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely! Repotting your monstera is a great idea. Need tips on soil or pot size?"
+        },
+        {
+          "role": "user",
+          "content": "Maybe just a reminder for Saturday morning. I’ll get a 10-inch pot and fresh soil."
+        },
+        {
+          "role": "assistant",
+          "content": "Reminder set for Saturday morning. If you need help with the process, just ask. How are your other plants doing?"
+        },
+        {
+          "role": "user",
+          "content": "Pretty good—my snake plant is thriving, but my calathea is a bit fussy."
+        },
+        {
+          "role": "assistant",
+          "content": "Calatheas can be tricky, especially in Seattle's humidity. Let me know if you want care tips."
+        },
+        {
+          "role": "user",
+          "content": "Thanks! Also, Pixel keeps trying to nibble the leaves."
+        },
+        {
+          "role": "assistant",
+          "content": "Classic Pixel! I can suggest some safe deterrents for curious cats if you need."
+        }
+      ]
+    },
+    {
+      "day": 36,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I picked up a new running watch! Switched to the Coros Pace 2 from Garmin."
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats on the new Coros Pace 2! How do you like it so far?"
+        },
+        {
+          "role": "user",
+          "content": "It’s super lightweight, and the battery life is amazing. Syncs with Strava perfectly."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a great upgrade. Have you tested it on a long run yet?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, did a 10-mile run with Alex yesterday. No GPS issues at all."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad to hear it! Did you beat your previous pace?"
+        },
+        {
+          "role": "user",
+          "content": "Actually, yes—averaged 8:20 per mile. My best yet!"
+        }
+      ]
+    },
+    {
+      "day": 43,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you help me set up a meal plan for next week? I want to try more vegetarian recipes."
+        },
+        {
+          "role": "assistant",
+          "content": "Great idea! Any favorite veggies or cuisines?"
+        },
+        {
+          "role": "user",
+          "content": "I like Mediterranean food and anything with mushrooms."
+        },
+        {
+          "role": "assistant",
+          "content": "How about a chickpea and mushroom stir-fry, and Mediterranean grain bowls?"
+        },
+        {
+          "role": "user",
+          "content": "Sounds perfect. I’ll need a shopping list for those recipes."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll put together a list for you. Cooking more at home should help with your Japan trip savings, too!"
+        },
+        {
+          "role": "user",
+          "content": "Exactly. Eating out less is my new goal."
+        }
+      ]
+    },
+    {
+      "day": 50,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I finally finished reading 'The Overstory'. Can you recommend another novel with a nature theme?"
+        },
+        {
+          "role": "assistant",
+          "content": "If you liked 'The Overstory,' you might enjoy 'Braiding Sweetgrass' or 'Where the Crawdads Sing.'"
+        },
+        {
+          "role": "user",
+          "content": "I’ve heard good things about both. Which one has more of a focus on plants?"
+        },
+        {
+          "role": "assistant",
+          "content": "'Braiding Sweetgrass' is especially focused on plants and our relationship with them."
+        },
+        {
+          "role": "user",
+          "content": "Great, I’ll start with that. I’ve been reading more since I stopped watching so much TV."
+        },
+        {
+          "role": "assistant",
+          "content": "Good for you! Let me know when you want more book recommendations."
+        }
+      ]
+    },
+    {
+      "day": 57,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I need to invoice the yoga studio client for the branding package. Can you help me draft it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure! What’s the total amount for the branding package?"
+        },
+        {
+          "role": "user",
+          "content": "$1,200 for the full package."
+        },
+        {
+          "role": "assistant",
+          "content": "Got it. Anything specific to include in the invoice notes?"
+        },
+        {
+          "role": "user",
+          "content": "Just a thank-you for their feedback and mention the final deliverables—logo, color palette, and social media templates."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll draft the invoice and include those details. Do you want it sent today?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please. The studio’s accountant prefers email."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll prepare the invoice for email delivery today."
+        }
+      ]
+    },
+    {
+      "day": 61,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey, can you remind me to send the updated yoga studio branding files to Priya tomorrow? She wants them by noon."
+        },
+        {
+          "role": "assistant",
+          "content": "Sure, Jordan! I'll set a reminder for you to send the yoga studio branding files to Priya by noon tomorrow. Anything else you'd like to add to your to-do list?"
+        },
+        {
+          "role": "user",
+          "content": "Actually, yes—remind me to check in with Lena about the new bakery menu designs. She mentioned wanting a spring refresh."
+        },
+        {
+          "role": "assistant",
+          "content": "Got it! I'll add a reminder to follow up with Lena about the bakery menu designs. Should I set that for tomorrow as well?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, tomorrow afternoon works. By the way, do you remember my freelance rate for branding packages? I need to confirm it before quoting a new tech client."
+        },
+        {
+          "role": "assistant",
+          "content": "Your current freelance rate for branding packages is $1,200. Let me know if you want to update that for tech clients."
+        },
+        {
+          "role": "user",
+          "content": "Thanks! I’ll keep it at $1,200 for now. Also, track that I’ve increased my monthly Japan trip savings from $350 to $500."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted! You’ve increased your monthly Japan savings from $350 to $500. Anything else on your mind today?"
+        }
+      ]
+    },
+    {
+      "day": 64,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you help me brainstorm more freelance clients? I’d like to add a few tech companies to my portfolio."
+        },
+        {
+          "role": "assistant",
+          "content": "Definitely! Are you looking for web design projects or branding work?"
+        },
+        {
+          "role": "user",
+          "content": "Mostly branding, but I’m open to some web design."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll compile a list of Seattle-based tech startups and agencies. Would you prefer remote or in-person projects?"
+        },
+        {
+          "role": "user",
+          "content": "Remote would be ideal, but I can meet locally if needed."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted! Also, updating your portfolio with Lena’s bakery and the yoga studio will help attract new clients."
+        },
+        {
+          "role": "user",
+          "content": "Good idea. I’ll send you my latest project descriptions to add."
+        }
+      ]
+    },
+    {
+      "day": 64,
+      "turns": [
+        {
+          "role": "user",
+          "content": "The rain is relentless today. I had to do my tempo run on the treadmill instead of Green Lake with Alex."
+        },
+        {
+          "role": "assistant",
+          "content": "Seattle weather can definitely be a challenge for outdoor running. Do you want me to log your treadmill tempo run for you on Strava?"
+        },
+        {
+          "role": "user",
+          "content": "No need, I already synced it from my Coros Pace 2. But remind me to do long intervals with Alex at Green Lake this Friday, if the weather’s better."
+        },
+        {
+          "role": "assistant",
+          "content": "Will do! I’ll remind you to meet Alex for interval training at Green Lake this Friday. Anything else for your training plan?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, keep me on track for my June mileage goal—aiming for 70 miles this month."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted: 70-mile goal for June. You’re on track so far. Want to check your current mileage?"
+        },
+        {
+          "role": "user",
+          "content": "I'm at 42 miles so far. Should be doable if I keep up the tempo and long runs."
+        }
+      ]
+    },
+    {
+      "day": 67,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Pixel knocked over my old mid-century lamp again. I think it’s time to finally get a cat-proof replacement."
+        },
+        {
+          "role": "assistant",
+          "content": "Pixel certainly keeps things lively! Would you like suggestions for sturdy, cat-proof lamps that match your mid-century modern style?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please. Also, remind me to repot the monstera this weekend. Its roots are coming out of the bottom."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll set a reminder to repot your monstera this weekend. How are your other houseplants holding up?"
+        },
+        {
+          "role": "user",
+          "content": "The snake plant is fine, but the calathea is still fussy. Pixel keeps nibbling the leaves."
+        },
+        {
+          "role": "assistant",
+          "content": "That calathea is persistent! Maybe try moving it to a spot less tempting for Pixel?"
+        }
+      ]
+    },
+    {
+      "day": 70,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I just finished updating my freelance portfolio with the yoga studio project. I want to add some tech company work next."
+        },
+        {
+          "role": "assistant",
+          "content": "Great job updating your portfolio! Are you reaching out to any specific tech companies in Seattle for freelance opportunities?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I’m talking to a small app startup about a branding package. Should I offer the same $1,200 rate I used for the yoga studio?"
+        },
+        {
+          "role": "assistant",
+          "content": "You could start with $1,200 and adjust based on project scope. Do you want to draft a proposal template for tech clients?"
+        },
+        {
+          "role": "user",
+          "content": "That would be helpful. Also, track that I’m focusing more on remote freelance work, but I’m still open to local meetings."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted! I’ll help you emphasize remote work availability while keeping the door open for local clients."
+        }
+      ]
+    },
+    {
+      "day": 73,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you remind me to book my Japan trip tickets next month? I want to fly out in November."
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely! What dates are you targeting for your Japan trip?"
+        },
+        {
+          "role": "user",
+          "content": "Looking at November 10-22. I’m hoping to keep airfare under $1,200."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll set a reminder for next month to book your Japan tickets. Any cities you’re planning to visit?"
+        },
+        {
+          "role": "user",
+          "content": "Tokyo, Kyoto, and maybe Osaka. I want to see as much as possible."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds amazing! I can help you build an itinerary when you’re ready."
+        },
+        {
+          "role": "user",
+          "content": "Thanks! I’ve been saving for this trip for a year."
+        }
+      ]
+    },
+    {
+      "day": 73,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I just booked my Portland Amtrak ticket for July to visit Maya. I’ll bring Lena’s pastries as gifts again."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect! Maya always appreciates your visits—and the pastries. Want to plan any special coffee gifts for her birthday this time?"
+        },
+        {
+          "role": "user",
+          "content": "Good idea. She mentioned a new roaster she likes—Heart Coffee. Remind me to pick up a bag before the trip."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll set a reminder to buy Heart Coffee beans before your Portland trip in July. Anything else you want to prep for the visit?"
+        },
+        {
+          "role": "user",
+          "content": "Maybe a small plant for her apartment. She’s been wanting to try keeping a pothos."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted! I’ll remind you to pick up a pothos for Maya as well."
+        }
+      ]
+    },
+    {
+      "day": 78,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Quick check—in my last half marathon, I finished in 2:01, right? I want to break 2 hours at the Seattle Half in November."
+        },
+        {
+          "role": "assistant",
+          "content": "Correct, your last half marathon finish time was 2:01. You’re aiming to run the Seattle Half Marathon on November 26 in under 2 hours."
+        },
+        {
+          "role": "user",
+          "content": "Great. Remind me to add more interval and tempo runs to my training plan. I also want to try running with Alex twice a week instead of just once."
+        },
+        {
+          "role": "assistant",
+          "content": "Will do! I’ll update your plan to include more intervals and tempo sessions, and schedule two weekly runs with Alex."
+        },
+        {
+          "role": "user",
+          "content": "Thanks. Also, track that I switched from a Garmin running watch to a Coros Pace 2—it’s working well so far."
+        },
+        {
+          "role": "assistant",
+          "content": "Got it! You’ve switched from Garmin to Coros Pace 2 for running. Let me know if you want to track any new metrics."
+        }
+      ]
+    },
+    {
+      "day": 80,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Pixel knocked over my favorite lamp again. Can you help me find a cat-proof replacement for my apartment?"
+        },
+        {
+          "role": "assistant",
+          "content": "Pixel is keeping you on your toes! Do you want a floor lamp or a table lamp?"
+        },
+        {
+          "role": "user",
+          "content": "Floor lamp, preferably with a heavy base."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll look for sturdy floor lamps that are less likely to tip. Want a particular style or color?"
+        },
+        {
+          "role": "user",
+          "content": "I like mid-century modern, something in walnut or black."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect! I’ll send you some options. Maybe some cat deterrent tips, too?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please—Pixel is relentless."
+        }
+      ]
+    },
+    {
+      "day": 80,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you help me brainstorm some Mediterranean vegetarian dinner ideas? I’m trying to eat out less and save more for Japan."
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely! How about mushroom and spinach spanakopita, roasted eggplant with tahini, or a chickpea tagine?"
+        },
+        {
+          "role": "user",
+          "content": "Love those. Add them to my meal plan for next week. Also, track that I stopped watching so much TV and started reading more in the evenings."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted: you’ve shifted from watching TV to reading more in the evenings. Any particular books you want to add to your reading list?"
+        },
+        {
+          "role": "user",
+          "content": "I just finished 'Braiding Sweetgrass' and want another nature-themed novel."
+        },
+        {
+          "role": "assistant",
+          "content": "How about 'The Overstory'? It’s a great novel with strong nature themes."
+        },
+        {
+          "role": "user",
+          "content": "Perfect, I’ll add that to my list."
+        }
+      ]
+    },
+    {
+      "day": 85,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Priya asked if I’d be interested in leading a new branding project for a wellness startup at Lunar Creative. Should I go for it?"
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds like a great opportunity! You’ve successfully led branding for the yoga studio before. Taking on this project could help with your promotion goals."
+        },
+        {
+          "role": "user",
+          "content": "True. My salary is still $68,000, and I’ve been here a little over two years. I wouldn’t mind negotiating for a raise after this project."
+        },
+        {
+          "role": "assistant",
+          "content": "Good plan. Taking on more responsibility could strengthen your case for a salary increase. Would you like help preparing talking points for your review?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, that would be helpful."
+        }
+      ]
+    },
+    {
+      "day": 91,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m meeting Sam in NYC in October. Should I bring Lena’s pastries as a gift, or are there customs issues with flying with baked goods?"
+        },
+        {
+          "role": "assistant",
+          "content": "Generally, bringing pastries on a domestic flight is fine as long as they’re packaged well. Lena’s treats would make a great gift for Sam."
+        },
+        {
+          "role": "user",
+          "content": "Perfect, I’ll do that. Also, remind me to update my freelance portfolio after the app startup project wraps up."
+        },
+        {
+          "role": "assistant",
+          "content": "Will do! Would you like to update your rates or service offerings for future tech clients?"
+        },
+        {
+          "role": "user",
+          "content": "Let’s keep it at $1,200 for now, but I may revisit after this project."
+        }
+      ]
+    },
+    {
+      "day": 93,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you help me plan a visit to Portland next month to see Maya?"
+        },
+        {
+          "role": "assistant",
+          "content": "Of course! What dates are you thinking?"
+        },
+        {
+          "role": "user",
+          "content": "July 20-23. I want to book Amtrak instead of flying this time."
+        },
+        {
+          "role": "assistant",
+          "content": "Great! I’ll check Amtrak schedules from Seattle to Portland for those dates. Want recommendations for things to do?"
+        },
+        {
+          "role": "user",
+          "content": "Sure! Maya and I usually hike but always end up at Powell’s Books."
+        },
+        {
+          "role": "assistant",
+          "content": "Powell’s is a must. I’ll suggest some new hiking trails and coffee shops, too."
+        },
+        {
+          "role": "user",
+          "content": "Thanks. I’ll bring Maya some of Lena’s pastries as a treat."
+        }
+      ]
+    },
+    {
+      "day": 95,
+      "turns": [
+        {
+          "role": "user",
+          "content": "It’s been extra rainy lately—Pixel hates it, but my monstera is loving the extra humidity."
+        },
+        {
+          "role": "assistant",
+          "content": "Seattle’s rainy weather is definitely good for your houseplants, even if Pixel disagrees! Have you repotted the monstera yet?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I did it last weekend. The roots were really crowded."
+        },
+        {
+          "role": "assistant",
+          "content": "Great! Any other plant care tasks on your schedule?"
+        },
+        {
+          "role": "user",
+          "content": "Just regular watering. The calathea had some brown tips, but I moved it further from the window."
+        },
+        {
+          "role": "assistant",
+          "content": "Hopefully that helps! Keep an eye out for Pixel—he seems to like nibbling those leaves."
+        }
+      ]
+    },
+    {
+      "day": 102,
+      "turns": [
+        {
+          "role": "user",
+          "content": "How’s my June running mileage looking? I want to stay on pace for 70 miles."
+        },
+        {
+          "role": "assistant",
+          "content": "You’re at 62 miles so far in June. If you keep up your intervals and long runs, you’ll hit your 70-mile goal."
+        },
+        {
+          "role": "user",
+          "content": "Perfect. And I’m still running with Alex twice a week—really helps me stay motivated."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s great! Are you still tracking your runs with the Coros Pace 2?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I switched from Garmin a while ago and haven’t looked back."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad to hear it’s working well. Let me know if you want to set new training targets for next month."
+        }
+      ]
+    },
+    {
+      "day": 105,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I signed up for the Seattle Half Marathon in November! Can you help me outline a training plan?"
+        },
+        {
+          "role": "assistant",
+          "content": "Congratulations! When is race day exactly?"
+        },
+        {
+          "role": "user",
+          "content": "November 26. I want to improve my finish time—last year I ran 2:01."
+        },
+        {
+          "role": "assistant",
+          "content": "Let’s aim for under 2 hours this year. How many days a week can you train?"
+        },
+        {
+          "role": "user",
+          "content": "Four days a week, with long runs on Sundays."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect, I’ll draft a plan with intervals, tempo runs, and long runs. Any injuries or issues to account for?"
+        },
+        {
+          "role": "user",
+          "content": "No, I’ve stayed injury-free since switching to the Coros Pace 2."
+        },
+        {
+          "role": "assistant",
+          "content": "Awesome! I’ll tailor the plan accordingly and send you weekly reminders."
+        }
+      ]
+    },
+    {
+      "day": 107,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I just finished the branding package for the app startup. Should I invoice them the same $1,200 as my yoga studio client?"
+        },
+        {
+          "role": "assistant",
+          "content": "Yes, $1,200 is your standard rate for branding packages. Do you want to send the invoice now or wait for their feedback?"
+        },
+        {
+          "role": "user",
+          "content": "I’ll send it now. Also, add this project to my freelance portfolio and note that I’m working with tech clients now."
+        },
+        {
+          "role": "assistant",
+          "content": "Will do! Your portfolio will now showcase bakery, yoga studio, and tech branding projects."
+        }
+      ]
+    },
+    {
+      "day": 111,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m thinking about finally upgrading my couch. The old mid-century one is comfy, but Pixel has scratched up the arms."
+        },
+        {
+          "role": "assistant",
+          "content": "A new couch sounds like a great idea. Would you like recommendations for mid-century modern, cat-friendly options?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please. Also, remind me to check local furniture stores this weekend."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll set a reminder to visit local furniture stores this weekend. Want to set a budget for the new couch?"
+        },
+        {
+          "role": "user",
+          "content": "Let’s keep it under $1,000 so I can prioritize savings for my Japan trip."
+        },
+        {
+          "role": "assistant",
+          "content": "Noted! I’ll look for stylish, durable options under $1,000."
+        }
+      ]
+    },
+    {
+      "day": 115,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I no longer use my old TV stand since I stopped watching much TV. Should I donate it or sell it?"
+        },
+        {
+          "role": "assistant",
+          "content": "If it’s in good shape, you could try selling it online for some extra Japan savings. Otherwise, donating is always a good option."
+        },
+        {
+          "role": "user",
+          "content": "Good point. I’ll list it online first. Also, I’ve been reading 'The Overstory' in the evenings instead of watching TV."
+        },
+        {
+          "role": "assistant",
+          "content": "Nice! Making time for reading and saving money—great multitasking. Want to add more nature-themed books to your list?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, suggest a couple more for me."
+        }
+      ]
+    },
+    {
+      "day": 118,
+      "turns": [
+        {
+          "role": "user",
+          "content": "How’s my Japan trip budget coming along? I want to keep airfare under $1,200 and visit Tokyo, Kyoto, and Osaka."
+        },
+        {
+          "role": "assistant",
+          "content": "You’ve increased your monthly savings to $500, which is helping a lot. Current airfare estimates to Japan are just under $1,200 for fall."
+        },
+        {
+          "role": "user",
+          "content": "That’s a relief! Keep tracking deals for me. I want to finalize bookings soon."
+        },
+        {
+          "role": "assistant",
+          "content": "Will do! I’ll alert you to any sale fares to Tokyo, and help with itinerary planning for Kyoto and Osaka."
+        },
+        {
+          "role": "user",
+          "content": "Thanks. I’m excited for all the food—I love mushrooms and want to try vegetarian kaiseki."
+        }
+      ]
+    },
+    {
+      "day": 120,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Can you help me update my monthly budget? I want to increase my Japan trip savings to $500 a month."
+        },
+        {
+          "role": "assistant",
+          "content": "I can help with that. How much are you currently saving each month?"
+        },
+        {
+          "role": "user",
+          "content": "I was saving $350 a month, but I want to bump it up."
+        },
+        {
+          "role": "assistant",
+          "content": "Great goal! Want to cut back anywhere else to make room for the extra $150?"
+        },
+        {
+          "role": "user",
+          "content": "I’ll eat out less and cancel my streaming subscription—I stopped watching so much TV anyway."
+        },
+        {
+          "role": "assistant",
+          "content": "Good strategies! I’ll update your budget and track your progress."
+        },
+        {
+          "role": "user",
+          "content": "Thanks—Japan is getting closer."
+        }
+      ]
+    },
+    {
+      "day": 120,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m about to visit Lena’s bakery to pick up pastries and check on her new menu launch. Should I bring anything else for our meeting?"
+        },
+        {
+          "role": "assistant",
+          "content": "Maybe bring your laptop to review her website updates on the spot. Lena will appreciate your feedback."
+        },
+        {
+          "role": "user",
+          "content": "Good idea. Also, remind me to ask her about any future design needs—she mentioned a possible summer event flyer."
+        },
+        {
+          "role": "assistant",
+          "content": "Will do! I’ll remind you to discuss upcoming design projects for Lena’s bakery."
+        },
+        {
+          "role": "user",
+          "content": "Thanks. And after, I’ll drop off some pastries for Maya when I visit Portland next month."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds perfect! Maya will love the treats."
+        }
+      ]
+    },
+    {
+      "day": 121,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Morning! Any tips for organizing a shared Figma project with my team at Lunar Creative? We're starting a new branding campaign this week."
+        },
+        {
+          "role": "assistant",
+          "content": "Good morning, Jordan! For a shared Figma project, I recommend setting up clear page hierarchies for each phase (wireframes, concepts, final assets), and assigning roles. Are you collaborating directly with Priya on this one or leading it solo?"
+        },
+        {
+          "role": "user",
+          "content": "Priya put me in charge, so I want to keep everything smooth. Last time, we struggled with version control."
+        },
+        {
+          "role": "assistant",
+          "content": "You could use Figma's version history and name milestones—like 'v1 concepts' or 'client feedback.' Also, regular check-ins via Slack help. Will you be looping in any freelance work for this?"
+        },
+        {
+          "role": "user",
+          "content": "Not for this project, but I might ask Lena for some bakery inspiration. The campaign is for a local food market."
+        },
+        {
+          "role": "assistant",
+          "content": "Great idea! Lena's bakery branding you designed was fantastic. Maybe reference your previous portfolio pieces for this campaign."
+        },
+        {
+          "role": "user",
+          "content": "Thanks! I’ve been updating my freelance portfolio with the bakery and yoga studio projects. I hope to add a tech company soon."
+        },
+        {
+          "role": "assistant",
+          "content": "That’ll look great on your portfolio. Let me know if you want reminders to keep your project files organized or send assets to Priya."
+        }
+      ]
+    },
+    {
+      "day": 123,
+      "turns": [
+        {
+          "role": "user",
+          "content": "It was pouring all day, so I did my tempo run on the treadmill. Green Lake is just too soggy right now."
+        },
+        {
+          "role": "assistant",
+          "content": "Seattle’s classic weather! How did the tempo run feel compared to your usual outdoor sessions with Alex?"
+        },
+        {
+          "role": "user",
+          "content": "Not as fun, honestly. Alex and I usually chat, which makes it go by faster. But my Coros Pace 2 is great for tracking intervals indoors."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad the Coros is working out! Are you still aiming for 70 miles this month on Strava?"
+        },
+        {
+          "role": "user",
+          "content": "Yep, holding steady so far. If I can keep up the long runs, I should hit my goal. I’m also still training for the Seattle Half in November—sub-2 hours is the dream."
+        },
+        {
+          "role": "assistant",
+          "content": "You’re on track! Your best 10-mile pace is impressive. Any tweaks to your training plan lately?"
+        },
+        {
+          "role": "user",
+          "content": "I added more intervals and a weekly hill session. The hills are brutal, but I think they’ll help."
+        },
+        {
+          "role": "assistant",
+          "content": "Hill training will definitely pay off. Let me know if you want to track your progress or set reminders for recovery days."
+        }
+      ]
+    },
+    {
+      "day": 125,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m going to Portland in July to visit Maya! I booked Amtrak—way less stressful than driving."
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds fun! Will you stay with her, or find a place nearby?"
+        },
+        {
+          "role": "user",
+          "content": "I’ll stay at her apartment. She’s working some shifts at the hospital, but we’ll have time for coffee and catching up."
+        },
+        {
+          "role": "assistant",
+          "content": "Are you bringing Lena’s pastries again as a gift?"
+        },
+        {
+          "role": "user",
+          "content": "Of course! Maya loves them. I’m also thinking about getting her some fancy coffee beans for her birthday."
+        },
+        {
+          "role": "assistant",
+          "content": "She’ll appreciate that combo. Any other plans for the trip?"
+        },
+        {
+          "role": "user",
+          "content": "We might go for a hike or visit Powell’s Books. I’ll bring my current read, ‘Braiding Sweetgrass.’"
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a great trip. Let me know if you want a packing checklist or reminders for gift shopping before you leave."
+        }
+      ]
+    },
+    {
+      "day": 127,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Pixel knocked over my bedside lamp—again. I need a cat-proof replacement."
+        },
+        {
+          "role": "assistant",
+          "content": "Pixel’s quite the troublemaker! Have you looked for weighted or wall-mounted lamps?"
+        },
+        {
+          "role": "user",
+          "content": "I started browsing some mid-century modern styles that could work. My last one was ceramic, so not ideal."
+        },
+        {
+          "role": "assistant",
+          "content": "A metal lamp with a broad base might be sturdier. Want suggestions that fit your apartment’s mid-century vibe?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please! Bonus if it’s also dimmable—I love reading in bed."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll compile a few options. And maybe a little cat deterrent spray for Pixel?"
+        },
+        {
+          "role": "user",
+          "content": "I tried that, but Pixel just ignores it. I’ll need to get creative."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll save some cat-proofing tips for you too. Let me know if you want to set a shopping reminder."
+        }
+      ]
+    },
+    {
+      "day": 130,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I just finished a new Mediterranean mushroom recipe for dinner—so good!"
+        },
+        {
+          "role": "assistant",
+          "content": "Yum! You love Mediterranean vegetarian dishes and mushrooms. Was it a new recipe or a twist on one you’ve tried before?"
+        },
+        {
+          "role": "user",
+          "content": "A new one. I’m trying to cook more at home to save up for Japan."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s smart—and tasty! You recently upped your monthly Japan savings from $350 to $500, right?"
+        },
+        {
+          "role": "user",
+          "content": "Yep! I’ve also cut back on eating out. It’s helping my budget a lot."
+        },
+        {
+          "role": "assistant",
+          "content": "Nice work. How’s your airfare search going for Tokyo, Kyoto, and Osaka? Still aiming to keep it under $1,200?"
+        },
+        {
+          "role": "user",
+          "content": "Exactly. Prices fluctuate, but I’m watching for deals. Japan’s getting closer!"
+        },
+        {
+          "role": "assistant",
+          "content": "Let me know if you want alerts for airfare deals or budgeting tips."
+        }
+      ]
+    },
+    {
+      "day": 133,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Priya mentioned there might be a small raise at Lunar Creative this fall. Fingers crossed!"
+        },
+        {
+          "role": "assistant",
+          "content": "That’s exciting! Your current salary is $68,000, right?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, and I’ve been there just over two years. I’d love to see it go up."
+        },
+        {
+          "role": "assistant",
+          "content": "You’ve led some major projects, like the yoga studio branding and the bakery redesign. That should strengthen your case."
+        },
+        {
+          "role": "user",
+          "content": "That’s the plan. I’m also updating my freelance portfolio with those projects."
+        },
+        {
+          "role": "assistant",
+          "content": "Let me know if you want to prep for a salary conversation or update your accomplishments list."
+        },
+        {
+          "role": "user",
+          "content": "I will! Priya is a supportive manager, so I’m optimistic."
+        },
+        {
+          "role": "assistant",
+          "content": "Great to hear. Good luck—keep me posted on any news!"
+        }
+      ]
+    },
+    {
+      "day": 135,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just finished repotting my calathea. Pixel tried to help, but mostly just nibbled the leaves."
+        },
+        {
+          "role": "assistant",
+          "content": "Classic Pixel! Is your calathea still as fussy as before?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, but I moved it further from the drafty window. Hopefully that helps."
+        },
+        {
+          "role": "assistant",
+          "content": "Good call. Are your monstera and snake plant still thriving?"
+        },
+        {
+          "role": "user",
+          "content": "They’re doing well—I water them every week. The rainy weather actually helps with humidity."
+        },
+        {
+          "role": "assistant",
+          "content": "Seattle’s rain does have a few perks! Want a reminder to check soil moisture next week?"
+        },
+        {
+          "role": "user",
+          "content": "Sure, that’d help. I sometimes forget, especially when work gets busy."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll set a plant care reminder for you. Let me know if you need help finding cat-safe plants, too."
+        }
+      ]
+    },
+    {
+      "day": 138,
+      "turns": [
+        {
+          "role": "user",
+          "content": "A new tech startup reached out for a branding package! They found me through my freelance portfolio."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s fantastic! You wanted to add a tech company to your portfolio. What kind of branding do they need?"
+        },
+        {
+          "role": "user",
+          "content": "Logo, website style guide, and social media assets. I’m quoting my standard $1,200 package."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect. Your rates have worked well for the bakery and yoga studio clients. Will this project be fully remote?"
+        },
+        {
+          "role": "user",
+          "content": "Mostly, but they might want one in-person kickoff. I’m open to local meetings."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a great fit. Let me know if you want to track project milestones or set reminders for client communications."
+        },
+        {
+          "role": "user",
+          "content": "Yes, I’ll need reminders to send drafts and invoice on time."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll set those up. Congrats on landing a tech client!"
+        }
+      ]
+    },
+    {
+      "day": 141,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m visiting Lena’s bakery tomorrow—she’s launching a new seasonal menu and I helped design the flyers."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s awesome! Did you do the logo and menu redesign as well?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I did those last year. Lena’s always got creative ideas."
+        },
+        {
+          "role": "assistant",
+          "content": "Are you picking up pastries to bring to Maya when you visit Portland?"
+        },
+        {
+          "role": "user",
+          "content": "Exactly. Maya expects them now!"
+        },
+        {
+          "role": "assistant",
+          "content": "It’s a sweet tradition. How are Lena’s new menu items?"
+        },
+        {
+          "role": "user",
+          "content": "Delicious! There’s a pistachio rose croissant I can’t wait to try."
+        },
+        {
+          "role": "assistant",
+          "content": "Let me know how it is—and if you want to update your portfolio with the new flyer designs."
+        }
+      ]
+    },
+    {
+      "day": 144,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I finally hit 70 miles for June on Strava! That’s a new record for me."
+        },
+        {
+          "role": "assistant",
+          "content": "Congratulations! That’s a huge milestone. How are you feeling after all those miles?"
+        },
+        {
+          "role": "user",
+          "content": "A bit sore, but proud. Alex and I ran the last few miles together at Green Lake."
+        },
+        {
+          "role": "assistant",
+          "content": "Running buddies make a big difference. Are you still doing intervals and long runs as part of your half marathon training?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, plus some extra recovery days this month."
+        },
+        {
+          "role": "assistant",
+          "content": "Smart move. Want me to track your progress toward the Seattle Half in November?"
+        },
+        {
+          "role": "user",
+          "content": "That would help. I’m still aiming for under 2 hours this year."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll set a training tracker for you. Keep up the great work!"
+        }
+      ]
+    },
+    {
+      "day": 147,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’ve stopped watching TV in the evenings—trying to read more and save money for Japan."
+        },
+        {
+          "role": "assistant",
+          "content": "Great strategy! Have you picked up any new books lately?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I’m reading ‘The Overstory’ now. I love novels with nature themes."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s a beautiful choice. Have you noticed any changes in your budget since cutting TV subscriptions?"
+        },
+        {
+          "role": "user",
+          "content": "Definitely. I canceled two streaming services, and that money goes straight into my Japan savings."
+        },
+        {
+          "role": "assistant",
+          "content": "Smart move. You increased your monthly savings to $500, right?"
+        },
+        {
+          "role": "user",
+          "content": "Exactly. Every bit helps with airfare and travel expenses."
+        },
+        {
+          "role": "assistant",
+          "content": "Let me know if you want more book recommendations or help tracking your savings."
+        }
+      ]
+    },
+    {
+      "day": 150,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Sam invited me to NYC in October! I can’t wait—I haven’t seen her since college."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s exciting! Will you stay with Sam, or book a place nearby?"
+        },
+        {
+          "role": "user",
+          "content": "I’ll probably stay with her. We’re planning to check out a few new bakeries and maybe see a show."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds fun! Are you bringing any treats from Lena’s bakery as a gift?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, Sam misses Seattle pastries."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s thoughtful. Will this trip affect your Japan savings at all?"
+        },
+        {
+          "role": "user",
+          "content": "I’ve budgeted for it, so I’m still on track. I just have to keep eating out less."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect! Let me know if you want a packing or itinerary checklist closer to October."
+        }
+      ]
+    },
+    {
+      "day": 154,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just finished a big project for the tech startup client. I sent the files and invoice—$1,200, same as my other branding packages."
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats! That’s your first tech company in your freelance portfolio, right?"
+        },
+        {
+          "role": "user",
+          "content": "Yes! It’s exciting to add a different industry. I’m going to update my site this weekend."
+        },
+        {
+          "role": "assistant",
+          "content": "Let me know if you want any help with your portfolio or reminders to follow up with the client."
+        },
+        {
+          "role": "user",
+          "content": "I will. This project was mostly remote, but I liked having one local meeting."
+        },
+        {
+          "role": "assistant",
+          "content": "You seem to balance remote and local work well. Are you planning to reach out to more tech clients now?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I’m hoping to find another project by the fall."
+        },
+        {
+          "role": "assistant",
+          "content": "Great plan! Let me know if you need help crafting proposals or tracking leads."
+        }
+      ]
+    },
+    {
+      "day": 158,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m thinking about asking Priya for more leadership opportunities at Lunar Creative. Any advice?"
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely! You’ve already led key projects—like the yoga studio branding. Highlight those successes in your conversation."
+        },
+        {
+          "role": "user",
+          "content": "Good point. I’ve also been mentoring a junior designer lately."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s leadership in action. Mentioning that will help. Do you want to set up talking points or reminders before your meeting with Priya?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please! I want to be as prepared as possible."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll draft some points and set a reminder for the meeting. Good luck—you’ve earned it."
+        },
+        {
+          "role": "user",
+          "content": "Thanks! I appreciate the support."
+        }
+      ]
+    },
+    {
+      "day": 162,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Seattle’s been extra rainy this week. I’ve been working from home with Pixel curled up on my keyboard."
+        },
+        {
+          "role": "assistant",
+          "content": "Rainy days are perfect for cozy work sessions! How are your houseplants holding up with the extra humidity?"
+        },
+        {
+          "role": "user",
+          "content": "They’re thriving, especially my monstera. The snake plant is almost too easy."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad to hear it. Have you tried any new plant care routines, or is your regular schedule working?"
+        },
+        {
+          "role": "user",
+          "content": "I set reminders to check soil moisture, which helps a lot."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s great. Let me know if you want to track watering or get tips for keeping Pixel away from the plants."
+        },
+        {
+          "role": "user",
+          "content": "Yes, please. Pixel has a thing for the calathea leaves."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll find some safe deterrent ideas for you."
+        }
+      ]
+    },
+    {
+      "day": 170,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Maya’s birthday is coming up! I want to find a unique coffee gift to bring when I visit Portland."
+        },
+        {
+          "role": "assistant",
+          "content": "You’ve brought her coffee gifts before—does she have a favorite local roaster?"
+        },
+        {
+          "role": "user",
+          "content": "She likes Coava, but I want to try something new this year."
+        },
+        {
+          "role": "assistant",
+          "content": "Maybe a subscription box or a pour-over kit?"
+        },
+        {
+          "role": "user",
+          "content": "Good ideas! I’ll also bring pastries from Lena’s bakery."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect combo. Will you be taking Amtrak again for the trip?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, it’s so much easier than driving."
+        },
+        {
+          "role": "assistant",
+          "content": "Let me know if you want a gift reminder or travel checklist before you go."
+        }
+      ]
+    },
+    {
+      "day": 178,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I upgraded my running shoes—switched from Brooks Ghost to Saucony Endorphin Speed. They feel amazing for interval work."
+        },
+        {
+          "role": "assistant",
+          "content": "Nice switch! How do they compare for your interval and tempo runs?"
+        },
+        {
+          "role": "user",
+          "content": "They’re lighter and feel faster. My splits have improved a bit already."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s great for your Seattle Half training. Are you still using the Coros Pace 2 to track your workouts?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, the Coros is still my go-to. I love the battery life."
+        },
+        {
+          "role": "assistant",
+          "content": "Awesome! Are Alex and you still running together at Green Lake?"
+        },
+        {
+          "role": "user",
+          "content": "We meet up once a week, though sometimes I run alone to test my pace."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a solid plan. Want to log your next interval session in your training tracker?"
+        }
+      ]
+    }
+  ],
+  "important_facts": [
+    {
+      "fact": "Jordan is a 29-year-old graphic designer living in Seattle.",
+      "category": "work",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan works at Lunar Creative, managed by Priya.",
+      "category": "work",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's sister, Maya, is a nurse in Portland.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan is friends with Lena (bakery owner), Sam (college friend in NYC), and Alex (running buddy).",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's hobbies include running, houseplants, cooking, and reading.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan has a cat named Pixel.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan does freelance design work for clients like Lena's bakery and a local yoga studio.",
+      "category": "freelance",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan is saving for a trip to Japan.",
+      "category": "travel & goals",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Priya is Jordan's manager at Lunar Creative.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan completed a logo and menu redesign for Lena's bakery.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's current salary is $68,000 at Lunar Creative.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan has been at Lunar Creative for just over two years.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan led the branding project for a yoga studio client.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan uses Strava to track running mileage and is aiming for 70 miles in June.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan often runs with Alex at Green Lake.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan had a Garmin running watch but switched to a Coros Pace 2.",
+      "category": "running & fitness",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's best 10-mile pace is 8:20 per mile.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan plans to run the Seattle Half Marathon on November 26, aiming to finish under 2 hours (previous time: 2:01).",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan waters houseplants regularly, including a monstera and snake plant.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's calathea is fussy; Pixel likes to nibble the leaves.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan visits Lena's bakery for pastries and to check in on freelance projects.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan writes and updates a freelance portfolio featuring bakery and yoga studio projects.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan wants to add tech companies to freelance portfolio.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan invoices $1,200 for the yoga studio branding package.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is increasing monthly savings for Japan trip from $350 to $500.",
+      "category": "travel & goals",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan stopped watching so much TV to read more and save money.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan likes Mediterranean vegetarian recipes and mushrooms.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is planning birthday and visit gifts for Maya, often coffee-related.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is planning a visit to NYC to see Sam in October.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is planning a visit to Portland to see Maya in July, traveling by Amtrak.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan brings Lena's pastries as gifts during visits.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's apartment is mid-century modern style.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Pixel has knocked over a favorite lamp; Jordan is seeking a cat-proof replacement.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan wants to keep Japan airfare under $1,200 and visit Tokyo, Kyoto, and Osaka.",
+      "category": "travel & goals",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's race training includes intervals, tempo runs, and long runs.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan sets reminders for tasks like sending logo files to Priya and repotting plants.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's freelance rates are $1,200 for branding packages.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's monthly budget prioritizes Japan savings and eating out less.",
+      "category": "travel & goals",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan enjoys reading novels with nature themes, like 'The Overstory' and 'Braiding Sweetgrass.'",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Seattle weather is often rainy, affecting work-from-home and plant care routines.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan prefers remote freelance projects but is open to local meetings.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is a 29-year-old graphic designer living in Seattle.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan works at Lunar Creative, managed by Priya.",
+      "category": "work",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's sister, Maya, is a nurse in Portland.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan is friends with Lena (bakery owner), Sam (NYC), and Alex (running buddy).",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's hobbies include running, houseplants, cooking, and reading.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan has a cat named Pixel.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan does freelance design work for clients like Lena's bakery and a local yoga studio.",
+      "category": "freelance",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan is saving for a trip to Japan.",
+      "category": "travel & goals",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan completed a logo and menu redesign for Lena's bakery.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's current salary is $68,000 at Lunar Creative.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan has been at Lunar Creative for just over two years.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan led the branding project for a yoga studio client.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan uses Strava to track running mileage and is aiming for 70 miles in June.",
+      "category": "running & fitness",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan often runs with Alex at Green Lake.",
+      "category": "running & fitness",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan had a Garmin running watch but switched to a Coros Pace 2.",
+      "category": "running & fitness",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's best 10-mile pace is 8:20 per mile.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan plans to run the Seattle Half Marathon on November 26, aiming to finish under 2 hours (previous time: 2:01).",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan waters houseplants regularly, including a monstera and snake plant.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's calathea is fussy; Pixel likes to nibble the leaves.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan visits Lena's bakery for pastries and to check in on freelance projects.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan writes and updates a freelance portfolio featuring bakery and yoga studio projects.",
+      "category": "freelance",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan wants to add tech companies to freelance portfolio.",
+      "category": "freelance",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan invoices $1,200 for the yoga studio branding package.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is increasing monthly savings for Japan trip from $350 to $500.",
+      "category": "travel & goals",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan stopped watching so much TV to read more and save money.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan likes Mediterranean vegetarian recipes and mushrooms.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is planning birthday and visit gifts for Maya, often coffee-related.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is planning a visit to NYC to see Sam in October.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is planning a visit to Portland to see Maya in July, traveling by Amtrak.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan brings Lena's pastries as gifts during visits.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's apartment is mid-century modern style.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Pixel has knocked over a favorite lamp; Jordan is seeking a cat-proof replacement.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan wants to keep Japan airfare under $1,200 and visit Tokyo, Kyoto, and Osaka.",
+      "category": "travel & goals",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's race training includes intervals, tempo runs, and long runs.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan sets reminders for tasks like sending logo files to Priya and repotting plants.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's freelance rates are $1,200 for branding packages.",
+      "category": "freelance",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's monthly budget prioritizes Japan savings and eating out less.",
+      "category": "travel & goals",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan enjoys reading novels with nature themes, like 'The Overstory' and 'Braiding Sweetgrass.'",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Seattle weather is often rainy, affecting work-from-home and plant care routines.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan prefers remote freelance projects but is open to local meetings.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan works at Lunar Creative, managed by Priya.",
+      "category": "work",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's current salary is $68,000 at Lunar Creative.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan led the branding project for a yoga studio client.",
+      "category": "work",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan completed a logo and menu redesign for Lena's bakery.",
+      "category": "work",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Priya is Jordan's manager at Lunar Creative.",
+      "category": "work",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is saving for a trip to Japan.",
+      "category": "travel & goals",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan increased monthly savings for Japan trip from $350 to $500.",
+      "category": "travel & goals",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan plans to visit Tokyo, Kyoto, and Osaka, keeping airfare under $1,200.",
+      "category": "travel & goals",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan uses Strava to track running mileage and is aiming for 70 miles in June.",
+      "category": "running & fitness",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan switched to a Coros Pace 2 running watch from Garmin.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's best 10-mile pace is 8:20 per mile.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan plans to run the Seattle Half Marathon on November 26, aiming to finish under 2 hours.",
+      "category": "running & fitness",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan often runs with Alex at Green Lake.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's sister, Maya, is a nurse in Portland.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan plans to visit Maya in Portland in July, traveling by Amtrak.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan brings Lena's pastries as gifts during visits.",
+      "category": "family & friends",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan is friends with Lena (bakery owner), Sam (NYC), and Alex (running buddy).",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan is planning a visit to NYC to see Sam in October.",
+      "category": "family & friends",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's hobbies include running, houseplants, cooking, and reading.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan has a cat named Pixel.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's apartment is mid-century modern style.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Pixel knocked over Jordan's favorite lamp; Jordan is seeking a cat-proof replacement.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan waters houseplants regularly, including a monstera and snake plant.",
+      "category": "home & lifestyle",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan's calathea is fussy; Pixel likes to nibble the leaves.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Seattle weather is often rainy, affecting work-from-home and plant care routines.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan likes Mediterranean vegetarian recipes and mushrooms.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan stopped watching so much TV to read more and save money.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan enjoys reading novels with nature themes, like 'The Overstory' and 'Braiding Sweetgrass.'",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan does freelance design work for clients like Lena's bakery and a local yoga studio.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan writes and updates a freelance portfolio featuring bakery and yoga studio projects.",
+      "category": "freelance",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan wants to add tech companies to freelance portfolio.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan invoices $1,200 for the yoga studio branding package.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's freelance rates are $1,200 for branding packages.",
+      "category": "freelance",
+      "times_mentioned": 3
+    },
+    {
+      "fact": "Jordan prefers remote freelance projects but is open to local meetings.",
+      "category": "freelance",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan sets reminders for tasks like sending logo files to Priya and repotting plants.",
+      "category": "work/home",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's monthly budget prioritizes Japan savings and eating out less.",
+      "category": "travel & goals",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan had a Garmin running watch but switched to a Coros Pace 2.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's race training includes intervals, tempo runs, and long runs.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan no longer watches as much TV, focusing on reading and saving.",
+      "category": "home & lifestyle",
+      "times_mentioned": 2
+    },
+    {
+      "fact": "Jordan's best 10-mile pace is 8:20 per mile.",
+      "category": "running & fitness",
+      "times_mentioned": 2
+    }
+  ],
+  "fact_updates": [
+    {
+      "old_fact": "Jordan had a Garmin running watch.",
+      "new_fact": "Jordan switched to the Coros Pace 2 running watch.",
+      "update_language": "switched to",
+      "change_day": 36
+    },
+    {
+      "old_fact": "Jordan was saving $350 a month for the Japan trip.",
+      "new_fact": "Jordan increased savings to $500 a month for the Japan trip.",
+      "update_language": "increased",
+      "change_day": 120
+    },
+    {
+      "old_fact": "Jordan watched a lot of TV.",
+      "new_fact": "Jordan stopped watching so much TV and reads more.",
+      "update_language": "stopped",
+      "change_day": 50
+    },
+    {
+      "old_fact": "Jordan's monthly budget did not prioritize Japan savings.",
+      "new_fact": "Jordan's monthly budget prioritizes Japan savings and eating out less.",
+      "update_language": "changed to",
+      "change_day": 120
+    },
+    {
+      "old_fact": "Jordan used to eat out frequently.",
+      "new_fact": "Jordan is eating out less to save money for Japan.",
+      "update_language": "changed from",
+      "change_day": 43
+    },
+    {
+      "old_fact": "Jordan hasn't visited Sam in NYC recently.",
+      "new_fact": "Jordan is planning a visit to Sam in NYC in October.",
+      "update_language": "planning",
+      "change_day": 25
+    },
+    {
+      "old_fact": "Jordan flew to Portland on previous visits.",
+      "new_fact": "Jordan is traveling by Amtrak to Portland next time.",
+      "update_language": "changed to",
+      "change_day": 93
+    },
+    {
+      "old_fact": "Jordan's old lamp was not cat-proof.",
+      "new_fact": "Jordan is looking for a cat-proof lamp for the apartment.",
+      "update_language": "looking for",
+      "change_day": 80
+    },
+    {
+      "old_fact": "Jordan used to use only Garmin devices for running.",
+      "new_fact": "Jordan is now open to other brands like Coros or Polar.",
+      "update_language": "open to",
+      "change_day": 21
+    },
+    {
+      "old_fact": "Jordan tracked runs only on Strava.",
+      "new_fact": "Jordan also logs runs with the assistant as a backup.",
+      "update_language": "also",
+      "change_day": 8
+    },
+    {
+      "old_fact": "Jordan's portfolio did not include bakery or yoga studio projects.",
+      "new_fact": "Jordan's portfolio now features Lena's bakery and the yoga studio.",
+      "update_language": "now features",
+      "change_day": 12
+    },
+    {
+      "old_fact": "Jordan saved less than $500 per month for Japan.",
+      "new_fact": "Jordan is now saving $500 per month for Japan.",
+      "update_language": "now saving",
+      "change_day": 120
+    },
+    {
+      "old_fact": "Jordan used to have only local freelance clients.",
+      "new_fact": "Jordan prefers remote freelance projects but is open to local meetings.",
+      "update_language": "prefers",
+      "change_day": 64
+    },
+    {
+      "old_fact": "Jordan switched from a Garmin running watch to a Coros Pace 2.",
+      "new_fact": "Jordan switched from a Garmin running watch to a Coros Pace 2, and continues to use the Coros Pace 2 for tracking runs.",
+      "update_language": "switched from",
+      "change_day": 78
+    },
+    {
+      "old_fact": "Jordan is increasing monthly savings for Japan trip from $350 to $500.",
+      "new_fact": "Jordan has increased monthly savings for the Japan trip to $500.",
+      "update_language": "increased from",
+      "change_day": 61
+    },
+    {
+      "old_fact": "Jordan stopped watching so much TV to read more and save money.",
+      "new_fact": "Jordan no longer uses the old TV stand since stopping watching TV and reading more.",
+      "update_language": "no longer",
+      "change_day": 115
+    },
+    {
+      "old_fact": "Jordan often runs with Alex at Green Lake.",
+      "new_fact": "Jordan is now running with Alex twice a week instead of just once.",
+      "update_language": "increased from",
+      "change_day": 78
+    },
+    {
+      "old_fact": "Jordan brings Lena's pastries as gifts during visits.",
+      "new_fact": "Jordan brings Lena’s pastries as gifts during visits and is planning to bring them to both Maya in Portland and Sam in NYC.",
+      "update_language": "added",
+      "change_day": 91
+    },
+    {
+      "old_fact": "Jordan writes and updates a freelance portfolio featuring bakery and yoga studio projects.",
+      "new_fact": "Jordan writes and updates a freelance portfolio featuring bakery, yoga studio, and tech branding projects.",
+      "update_language": "added",
+      "change_day": 107
+    },
+    {
+      "old_fact": "Jordan's apartment is mid-century modern style. Pixel has knocked over a favorite lamp; Jordan is seeking a cat-proof replacement.",
+      "new_fact": "Jordan is replacing the old mid-century lamp with a cat-proof version, and is considering upgrading the scratched mid-century couch.",
+      "update_language": "upgrading",
+      "change_day": 111
+    },
+    {
+      "old_fact": "Jordan's freelance rates are $1,200 for branding packages.",
+      "new_fact": "Jordan maintains freelance rates at $1,200 for branding packages, including for new tech clients.",
+      "update_language": "maintains",
+      "change_day": 107
+    },
+    {
+      "old_fact": "Jordan had a fussy calathea; Pixel likes to nibble the leaves.",
+      "new_fact": "Jordan moved the calathea further from the window to improve its health and reduce Pixel’s nibbling.",
+      "update_language": "moved",
+      "change_day": 95
+    },
+    {
+      "old_fact": "Jordan's best 10-mile pace is 8:20 per mile.",
+      "new_fact": "Jordan is focusing on interval and tempo runs to improve on the 8:20 per mile 10-mile pace.",
+      "update_language": "focusing on improvements",
+      "change_day": 78
+    },
+    {
+      "old_fact": "Jordan's current salary is $68,000 at Lunar Creative.",
+      "new_fact": "Jordan is planning to negotiate a raise after leading the wellness startup branding project at Lunar Creative.",
+      "update_language": "planning to negotiate",
+      "change_day": 85
+    },
+    {
+      "old_fact": "Jordan prefers remote freelance projects but is open to local meetings.",
+      "new_fact": "Jordan is focusing more on remote freelance projects, but remains open to local meetings.",
+      "update_language": "focusing more",
+      "change_day": 70
+    },
+    {
+      "old_fact": "Jordan's monthly budget prioritizes Japan savings and eating out less.",
+      "new_fact": "Jordan is cooking more Mediterranean vegetarian meals at home to prioritize Japan savings and reduce eating out.",
+      "update_language": "cooking more",
+      "change_day": 80
+    },
+    {
+      "old_fact": "Jordan's monthly savings for Japan trip is $350.",
+      "new_fact": "Jordan is increasing monthly savings for Japan trip from $350 to $500.",
+      "update_language": "increased from",
+      "change_day": 130
+    },
+    {
+      "old_fact": "Jordan had a Garmin running watch.",
+      "new_fact": "Jordan switched to a Coros Pace 2 running watch.",
+      "update_language": "switched to",
+      "change_day": 123
+    },
+    {
+      "old_fact": "Jordan used to watch a lot of TV in the evenings.",
+      "new_fact": "Jordan stopped watching so much TV to read more and save money.",
+      "update_language": "stopped",
+      "change_day": 147
+    },
+    {
+      "old_fact": "Jordan used Brooks Ghost running shoes.",
+      "new_fact": "Jordan switched from Brooks Ghost to Saucony Endorphin Speed running shoes.",
+      "update_language": "switched from",
+      "change_day": 178
+    },
+    {
+      "old_fact": "Jordan's freelance client list includes only bakery and yoga studio.",
+      "new_fact": "Jordan added a tech startup client to the freelance portfolio.",
+      "update_language": "added",
+      "change_day": 154
+    },
+    {
+      "old_fact": "Jordan used to have a ceramic bedside lamp.",
+      "new_fact": "Jordan is seeking a cat-proof replacement after Pixel knocked over the lamp.",
+      "update_language": "seeking replacement after",
+      "change_day": 127
+    },
+    {
+      "old_fact": "Jordan's calathea was located near a drafty window.",
+      "new_fact": "Jordan moved the calathea further from the drafty window.",
+      "update_language": "moved",
+      "change_day": 135
+    },
+    {
+      "old_fact": "Jordan did not have any tech companies in freelance portfolio.",
+      "new_fact": "Jordan now has a tech company branding project in the portfolio.",
+      "update_language": "added",
+      "change_day": 154
+    },
+    {
+      "old_fact": "Jordan's plant care was irregular.",
+      "new_fact": "Jordan now sets reminders to check plant soil moisture.",
+      "update_language": "now sets reminders",
+      "change_day": 135
+    },
+    {
+      "old_fact": "Jordan led only bakery and yoga studio branding projects.",
+      "new_fact": "Jordan led a tech startup branding project as well.",
+      "update_language": "led",
+      "change_day": 154
+    },
+    {
+      "old_fact": "Jordan's main running buddy sessions were outdoors.",
+      "new_fact": "Jordan sometimes runs interval sessions alone to test pace.",
+      "update_language": "sometimes runs alone to test pace",
+      "change_day": 178
+    },
+    {
+      "old_fact": "Jordan used to have ceramic lamps.",
+      "new_fact": "Jordan is searching for a metal or wall-mounted lamp.",
+      "update_language": "searching for",
+      "change_day": 127
+    },
+    {
+      "old_fact": "Jordan's freelance projects were bakery and yoga studio only.",
+      "new_fact": "Jordan completed a tech startup branding package.",
+      "update_language": "completed",
+      "change_day": 154
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "retention",
+      "question": "What is the name of Jordan's cat?",
+      "gold_answer": "Pixel",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 2,
+      "category": "retention",
+      "question": "Who is Jordan's manager at Lunar Creative?",
+      "gold_answer": "Priya",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 3,
+      "category": "retention",
+      "question": "Where does Jordan live?",
+      "gold_answer": "Seattle",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 4,
+      "category": "retention",
+      "question": "What is Jordan's main fitness goal for June?",
+      "gold_answer": "Run 70 miles",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 5,
+      "category": "retention",
+      "question": "Which friend does Jordan often run with?",
+      "gold_answer": "Alex",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 6,
+      "category": "retention",
+      "question": "What kind of recipes does Jordan enjoy cooking?",
+      "gold_answer": "Mediterranean vegetarian recipes and mushrooms",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 7,
+      "category": "retention",
+      "question": "What freelance projects has Jordan completed for Lena's bakery?",
+      "gold_answer": "Logo and menu redesign",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 8,
+      "category": "retention",
+      "question": "Who is Jordan planning to visit in NYC?",
+      "gold_answer": "Sam",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 9,
+      "category": "retention",
+      "question": "How long has Jordan worked at Lunar Creative?",
+      "gold_answer": "Just over two years",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 10,
+      "category": "retention",
+      "question": "What is Jordan saving for?",
+      "gold_answer": "A trip to Japan",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 11,
+      "category": "retention",
+      "question": "What plant in Jordan's apartment does Pixel like to nibble?",
+      "gold_answer": "Calathea",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 12,
+      "category": "retention",
+      "question": "Which family member does Jordan plan coffee-related gifts for?",
+      "gold_answer": "Maya (Jordan's sister)",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 13,
+      "category": "forgetting",
+      "question": "What kind of dog does Jordan walk in the evenings?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 14,
+      "category": "forgetting",
+      "question": "What is the name of Jordan's favorite podcast?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 15,
+      "category": "forgetting",
+      "question": "Which ski resort does Jordan visit every winter?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 16,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite brand of running shoes?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 17,
+      "category": "forgetting",
+      "question": "What instrument does Jordan play in a band?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 18,
+      "category": "forgetting",
+      "question": "Which charity does Jordan donate to monthly?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 19,
+      "category": "forgetting",
+      "question": "When did Jordan move to Seattle from San Francisco?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 20,
+      "category": "forgetting",
+      "question": "What is the name of Jordan's favorite hiking trail?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 21,
+      "category": "forgetting",
+      "question": "Who is Jordan's roommate?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 22,
+      "category": "forgetting",
+      "question": "Which university did Jordan attend for graduate school?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 23,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite wine region?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 24,
+      "category": "forgetting",
+      "question": "Which video game does Jordan play online with friends?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 25,
+      "category": "forgetting",
+      "question": "What is Jordan's preferred brand of yoga mat?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 26,
+      "category": "contradiction",
+      "question": "How much is Jordan now saving each month for the Japan trip?",
+      "gold_answer": "$500",
+      "old_answer": "$350",
+      "difficulty": "medium"
+    },
+    {
+      "id": 27,
+      "category": "contradiction",
+      "question": "Which running watch does Jordan currently use?",
+      "gold_answer": "Coros Pace 2",
+      "old_answer": "Garmin running watch",
+      "difficulty": "medium"
+    },
+    {
+      "id": 28,
+      "category": "contradiction",
+      "question": "How does Jordan now track runs besides Strava?",
+      "gold_answer": "Logs runs with the assistant as a backup",
+      "old_answer": "Tracked runs only on Strava",
+      "difficulty": "medium"
+    },
+    {
+      "id": 29,
+      "category": "contradiction",
+      "question": "Which freelance projects are now included in Jordan's portfolio?",
+      "gold_answer": "Lena's bakery and the yoga studio projects",
+      "old_answer": "Portfolio did not include bakery or yoga studio projects",
+      "difficulty": "medium"
+    },
+    {
+      "id": 30,
+      "category": "contradiction",
+      "question": "How does Jordan travel to Portland to visit Maya now?",
+      "gold_answer": "Amtrak",
+      "old_answer": "Flew to Portland",
+      "difficulty": "medium"
+    },
+    {
+      "id": 31,
+      "category": "contradiction",
+      "question": "What is a new priority in Jordan's monthly budget?",
+      "gold_answer": "Japan savings and eating out less",
+      "old_answer": "Monthly budget did not prioritize Japan savings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 32,
+      "category": "contradiction",
+      "question": "What is Jordan's current habit regarding TV watching?",
+      "gold_answer": "Stopped watching so much TV and reads more",
+      "old_answer": "Watched a lot of TV",
+      "difficulty": "medium"
+    },
+    {
+      "id": 33,
+      "category": "contradiction",
+      "question": "What type of lamp is Jordan seeking for the apartment?",
+      "gold_answer": "A cat-proof lamp",
+      "old_answer": "Old lamp was not cat-proof",
+      "difficulty": "medium"
+    },
+    {
+      "id": 34,
+      "category": "contradiction",
+      "question": "Is Jordan still using only Garmin devices for running?",
+      "gold_answer": "No, now open to other brands like Coros or Polar",
+      "old_answer": "Used only Garmin devices",
+      "difficulty": "medium"
+    },
+    {
+      "id": 35,
+      "category": "contradiction",
+      "question": "Is Jordan still eating out frequently?",
+      "gold_answer": "No, eating out less to save money for Japan",
+      "old_answer": "Ate out frequently",
+      "difficulty": "medium"
+    },
+    {
+      "id": 36,
+      "category": "contradiction",
+      "question": "What is Jordan's approach to freelance client locations now?",
+      "gold_answer": "Prefers remote freelance projects but is open to local meetings",
+      "old_answer": "Had only local freelance clients",
+      "difficulty": "medium"
+    },
+    {
+      "id": 37,
+      "category": "contradiction",
+      "question": "Is Jordan planning a visit to Sam in NYC in the near future?",
+      "gold_answer": "Yes, planning a visit in October",
+      "old_answer": "Hasn't visited Sam in NYC recently",
+      "difficulty": "medium"
+    },
+    {
+      "id": 38,
+      "category": "contradiction",
+      "question": "How much is Jordan now saving per month for the Japan trip?",
+      "gold_answer": "$500",
+      "old_answer": "Less than $500",
+      "difficulty": "medium"
+    },
+    {
+      "id": 39,
+      "category": "precision",
+      "question": "What is Jordan's current salary at Lunar Creative?",
+      "gold_answer": "$68,000",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 40,
+      "category": "precision",
+      "question": "What is Jordan's best 10-mile pace?",
+      "gold_answer": "8:20 per mile",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 41,
+      "category": "precision",
+      "question": "What is the date of the Seattle Half Marathon that Jordan plans to run?",
+      "gold_answer": "November 26",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 42,
+      "category": "precision",
+      "question": "What was Jordan's previous half marathon finish time?",
+      "gold_answer": "2:01",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 43,
+      "category": "precision",
+      "question": "How much did Jordan invoice for the yoga studio branding package?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 44,
+      "category": "precision",
+      "question": "Which three Japanese cities does Jordan want to visit?",
+      "gold_answer": "Tokyo, Kyoto, and Osaka",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 45,
+      "category": "precision",
+      "question": "What is Jordan's goal for airfare to Japan?",
+      "gold_answer": "Keep it under $1,200",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 46,
+      "category": "precision",
+      "question": "On what day did Jordan switch to the Coros Pace 2 running watch?",
+      "gold_answer": "Day 36",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 47,
+      "category": "precision",
+      "question": "Which plants does Jordan water regularly?",
+      "gold_answer": "Monstera and snake plant",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 48,
+      "category": "precision",
+      "question": "What is the style of Jordan's apartment?",
+      "gold_answer": "Mid-century modern",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 49,
+      "category": "precision",
+      "question": "What novels with nature themes has Jordan enjoyed?",
+      "gold_answer": "'The Overstory' and 'Braiding Sweetgrass'",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 50,
+      "category": "precision",
+      "question": "What is Jordan's freelance rate for branding packages?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 51,
+      "category": "retention",
+      "question": "Where does Jordan frequently buy pastries and check in on freelance projects?",
+      "gold_answer": "Lena's bakery",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 52,
+      "category": "retention",
+      "question": "What is the main reason Jordan is increasing monthly savings?",
+      "gold_answer": "To save for a trip to Japan",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 53,
+      "category": "retention",
+      "question": "Who is Jordan's running buddy for frequent runs at Green Lake?",
+      "gold_answer": "Alex",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 54,
+      "category": "retention",
+      "question": "What types of projects does Jordan's freelance portfolio now include?",
+      "gold_answer": "Bakery, yoga studio, and tech branding projects",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 55,
+      "category": "retention",
+      "question": "What is the style of Jordan's apartment?",
+      "gold_answer": "Mid-century modern",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 56,
+      "category": "retention",
+      "question": "What device does Jordan currently use to track running?",
+      "gold_answer": "Coros Pace 2",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 57,
+      "category": "retention",
+      "question": "Which friend does Jordan plan to visit in NYC?",
+      "gold_answer": "Sam",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 58,
+      "category": "retention",
+      "question": "What is Jordan's main dietary preference for home cooking?",
+      "gold_answer": "Mediterranean vegetarian recipes and mushrooms",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 59,
+      "category": "retention",
+      "question": "What is Jordan's current salary at Lunar Creative?",
+      "gold_answer": "$68,000",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 60,
+      "category": "retention",
+      "question": "Who manages Jordan at Lunar Creative?",
+      "gold_answer": "Priya",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 61,
+      "category": "retention",
+      "question": "What is the name of Jordan's cat?",
+      "gold_answer": "Pixel",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 62,
+      "category": "retention",
+      "question": "What is Jordan's relationship to Maya?",
+      "gold_answer": "Sister",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 63,
+      "category": "forgetting",
+      "question": "What is the name of Jordan's favorite jazz club in Seattle?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 64,
+      "category": "forgetting",
+      "question": "What kind of dog does Jordan own?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 65,
+      "category": "forgetting",
+      "question": "Has Jordan ever mentioned a trip to Australia?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 66,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite video game?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 67,
+      "category": "forgetting",
+      "question": "Does Jordan have a roommate named Chris?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 68,
+      "category": "forgetting",
+      "question": "What is Jordan's preferred musical instrument to play?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 69,
+      "category": "forgetting",
+      "question": "Has Jordan ever worked as a barista?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 70,
+      "category": "forgetting",
+      "question": "Which mountain did Jordan climb last summer?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 71,
+      "category": "forgetting",
+      "question": "Did Jordan ever mention a favorite soccer team?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 72,
+      "category": "forgetting",
+      "question": "What is the name of Jordan's art collective?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 73,
+      "category": "forgetting",
+      "question": "Who is Jordan's cousin living in San Francisco?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 74,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite type of cheese?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 75,
+      "category": "forgetting",
+      "question": "Which day of the week does Jordan usually go hiking?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 76,
+      "category": "contradiction",
+      "question": "How is Jordan traveling to Portland the next time?",
+      "gold_answer": "By Amtrak",
+      "old_answer": "By plane",
+      "difficulty": "medium"
+    },
+    {
+      "id": 77,
+      "category": "contradiction",
+      "question": "Which friends will receive Lena’s pastries as gifts during upcoming visits?",
+      "gold_answer": "Maya in Portland and Sam in NYC",
+      "old_answer": "Maya in Portland",
+      "difficulty": "medium"
+    },
+    {
+      "id": 78,
+      "category": "contradiction",
+      "question": "What brand of running watch does Jordan currently use?",
+      "gold_answer": "Coros Pace 2",
+      "old_answer": "Garmin",
+      "difficulty": "medium"
+    },
+    {
+      "id": 79,
+      "category": "contradiction",
+      "question": "How often does Jordan now run with Alex?",
+      "gold_answer": "Twice a week",
+      "old_answer": "Once a week",
+      "difficulty": "medium"
+    },
+    {
+      "id": 80,
+      "category": "contradiction",
+      "question": "What value does Jordan now save monthly for the Japan trip?",
+      "gold_answer": "$500",
+      "old_answer": "$350",
+      "difficulty": "medium"
+    },
+    {
+      "id": 81,
+      "category": "contradiction",
+      "question": "What types of freelance projects are now included in Jordan’s portfolio?",
+      "gold_answer": "Bakery, yoga studio, and tech branding projects",
+      "old_answer": "Bakery and yoga studio projects",
+      "difficulty": "medium"
+    },
+    {
+      "id": 82,
+      "category": "contradiction",
+      "question": "How is Jordan replacing the old lamp in the apartment?",
+      "gold_answer": "With a cat-proof lamp and considering upgrading the scratched mid-century couch",
+      "old_answer": "Seeking a cat-proof replacement for the lamp",
+      "difficulty": "hard"
+    },
+    {
+      "id": 83,
+      "category": "contradiction",
+      "question": "How does Jordan log running activities now?",
+      "gold_answer": "Logs runs with the assistant and on Strava",
+      "old_answer": "Tracks runs only on Strava",
+      "difficulty": "medium"
+    },
+    {
+      "id": 84,
+      "category": "contradiction",
+      "question": "What is the current status of Jordan's TV stand?",
+      "gold_answer": "Jordan no longer uses the old TV stand since stopping watching TV and reading more",
+      "old_answer": "Jordan stopped watching so much TV to read more and save money",
+      "difficulty": "hard"
+    },
+    {
+      "id": 85,
+      "category": "contradiction",
+      "question": "When is Jordan visiting Sam in NYC?",
+      "gold_answer": "October",
+      "old_answer": "Jordan hasn't visited Sam in NYC recently",
+      "difficulty": "medium"
+    },
+    {
+      "id": 86,
+      "category": "contradiction",
+      "question": "How much is Jordan now saving per month for Japan?",
+      "gold_answer": "$500",
+      "old_answer": "Less than $500",
+      "difficulty": "medium"
+    },
+    {
+      "id": 87,
+      "category": "contradiction",
+      "question": "What is Jordan's current attitude toward remote freelance projects?",
+      "gold_answer": "Prefers remote freelance projects but is open to local meetings",
+      "old_answer": "Only local freelance clients",
+      "difficulty": "medium"
+    },
+    {
+      "id": 88,
+      "category": "precision",
+      "question": "How much did Jordan invoice for the yoga studio branding package?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 89,
+      "category": "precision",
+      "question": "What are the three Japanese cities Jordan wants to visit?",
+      "gold_answer": "Tokyo, Kyoto, and Osaka",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 90,
+      "category": "precision",
+      "question": "What is Jordan's best 10-mile pace?",
+      "gold_answer": "8:20 per mile",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 91,
+      "category": "precision",
+      "question": "What is the date of the Seattle Half Marathon that Jordan plans to run?",
+      "gold_answer": "November 26",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 92,
+      "category": "precision",
+      "question": "How long has Jordan worked at Lunar Creative?",
+      "gold_answer": "Just over two years",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 93,
+      "category": "precision",
+      "question": "Which novels with nature themes has Jordan enjoyed reading?",
+      "gold_answer": "'The Overstory' and 'Braiding Sweetgrass'",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 94,
+      "category": "precision",
+      "question": "What running mileage is Jordan aiming for in June?",
+      "gold_answer": "70 miles",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 95,
+      "category": "precision",
+      "question": "What is Jordan's monthly freelance rate for branding packages?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 96,
+      "category": "precision",
+      "question": "What is the maximum airfare Jordan wants for the Japan trip?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 97,
+      "category": "precision",
+      "question": "Which houseplants does Jordan water regularly?",
+      "gold_answer": "Monstera and snake plant",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 98,
+      "category": "precision",
+      "question": "Which client did Jordan send logo files to, as part of a reminder?",
+      "gold_answer": "Priya",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 99,
+      "category": "precision",
+      "question": "What career goal does Jordan have for the freelance portfolio?",
+      "gold_answer": "To add tech companies to the freelance portfolio",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 100,
+      "category": "precision",
+      "question": "How old is Jordan?",
+      "gold_answer": "29",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 101,
+      "category": "retention",
+      "question": "What is Jordan's current city of residence?",
+      "gold_answer": "Seattle",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 102,
+      "category": "retention",
+      "question": "What is the name of Jordan's cat?",
+      "gold_answer": "Pixel",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 103,
+      "category": "retention",
+      "question": "Who manages Jordan at Lunar Creative?",
+      "gold_answer": "Priya",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 104,
+      "category": "retention",
+      "question": "Where does Jordan's sister, Maya, live?",
+      "gold_answer": "Portland",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 105,
+      "category": "retention",
+      "question": "What type of freelance work has Jordan done for Lena's bakery?",
+      "gold_answer": "Logo and menu redesign",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 106,
+      "category": "retention",
+      "question": "Which running app does Jordan use to track mileage?",
+      "gold_answer": "Strava",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 107,
+      "category": "retention",
+      "question": "What are Jordan's main hobbies?",
+      "gold_answer": "Running, houseplants, cooking, and reading",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 108,
+      "category": "retention",
+      "question": "Who is Jordan's running buddy?",
+      "gold_answer": "Alex",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 109,
+      "category": "retention",
+      "question": "For which trip is Jordan currently saving money?",
+      "gold_answer": "A trip to Japan",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 110,
+      "category": "retention",
+      "question": "What style is Jordan's apartment decorated in?",
+      "gold_answer": "Mid-century modern",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 111,
+      "category": "retention",
+      "question": "What types of projects does Jordan want to add to the freelance portfolio?",
+      "gold_answer": "Tech branding projects",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 112,
+      "category": "retention",
+      "question": "How does Seattle's weather affect Jordan's routines?",
+      "gold_answer": "Seattle's rainy weather affects work-from-home and plant care routines.",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 113,
+      "category": "retention",
+      "question": "What are Jordan's favorite types of recipes?",
+      "gold_answer": "Mediterranean vegetarian recipes and mushrooms",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 114,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite video game?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 115,
+      "category": "forgetting",
+      "question": "Has Jordan ever worked as a photographer?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 116,
+      "category": "forgetting",
+      "question": "What is the name of Jordan's childhood pet dog?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 117,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite sports team?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 118,
+      "category": "forgetting",
+      "question": "Has Jordan ever lived abroad?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 119,
+      "category": "forgetting",
+      "question": "Which brand of laptop does Jordan use for design work?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 120,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite color to use in designs?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 121,
+      "category": "forgetting",
+      "question": "Where did Jordan attend college?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 122,
+      "category": "forgetting",
+      "question": "Has Jordan ever traveled to Australia?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 123,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite podcast?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 124,
+      "category": "forgetting",
+      "question": "Does Jordan own a bike?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 125,
+      "category": "forgetting",
+      "question": "What was Jordan's first freelance client?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 126,
+      "category": "forgetting",
+      "question": "Does Jordan have any allergies?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 127,
+      "category": "contradiction",
+      "question": "Which running watch does Jordan currently use to track runs?",
+      "gold_answer": "Coros Pace 2",
+      "old_answer": "Garmin running watch",
+      "difficulty": "easy"
+    },
+    {
+      "id": 128,
+      "category": "contradiction",
+      "question": "How much does Jordan save monthly for the Japan trip?",
+      "gold_answer": "$500",
+      "old_answer": "$350",
+      "difficulty": "medium"
+    },
+    {
+      "id": 129,
+      "category": "contradiction",
+      "question": "How often does Jordan run with Alex at Green Lake now?",
+      "gold_answer": "Twice a week",
+      "old_answer": "Once a week",
+      "difficulty": "medium"
+    },
+    {
+      "id": 130,
+      "category": "contradiction",
+      "question": "Which projects are currently featured in Jordan's freelance portfolio?",
+      "gold_answer": "Bakery, yoga studio, and tech branding projects",
+      "old_answer": "Bakery and yoga studio projects",
+      "difficulty": "medium"
+    },
+    {
+      "id": 131,
+      "category": "contradiction",
+      "question": "What did Jordan do to help the fussy calathea plant?",
+      "gold_answer": "Moved it further from the window to improve health and reduce Pixel's nibbling",
+      "old_answer": "Calathea was fussy and Pixel nibbled the leaves",
+      "difficulty": "hard"
+    },
+    {
+      "id": 132,
+      "category": "contradiction",
+      "question": "What is Jordan doing about the mid-century lamp Pixel knocked over?",
+      "gold_answer": "Replacing the old mid-century lamp with a cat-proof version and considering upgrading the scratched mid-century couch",
+      "old_answer": "Seeking a cat-proof replacement for the favorite lamp",
+      "difficulty": "hard"
+    },
+    {
+      "id": 133,
+      "category": "contradiction",
+      "question": "What freelance rates does Jordan offer for new tech clients?",
+      "gold_answer": "$1,200 for branding packages",
+      "old_answer": "$1,200 for branding packages (not mentioning tech clients)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 134,
+      "category": "contradiction",
+      "question": "What is Jordan's main focus regarding freelance project types?",
+      "gold_answer": "Focusing more on remote freelance projects, but remains open to local meetings",
+      "old_answer": "Prefers remote freelance projects but is open to local meetings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 135,
+      "category": "contradiction",
+      "question": "What change did Jordan make to reduce eating out and prioritize Japan savings?",
+      "gold_answer": "Cooking more Mediterranean vegetarian meals at home",
+      "old_answer": "Monthly budget prioritizes Japan savings and eating out less",
+      "difficulty": "medium"
+    },
+    {
+      "id": 136,
+      "category": "contradiction",
+      "question": "What is Jordan planning regarding salary at Lunar Creative?",
+      "gold_answer": "Planning to negotiate a raise after leading the wellness startup branding project",
+      "old_answer": "$68,000 salary at Lunar Creative",
+      "difficulty": "hard"
+    },
+    {
+      "id": 137,
+      "category": "contradiction",
+      "question": "What is Jordan's current running shoe brand?",
+      "gold_answer": "Saucony Endorphin Speed",
+      "old_answer": "Brooks Ghost",
+      "difficulty": "medium"
+    },
+    {
+      "id": 138,
+      "category": "contradiction",
+      "question": "How has Jordan's focus on TV watching changed?",
+      "gold_answer": "Stopped watching so much TV to read more and save money",
+      "old_answer": "Used to watch a lot of TV in the evenings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 139,
+      "category": "contradiction",
+      "question": "What is Jordan doing to improve their 10-mile race pace?",
+      "gold_answer": "Focusing on interval and tempo runs to improve on the 8:20 per mile 10-mile pace",
+      "old_answer": "Best 10-mile pace is 8:20 per mile",
+      "difficulty": "hard"
+    },
+    {
+      "id": 140,
+      "category": "contradiction",
+      "question": "Where does Jordan plan to bring Lena’s pastries as gifts?",
+      "gold_answer": "To both Maya in Portland and Sam in NYC",
+      "old_answer": "Brings Lena's pastries as gifts during visits",
+      "difficulty": "medium"
+    },
+    {
+      "id": 141,
+      "category": "precision",
+      "question": "How long has Jordan worked at Lunar Creative?",
+      "gold_answer": "Just over two years",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 142,
+      "category": "precision",
+      "question": "What is the amount Jordan invoiced for the yoga studio branding package?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 143,
+      "category": "precision",
+      "question": "What is Jordan's target finish time for the Seattle Half Marathon?",
+      "gold_answer": "Under 2 hours",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 144,
+      "category": "precision",
+      "question": "Which three Japanese cities does Jordan want to visit on the upcoming trip?",
+      "gold_answer": "Tokyo, Kyoto, and Osaka",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 145,
+      "category": "precision",
+      "question": "What date is the Seattle Half Marathon Jordan plans to run?",
+      "gold_answer": "November 26",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 146,
+      "category": "precision",
+      "question": "What type of gifts does Jordan plan for Maya's birthday and visits?",
+      "gold_answer": "Coffee-related gifts",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 147,
+      "category": "precision",
+      "question": "What is the maximum airfare Jordan wants to spend for the Japan trip?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 148,
+      "category": "precision",
+      "question": "Which novels with nature themes does Jordan enjoy?",
+      "gold_answer": "'The Overstory' and 'Braiding Sweetgrass'",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 149,
+      "category": "precision",
+      "question": "How is Jordan traveling to Portland to visit Maya?",
+      "gold_answer": "By Amtrak",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 150,
+      "category": "precision",
+      "question": "What is Jordan's best recorded 10-mile pace?",
+      "gold_answer": "8:20 per mile",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 151,
+      "category": "retention",
+      "question": "What city does Jordan live in?",
+      "gold_answer": "Seattle",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 152,
+      "category": "retention",
+      "question": "Who is Jordan's manager at Lunar Creative?",
+      "gold_answer": "Priya",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 153,
+      "category": "retention",
+      "question": "What is the name of Jordan's cat?",
+      "gold_answer": "Pixel",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 154,
+      "category": "retention",
+      "question": "Which cities does Jordan plan to visit on the Japan trip?",
+      "gold_answer": "Tokyo, Kyoto, and Osaka",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 155,
+      "category": "retention",
+      "question": "What is Jordan's favorite type of recipe to cook at home?",
+      "gold_answer": "Mediterranean vegetarian recipes",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 156,
+      "category": "retention",
+      "question": "Which friend does Jordan visit in NYC?",
+      "gold_answer": "Sam",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 157,
+      "category": "retention",
+      "question": "Which two projects did Jordan include in the freelance portfolio before adding tech clients?",
+      "gold_answer": "Bakery and yoga studio projects",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 158,
+      "category": "retention",
+      "question": "What is Jordan's main reason for increasing monthly savings?",
+      "gold_answer": "To save for a trip to Japan",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 159,
+      "category": "retention",
+      "question": "What style is Jordan's apartment decorated in?",
+      "gold_answer": "Mid-century modern",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 160,
+      "category": "retention",
+      "question": "On which app does Jordan track running mileage?",
+      "gold_answer": "Strava",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 161,
+      "category": "retention",
+      "question": "What type of gifts does Jordan often plan for Maya?",
+      "gold_answer": "Coffee-related gifts",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 162,
+      "category": "retention",
+      "question": "What are Jordan's primary running training components?",
+      "gold_answer": "Intervals, tempo runs, and long runs",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 163,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite ski resort?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 164,
+      "category": "forgetting",
+      "question": "What instrument does Jordan play in a band?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 165,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite programming language?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 166,
+      "category": "forgetting",
+      "question": "Which mountain did Jordan hike last summer?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 167,
+      "category": "forgetting",
+      "question": "What is the name of Jordan's dog?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 168,
+      "category": "forgetting",
+      "question": "Which yoga class does Jordan attend weekly?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 169,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite sports team?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 170,
+      "category": "forgetting",
+      "question": "Where did Jordan go to university?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 171,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite bakery item at Lena's bakery?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 172,
+      "category": "forgetting",
+      "question": "Has Jordan ever taught a graphic design course?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 173,
+      "category": "forgetting",
+      "question": "Which musical festival did Jordan attend in 2023?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 174,
+      "category": "forgetting",
+      "question": "Does Jordan have a favorite video game?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 175,
+      "category": "forgetting",
+      "question": "What is the name of Jordan's favorite yoga instructor?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 176,
+      "category": "forgetting",
+      "question": "What is Jordan's preferred brand of bicycle?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 177,
+      "category": "contradiction",
+      "question": "What is Jordan's current monthly savings amount for the Japan trip?",
+      "gold_answer": "$500",
+      "old_answer": "$350",
+      "difficulty": "medium"
+    },
+    {
+      "id": 178,
+      "category": "contradiction",
+      "question": "What type of lamp is Jordan seeking after Pixel knocked over the old one?",
+      "gold_answer": "A metal or wall-mounted, cat-proof replacement",
+      "old_answer": "A ceramic bedside lamp",
+      "difficulty": "medium"
+    },
+    {
+      "id": 179,
+      "category": "contradiction",
+      "question": "What running shoes does Jordan currently use?",
+      "gold_answer": "Saucony Endorphin Speed running shoes",
+      "old_answer": "Brooks Ghost running shoes",
+      "difficulty": "medium"
+    },
+    {
+      "id": 180,
+      "category": "contradiction",
+      "question": "Which running watch does Jordan currently use?",
+      "gold_answer": "Coros Pace 2 running watch",
+      "old_answer": "Garmin running watch",
+      "difficulty": "medium"
+    },
+    {
+      "id": 181,
+      "category": "contradiction",
+      "question": "What is Jordan's current freelance client portfolio?",
+      "gold_answer": "Bakery, yoga studio, and tech startup",
+      "old_answer": "Bakery and yoga studio only",
+      "difficulty": "medium"
+    },
+    {
+      "id": 182,
+      "category": "contradiction",
+      "question": "Where does Jordan's calathea plant sit now?",
+      "gold_answer": "Further from the window and away from the draft",
+      "old_answer": "Near a drafty window",
+      "difficulty": "medium"
+    },
+    {
+      "id": 183,
+      "category": "contradiction",
+      "question": "How does Jordan now care for houseplants?",
+      "gold_answer": "Sets reminders to check plant soil moisture",
+      "old_answer": "Plant care was irregular",
+      "difficulty": "medium"
+    },
+    {
+      "id": 184,
+      "category": "contradiction",
+      "question": "What is Jordan focusing on to improve 10-mile pace?",
+      "gold_answer": "Interval and tempo runs",
+      "old_answer": "10-mile pace is 8:20 per mile",
+      "difficulty": "medium"
+    },
+    {
+      "id": 185,
+      "category": "contradiction",
+      "question": "What are Jordan's freelance rates for branding packages for new tech clients?",
+      "gold_answer": "$1,200",
+      "old_answer": "$1,200 (not specified for tech clients)",
+      "difficulty": "medium"
+    },
+    {
+      "id": 186,
+      "category": "contradiction",
+      "question": "What is Jordan's current approach to freelance work locations?",
+      "gold_answer": "Focusing more on remote freelance projects, but remains open to local meetings",
+      "old_answer": "Prefers remote freelance projects but is open to local meetings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 187,
+      "category": "contradiction",
+      "question": "What is Jordan's current work status at Lunar Creative regarding salary?",
+      "gold_answer": "Planning to negotiate a raise after leading the wellness startup branding project",
+      "old_answer": "$68,000 salary at Lunar Creative",
+      "difficulty": "medium"
+    },
+    {
+      "id": 188,
+      "category": "contradiction",
+      "question": "What has Jordan changed in the monthly budget to prioritize Japan savings?",
+      "gold_answer": "Cooking more Mediterranean vegetarian meals at home and reducing eating out",
+      "old_answer": "Prioritizing Japan savings and eating out less",
+      "difficulty": "medium"
+    },
+    {
+      "id": 189,
+      "category": "contradiction",
+      "question": "What branding projects has Jordan led most recently?",
+      "gold_answer": "Bakery, yoga studio, and tech startup branding projects",
+      "old_answer": "Bakery and yoga studio branding projects",
+      "difficulty": "medium"
+    },
+    {
+      "id": 190,
+      "category": "contradiction",
+      "question": "What does Jordan do during evening leisure time now?",
+      "gold_answer": "Reads more and watches less TV to save money",
+      "old_answer": "Used to watch a lot of TV in the evenings",
+      "difficulty": "medium"
+    },
+    {
+      "id": 191,
+      "category": "precision",
+      "question": "How much did Jordan invoice for the yoga studio branding package?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 192,
+      "category": "precision",
+      "question": "What is the maximum airfare Jordan wants to pay for the Japan trip?",
+      "gold_answer": "$1,200",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 193,
+      "category": "precision",
+      "question": "What is Jordan's best recorded 10-mile running pace per mile?",
+      "gold_answer": "8:20 per mile",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 194,
+      "category": "precision",
+      "question": "Which race is Jordan planning to run on November 26?",
+      "gold_answer": "Seattle Half Marathon",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 195,
+      "category": "precision",
+      "question": "What is Jordan's monthly savings goal for the Japan trip as of day 130?",
+      "gold_answer": "$500",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 196,
+      "category": "precision",
+      "question": "Who is Jordan visiting in Portland in July?",
+      "gold_answer": "Maya",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 197,
+      "category": "precision",
+      "question": "What platform does Jordan use to track running mileage?",
+      "gold_answer": "Strava",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 198,
+      "category": "precision",
+      "question": "What date is Jordan aiming to finish the Seattle Half Marathon under 2 hours?",
+      "gold_answer": "November 26",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 199,
+      "category": "precision",
+      "question": "How does Jordan travel to Portland to visit Maya?",
+      "gold_answer": "By Amtrak",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 200,
+      "category": "precision",
+      "question": "Which friend does Jordan often run with at Green Lake?",
+      "gold_answer": "Alex",
+      "old_answer": null,
+      "difficulty": "easy"
+    }
+  ]
+}

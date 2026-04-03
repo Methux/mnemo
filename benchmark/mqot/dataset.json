@@ -1,0 +1,1750 @@
+{
+  "metadata": {
+    "name": "MQoT — Memory Quality Over Time",
+    "version": "1.0",
+    "created": "2026-03-28T08:15:26.392Z",
+    "user": "Jordan, 29, graphic designer, Seattle",
+    "days": 60,
+    "description": "Tests 4 dimensions: retention, forgetting, contradiction handling, extraction precision"
+  },
+  "conversations": [
+    {
+      "day": 1,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey! I just moved to a new apartment in Capitol Hill. Any tips on making it feel cozy?"
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats on the move, Jordan! Adding some plants, cozy lighting, and your favorite art pieces can make a big difference. Do you have any favorite decor styles?"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I'm thinking of calling my sister Maya for advice—she's got great taste. She's a nurse in Portland."
+        },
+        {
+          "role": "assistant",
+          "content": "Maya sounds like a helpful resource! Maybe she has tips from her own place in Portland. What’s your favorite part about your new place so far?"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Pixel, my cat, is loving the new window view. I think she’s adjusting better than I am."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s adorable! Cats do love a good window perch. How old is Pixel?"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Had a blueberry scone for breakfast and now I’m craving another!"
+        },
+        {
+          "role": "assistant",
+          "content": "Blueberry scones are a delicious way to start the day. Do you have a favorite bakery nearby?"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Started a new project today at work using Figma. I love how collaborative it is."
+        },
+        {
+          "role": "assistant",
+          "content": "Figma is a great tool for graphic design. What kind of project are you working on?"
+        }
+      ]
+    },
+    {
+      "day": 13,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Went to Pike Place Market for fresh flowers after work—it’s my little Friday ritual."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s such a lovely tradition! Do you have a favorite type of flower?"
+        }
+      ]
+    },
+    {
+      "day": 15,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tried a new yoga class at the community center. My back feels better already."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad to hear the yoga helped your back! Are you planning to make it a regular thing?"
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "turns": [
+        {
+          "role": "user",
+          "content": "It was pouring rain today, so I binged a true crime podcast instead of going out."
+        },
+        {
+          "role": "assistant",
+          "content": "Seattle weather can be so unpredictable! Which podcast did you listen to?"
+        }
+      ]
+    },
+    {
+      "day": 20,
+      "turns": [
+        {
+          "role": "user",
+          "content": "My friend Sam invited me to a game night next week. I usually lose at Codenames but it's fun."
+        },
+        {
+          "role": "assistant",
+          "content": "Game nights are always a good time! Do you have a favorite board game, or is Codenames your go-to?"
+        }
+      ]
+    },
+    {
+      "day": 22,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Booked a weekend trip to Vancouver in July with some friends. Can't wait to explore the art scene there."
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds exciting, Jordan! Vancouver’s art scene is vibrant. Do you have any must-see galleries in mind?"
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mom called to say she’s visiting next month. She loves Pike Place as much as I do."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s wonderful! Maybe you can show her your favorite flower stands or coffee shops."
+        }
+      ]
+    },
+    {
+      "day": 27,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m trying to cut down on screen time after work. Any hobby recommendations?"
+        },
+        {
+          "role": "assistant",
+          "content": "How about sketching or journaling? Both can be relaxing and fit your creative background as a graphic designer."
+        }
+      ]
+    },
+    {
+      "day": 30,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just finished a logo project for a local coffee shop. They were really happy with it."
+        },
+        {
+          "role": "assistant",
+          "content": "Congratulations! It’s always rewarding to see your designs appreciated. Did you get any free coffee as a thank you?"
+        }
+      ]
+    },
+    {
+      "day": 33,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m considering getting another cat. Pixel seems a bit lonely when I’m working late."
+        },
+        {
+          "role": "assistant",
+          "content": "A companion for Pixel sounds like a great idea. Do you have any names in mind for the new cat?"
+        }
+      ]
+    },
+    {
+      "day": 35,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Decided to switch to black coffee this week. Oat milk lattes were making my stomach upset."
+        },
+        {
+          "role": "assistant",
+          "content": "Hope the switch helps! Sometimes simple black coffee is all you need. Do you have a favorite coffee roaster in Seattle?"
+        }
+      ]
+    },
+    {
+      "day": 38,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Weather’s finally nice enough for a walk around Green Lake. Pixel tried to follow me out the door!"
+        },
+        {
+          "role": "assistant",
+          "content": "Green Lake is beautiful this time of year. Maybe Pixel just wanted some adventure too!"
+        }
+      ]
+    },
+    {
+      "day": 40,
+      "turns": [
+        {
+          "role": "user",
+          "content": "I’m switching from Figma to Framer for my next project. Time to learn some new tricks!"
+        },
+        {
+          "role": "assistant",
+          "content": "Framer offers some powerful prototyping tools. Excited to see what you create!"
+        }
+      ]
+    },
+    {
+      "day": 45,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Big news—I adopted a second cat! Her name is Glitch. Pixel is still adjusting."
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats on the new addition! I’m sure Pixel and Glitch will become fast friends."
+        }
+      ]
+    },
+    {
+      "day": 50,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Visited a pottery class today. Made a lopsided mug but it was so much fun."
+        },
+        {
+          "role": "assistant",
+          "content": "Pottery can be so relaxing. Maybe your next mug will be Pixel or Glitch themed!"
+        }
+      ]
+    },
+    {
+      "day": 60,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Just wrapped up a big branding project and I’m treating myself to sushi tonight. What’s a good dessert to go with it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats on finishing your project! Mochi is a classic choice after sushi. Enjoy your meal and your well-deserved celebration!"
+        }
+      ]
+    }
+  ],
+  "important_facts": [
+    {
+      "fact": "Jordan is a 29-year-old graphic designer living in Seattle",
+      "first_mentioned_day": 1,
+      "times_mentioned": 6,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan just moved to a new apartment in Capitol Hill",
+      "first_mentioned_day": 1,
+      "times_mentioned": 4,
+      "category": "life event"
+    },
+    {
+      "fact": "Jordan's cat is named Pixel",
+      "first_mentioned_day": 5,
+      "times_mentioned": 7,
+      "category": "pets"
+    },
+    {
+      "fact": "Jordan's sister Maya is a nurse in Portland",
+      "first_mentioned_day": 2,
+      "times_mentioned": 4,
+      "category": "family"
+    },
+    {
+      "fact": "Jordan enjoys visiting Pike Place Market for fresh flowers",
+      "first_mentioned_day": 13,
+      "times_mentioned": 5,
+      "category": "recurring activity"
+    },
+    {
+      "fact": "Jordan's mom is visiting next month and loves Pike Place Market",
+      "first_mentioned_day": 25,
+      "times_mentioned": 3,
+      "category": "family"
+    },
+    {
+      "fact": "Jordan regularly does yoga to help with back pain",
+      "first_mentioned_day": 15,
+      "times_mentioned": 4,
+      "category": "health"
+    },
+    {
+      "fact": "Jordan likes true crime podcasts",
+      "first_mentioned_day": 18,
+      "times_mentioned": 3,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan has a friend named Sam who hosts game nights",
+      "first_mentioned_day": 20,
+      "times_mentioned": 3,
+      "category": "friends"
+    },
+    {
+      "fact": "Jordan is going to Vancouver in July to explore the art scene",
+      "first_mentioned_day": 22,
+      "times_mentioned": 3,
+      "category": "travel"
+    },
+    {
+      "fact": "Jordan tries to cut down on screen time after work",
+      "first_mentioned_day": 27,
+      "times_mentioned": 2,
+      "category": "health"
+    },
+    {
+      "fact": "Jordan does graphic design projects for local businesses",
+      "first_mentioned_day": 30,
+      "times_mentioned": 4,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan considered adopting a second cat",
+      "first_mentioned_day": 33,
+      "times_mentioned": 2,
+      "category": "pets"
+    },
+    {
+      "fact": "Jordan switched from oat milk lattes to black coffee",
+      "first_mentioned_day": 35,
+      "times_mentioned": 3,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan switched from Figma to Framer for design work",
+      "first_mentioned_day": 40,
+      "times_mentioned": 3,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan adopted a second cat named Glitch",
+      "first_mentioned_day": 45,
+      "times_mentioned": 3,
+      "category": "pets"
+    },
+    {
+      "fact": "Jordan enjoys walking around Green Lake",
+      "first_mentioned_day": 38,
+      "times_mentioned": 2,
+      "category": "recurring activity"
+    },
+    {
+      "fact": "Jordan likes to take pottery classes",
+      "first_mentioned_day": 50,
+      "times_mentioned": 2,
+      "category": "hobbies"
+    },
+    {
+      "fact": "Jordan celebrates finishing projects with treats like sushi",
+      "first_mentioned_day": 60,
+      "times_mentioned": 2,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan is interested in sketching and journaling as hobbies",
+      "first_mentioned_day": 27,
+      "times_mentioned": 2,
+      "category": "hobbies"
+    },
+    {
+      "fact": "Jordan’s favorite bakery is near their apartment",
+      "first_mentioned_day": 7,
+      "times_mentioned": 2,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan’s sister Maya gives decor advice",
+      "first_mentioned_day": 2,
+      "times_mentioned": 2,
+      "category": "family"
+    },
+    {
+      "fact": "Jordan has back pain and uses yoga as therapy",
+      "first_mentioned_day": 15,
+      "times_mentioned": 2,
+      "category": "health"
+    },
+    {
+      "fact": "Jordan’s mom loves Pike Place Market",
+      "first_mentioned_day": 25,
+      "times_mentioned": 2,
+      "category": "family"
+    },
+    {
+      "fact": "Jordan has a regular Friday flower ritual",
+      "first_mentioned_day": 13,
+      "times_mentioned": 2,
+      "category": "recurring activity"
+    },
+    {
+      "fact": "Jordan’s cats, Pixel and Glitch, are adjusting to each other",
+      "first_mentioned_day": 45,
+      "times_mentioned": 2,
+      "category": "pets"
+    },
+    {
+      "fact": "Jordan is a coffee enthusiast",
+      "first_mentioned_day": 35,
+      "times_mentioned": 2,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan’s new apartment has a great window view",
+      "first_mentioned_day": 5,
+      "times_mentioned": 2,
+      "category": "life event"
+    },
+    {
+      "fact": "Jordan enjoys working with new design tools",
+      "first_mentioned_day": 10,
+      "times_mentioned": 2,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan's favorite flower is tulip",
+      "first_mentioned_day": 13,
+      "times_mentioned": 2,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan’s local coffee shop appreciates their logo design",
+      "first_mentioned_day": 30,
+      "times_mentioned": 2,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan is excited to explore Vancouver’s galleries",
+      "first_mentioned_day": 22,
+      "times_mentioned": 2,
+      "category": "travel"
+    },
+    {
+      "fact": "Jordan is from Seattle originally",
+      "first_mentioned_day": 1,
+      "times_mentioned": 2,
+      "category": "life event"
+    },
+    {
+      "fact": "Jordan uses design tools for collaborative work",
+      "first_mentioned_day": 10,
+      "times_mentioned": 2,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan enjoys art-themed travel",
+      "first_mentioned_day": 22,
+      "times_mentioned": 2,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan hosts friends for board game nights",
+      "first_mentioned_day": 20,
+      "times_mentioned": 2,
+      "category": "friends"
+    },
+    {
+      "fact": "Jordan’s apartment is decorated with plants and art",
+      "first_mentioned_day": 1,
+      "times_mentioned": 2,
+      "category": "life event"
+    },
+    {
+      "fact": "Jordan’s favorite dessert after sushi is mochi",
+      "first_mentioned_day": 60,
+      "times_mentioned": 2,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan likes to reward themselves after big projects",
+      "first_mentioned_day": 60,
+      "times_mentioned": 2,
+      "category": "preference"
+    },
+    {
+      "fact": "Jordan’s friend Sam is part of their close social circle",
+      "first_mentioned_day": 20,
+      "times_mentioned": 2,
+      "category": "friends"
+    },
+    {
+      "fact": "Jordan is open to learning new creative hobbies",
+      "first_mentioned_day": 27,
+      "times_mentioned": 2,
+      "category": "hobbies"
+    },
+    {
+      "fact": "Jordan values advice from family, especially Maya",
+      "first_mentioned_day": 2,
+      "times_mentioned": 2,
+      "category": "family"
+    },
+    {
+      "fact": "Jordan’s cats are indoor only",
+      "first_mentioned_day": 38,
+      "times_mentioned": 2,
+      "category": "pets"
+    },
+    {
+      "fact": "Jordan struggles with screen time balance",
+      "first_mentioned_day": 27,
+      "times_mentioned": 2,
+      "category": "health"
+    },
+    {
+      "fact": "Jordan prefers collaborative design tools",
+      "first_mentioned_day": 10,
+      "times_mentioned": 2,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan enjoys exploring new activities in Seattle",
+      "first_mentioned_day": 1,
+      "times_mentioned": 2,
+      "category": "life event"
+    },
+    {
+      "fact": "Jordan has a creative background",
+      "first_mentioned_day": 1,
+      "times_mentioned": 2,
+      "category": "career"
+    },
+    {
+      "fact": "Jordan is interested in improving health and wellness",
+      "first_mentioned_day": 15,
+      "times_mentioned": 2,
+      "category": "health"
+    },
+    {
+      "fact": "Jordan has a routine that includes small personal rituals",
+      "first_mentioned_day": 13,
+      "times_mentioned": 2,
+      "category": "recurring activity"
+    },
+    {
+      "fact": "Jordan is proud of their personal and professional growth",
+      "first_mentioned_day": 60,
+      "times_mentioned": 2,
+      "category": "life event"
+    }
+  ],
+  "trivial_facts": [
+    {
+      "fact": "Jordan had a blueberry scone for breakfast on day 7",
+      "mentioned_day": 7,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan wore a green sweater to work on day 3",
+      "mentioned_day": 3,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan bought a new succulent for their desk on day 4",
+      "mentioned_day": 4,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan forgot their umbrella and got soaked in the rain on day 6",
+      "mentioned_day": 6,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan used a special mug from an art fair on day 8",
+      "mentioned_day": 8,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan had avocado toast for lunch on day 9",
+      "mentioned_day": 9,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan picked up groceries at Trader Joe's on day 11",
+      "mentioned_day": 11,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s yoga mat is purple",
+      "mentioned_day": 12,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan saw a rainbow over the city on day 14",
+      "mentioned_day": 14,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan tried a new kombucha flavor (ginger peach) on day 16",
+      "mentioned_day": 16,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite pen ran out of ink on day 17",
+      "mentioned_day": 17,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s neighbor has a golden retriever named Max",
+      "mentioned_day": 19,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan wore mismatched socks on day 21",
+      "mentioned_day": 21,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s friend Sam brought homemade cookies on day 23",
+      "mentioned_day": 23,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan spilled coffee on their keyboard on day 24",
+      "mentioned_day": 24,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite podcast episode was about a 1980s art heist",
+      "mentioned_day": 26,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan found $5 on the sidewalk on day 28",
+      "mentioned_day": 28,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan accidentally left the fridge open on day 29",
+      "mentioned_day": 29,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s phone battery died at the park on day 31",
+      "mentioned_day": 31,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan tried a new salad dressing (sesame ginger) on day 32",
+      "mentioned_day": 32,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan saw a street performer playing violin on day 34",
+      "mentioned_day": 34,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite notebook is almost full as of day 36",
+      "mentioned_day": 36,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s neighbor hosted a BBQ on day 37",
+      "mentioned_day": 37,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan got a parking ticket on day 39",
+      "mentioned_day": 39,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan bought new running shoes on day 41",
+      "mentioned_day": 41,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan tried a matcha croissant on day 42",
+      "mentioned_day": 42,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s friend recommended a sci-fi novel on day 43",
+      "mentioned_day": 43,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s umbrella broke on day 44",
+      "mentioned_day": 44,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan got a compliment on their jacket on day 46",
+      "mentioned_day": 46,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite song this week is 'Peach Fuzz' by Tyler, The Creator",
+      "mentioned_day": 47,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s lunch was a noodle bowl on day 48",
+      "mentioned_day": 48,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s pottery mug cracked while washing on day 49",
+      "mentioned_day": 49,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s friend Sam recommended a new pizza place on day 51",
+      "mentioned_day": 51,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite color is teal as of day 52",
+      "mentioned_day": 52,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan tried a new gelato spot on day 53",
+      "mentioned_day": 53,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s plant needs repotting as of day 54",
+      "mentioned_day": 54,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan wore rain boots for the first time this season on day 55",
+      "mentioned_day": 55,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite candle scent is cedarwood as of day 56",
+      "mentioned_day": 56,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s friend gave them a handmade bookmark on day 57",
+      "mentioned_day": 57,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan lost a button from their sweater on day 58",
+      "mentioned_day": 58,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s sushi dinner included spicy tuna roll on day 60",
+      "mentioned_day": 60,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite mochi flavor is mango as of day 60",
+      "mentioned_day": 60,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s water bottle leaked in their bag on day 59",
+      "mentioned_day": 59,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan watched a documentary about mountaineering on day 50",
+      "mentioned_day": 50,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s neighbor Max barked at the mail carrier on day 18",
+      "mentioned_day": 18,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s yoga teacher played jazz music on day 15",
+      "mentioned_day": 15,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s cat Pixel knocked over a plant on day 13",
+      "mentioned_day": 13,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s favorite coffee mug has a cat illustration",
+      "mentioned_day": 1,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan’s shower ran cold during their morning routine on day 5",
+      "mentioned_day": 5,
+      "category": "trivial"
+    },
+    {
+      "fact": "Jordan bought a pack of colored pencils on day 27",
+      "mentioned_day": 27,
+      "category": "trivial"
+    }
+  ],
+  "fact_updates": [
+    {
+      "old_fact": "Jordan drinks oat milk lattes",
+      "new_fact": "Jordan switched to black coffee",
+      "change_day": 35,
+      "category": "preference"
+    },
+    {
+      "old_fact": "Jordan's cat is named Pixel",
+      "new_fact": "Jordan adopted a second cat named Glitch",
+      "change_day": 45,
+      "category": "pets"
+    },
+    {
+      "old_fact": "Jordan uses Figma for design",
+      "new_fact": "Jordan switched to Framer for design",
+      "change_day": 40,
+      "category": "career"
+    },
+    {
+      "old_fact": "Jordan did not have a pottery hobby",
+      "new_fact": "Jordan started attending pottery classes",
+      "change_day": 50,
+      "category": "hobbies"
+    },
+    {
+      "old_fact": "Jordan only had one cat",
+      "new_fact": "Jordan has two cats: Pixel and Glitch",
+      "change_day": 45,
+      "category": "pets"
+    },
+    {
+      "old_fact": "Jordan had back pain issues",
+      "new_fact": "Jordan's back pain improved with yoga",
+      "change_day": 15,
+      "category": "health"
+    },
+    {
+      "old_fact": "Jordan lived alone",
+      "new_fact": "Jordan lives with two cats",
+      "change_day": 45,
+      "category": "life event"
+    },
+    {
+      "old_fact": "Jordan did not attend yoga",
+      "new_fact": "Jordan started yoga at community center",
+      "change_day": 15,
+      "category": "health"
+    },
+    {
+      "old_fact": "Jordan did not visit Vancouver",
+      "new_fact": "Jordan planned a trip to Vancouver",
+      "change_day": 22,
+      "category": "travel"
+    },
+    {
+      "old_fact": "Jordan only drank oat milk lattes",
+      "new_fact": "Jordan now drinks black coffee",
+      "change_day": 35,
+      "category": "preference"
+    },
+    {
+      "old_fact": "Jordan had no pottery mug",
+      "new_fact": "Jordan made a pottery mug",
+      "change_day": 50,
+      "category": "hobbies"
+    },
+    {
+      "old_fact": "Jordan's mom was not visiting",
+      "new_fact": "Jordan's mom planned a visit",
+      "change_day": 25,
+      "category": "family"
+    },
+    {
+      "old_fact": "Jordan used to lose at Codenames",
+      "new_fact": "Jordan began to win at Codenames",
+      "change_day": 20,
+      "category": "friends"
+    },
+    {
+      "old_fact": "Jordan's screen time was high",
+      "new_fact": "Jordan reduced after-work screen time",
+      "change_day": 27,
+      "category": "health"
+    },
+    {
+      "old_fact": "Jordan had not tried Framer",
+      "new_fact": "Jordan started using Framer",
+      "change_day": 40,
+      "category": "career"
+    },
+    {
+      "old_fact": "Jordan decorated the new apartment minimally",
+      "new_fact": "Jordan's apartment is now full of plants and art",
+      "change_day": 13,
+      "category": "life event"
+    },
+    {
+      "old_fact": "Jordan used to work alone",
+      "new_fact": "Jordan collaborates more with coworkers",
+      "change_day": 10,
+      "category": "career"
+    },
+    {
+      "old_fact": "Jordan did not walk at Green Lake",
+      "new_fact": "Jordan started walking at Green Lake",
+      "change_day": 38,
+      "category": "recurring activity"
+    },
+    {
+      "old_fact": "Jordan did not have pottery as a hobby",
+      "new_fact": "Jordan tried pottery and enjoyed it",
+      "change_day": 50,
+      "category": "hobbies"
+    },
+    {
+      "old_fact": "Jordan never used black coffee",
+      "new_fact": "Jordan now prefers black coffee",
+      "change_day": 35,
+      "category": "preference"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "retention",
+      "question": "What is Jordan's profession?",
+      "gold_answer": "Graphic designer",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 2,
+      "category": "retention",
+      "question": "What neighborhood does Jordan live in?",
+      "gold_answer": "Capitol Hill",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 3,
+      "category": "retention",
+      "question": "What is the name of Jordan's first cat?",
+      "gold_answer": "Pixel",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 4,
+      "category": "retention",
+      "question": "In which city does Jordan’s sister Maya live?",
+      "gold_answer": "Portland",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 5,
+      "category": "retention",
+      "question": "Where does Jordan like to go for fresh flowers?",
+      "gold_answer": "Pike Place Market",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 6,
+      "category": "retention",
+      "question": "Who is hosting game nights that Jordan attends?",
+      "gold_answer": "Sam",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 7,
+      "category": "retention",
+      "question": "What city is Jordan planning to visit to explore the art scene?",
+      "gold_answer": "Vancouver",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 8,
+      "category": "retention",
+      "question": "What activity does Jordan do to help with back pain?",
+      "gold_answer": "Yoga",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 9,
+      "category": "retention",
+      "question": "What is the name of Jordan’s second cat?",
+      "gold_answer": "Glitch",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 10,
+      "category": "retention",
+      "question": "What is Jordan’s favorite flower?",
+      "gold_answer": "Tulip",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 11,
+      "category": "retention",
+      "question": "What does Jordan’s mom love to visit in Seattle?",
+      "gold_answer": "Pike Place Market",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 12,
+      "category": "retention",
+      "question": "What is the primary reason Jordan tries to cut down on screen time after work?",
+      "gold_answer": "To improve health and wellness",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 13,
+      "category": "retention",
+      "question": "Where does Jordan enjoy walking?",
+      "gold_answer": "Green Lake",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 14,
+      "category": "retention",
+      "question": "What is Jordan’s favorite dessert after sushi?",
+      "gold_answer": "Mochi",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 15,
+      "category": "retention",
+      "question": "What hobby did Jordan start recently?",
+      "gold_answer": "Pottery classes",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 16,
+      "category": "retention",
+      "question": "What does Jordan do to celebrate finishing big projects?",
+      "gold_answer": "Treats like sushi",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 17,
+      "category": "retention",
+      "question": "Which coffee shop appreciates Jordan’s logo design?",
+      "gold_answer": "Their local coffee shop",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 18,
+      "category": "retention",
+      "question": "What does Jordan use for collaborative design work?",
+      "gold_answer": "Collaborative design tools (Framer)",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 19,
+      "category": "retention",
+      "question": "Who gives Jordan decor advice?",
+      "gold_answer": "Maya (Jordan’s sister)",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 20,
+      "category": "retention",
+      "question": "What kind of podcasts does Jordan like?",
+      "gold_answer": "True crime podcasts",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 21,
+      "category": "retention",
+      "question": "What creative hobbies is Jordan interested in?",
+      "gold_answer": "Sketching and journaling",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 22,
+      "category": "retention",
+      "question": "What does Jordan’s apartment feature in terms of decor?",
+      "gold_answer": "Plants and art",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 23,
+      "category": "retention",
+      "question": "Are Jordan’s cats indoor or outdoor?",
+      "gold_answer": "Indoor only",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 24,
+      "category": "retention",
+      "question": "Where is Jordan originally from?",
+      "gold_answer": "Seattle",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 25,
+      "category": "retention",
+      "question": "What is Jordan proud of regarding their life?",
+      "gold_answer": "Personal and professional growth",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 26,
+      "category": "forgetting",
+      "question": "What did Jordan have for breakfast on day 7?",
+      "gold_answer": "Blueberry scone",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 27,
+      "category": "forgetting",
+      "question": "What color sweater did Jordan wear to work on day 3?",
+      "gold_answer": "Green",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 28,
+      "category": "forgetting",
+      "question": "What kind of plant did Jordan buy for their desk on day 4?",
+      "gold_answer": "Succulent",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 29,
+      "category": "forgetting",
+      "question": "What happened to Jordan when they forgot their umbrella on day 6?",
+      "gold_answer": "Got soaked in the rain",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 30,
+      "category": "forgetting",
+      "question": "What special mug did Jordan use on day 8?",
+      "gold_answer": "Mug from an art fair",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 31,
+      "category": "forgetting",
+      "question": "What did Jordan have for lunch on day 9?",
+      "gold_answer": "Avocado toast",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 32,
+      "category": "forgetting",
+      "question": "Where did Jordan pick up groceries on day 11?",
+      "gold_answer": "Trader Joe's",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 33,
+      "category": "forgetting",
+      "question": "What color is Jordan’s yoga mat?",
+      "gold_answer": "Purple",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 34,
+      "category": "forgetting",
+      "question": "What did Jordan see over the city on day 14?",
+      "gold_answer": "A rainbow",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 35,
+      "category": "forgetting",
+      "question": "What kombucha flavor did Jordan try on day 16?",
+      "gold_answer": "Ginger peach",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 36,
+      "category": "forgetting",
+      "question": "What happened to Jordan’s favorite pen on day 17?",
+      "gold_answer": "Ran out of ink",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 37,
+      "category": "forgetting",
+      "question": "What is the name of Jordan’s neighbor’s dog?",
+      "gold_answer": "Max",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 38,
+      "category": "forgetting",
+      "question": "What did Jordan wear on day 21?",
+      "gold_answer": "Mismatched socks",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 39,
+      "category": "forgetting",
+      "question": "Who brought homemade cookies on day 23?",
+      "gold_answer": "Sam",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 40,
+      "category": "forgetting",
+      "question": "What happened with Jordan's coffee on day 24?",
+      "gold_answer": "Spilled coffee on their keyboard",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 41,
+      "category": "forgetting",
+      "question": "What was the subject of Jordan’s favorite podcast episode?",
+      "gold_answer": "A 1980s art heist",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 42,
+      "category": "forgetting",
+      "question": "How much money did Jordan find on the sidewalk on day 28?",
+      "gold_answer": "$5",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 43,
+      "category": "forgetting",
+      "question": "What did Jordan accidentally leave open on day 29?",
+      "gold_answer": "Fridge",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 44,
+      "category": "forgetting",
+      "question": "What happened to Jordan’s phone at the park on day 31?",
+      "gold_answer": "Battery died",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 45,
+      "category": "forgetting",
+      "question": "What salad dressing did Jordan try on day 32?",
+      "gold_answer": "Sesame ginger",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 46,
+      "category": "forgetting",
+      "question": "What did Jordan see on day 34?",
+      "gold_answer": "A street performer playing violin",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 47,
+      "category": "forgetting",
+      "question": "What was almost full as of day 36?",
+      "gold_answer": "Jordan's favorite notebook",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 48,
+      "category": "forgetting",
+      "question": "Who hosted a BBQ on day 37?",
+      "gold_answer": "Jordan's neighbor",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 49,
+      "category": "forgetting",
+      "question": "What did Jordan get on day 39?",
+      "gold_answer": "A parking ticket",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 50,
+      "category": "forgetting",
+      "question": "What kind of shoes did Jordan buy on day 41?",
+      "gold_answer": "Running shoes",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 51,
+      "category": "contradiction",
+      "question": "What kind of coffee does Jordan currently drink?",
+      "gold_answer": "Black coffee",
+      "old_answer": "Oat milk lattes",
+      "difficulty": "easy"
+    },
+    {
+      "id": 52,
+      "category": "contradiction",
+      "question": "How many cats does Jordan have now?",
+      "gold_answer": "Two (Pixel and Glitch)",
+      "old_answer": "One (Pixel)",
+      "difficulty": "easy"
+    },
+    {
+      "id": 53,
+      "category": "contradiction",
+      "question": "What design tool does Jordan use now?",
+      "gold_answer": "Framer",
+      "old_answer": "Figma",
+      "difficulty": "easy"
+    },
+    {
+      "id": 54,
+      "category": "contradiction",
+      "question": "What new hobby did Jordan start around day 50?",
+      "gold_answer": "Pottery",
+      "old_answer": "Did not have pottery as a hobby",
+      "difficulty": "easy"
+    },
+    {
+      "id": 55,
+      "category": "contradiction",
+      "question": "Where does Jordan practice yoga now?",
+      "gold_answer": "Community center",
+      "old_answer": "Did not attend yoga",
+      "difficulty": "easy"
+    },
+    {
+      "id": 56,
+      "category": "contradiction",
+      "question": "What is the current decor style of Jordan’s apartment?",
+      "gold_answer": "Full of plants and art",
+      "old_answer": "Minimal",
+      "difficulty": "medium"
+    },
+    {
+      "id": 57,
+      "category": "contradiction",
+      "question": "What is the number of cats Jordan lives with now?",
+      "gold_answer": "Two (Pixel and Glitch)",
+      "old_answer": "Lived alone/One cat",
+      "difficulty": "easy"
+    },
+    {
+      "id": 58,
+      "category": "contradiction",
+      "question": "Has Jordan’s back pain improved, and how?",
+      "gold_answer": "Yes, improved with yoga",
+      "old_answer": "Had back pain issues",
+      "difficulty": "medium"
+    },
+    {
+      "id": 59,
+      "category": "contradiction",
+      "question": "Has Jordan visited Vancouver yet?",
+      "gold_answer": "Planning a trip",
+      "old_answer": "Had not visited",
+      "difficulty": "easy"
+    },
+    {
+      "id": 60,
+      "category": "contradiction",
+      "question": "What happened to Jordan’s screen time after work?",
+      "gold_answer": "Reduced",
+      "old_answer": "Was high",
+      "difficulty": "medium"
+    },
+    {
+      "id": 61,
+      "category": "contradiction",
+      "question": "Has Jordan started collaborating with coworkers?",
+      "gold_answer": "Yes, collaborates more",
+      "old_answer": "Used to work alone",
+      "difficulty": "medium"
+    },
+    {
+      "id": 62,
+      "category": "contradiction",
+      "question": "How does Jordan feel about walking at Green Lake?",
+      "gold_answer": "Started walking at Green Lake, enjoys it",
+      "old_answer": "Did not walk at Green Lake",
+      "difficulty": "medium"
+    },
+    {
+      "id": 63,
+      "category": "contradiction",
+      "question": "What is Jordan's preferred coffee order now?",
+      "gold_answer": "Black coffee",
+      "old_answer": "Oat milk latte",
+      "difficulty": "easy"
+    },
+    {
+      "id": 64,
+      "category": "contradiction",
+      "question": "Does Jordan have a pottery mug?",
+      "gold_answer": "Yes, made one",
+      "old_answer": "Did not have a pottery mug",
+      "difficulty": "easy"
+    },
+    {
+      "id": 65,
+      "category": "contradiction",
+      "question": "Is Jordan planning to travel with anyone for Vancouver?",
+      "gold_answer": "No, exploring solo (unless specified otherwise)",
+      "old_answer": "No trip planned",
+      "difficulty": "medium"
+    },
+    {
+      "id": 66,
+      "category": "contradiction",
+      "question": "Has Jordan’s mom planned a visit to Seattle?",
+      "gold_answer": "Yes, visiting next month",
+      "old_answer": "Was not visiting",
+      "difficulty": "easy"
+    },
+    {
+      "id": 67,
+      "category": "contradiction",
+      "question": "How did Jordan’s performance at Codenames change?",
+      "gold_answer": "Began to win",
+      "old_answer": "Used to lose",
+      "difficulty": "medium"
+    },
+    {
+      "id": 68,
+      "category": "contradiction",
+      "question": "Has Jordan made a pottery mug?",
+      "gold_answer": "Yes",
+      "old_answer": "No",
+      "difficulty": "easy"
+    },
+    {
+      "id": 69,
+      "category": "contradiction",
+      "question": "What is Jordan’s current favorite design tool?",
+      "gold_answer": "Framer",
+      "old_answer": "Figma",
+      "difficulty": "easy"
+    },
+    {
+      "id": 70,
+      "category": "contradiction",
+      "question": "What is Jordan’s approach to apartment decoration now?",
+      "gold_answer": "Full of plants and art",
+      "old_answer": "Minimal",
+      "difficulty": "medium"
+    },
+    {
+      "id": 71,
+      "category": "contradiction",
+      "question": "Is pottery a hobby for Jordan now?",
+      "gold_answer": "Yes, tried and enjoyed it",
+      "old_answer": "No, had not tried",
+      "difficulty": "medium"
+    },
+    {
+      "id": 72,
+      "category": "contradiction",
+      "question": "How does Jordan feel about collaborative design tools now?",
+      "gold_answer": "Prefers collaborative tools",
+      "old_answer": "Worked alone",
+      "difficulty": "medium"
+    },
+    {
+      "id": 73,
+      "category": "contradiction",
+      "question": "What is Jordan’s preferred beverage after the switch?",
+      "gold_answer": "Black coffee",
+      "old_answer": "Oat milk latte",
+      "difficulty": "easy"
+    },
+    {
+      "id": 74,
+      "category": "contradiction",
+      "question": "Does Jordan prefer solo or collaborative work now?",
+      "gold_answer": "Collaborative",
+      "old_answer": "Solo",
+      "difficulty": "medium"
+    },
+    {
+      "id": 75,
+      "category": "contradiction",
+      "question": "How does Jordan decorate their apartment now?",
+      "gold_answer": "With plants and art",
+      "old_answer": "Minimal decor",
+      "difficulty": "medium"
+    },
+    {
+      "id": 76,
+      "category": "precision",
+      "question": "How old is Jordan?",
+      "gold_answer": "29",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 77,
+      "category": "precision",
+      "question": "What is the name of Jordan’s sister and her profession?",
+      "gold_answer": "Maya, nurse",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 78,
+      "category": "precision",
+      "question": "What is the name of Jordan’s friend who hosts game nights?",
+      "gold_answer": "Sam",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 79,
+      "category": "precision",
+      "question": "What is the name of Jordan’s second cat and when was it adopted?",
+      "gold_answer": "Glitch, adopted on day 45",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 80,
+      "category": "precision",
+      "question": "What market does Jordan visit for their regular Friday flower ritual?",
+      "gold_answer": "Pike Place Market",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 81,
+      "category": "precision",
+      "question": "What is Jordan’s favorite flower?",
+      "gold_answer": "Tulip",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 82,
+      "category": "precision",
+      "question": "What is the name of the neighborhood Jordan just moved to?",
+      "gold_answer": "Capitol Hill",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 83,
+      "category": "precision",
+      "question": "When did Jordan switch from Figma to Framer for design work?",
+      "gold_answer": "Day 40",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 84,
+      "category": "precision",
+      "question": "When did Jordan start attending pottery classes?",
+      "gold_answer": "Day 50",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 85,
+      "category": "precision",
+      "question": "What is Jordan’s favorite bakery located near?",
+      "gold_answer": "Near their apartment",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 86,
+      "category": "precision",
+      "question": "What dessert does Jordan enjoy after sushi?",
+      "gold_answer": "Mochi",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 87,
+      "category": "precision",
+      "question": "When did Jordan start walking at Green Lake?",
+      "gold_answer": "Day 38",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 88,
+      "category": "precision",
+      "question": "What is the name of Jordan’s local coffee shop that appreciates their logo design?",
+      "gold_answer": "Local coffee shop (name unspecified)",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 89,
+      "category": "precision",
+      "question": "What is the name of Jordan’s second cat?",
+      "gold_answer": "Glitch",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 90,
+      "category": "precision",
+      "question": "What is Jordan’s favorite flower?",
+      "gold_answer": "Tulip",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 91,
+      "category": "precision",
+      "question": "What is Jordan’s favorite mochi flavor as of day 60?",
+      "gold_answer": "Mango",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 92,
+      "category": "precision",
+      "question": "Who gives Jordan decor advice?",
+      "gold_answer": "Maya, Jordan’s sister",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 93,
+      "category": "precision",
+      "question": "On what day did Jordan adopt Glitch?",
+      "gold_answer": "Day 45",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 94,
+      "category": "precision",
+      "question": "What is the name of Jordan’s first cat?",
+      "gold_answer": "Pixel",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 95,
+      "category": "precision",
+      "question": "When did Jordan switch to black coffee?",
+      "gold_answer": "Day 35",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 96,
+      "category": "precision",
+      "question": "How many cats does Jordan currently have?",
+      "gold_answer": "Two (Pixel and Glitch)",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 97,
+      "category": "precision",
+      "question": "What is the main reason Jordan does yoga?",
+      "gold_answer": "To help with back pain",
+      "old_answer": null,
+      "difficulty": "medium"
+    },
+    {
+      "id": 98,
+      "category": "precision",
+      "question": "What city does Jordan’s sister Maya live in?",
+      "gold_answer": "Portland",
+      "old_answer": null,
+      "difficulty": "easy"
+    },
+    {
+      "id": 99,
+      "category": "precision",
+      "question": "On what day did Jordan’s mom plan a visit?",
+      "gold_answer": "Day 25",
+      "old_answer": null,
+      "difficulty": "hard"
+    },
+    {
+      "id": 100,
+      "category": "precision",
+      "question": "What street market does Jordan and their mom both enjoy?",
+      "gold_answer": "Pike Place Market",
+      "old_answer": null,
+      "difficulty": "easy"
+    }
+  ]
+}

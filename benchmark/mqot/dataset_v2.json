@@ -1,0 +1,1776 @@
+{
+  "metadata": {
+    "name": "MQoT v2 — Memory Quality Over Time",
+    "version": "2.0",
+    "created": "2026-03-28T11:58:16.079Z",
+    "philosophy": "Tests intelligent memory: store precisely, forget correctly, find accurately",
+    "scoring": {
+      "retention": "Important facts that SHOULD be remembered (repeated, emotional, specific)",
+      "forgetting": "Noise/unknown that SHOULD be forgotten (abstaining = correct)",
+      "contradiction": "Updated facts that SHOULD use new value",
+      "precision": "Specific details within important contexts"
+    }
+  },
+  "conversations": [
+    {
+      "day": 1,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey, can you help me find some inspiration for a logo I'm working on for a local bakery?"
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely! Can you tell me more about the bakery and the vibe they want?"
+        },
+        {
+          "role": "user",
+          "content": "It's called Sweet Flour, run by my friend Lena. They're in Capitol Hill, Seattle. They want something playful but not too childish."
+        },
+        {
+          "role": "assistant",
+          "content": "Great details. Do they have signature colors or motifs they like?"
+        },
+        {
+          "role": "user",
+          "content": "They love pastel colors, especially light pink and mint green. Lena bakes these amazing croissants—those could be a motif."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect! I'll gather some logo inspiration with pastel palettes and croissant elements. Anything else special about this project?"
+        },
+        {
+          "role": "user",
+          "content": "I'm really excited about this one because it's my first project since switching to Framer from Figma. The workflow feels smoother."
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats on the switch! That's a big move for a designer. Are you finding it easy to adjust?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, I used to be all about Figma, but Framer's prototyping is just next level. I committed to only using Framer for client work now."
+        },
+        {
+          "role": "assistant",
+          "content": "Nice! I'll make sure to keep that in mind for future design questions. Let me know if you want some Framer-specific resources."
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Morning! It's pouring rain in Seattle today, classic."
+        },
+        {
+          "role": "assistant",
+          "content": "Typical Seattle weather! How are you feeling about the week ahead?"
+        },
+        {
+          "role": "user",
+          "content": "Pretty good, actually. I got my annual salary review yesterday—$95,000, up from $88,000. I'm stoked!"
+        },
+        {
+          "role": "assistant",
+          "content": "Congratulations, Jordan! That's a significant jump. How do you feel about your work these days?"
+        },
+        {
+          "role": "user",
+          "content": "Honestly, pretty motivated. My team at Lunar Creative is great, and my manager, Priya, has been really supportive."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like you're in a good place career-wise. Any plans for celebrating the raise?"
+        },
+        {
+          "role": "user",
+          "content": "I might treat myself to a new pair of running shoes. I’ve been running around Green Lake more lately."
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds like a fun reward! Let me know if you need help choosing a pair."
+        },
+        {
+          "role": "user",
+          "content": "Will do. Oh, and Maya—my sister—called last night. She’s now the head nurse at her hospital in Portland!"
+        },
+        {
+          "role": "assistant",
+          "content": "Wow, double congratulations in your family! You and Maya both have big things happening."
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey, do you know any good vegan restaurants in Seattle?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure! There’s Plum Bistro, Harvest Beat, and Wayward Vegan Café. Any particular cuisine you’re craving?"
+        },
+        {
+          "role": "user",
+          "content": "Not really, just trying to eat healthier. I used to go to Junkyard, but I’m trying to avoid fried stuff now."
+        },
+        {
+          "role": "assistant",
+          "content": "Makes sense. Plum Bistro has some great fresh options."
+        },
+        {
+          "role": "user",
+          "content": "Thanks! Also, I’m planning to visit Maya in Portland next weekend. She wants to show me her new office since she became head nurse."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s exciting! Are you taking the train or driving?"
+        },
+        {
+          "role": "user",
+          "content": "Driving. I might stop by Powell’s Books on the way—love that place."
+        },
+        {
+          "role": "assistant",
+          "content": "Powell’s is a classic. Are you looking for anything specific?"
+        },
+        {
+          "role": "user",
+          "content": "Maybe something on branding. I want to up my game for freelance gigs."
+        },
+        {
+          "role": "assistant",
+          "content": "I can recommend some great branding books if you want."
+        },
+        {
+          "role": "user",
+          "content": "Please do! By the way, I had a quinoa bowl for lunch today—trying to keep it healthy."
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hi, any tips for presenting design concepts to a client who isn’t very tech-savvy?"
+        },
+        {
+          "role": "assistant",
+          "content": "Definitely. Use simple language, visual aids, and interactive prototypes. Are you preparing for a specific meeting?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, it’s for Lena at Sweet Flour. She’s more of a hands-on baker than a digital person."
+        },
+        {
+          "role": "assistant",
+          "content": "Understandable. Maybe walk her through the Framer prototype step by step."
+        },
+        {
+          "role": "user",
+          "content": "Good idea. I used to do static mockups, but now that I’m using Framer, I can show her real interactions."
+        },
+        {
+          "role": "assistant",
+          "content": "That should really help her visualize the final product."
+        },
+        {
+          "role": "user",
+          "content": "True. I’m kind of nervous though!"
+        },
+        {
+          "role": "assistant",
+          "content": "You’ve got this. Remember, you’re the expert."
+        },
+        {
+          "role": "user",
+          "content": "Thanks. Oh, and Maya texted me a photo of her new head nurse badge. She’s so proud."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s so sweet. You two seem really close."
+        },
+        {
+          "role": "user",
+          "content": "We are. I’m lucky to have her."
+        }
+      ]
+    },
+    {
+      "day": 14,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Afternoon! Any good music recommendations for working?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure! Do you prefer instrumental, electronic, or something else?"
+        },
+        {
+          "role": "user",
+          "content": "Usually lo-fi or ambient. I’ve been listening to Tycho a lot lately."
+        },
+        {
+          "role": "assistant",
+          "content": "Tycho is great for focus. I can make a playlist if you want."
+        },
+        {
+          "role": "user",
+          "content": "That’d be awesome. By the way, I’m prepping for the Seattle Half Marathon in November—it’s my first one."
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats on signing up! How’s the training going?"
+        },
+        {
+          "role": "user",
+          "content": "Pretty good. I run at Green Lake three times a week, usually after work."
+        },
+        {
+          "role": "assistant",
+          "content": "Consistency is key. Let me know if you need a training plan."
+        },
+        {
+          "role": "user",
+          "content": "Thanks! Also, I used to only run 5Ks, so this is a big step up for me."
+        },
+        {
+          "role": "assistant",
+          "content": "You’ll do great! I’ll add some motivational tracks to your playlist."
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Morning! The sun’s out for once."
+        },
+        {
+          "role": "assistant",
+          "content": "Enjoy it while it lasts! Got any plans for the day?"
+        },
+        {
+          "role": "user",
+          "content": "Just work. Oh, and I’m heading to Portland tomorrow to see Maya. She’s giving me a tour of her hospital as head nurse."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a special trip. Are you bringing her anything?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, I got her a personalized stethoscope as a congrats gift."
+        },
+        {
+          "role": "assistant",
+          "content": "She’ll love that! Do you visit Portland often?"
+        },
+        {
+          "role": "user",
+          "content": "A few times a year. I used to go more, but work’s been busy."
+        },
+        {
+          "role": "assistant",
+          "content": "Maybe you’ll have more time with your new raise. $95,000 gives you some freedom!"
+        },
+        {
+          "role": "user",
+          "content": "True! I’m thinking of saving up for a trip to Japan next spring."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s exciting. I can help you plan when the time comes."
+        }
+      ]
+    },
+    {
+      "day": 22,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey, I think I’m getting a cold. Any tips to feel better fast?"
+        },
+        {
+          "role": "assistant",
+          "content": "Rest, fluids, maybe some ginger tea. Do you have a busy week ahead?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, I have a big presentation at Lunar Creative. It’s for a tech startup called DynaLoop."
+        },
+        {
+          "role": "assistant",
+          "content": "Hope you feel better soon! Is this the first startup you’ve worked with?"
+        },
+        {
+          "role": "user",
+          "content": "No, but DynaLoop is my biggest client so far. Their CEO, Marcus, is really particular about branding."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a lot of pressure. How are you preparing?"
+        },
+        {
+          "role": "user",
+          "content": "I’m building the prototype in Framer—switched over from Figma a few weeks ago and haven’t looked back."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad the switch is working for you. Want any feedback on your presentation?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please! I’ll send you my deck tomorrow. For now, I need to grab a sandwich and rest a bit."
+        },
+        {
+          "role": "assistant",
+          "content": "Take care, Jordan. Let me know if you need anything else."
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hi! The DynaLoop presentation went well. Marcus loved the Framer prototype."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s awesome news! How did you feel during the presentation?"
+        },
+        {
+          "role": "user",
+          "content": "Nervous at first, but once I started walking them through the interactive pieces, it clicked."
+        },
+        {
+          "role": "assistant",
+          "content": "Your effort paid off. Did you get any feedback from your manager, Priya?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, she said I’m getting better at client communication. That means a lot to me."
+        },
+        {
+          "role": "assistant",
+          "content": "You’ve made a lot of progress. Did you celebrate afterwards?"
+        },
+        {
+          "role": "user",
+          "content": "Sort of—I treated myself to a new pair of Brooks running shoes. I’m committed to my training for the half marathon."
+        },
+        {
+          "role": "assistant",
+          "content": "Great choice! How’s your training going?"
+        },
+        {
+          "role": "user",
+          "content": "Good! I ran six miles yesterday, my longest yet."
+        },
+        {
+          "role": "assistant",
+          "content": "Impressive! Keep it up, Jordan."
+        }
+      ]
+    },
+    {
+      "day": 28,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Evening! Quick question: any tips for keeping my houseplants alive?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure! What kind of plants do you have?"
+        },
+        {
+          "role": "user",
+          "content": "Mostly pothos and a fiddle leaf fig. The fig is struggling."
+        },
+        {
+          "role": "assistant",
+          "content": "Fiddle leaf figs can be finicky. Try more indirect light and check soil moisture."
+        },
+        {
+          "role": "user",
+          "content": "I’ll do that. I used to have a snake plant, but it died when I was traveling last fall."
+        },
+        {
+          "role": "assistant",
+          "content": "Traveling can make plant care tough. Are you planning any trips soon?"
+        },
+        {
+          "role": "user",
+          "content": "Maybe Japan next year if I save enough from my new salary."
+        },
+        {
+          "role": "assistant",
+          "content": "That would be an amazing adventure!"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, I’m really looking forward to it."
+        }
+      ]
+    },
+    {
+      "day": 32,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey, random question: do you know any good co-working spaces in Seattle?"
+        },
+        {
+          "role": "assistant",
+          "content": "There’s The Riveter, WeWork, and Collective Chemistry. Are you looking to switch things up?"
+        },
+        {
+          "role": "user",
+          "content": "Yeah, working from home gets lonely. I’m thinking about joining Collective Chemistry."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s a creative space. Have you visited yet?"
+        },
+        {
+          "role": "user",
+          "content": "Not yet. I’ll check it out this weekend. Also, I used to go to coffee shops, but it’s just too noisy now."
+        },
+        {
+          "role": "assistant",
+          "content": "A co-working space might be the right move then."
+        },
+        {
+          "role": "user",
+          "content": "Agreed. Oh, and I started drinking black coffee instead of oat milk lattes. Needed a change."
+        },
+        {
+          "role": "assistant",
+          "content": "Switching things up! How do you like black coffee so far?"
+        },
+        {
+          "role": "user",
+          "content": "It’s growing on me."
+        }
+      ]
+    },
+    {
+      "day": 35,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey, just a heads up—I switched from oat milk lattes to black coffee last month. I’m trying to cut back on sugar."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s a healthy switch. Do you miss the oat milk?"
+        },
+        {
+          "role": "user",
+          "content": "A little, but black coffee is simpler and less expensive."
+        },
+        {
+          "role": "assistant",
+          "content": "Less sugar and fewer calories too!"
+        },
+        {
+          "role": "user",
+          "content": "Exactly. Also, I decided to join Collective Chemistry—signed up for a monthly membership."
+        },
+        {
+          "role": "assistant",
+          "content": "Congrats! Hope you find it inspiring."
+        },
+        {
+          "role": "user",
+          "content": "Thanks. I used to work from coffee shops, but Collective Chemistry has better Wi-Fi and fewer distractions."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a good fit for focused work."
+        },
+        {
+          "role": "user",
+          "content": "Definitely. I’m working on a new freelance project for a yoga studio, too."
+        }
+      ]
+    },
+    {
+      "day": 39,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Morning! Can you help me brainstorm some ideas for a yoga studio rebranding project?"
+        },
+        {
+          "role": "assistant",
+          "content": "Of course! What’s the studio called and what’s their vibe?"
+        },
+        {
+          "role": "user",
+          "content": "It’s called Rooted Flow. They want to attract more young professionals in downtown Seattle."
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Any color or style preferences?"
+        },
+        {
+          "role": "user",
+          "content": "They prefer earthy tones and minimalist logos. I’m excited because it’s my first freelance project since joining Collective Chemistry."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s awesome! How’s the space working for you so far?"
+        },
+        {
+          "role": "user",
+          "content": "Love it. I used to work at home and got distracted, but now I’m much more productive."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad to hear it. Want me to gather some branding inspiration for Rooted Flow?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, please!"
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll make a mood board for you."
+        }
+      ]
+    },
+    {
+      "day": 43,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hey! Can you recommend a good place for a birthday dinner in Seattle?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure! Any preferences?"
+        },
+        {
+          "role": "user",
+          "content": "Something cozy, maybe Italian. I’m celebrating my 30th with friends—Maya’s coming up from Portland."
+        },
+        {
+          "role": "assistant",
+          "content": "How exciting! Happy birthday in advance. How does Spinasse sound?"
+        },
+        {
+          "role": "user",
+          "content": "Spinasse is perfect. I’m really looking forward to it—first big celebration since my salary bump at Lunar Creative."
+        },
+        {
+          "role": "assistant",
+          "content": "You deserve it! Are you planning anything else for your 30th?"
+        },
+        {
+          "role": "user",
+          "content": "Maybe a hike at Rattlesnake Ledge if the weather’s good."
+        },
+        {
+          "role": "assistant",
+          "content": "Hope you have a great birthday, Jordan!"
+        }
+      ]
+    },
+    {
+      "day": 47,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hi, can you help me track my half marathon training? I want to hit 13.1 miles by November."
+        },
+        {
+          "role": "assistant",
+          "content": "Absolutely. How many miles are you running currently per week?"
+        },
+        {
+          "role": "user",
+          "content": "About 15, split over three days. I used to only run 5Ks, so this is a big jump."
+        },
+        {
+          "role": "assistant",
+          "content": "I’ll make a training schedule to gradually build your mileage."
+        },
+        {
+          "role": "user",
+          "content": "Thank you! My new Brooks shoes are making a difference, too."
+        },
+        {
+          "role": "assistant",
+          "content": "Glad you’re enjoying them. Any soreness or injuries so far?"
+        },
+        {
+          "role": "user",
+          "content": "No injuries. I’m careful about stretching."
+        },
+        {
+          "role": "assistant",
+          "content": "Perfect. Stay consistent and you’ll be ready for race day."
+        }
+      ]
+    },
+    {
+      "day": 53,
+      "turns": [
+        {
+          "role": "user",
+          "content": "Afternoon! Can you help me find a gift for my manager Priya? She’s celebrating her 5-year anniversary at Lunar Creative."
+        },
+        {
+          "role": "assistant",
+          "content": "That’s thoughtful. What does Priya like?"
+        },
+        {
+          "role": "user",
+          "content": "She’s into books and tea. Maybe a gift card to Elliott Bay Book Company?"
+        },
+        {
+          "role": "assistant",
+          "content": "That’s a great idea. Do you want to include a personal note?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I’ll write something about how supportive she’s been—she helped me a lot during my last salary review."
+        },
+        {
+          "role": "assistant",
+          "content": "She’ll appreciate that. Anything else planned for her celebration?"
+        },
+        {
+          "role": "user",
+          "content": "The team is taking her out for lunch at Din Tai Fung."
+        },
+        {
+          "role": "assistant",
+          "content": "Sounds like a wonderful gesture."
+        }
+      ]
+    }
+  ],
+  "important_facts": [
+    {
+      "fact": "Jordan's sister Maya is a head nurse in Portland",
+      "category": "family",
+      "times_mentioned": 3,
+      "emotional_weight": "high",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan switched to Framer from Figma for all design work",
+      "category": "career/tools",
+      "times_mentioned": 3,
+      "emotional_weight": "high",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's annual salary review increased to $95,000 from $88,000",
+      "category": "career",
+      "times_mentioned": 3,
+      "emotional_weight": "high",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan works at Lunar Creative under manager Priya",
+      "category": "career",
+      "times_mentioned": 3,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan is training for the Seattle Half Marathon in November",
+      "category": "health/fitness",
+      "times_mentioned": 3,
+      "emotional_weight": "high",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan runs at Green Lake three times a week",
+      "category": "health/fitness",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan bought Brooks running shoes as a reward for salary raise",
+      "category": "personal purchases",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's first freelance project at Collective Chemistry is for a yoga studio called Rooted Flow",
+      "category": "career/freelance",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan joined Collective Chemistry co-working space",
+      "category": "career/work environment",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan wants to travel to Japan next year",
+      "category": "personal goals",
+      "times_mentioned": 2,
+      "emotional_weight": "high",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's friend Lena owns Sweet Flour bakery in Capitol Hill, Seattle",
+      "category": "social/friends",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's biggest client is DynaLoop, a tech startup with CEO Marcus",
+      "category": "career/clients",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan is celebrating their 30th birthday with Maya in Seattle at Spinasse",
+      "category": "personal/life event",
+      "times_mentioned": 2,
+      "emotional_weight": "high",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan plans hikes at Rattlesnake Ledge",
+      "category": "health/fitness",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan enjoys listening to Tycho while working",
+      "category": "personal/preferences",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan had a snake plant that died while traveling last fall",
+      "category": "personal/home",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's favorite bookstore is Powell’s Books in Portland",
+      "category": "personal/preferences",
+      "times_mentioned": 1,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan shops at Elliott Bay Book Company for gifts",
+      "category": "personal/preferences",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan has worked with tech startup clients before DynaLoop",
+      "category": "career/clients",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's manager Priya is celebrating 5 years at Lunar Creative",
+      "category": "career",
+      "times_mentioned": 1,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan used to only run 5Ks before training for half marathon",
+      "category": "health/fitness",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan’s freelance work includes branding for local businesses",
+      "category": "career/freelance",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan is committed to healthy eating, prefers vegan options",
+      "category": "health/diet",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's previous go-to vegan spot was Junkyard, but is avoiding fried foods now",
+      "category": "health/diet",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan's friend Lena prefers pastel colors for Sweet Flour's branding",
+      "category": "social/friends",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan is working on a yoga studio branding project called Rooted Flow for young professionals",
+      "category": "career/freelance",
+      "times_mentioned": 1,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan used to work from home and coffee shops before joining Collective Chemistry",
+      "category": "career/work environment",
+      "times_mentioned": 2,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan celebrates successes with small personal rewards",
+      "category": "personal habits",
+      "times_mentioned": 1,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan is careful about stretching to avoid running injuries",
+      "category": "health/fitness",
+      "times_mentioned": 1,
+      "emotional_weight": "low",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan has a supportive relationship with manager Priya",
+      "category": "career",
+      "times_mentioned": 2,
+      "emotional_weight": "medium",
+      "has_specific_details": true
+    },
+    {
+      "fact": "Jordan is close with Maya and they visit each other a few times a year",
+      "category": "family",
+      "times_mentioned": 2,
+      "emotional_weight": "high",
+      "has_specific_details": true
+    }
+  ],
+  "fact_updates": [
+    {
+      "old_fact": "Jordan used to use Figma for design work",
+      "new_fact": "Jordan switched to Framer for all design work",
+      "update_language": "switched to",
+      "change_day": 1
+    },
+    {
+      "old_fact": "Jordan's annual salary was $88,000",
+      "new_fact": "Jordan's annual salary is $95,000",
+      "update_language": "increased to",
+      "change_day": 4
+    },
+    {
+      "old_fact": "Maya was a nurse at her hospital",
+      "new_fact": "Maya is now the head nurse at her hospital in Portland",
+      "update_language": "became head nurse",
+      "change_day": 4
+    },
+    {
+      "old_fact": "Jordan used to go to coffee shops to work",
+      "new_fact": "Jordan joined Collective Chemistry co-working space",
+      "update_language": "joined",
+      "change_day": 35
+    },
+    {
+      "old_fact": "Jordan used to drink oat milk lattes",
+      "new_fact": "Jordan switched to black coffee",
+      "update_language": "switched to",
+      "change_day": 35
+    },
+    {
+      "old_fact": "Jordan used to only run 5Ks",
+      "new_fact": "Jordan is training for a half marathon",
+      "update_language": "now",
+      "change_day": 14
+    },
+    {
+      "old_fact": "Jordan used to present static mockups to clients",
+      "new_fact": "Jordan now presents interactive Framer prototypes",
+      "update_language": "now",
+      "change_day": 10
+    },
+    {
+      "old_fact": "Jordan used to work from home",
+      "new_fact": "Jordan now works at Collective Chemistry",
+      "update_language": "now",
+      "change_day": 32
+    },
+    {
+      "old_fact": "Jordan went to Junkyard for vegan food",
+      "new_fact": "Jordan is now avoiding fried foods and seeking healthier vegan options",
+      "update_language": "now",
+      "change_day": 7
+    },
+    {
+      "old_fact": "Jordan had a snake plant",
+      "new_fact": "The snake plant died while Jordan was traveling last fall",
+      "update_language": "died while traveling",
+      "change_day": 28
+    },
+    {
+      "old_fact": "Jordan did not have Brooks running shoes",
+      "new_fact": "Jordan bought Brooks running shoes",
+      "update_language": "bought",
+      "change_day": 25
+    },
+    {
+      "old_fact": "Jordan used to be nervous about client communication",
+      "new_fact": "Jordan is getting better at client communication",
+      "update_language": "getting better at",
+      "change_day": 25
+    },
+    {
+      "old_fact": "Jordan was not a member of a co-working space",
+      "new_fact": "Jordan is a member of Collective Chemistry",
+      "update_language": "joined",
+      "change_day": 35
+    },
+    {
+      "old_fact": "Jordan used to only run shorter distances",
+      "new_fact": "Jordan now runs six miles as part of training",
+      "update_language": "now",
+      "change_day": 25
+    },
+    {
+      "old_fact": "Jordan used to present design concepts without interactive prototypes",
+      "new_fact": "Jordan now uses Framer interactive prototypes for client presentations",
+      "update_language": "now",
+      "change_day": 10
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "retention",
+      "question": "What is Jordan's sister Maya's profession?",
+      "gold_answer": "Head nurse in Portland",
+      "old_answer": null,
+      "why_testable": "Mentioned 3x with emotional weight (family, career advancement)"
+    },
+    {
+      "id": 2,
+      "category": "retention",
+      "question": "What design tool does Jordan use for all their work?",
+      "gold_answer": "Framer",
+      "old_answer": null,
+      "why_testable": "Mentioned 3x, recent tool switch, career core fact"
+    },
+    {
+      "id": 3,
+      "category": "retention",
+      "question": "What is Jordan's current annual salary after their raise?",
+      "gold_answer": "$95,000",
+      "old_answer": null,
+      "why_testable": "Mentioned 3x, significant career event"
+    },
+    {
+      "id": 4,
+      "category": "retention",
+      "question": "Where does Jordan work and who is their manager?",
+      "gold_answer": "Lunar Creative, manager Priya",
+      "old_answer": null,
+      "why_testable": "Mentioned 3x, central to career context"
+    },
+    {
+      "id": 5,
+      "category": "retention",
+      "question": "What major event is Jordan training for in November?",
+      "gold_answer": "Seattle Half Marathon",
+      "old_answer": null,
+      "why_testable": "Mentioned 3x, health/fitness, personal goal"
+    },
+    {
+      "id": 6,
+      "category": "retention",
+      "question": "Where does Jordan typically go running three times a week?",
+      "gold_answer": "Green Lake",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, routine activity"
+    },
+    {
+      "id": 7,
+      "category": "retention",
+      "question": "What did Jordan buy as a reward for their salary raise?",
+      "gold_answer": "Brooks running shoes",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, personal milestone/reward"
+    },
+    {
+      "id": 8,
+      "category": "retention",
+      "question": "What is the name of Jordan's first freelance project at Collective Chemistry?",
+      "gold_answer": "Rooted Flow (yoga studio)",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, first freelance client, important milestone"
+    },
+    {
+      "id": 9,
+      "category": "retention",
+      "question": "What co-working space did Jordan join?",
+      "gold_answer": "Collective Chemistry",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, work environment change"
+    },
+    {
+      "id": 10,
+      "category": "retention",
+      "question": "Where does Jordan want to travel next year?",
+      "gold_answer": "Japan",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, personal future goal"
+    },
+    {
+      "id": 11,
+      "category": "retention",
+      "question": "Who owns Sweet Flour bakery, and what is their relationship to Jordan?",
+      "gold_answer": "Lena, Jordan's friend",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, social relationship"
+    },
+    {
+      "id": 12,
+      "category": "retention",
+      "question": "Who is Jordan's biggest client and what kind of company is it?",
+      "gold_answer": "DynaLoop, a tech startup with CEO Marcus",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, career/clients"
+    },
+    {
+      "id": 13,
+      "category": "retention",
+      "question": "How is Jordan celebrating their 30th birthday?",
+      "gold_answer": "With Maya in Seattle at Spinasse",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, significant personal event"
+    },
+    {
+      "id": 14,
+      "category": "retention",
+      "question": "Where does Jordan plan their hikes?",
+      "gold_answer": "Rattlesnake Ledge",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, but important as a fitness activity"
+    },
+    {
+      "id": 15,
+      "category": "retention",
+      "question": "What music does Jordan enjoy listening to while working?",
+      "gold_answer": "Tycho",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, stated as favorite for work focus"
+    },
+    {
+      "id": 16,
+      "category": "retention",
+      "question": "What happened to Jordan's snake plant?",
+      "gold_answer": "It died while Jordan was traveling last fall",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, personal/home anecdote"
+    },
+    {
+      "id": 17,
+      "category": "retention",
+      "question": "What is Jordan's favorite bookstore?",
+      "gold_answer": "Powell’s Books in Portland",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, personal preference"
+    },
+    {
+      "id": 18,
+      "category": "retention",
+      "question": "Where does Jordan shop for book gifts?",
+      "gold_answer": "Elliott Bay Book Company",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, personal tradition"
+    },
+    {
+      "id": 19,
+      "category": "retention",
+      "question": "Has Jordan worked with tech startup clients before DynaLoop?",
+      "gold_answer": "Yes",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, career experience"
+    },
+    {
+      "id": 20,
+      "category": "retention",
+      "question": "What milestone is Jordan's manager Priya celebrating?",
+      "gold_answer": "5 years at Lunar Creative",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, manager relationship/career"
+    },
+    {
+      "id": 21,
+      "category": "retention",
+      "question": "What distance did Jordan used to run before training for the half marathon?",
+      "gold_answer": "5Ks",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, health/fitness progression"
+    },
+    {
+      "id": 22,
+      "category": "retention",
+      "question": "What kind of freelance work does Jordan do?",
+      "gold_answer": "Branding for local businesses",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, career/freelance"
+    },
+    {
+      "id": 23,
+      "category": "retention",
+      "question": "What is Jordan's dietary preference?",
+      "gold_answer": "Vegan options",
+      "old_answer": null,
+      "why_testable": "Mentioned 2x, health/diet"
+    },
+    {
+      "id": 24,
+      "category": "retention",
+      "question": "What was Jordan's previous go-to vegan spot, and why did they stop going?",
+      "gold_answer": "Junkyard, avoiding fried foods now",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, diet/health change"
+    },
+    {
+      "id": 25,
+      "category": "retention",
+      "question": "What color palette does Lena prefer for Sweet Flour's branding?",
+      "gold_answer": "Pastel colors",
+      "old_answer": null,
+      "why_testable": "Mentioned 1x, client preference (important to Jordan's freelance work)"
+    },
+    {
+      "id": 26,
+      "category": "forgetting",
+      "question": "What is Jordan's blood type?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never mentioned; personal health details not in conversations"
+    },
+    {
+      "id": 27,
+      "category": "forgetting",
+      "question": "What did Jordan eat for lunch on day 12?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Trivial daily detail; not retained"
+    },
+    {
+      "id": 28,
+      "category": "forgetting",
+      "question": "What was the weather like when Jordan went hiking?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Environmental noise; never mentioned"
+    },
+    {
+      "id": 29,
+      "category": "forgetting",
+      "question": "What model is Jordan's car?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never mentioned; not relevant to extracted facts"
+    },
+    {
+      "id": 30,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite color?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never mentioned; not a stored preference"
+    },
+    {
+      "id": 31,
+      "category": "forgetting",
+      "question": "Does Jordan have any pets currently?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "No current pet mentioned (only past plant)"
+    },
+    {
+      "id": 32,
+      "category": "forgetting",
+      "question": "What is Maya's favorite cuisine?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never discussed"
+    },
+    {
+      "id": 33,
+      "category": "forgetting",
+      "question": "What time does Jordan usually wake up?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Not a retained daily routine detail"
+    },
+    {
+      "id": 34,
+      "category": "forgetting",
+      "question": "What is Lena's middle name?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never mentioned"
+    },
+    {
+      "id": 35,
+      "category": "forgetting",
+      "question": "What phone does Jordan use?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Not discussed"
+    },
+    {
+      "id": 36,
+      "category": "forgetting",
+      "question": "How did Jordan commute to work on day 17?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Trivial, not retained"
+    },
+    {
+      "id": 37,
+      "category": "forgetting",
+      "question": "What was Jordan's grade in high school math?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Irrelevant, never mentioned"
+    },
+    {
+      "id": 38,
+      "category": "forgetting",
+      "question": "What is Marcus's favorite sport?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Not discussed"
+    },
+    {
+      "id": 39,
+      "category": "forgetting",
+      "question": "What book did Jordan buy last week?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "No specific book purchase mentioned"
+    },
+    {
+      "id": 40,
+      "category": "forgetting",
+      "question": "What is the address of Rooted Flow?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Specific address never mentioned"
+    },
+    {
+      "id": 41,
+      "category": "forgetting",
+      "question": "Did Jordan attend any concerts in the past 60 days?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "No such event discussed"
+    },
+    {
+      "id": 42,
+      "category": "forgetting",
+      "question": "What time did Jordan finish their last run at Green Lake?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Trivial, never mentioned"
+    },
+    {
+      "id": 43,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite pizza topping?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never discussed"
+    },
+    {
+      "id": 44,
+      "category": "forgetting",
+      "question": "What is the name of Maya's hospital?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "No specific hospital named"
+    },
+    {
+      "id": 45,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite movie?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never mentioned"
+    },
+    {
+      "id": 46,
+      "category": "forgetting",
+      "question": "What kind of car does Lena drive?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never discussed"
+    },
+    {
+      "id": 47,
+      "category": "forgetting",
+      "question": "How many employees work at Lunar Creative?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "No company size info"
+    },
+    {
+      "id": 48,
+      "category": "forgetting",
+      "question": "What was the last book Jordan read?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "No specific recent reading mentioned"
+    },
+    {
+      "id": 49,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite running route besides Green Lake?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "No alternate route mentioned"
+    },
+    {
+      "id": 50,
+      "category": "forgetting",
+      "question": "What is Jordan's favorite holiday?",
+      "gold_answer": "I don't know",
+      "old_answer": null,
+      "why_testable": "Never discussed"
+    },
+    {
+      "id": 51,
+      "category": "contradiction",
+      "question": "What design tool does Jordan use for all their design work?",
+      "gold_answer": "Framer",
+      "old_answer": "Figma",
+      "why_testable": "Switched tools; system should hold new value"
+    },
+    {
+      "id": 52,
+      "category": "contradiction",
+      "question": "What is Jordan's current annual salary?",
+      "gold_answer": "$95,000",
+      "old_answer": "$88,000",
+      "why_testable": "Salary increased; system should update"
+    },
+    {
+      "id": 53,
+      "category": "contradiction",
+      "question": "What is Maya's current role at her hospital?",
+      "gold_answer": "Head nurse in Portland",
+      "old_answer": "Nurse at her hospital",
+      "why_testable": "Promotion; system should keep latest"
+    },
+    {
+      "id": 54,
+      "category": "contradiction",
+      "question": "Where does Jordan primarily work now?",
+      "gold_answer": "Collective Chemistry co-working space",
+      "old_answer": "Coffee shops",
+      "why_testable": "Work location change"
+    },
+    {
+      "id": 55,
+      "category": "contradiction",
+      "question": "What is Jordan's preferred coffee order now?",
+      "gold_answer": "Black coffee",
+      "old_answer": "Oat milk lattes",
+      "why_testable": "Preference update"
+    },
+    {
+      "id": 56,
+      "category": "contradiction",
+      "question": "What race distance is Jordan training for now?",
+      "gold_answer": "Half marathon",
+      "old_answer": "5Ks",
+      "why_testable": "Fitness goal updated"
+    },
+    {
+      "id": 57,
+      "category": "contradiction",
+      "question": "How does Jordan present design concepts to clients now?",
+      "gold_answer": "Interactive Framer prototypes",
+      "old_answer": "Static mockups",
+      "why_testable": "Client presentation method updated"
+    },
+    {
+      "id": 58,
+      "category": "contradiction",
+      "question": "Where does Jordan primarily work from now?",
+      "gold_answer": "Collective Chemistry",
+      "old_answer": "Home",
+      "why_testable": "Work location updated"
+    },
+    {
+      "id": 59,
+      "category": "contradiction",
+      "question": "What is Jordan's current dietary approach regarding vegan food?",
+      "gold_answer": "Avoiding fried foods, seeking healthier vegan options",
+      "old_answer": "Went to Junkyard for vegan food",
+      "why_testable": "Diet preference updated"
+    },
+    {
+      "id": 60,
+      "category": "contradiction",
+      "question": "What happened to Jordan's snake plant?",
+      "gold_answer": "It died while traveling last fall",
+      "old_answer": "Had a snake plant",
+      "why_testable": "Plant status changed"
+    },
+    {
+      "id": 61,
+      "category": "contradiction",
+      "question": "What running shoes does Jordan own now?",
+      "gold_answer": "Brooks running shoes",
+      "old_answer": "Did not have Brooks running shoes",
+      "why_testable": "Personal purchase update"
+    },
+    {
+      "id": 62,
+      "category": "contradiction",
+      "question": "How does Jordan feel about client communication now?",
+      "gold_answer": "Getting better at client communication",
+      "old_answer": "Used to be nervous about client communication",
+      "why_testable": "Skill/confidence update"
+    },
+    {
+      "id": 63,
+      "category": "contradiction",
+      "question": "Is Jordan now a member of a co-working space?",
+      "gold_answer": "Yes, Collective Chemistry",
+      "old_answer": "Was not a member of a co-working space",
+      "why_testable": "Membership status updated"
+    },
+    {
+      "id": 64,
+      "category": "contradiction",
+      "question": "How far does Jordan run during their training now?",
+      "gold_answer": "Six miles",
+      "old_answer": "Only shorter distances",
+      "why_testable": "Running distance update"
+    },
+    {
+      "id": 65,
+      "category": "contradiction",
+      "question": "What type of prototypes does Jordan show clients now?",
+      "gold_answer": "Interactive Framer prototypes",
+      "old_answer": "Design concepts without interactive prototypes",
+      "why_testable": "Presentation style update"
+    },
+    {
+      "id": 66,
+      "category": "contradiction",
+      "question": "Where did Jordan used to work before joining Collective Chemistry?",
+      "gold_answer": "Home and coffee shops",
+      "old_answer": "Now works at Collective Chemistry",
+      "why_testable": "Reverse check for update"
+    },
+    {
+      "id": 67,
+      "category": "contradiction",
+      "question": "Where did Maya work before becoming head nurse?",
+      "gold_answer": "Nurse at her hospital",
+      "old_answer": "Now head nurse in Portland",
+      "why_testable": "Reverse check on career progression"
+    },
+    {
+      "id": 68,
+      "category": "contradiction",
+      "question": "What was Jordan's salary before the recent raise?",
+      "gold_answer": "$88,000",
+      "old_answer": "$95,000",
+      "why_testable": "Reverse check for pay history"
+    },
+    {
+      "id": 69,
+      "category": "contradiction",
+      "question": "What coffee did Jordan use to drink before switching to black coffee?",
+      "gold_answer": "Oat milk lattes",
+      "old_answer": "Black coffee",
+      "why_testable": "Reverse check on preference"
+    },
+    {
+      "id": 70,
+      "category": "contradiction",
+      "question": "What distance did Jordan use to run before half marathon training?",
+      "gold_answer": "5Ks",
+      "old_answer": "Half marathon",
+      "why_testable": "Reverse check on progress"
+    },
+    {
+      "id": 71,
+      "category": "contradiction",
+      "question": "Where did Jordan go for vegan food before seeking healthier options?",
+      "gold_answer": "Junkyard",
+      "old_answer": "Now avoiding fried foods",
+      "why_testable": "Dietary changes"
+    },
+    {
+      "id": 72,
+      "category": "contradiction",
+      "question": "What was Jordan's approach to client presentations before using Framer?",
+      "gold_answer": "Static mockups",
+      "old_answer": "Interactive Framer prototypes",
+      "why_testable": "Presentation methods updated"
+    },
+    {
+      "id": 73,
+      "category": "contradiction",
+      "question": "What was Jordan's main design tool before switching to Framer?",
+      "gold_answer": "Figma",
+      "old_answer": "Framer",
+      "why_testable": "Tool change history"
+    },
+    {
+      "id": 74,
+      "category": "contradiction",
+      "question": "Did Jordan have Brooks running shoes before their salary raise?",
+      "gold_answer": "No",
+      "old_answer": "Now has Brooks running shoes",
+      "why_testable": "Purchase only after salary raise"
+    },
+    {
+      "id": 75,
+      "category": "contradiction",
+      "question": "Did Jordan work from home before joining a co-working space?",
+      "gold_answer": "Yes",
+      "old_answer": "Now at Collective Chemistry",
+      "why_testable": "Work location change"
+    },
+    {
+      "id": 76,
+      "category": "precision",
+      "question": "What is the exact salary increase Jordan received in their annual review?",
+      "gold_answer": "From $88,000 to $95,000",
+      "old_answer": null,
+      "why_testable": "Specific numbers required; important repeated fact"
+    },
+    {
+      "id": 77,
+      "category": "precision",
+      "question": "Who is the CEO of DynaLoop, Jordan's biggest client?",
+      "gold_answer": "Marcus",
+      "old_answer": null,
+      "why_testable": "Precise client/career detail"
+    },
+    {
+      "id": 78,
+      "category": "precision",
+      "question": "How many times a week does Jordan run at Green Lake?",
+      "gold_answer": "Three times a week",
+      "old_answer": null,
+      "why_testable": "Routine frequency, important fitness fact"
+    },
+    {
+      "id": 79,
+      "category": "precision",
+      "question": "What is the name of the yoga studio that is Jordan's first freelance project at Collective Chemistry?",
+      "gold_answer": "Rooted Flow",
+      "old_answer": null,
+      "why_testable": "Specific client/project name"
+    },
+    {
+      "id": 80,
+      "category": "precision",
+      "question": "Where is Sweet Flour bakery located?",
+      "gold_answer": "Capitol Hill, Seattle",
+      "old_answer": null,
+      "why_testable": "Precise location, friend’s business"
+    },
+    {
+      "id": 81,
+      "category": "precision",
+      "question": "What is Maya's relationship to Jordan?",
+      "gold_answer": "Sister",
+      "old_answer": null,
+      "why_testable": "Precise family relationship"
+    },
+    {
+      "id": 82,
+      "category": "precision",
+      "question": "On what occasion did Jordan buy Brooks running shoes?",
+      "gold_answer": "As a reward for their salary raise",
+      "old_answer": null,
+      "why_testable": "Purchase context; milestone"
+    },
+    {
+      "id": 83,
+      "category": "precision",
+      "question": "What is the name of the restaurant where Jordan is celebrating their 30th birthday?",
+      "gold_answer": "Spinasse",
+      "old_answer": null,
+      "why_testable": "Specific event detail"
+    },
+    {
+      "id": 84,
+      "category": "precision",
+      "question": "When is the Seattle Half Marathon that Jordan is training for?",
+      "gold_answer": "November",
+      "old_answer": null,
+      "why_testable": "Event timing; goal specificity"
+    },
+    {
+      "id": 85,
+      "category": "precision",
+      "question": "What is the target audience for the Rooted Flow branding project?",
+      "gold_answer": "Young professionals",
+      "old_answer": null,
+      "why_testable": "Project context"
+    },
+    {
+      "id": 86,
+      "category": "precision",
+      "question": "How often do Jordan and Maya visit each other?",
+      "gold_answer": "A few times a year",
+      "old_answer": null,
+      "why_testable": "Specific family interaction frequency"
+    },
+    {
+      "id": 87,
+      "category": "precision",
+      "question": "How does Jordan celebrate successes?",
+      "gold_answer": "With small personal rewards",
+      "old_answer": null,
+      "why_testable": "Specific habit, stated explicitly"
+    },
+    {
+      "id": 88,
+      "category": "precision",
+      "question": "What is Jordan careful about before running?",
+      "gold_answer": "Stretching to avoid running injuries",
+      "old_answer": null,
+      "why_testable": "Specific health/fitness precaution"
+    },
+    {
+      "id": 89,
+      "category": "precision",
+      "question": "What kind of businesses does Jordan do freelance branding for?",
+      "gold_answer": "Local businesses",
+      "old_answer": null,
+      "why_testable": "Freelance client specificity"
+    },
+    {
+      "id": 90,
+      "category": "precision",
+      "question": "What kind of relationship does Jordan have with manager Priya?",
+      "gold_answer": "Supportive",
+      "old_answer": null,
+      "why_testable": "Specific relationship attribute"
+    },
+    {
+      "id": 91,
+      "category": "precision",
+      "question": "What is Jordan's favorite bookstore in Portland?",
+      "gold_answer": "Powell’s Books",
+      "old_answer": null,
+      "why_testable": "Precise preference, location specificity"
+    },
+    {
+      "id": 92,
+      "category": "precision",
+      "question": "What does Jordan present to clients now during design presentations?",
+      "gold_answer": "Interactive Framer prototypes",
+      "old_answer": null,
+      "why_testable": "Specific deliverable, career/professional context"
+    },
+    {
+      "id": 93,
+      "category": "precision",
+      "question": "What does Jordan prefer in their vegan diet now?",
+      "gold_answer": "Healthier vegan options, avoiding fried foods",
+      "old_answer": null,
+      "why_testable": "Updated, specific dietary preference"
+    },
+    {
+      "id": 94,
+      "category": "precision",
+      "question": "What is the name of the co-working space Jordan joined?",
+      "gold_answer": "Collective Chemistry",
+      "old_answer": null,
+      "why_testable": "Specific location, work context"
+    },
+    {
+      "id": 95,
+      "category": "precision",
+      "question": "What does Lena prefer for Sweet Flour’s branding?",
+      "gold_answer": "Pastel colors",
+      "old_answer": null,
+      "why_testable": "Specific client preference"
+    },
+    {
+      "id": 96,
+      "category": "precision",
+      "question": "What is Jordan's biggest client in the tech startup space?",
+      "gold_answer": "DynaLoop",
+      "old_answer": null,
+      "why_testable": "Specific client, important for career"
+    },
+    {
+      "id": 97,
+      "category": "precision",
+      "question": "What is the name of the bookshop where Jordan shops for gifts?",
+      "gold_answer": "Elliott Bay Book Company",
+      "old_answer": null,
+      "why_testable": "Specific shop, gift-giving context"
+    },
+    {
+      "id": 98,
+      "category": "precision",
+      "question": "What is the relationship between Jordan and Lena?",
+      "gold_answer": "Friends",
+      "old_answer": null,
+      "why_testable": "Specific social connection"
+    },
+    {
+      "id": 99,
+      "category": "precision",
+      "question": "What type of music does Jordan prefer while working?",
+      "gold_answer": "Tycho",
+      "old_answer": null,
+      "why_testable": "Precise personal preference"
+    },
+    {
+      "id": 100,
+      "category": "precision",
+      "question": "What event did Jordan's manager Priya recently celebrate?",
+      "gold_answer": "5 years at Lunar Creative",
+      "old_answer": null,
+      "why_testable": "Specific milestone, career context"
+    }
+  ]
+}
