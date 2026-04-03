@@ -43,7 +43,7 @@ import { log as _log } from "./logger.js";
 // Constants
 // ============================================================================
 
-const SIMILARITY_THRESHOLD = 0.50;
+const SIMILARITY_THRESHOLD = 0.70;
 const MAX_SIMILAR_FOR_PROMPT = 3;
 const MAX_MEMORIES_PER_EXTRACTION = 10;
 const VALID_DECISIONS = new Set<string>(["create", "merge", "skip", "support", "contextualize", "contradict"]);

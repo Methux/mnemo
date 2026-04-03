@@ -82,7 +82,7 @@ export interface StoreConfig {
 }
 
 const DEDUP_SIMILARITY_THRESHOLD = 0.92;
-const CONFLICT_SIMILARITY_THRESHOLD = 0.55;
+const CONFLICT_SIMILARITY_THRESHOLD = 0.70;
 
 export interface MetadataPatch {
   [key: string]: unknown;
