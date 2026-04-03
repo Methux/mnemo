@@ -376,15 +376,15 @@ tr:hover td{background:var(--bg3);}
 
       <div class="grid-3">
         <div class="card" style="border-left:3px solid var(--accent);">
-          <div class="card-title">Core (beta=0.8)</div>
+          <div class="card-title">Core (tier-optimized)</div>
           <div class="card-sub">Slow initial decay, long tail retention. Used for high-importance persistent memories.</div>
         </div>
         <div class="card" style="border-left:3px solid var(--blue);">
-          <div class="card-title">Working (beta=1.0)</div>
+          <div class="card-title">Working (tier-optimized)</div>
           <div class="card-sub">Exponential decay. Standard forgetting curve for session-level memories.</div>
         </div>
         <div class="card" style="border-left:3px solid var(--orange);">
-          <div class="card-title">Peripheral (beta=1.3)</div>
+          <div class="card-title">Peripheral (tier-optimized)</div>
           <div class="card-sub">Rapid early decay. Transient context that fades quickly unless reinforced.</div>
         </div>
       </div>
@@ -1255,9 +1255,9 @@ function drawDecayCurves(){
 
   // Curves
   const curves = [
-    {beta:0.8, color:'#4ecdc4', label:'Core (beta=0.8)'},
-    {beta:1.0, color:'#60a5fa', label:'Working (beta=1.0)'},
-    {beta:1.3, color:'#fb923c', label:'Peripheral (beta=1.3)'},
+    {beta:0.8, color:'#4ecdc4', label:'Core'},
+    {beta:1.0, color:'#60a5fa', label:'Working'},
+    {beta:1.3, color:'#fb923c', label:'Peripheral'},
   ];
 
   curves.forEach(c => {
@@ -1466,7 +1466,7 @@ async function renderHealth(){
   document.getElementById('diag-config').innerHTML = [
     {ok:true, name:'mnemo.json schema', msg:'Valid, all required fields present'},
     {ok:true, name:'Embedding model config', msg:'text-embedding-3-small, dim=1536'},
-    {ok:true, name:'Decay parameters', msg:'Core: beta=0.8 hl=90d | Working: beta=1.0 hl=30d | Peripheral: beta=1.3 hl=7d'},
+    {ok:true, name:'Decay parameters', msg:'Core: tier-specific | Working: tier-specific | Peripheral: tier-specific'},
     {ok:true, name:'LanceDB connection', msg:'Path valid, read/write permissions OK'},
     {ok:true, name:'Graphiti URI', msg:'bolt://localhost:7687 reachable'},
     {ok:false, name:'BM25 index', msg:'1 partition needs rebuild (auto-scheduled)'},

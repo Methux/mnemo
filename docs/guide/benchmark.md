@@ -65,7 +65,7 @@ All frameworks tested under identical conditions using our [open-source benchmar
 
 | Framework | Accuracy | Ingestion Time | Config |
 |-----------|----------|---------------|--------|
-| **Mnemo Cloud** | **85.2%** | — | Voyage voyage-4, BM25, rerank-2, pool=40 |
+| **Mnemo Cloud** | **85.2%** | — | Voyage voyage-4, BM25, rerank-2 |
 | **Mnemo Core** | **46.4%** | 4.7 min | OpenAI text-embedding-3-small, vector only |
 | **Mem0** (default config) | **~31.7%** | 73 min | `Memory()` default — OpenAI embedding + LLM extraction |
 | Baseline (no memory) | 0% | 0s | Control — no retrieval |
@@ -76,7 +76,7 @@ All frameworks tested under identical conditions using our [open-source benchmar
 - Mnemo Cloud's full pipeline (triple-path retrieval + rerank) is the primary driver of the 85.2% score
 - Mnemo Core with basic vector search scores ~15pp higher than Mem0's default configuration
 - Mem0 uses LLM-based memory extraction which increases ingestion time significantly
-- The gap between Core (46%) and Pro (85%) demonstrates the value of BM25 fusion and cross-encoder reranking
+- The gap between Core (46%) and Cloud (85%) demonstrates the value of BM25 fusion and cross-encoder reranking
 
 ## MQoT (Mnemo Quality-of-Thought)
 
@@ -91,7 +91,7 @@ MQoT is Mnemo's internal benchmark designed to test memory quality in realistic 
 | **Mnemo Cloud** | **91.5%** |
 | **Mnemo Core** | **85.5%** |
 
-The 6pp gap demonstrates the value of Pro's adaptive retrieval strategies (candidate pool sizing, soft frequency cap, extraction-time context injection) even at moderate scale.
+The 6pp gap demonstrates the value of Cloud's adaptive retrieval strategies (candidate pool sizing, soft frequency cap, extraction-time context injection) even at moderate scale.
 
 ### MQoT-3K
 

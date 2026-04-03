@@ -31,6 +31,7 @@ function intrinsicValue(importance, confidence, salience) {
   return importance * confidence * (1 + salience * 0.3);
 }
 
+// Test fixture weights — used for ablation comparison only, not production values
 function composite(recency, frequency, intrinsic, rw = 0.4, fw = 0.3, iw = 0.3) {
   return rw * recency + fw * frequency + iw * intrinsic;
 }

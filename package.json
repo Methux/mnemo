@@ -5,7 +5,6 @@
   "description": "Cognitive science-based AI memory framework",
   "workspaces": [
     "packages/core",
-    "packages/pro",
     "packages/vercel-ai"
   ],
   "scripts": {

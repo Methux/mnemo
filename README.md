@@ -22,7 +22,7 @@
   <a href="#quick-start">Quick Start</a> ·
   <a href="https://docs.m-nemo.ai">Docs</a> ·
   <a href="#why-mnemo">Why Mnemo</a> ·
-  <a href="#core-vs-pro">Core vs Pro</a> ·
+  <a href="#self-hosted-vs-cloud">Self-hosted vs Cloud</a> ·
   <a href="https://m-nemo.ai">Website</a>
 </p>
 
@@ -164,7 +164,7 @@ Every parameter adapts to your store size. No magic numbers to tune.
 
 ## Feature Highlights
 
-| Capability | Core (Free) | Pro |
+| Capability | Core (Free) | Cloud |
 |:---|:---:|:---:|
 | Vector + BM25 + Knowledge Graph | Yes | Yes |
 | Weibull forgetting model | Yes | Yes |

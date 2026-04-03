@@ -71,7 +71,7 @@ The `MemoryLifecycle` class manages tier transitions based on composite decay sc
 - Tier transitions are driven by the composite decay score (recency + frequency + intrinsic weights)
 - There are no hard capacity limits — the decay model ensures low-value memories fade naturally
 
-## Pro Components
+## Cloud Components
 
 Mnemo Cloud adds production-grade capabilities. See [Mnemo Cloud](/pro) for details.
 
@@ -79,5 +79,5 @@ Mnemo Cloud adds production-grade capabilities. See [Mnemo Cloud](/pro) for deta
 
 1. **Cognitive science first** — Memory model based on established research, not ad-hoc engineering
 2. **Every module earns its place** — Validated by [35 ablation tests](/guide/ablation)
-3. **Graceful degradation** — Core works fully without Pro; Pro enhances, never gates
+3. **Graceful degradation** — Core works fully without Cloud; Cloud enhances, never gates
 4. **Provider agnostic** — Bring your own embedding, LLM, and rerank providers
