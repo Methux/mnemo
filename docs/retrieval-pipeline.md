@@ -28,10 +28,10 @@ Score < 0.3 → discard.
 Voyage rerank-2. Blend: rerank × 0.6 + original × 0.4. BM25 ≥ 0.75 gets preservation floor.
 
 ### S7: Weibull Decay + Lifecycle
-Tier-specific decay: Core (β=0.8, floor 0.9), Working (β=1.0, floor 0.7), Peripheral (β=1.3, floor 0.5).
+Tier-specific decay with optimized β parameters and decay floors. Core memories persist longest, peripheral memories fade fastest.
 
 ### S8: Length Normalization + Hard Cutoff
-Anchor 500 chars. hardMinScore = 0.35.
+Length normalization with configurable anchor. Hard minimum score cutoff.
 
 ### S9: Noise Filter + MMR
 Remove agent denials, meta-questions, boilerplate. MMR deduplication.

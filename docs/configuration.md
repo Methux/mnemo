@@ -29,19 +29,11 @@ See [config/mnemo.example.json](../config/mnemo.example.json) for a full example
 | dimensions | integer | 1024 | Vector dimensions |
 
 ### decay
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| recencyHalfLifeDays | number | 30 | Half-life for Weibull decay |
-| recencyWeight | number | 0.4 | Weight for recency in composite score |
-| frequencyWeight | number | 0.3 | Weight for access frequency |
-| intrinsicWeight | number | 0.3 | Weight for intrinsic importance |
+| Field | Type | Description |
+|-------|------|-------------|
+| recencyHalfLifeDays | number | Half-life for Weibull decay (default: sensible preset) |
 
-### tier
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| coreAccessThreshold | integer | 10 | Access count to promote to Core |
-| coreImportanceThreshold | number | 0.8 | Importance to promote to Core |
-| peripheralAgeDays | integer | 60 | Days before demotion to Peripheral |
+Composite score weights and tier transition thresholds use optimized defaults. Mnemo Cloud applies additional adaptive tuning automatically.
 
 ### retrieval
 | Field | Type | Default | Description |

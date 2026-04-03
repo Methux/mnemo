@@ -11,95 +11,65 @@ Other memory systems store everything forever. This leads to:
 
 Mnemo models human forgetting using the **Weibull distribution**, the same model used in reliability engineering and cognitive psychology.
 
-## The Weibull Function
+## How It Works
 
-```
-S(t) = exp(-(t/λ)^β)
-```
+The Weibull stretched-exponential function controls how memories fade over time. Each memory tier has its own shape parameter (β), optimized through [35 ablation tests](/guide/ablation) to match cognitive science research on different memory types:
 
-| Parameter | Meaning |
-|-----------|---------|
-| `t` | Time since memory creation (days) |
-| `λ` | Scale parameter (derived from half-life) |
-| `β` | Shape parameter (controls decay curve shape) |
+- **Core memories** (user identity, key preferences) — sub-exponential decay: slow to fade, highly persistent
+- **Working memories** (recent conversations, active tasks) — standard exponential decay
+- **Peripheral memories** (one-off mentions, trivia) — super-exponential: fades faster than standard
+
+Important memories with high `importance` or `emotionalSalience` decay more slowly. Frequently accessed memories are reinforced — just like human recall strengthens neural pathways.
 
 ## Memory Tiers
 
 Different memories decay at different rates, just like in human cognition:
 
-| Tier | β | Behavior | Example |
-|------|---|----------|---------|
-| **Core** | 0.8 | Slow start, then rapid drop | User's name, job, key preferences |
-| **Working** | 1.0 | Standard exponential | Recent conversations, tasks |
-| **Peripheral** | 1.3 | Fast initial drop, long tail | One-off mentions, trivia |
+| Tier | Behavior | Example |
+|------|----------|---------|
+| **Core** | Very persistent, almost never forgotten | User's name, job, key preferences |
+| **Working** | Standard decay rate | Recent conversations, tasks |
+| **Peripheral** | Fades quickly unless reinforced | One-off mentions, trivia |
 
-### Decay Curves
+## Tier Transitions
 
-At half-life = 30 days:
+Memories move between tiers based on usage patterns. Promotion and demotion are driven by a **composite decay score** that combines recency, frequency, and intrinsic value with optimized weights:
 
-| Days | Core (β=0.8) | Working (β=1.0) | Peripheral (β=1.3) |
-|------|-------------|-----------------|-------------------|
-| 0 | 100% | 100% | 100% |
-| 15 | 72% | 71% | 68% |
-| 30 | 50% | 50% | 50% |
-| 60 | 28% | 25% | 21% |
-| 90 | 17% | 13% | 8% |
+- **→ Core**: sufficient access frequency + high composite score + high importance
+- **→ Peripheral**: low composite score or extended inactivity
+- **Working**: default tier for all new memories
 
-## Tier Promotion
+Transition thresholds are derived from empirical testing, not hardcoded magic numbers.
 
-Memories move between tiers based on usage:
+## Frequency Scoring
 
-- **→ Core**: accessed ≥5 times OR importance ≥0.8
-- **→ Peripheral**: not accessed for 90+ days
-- **Working**: everything else (default)
+Raw access count can create a runaway advantage for frequently recalled memories, drowning out newer or less-accessed but relevant ones. Mnemo Cloud applies a **soft logarithmic frequency cap** — the first few accesses count at full value, then each subsequent doubling adds diminishing returns.
 
-## Soft Logarithmic Frequency Cap
+This keeps frequently recalled memories competitive without letting them dominate the ranking.
 
-Raw access count can create a runaway advantage for frequently recalled memories, drowning out newer or less-accessed but relevant ones. Mnemo Pro applies a soft logarithmic cap:
-
-```
-effective = count <= 5 ? count : 5 + log2(count - 4)
-```
-
-| Raw Count | Effective Score |
-|:---------:|:--------------:|
-| 1 | 1.0 |
-| 5 | 5.0 |
-| 10 | 7.6 |
-| 50 | 10.5 |
-| 100 | 11.5 |
-
-The first 5 accesses count at full value. Beyond that, each doubling of accesses adds only +1. This keeps frequently recalled memories competitive without letting them dominate the ranking.
-
-In Core (without Pro), raw frequency count is used directly — no cap is applied.
+In Core (self-hosted), raw frequency count is used directly. Cloud applies the optimized frequency transform automatically.
 
 ## Lifecycle Integration
 
 The `MemoryLifecycle` class ties decay to tier transitions:
 
-- The **composite decay score** (recency weight + frequency weight + intrinsic weight) is computed for each memory
-- When the composite score crosses tier thresholds, the memory is promoted or demoted:
-  - **Working → Core**: accessed >= 5 times OR importance >= 0.8
-  - **Working → Peripheral**: not accessed for 90+ days
-- **Stale peripheral memories** (those below a minimum composite threshold) are archived to JSONL files, keeping the active vector store lean
+- A **composite decay score** combining recency, frequency, and intrinsic value is computed for each memory
+- When the composite score crosses tier thresholds, the memory is promoted or demoted
+- **Stale peripheral memories** below a minimum composite threshold are archived to JSONL files, keeping the active vector store lean
 - There are **no hard capacity limits** — the decay model ensures irrelevant memories fade naturally through tier demotion and eventual archival
 
 ## Configuration
+
+Core provides configurable decay parameters. Sensible defaults are built in — most users don't need to change them:
 
 ```typescript
 const mnemo = await createMnemo({
   embedding: { /* ... */ },
   dbPath: './db',
   decay: {
-    recencyHalfLifeDays: 30,   // default: 30
-    recencyWeight: 0.5,        // default: 0.5
-    frequencyWeight: 0.3,      // default: 0.3
-    intrinsicWeight: 0.2,      // default: 0.2
-  },
-  tier: {
-    coreAccessThreshold: 5,
-    coreImportanceThreshold: 0.8,
-    peripheralAgeDays: 90,
+    recencyHalfLifeDays: 30,  // how fast memories fade
   },
 });
 ```
+
+Mnemo Cloud uses optimized parameters tuned through extensive benchmarking. No configuration needed.

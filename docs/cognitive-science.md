@@ -12,13 +12,10 @@ Mnemo's architecture maps to established cognitive science models:
 ### Ebbinghaus Forgetting Curve → Weibull Decay
 Standard forgetting: `R = exp(-t/S)` where S = memory strength.
 
-Mnemo extends this with Weibull stretched-exponential:
-```
-R = exp(-λ · t^β)
-```
-- β < 1 (Core, β=0.8): sub-exponential — slow initial decay, very persistent
-- β = 1 (Working): standard exponential — classic Ebbinghaus
-- β > 1 (Peripheral, β=1.3): super-exponential — faster-than-exponential fade
+Mnemo extends this with Weibull stretched-exponential decay. Each memory tier uses a different shape parameter (β), optimized through ablation testing:
+- β < 1 (Core tier): sub-exponential — slow initial decay, very persistent
+- β = 1 (Working tier): standard exponential — classic Ebbinghaus
+- β > 1 (Peripheral tier): super-exponential — faster-than-exponential fade
 
 ### Spreading Activation → Graphiti Spread Search
 Collins & Loftus (1975): activating one concept spreads to related concepts.

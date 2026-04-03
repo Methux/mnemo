@@ -167,7 +167,7 @@ Mnemo
 </a>
 <div class="nav-links">
 <a href="#features">Features</a>
-<a href="#comparison">Core vs Pro</a>
+<a href="#comparison">Self-hosted vs Cloud</a>
 <a href="#pricing">Pricing</a>
 <a href="https://methux.github.io/mnemo/" target="_blank">Docs</a>
 <a href="https://github.com/Methux/mnemo" target="_blank">GitHub</a>
@@ -185,7 +185,7 @@ Mnemo
 <p class="hero-sub">A cognitive science-based memory framework for AI agents. Runs 100% local at $0 or with cloud APIs. Weibull forgetting, triple-path retrieval, 10-stage pipeline.</p>
 <div class="cta-group">
 <a href="#quickstart" class="btn btn-primary">Get Started &mdash; Free</a>
-<a href="#pricing" class="btn btn-secondary">Mnemo Pro &mdash; $69/mo</a>
+<a href="#pricing" class="btn btn-secondary">Mnemo Cloud &mdash; Free</a>
 </div>
 </div>
 </section>
@@ -341,66 +341,54 @@ Mnemo
 <section id="comparison">
 <div class="container">
 <div class="text-center reveal">
-<div class="section-label">Core vs Pro</div>
-<h2 class="section-title">Choose your tier</h2>
-<p class="section-desc">Core is free (MIT). Pro unlocks production features. API costs are separate &mdash; you bring your own keys.</p>
+<div class="section-label">Self-hosted vs Cloud</div>
+<h2 class="section-title">Run it yourself, or let us run it for you</h2>
+<p class="section-desc">Core is free and fully functional. Cloud adds adaptive intelligence and zero-ops hosting.</p>
 </div>
-<div class="comp-grid" style="grid-template-columns:repeat(4,1fr);">
+<div class="comp-grid" style="grid-template-columns:repeat(3,1fr);">
 <div class="comp-card reveal">
-<div class="comp-badge" style="background:#4ade8022;color:#4ade80;border-color:#4ade8044;">Local</div>
-<h3>Core Local</h3>
-<p class="comp-price" style="color:#4ade80;font-weight:700;">$0/mo API &middot; 100% Offline</p>
+<div class="comp-badge" style="background:#4ade8022;color:#4ade80;border-color:#4ade8044;">Self-hosted</div>
+<h3>Core (Free)</h3>
+<p class="comp-price" style="color:#4ade80;font-weight:700;">$0 &middot; MIT License</p>
 <ul class="comp-list">
-<li>Ollama embedding (bge-m3)</li>
-<li>Ollama LLM extraction (qwen3:8b)</li>
-<li>Ollama cross-encoder rerank (bge-reranker)</li>
+<li>npm install @mnemoai/core</li>
 <li>Weibull decay + tier lifecycle</li>
-<li>Triple-path retrieval (Vec+BM25+Graph)</li>
+<li>Vector + BM25 + Knowledge Graph</li>
+<li>Cross-encoder rerank</li>
 <li>Contradiction detection</li>
+<li>Multi-backend (LanceDB, Qdrant, Chroma, PGVector)</li>
+<li>$0 with Ollama, or BYO cloud API keys</li>
 </ul>
-<div class="comp-note">Zero API cost. Full offline capability.</div>
-</div>
-<div class="comp-card reveal">
-<div class="comp-badge">Hybrid</div>
-<h3>Core Hybrid</h3>
-<p class="comp-price">~$5/mo API &middot; MIT License</p>
-<ul class="comp-list">
-<li>Voyage embedding (voyage-4)</li>
-<li>GPT-4.1-mini smart extraction</li>
-<li>Voyage rerank-2 cross-encoder</li>
-<li>Everything in Local, better models</li>
-<li>Best quality-to-cost ratio</li>
-<li>Recommended for most users</li>
-</ul>
-<div class="comp-note">Cloud-grade models, self-hosted infrastructure.</div>
-</div>
-<div class="comp-card reveal">
-<div class="comp-badge">Cloud</div>
-<h3>Core Cloud</h3>
-<p class="comp-price">~$45/mo API &middot; MIT License</p>
-<ul class="comp-list">
-<li>Voyage embedding (voyage-4)</li>
-<li>GPT-4.1 full extraction</li>
-<li>Voyage rerank-2 cross-encoder</li>
-<li>Maximum extraction quality</li>
-<li>Best for high-volume production</li>
-<li>Near Pro-level retrieval</li>
-</ul>
-<div class="comp-note">Top-tier models. Near Pro-level retrieval quality.</div>
+<div class="comp-note">Full framework. You run it, you own it.</div>
 </div>
 <div class="comp-card pro reveal">
-<div class="comp-badge">Pro</div>
-<h3>Mnemo Pro</h3>
-<p class="comp-price">From $69/mo + API &middot; Commercial</p>
+<div class="comp-badge">Cloud</div>
+<h3>Mnemo Cloud</h3>
+<p class="comp-price">Free tier &middot; Hosted API</p>
 <ul class="comp-list">
-<li>Everything in Core Cloud</li>
-<li>WAL crash recovery</li>
-<li>Session reflection + self-improvement</li>
-<li>Memory tools + MCP server</li>
-<li>Observability + access tracking</li>
-<li>Machine-bound license + priority support</li>
+<li>Everything in Core</li>
+<li>Adaptive retrieval (pool + score + frequency)</li>
+<li>6-category intelligent extraction</li>
+<li>Extraction-time contradiction detection</li>
+<li>Session deduplication</li>
+<li>Zero setup &mdash; one API call to start</li>
+<li>Automatic backup + monitoring</li>
 </ul>
-<div class="comp-note">npm install @mnemoai/pro &mdash; activates automatically with license key.</div>
+<div class="comp-note">POST https://api.m-nemo.ai/v1/store &mdash; done.</div>
+</div>
+<div class="comp-card reveal">
+<div class="comp-badge">Enterprise</div>
+<h3>Custom</h3>
+<p class="comp-price">Contact us</p>
+<ul class="comp-list">
+<li>Everything in Cloud</li>
+<li>On-prem deployment</li>
+<li>Custom integrations</li>
+<li>Dedicated support engineer</li>
+<li>SLA guarantees</li>
+<li>Training and onboarding</li>
+</ul>
+<div class="comp-note">For teams with custom requirements.</div>
 </div>
 </div>
 </div>
@@ -412,61 +400,59 @@ Mnemo
 <div class="text-center reveal">
 <div class="section-label">Pricing</div>
 <h2 class="section-title">Simple, transparent pricing</h2>
-<p class="section-desc">Start free with Core. Upgrade when you need production features.</p>
+<p class="section-desc">Self-host for free. Or use Mnemo Cloud for zero-ops.</p>
 </div>
 <div class="pricing-grid">
 <div class="price-card reveal">
-<h3>Indie</h3>
-<p style="color:var(--text2);font-size:.9rem">For solo developers and side projects</p>
-<div class="price">$69<sup>/mo</sup></div>
-<div class="annual">$690/yr billed annually (save 2 months)</div>
+<h3>Core</h3>
+<p style="color:var(--text2);font-size:.9rem">Self-hosted, full framework</p>
+<div class="price" style="color:#4ade80">Free</div>
+<div class="annual">Forever. MIT License.</div>
 <ul class="price-features">
-<li>Everything in Core</li>
-<li>WAL crash recovery</li>
-<li>Session reflection</li>
-<li>Memory management tools</li>
-<li>MCP server</li>
-<li>1 machine license</li>
-<li>Community support</li>
+<li>npm install @mnemoai/core</li>
+<li>Weibull decay + lifecycle</li>
+<li>Vector + BM25 + rerank</li>
+<li>Contradiction detection</li>
+<li>Multi-backend support</li>
+<li>$0 with Ollama</li>
+<li>GitHub Issues support</li>
 </ul>
-<a href="https://mnemoai.lemonsqueezy.com/checkout/buy/0b81a3ae-6c5d-443c-bdf9-7cadd13d860b" class="btn btn-secondary">Get Started</a>
+<a href="#quickstart" class="btn btn-secondary">Get Started</a>
 </div>
 <div class="price-card featured reveal">
-<h3>Team</h3>
-<p style="color:var(--text2);font-size:.9rem">For teams building production agents</p>
-<div class="price">$199<sup>/mo</sup></div>
-<div class="annual">$1,990/yr billed annually (save 2 months)</div>
+<h3>Cloud</h3>
+<p style="color:var(--text2);font-size:.9rem">Hosted API, zero setup</p>
+<div class="price">Free</div>
+<div class="annual">1,000 memories &middot; 5,000 recalls/mo</div>
 <ul class="price-features">
-<li>Everything in Indie</li>
-<li>Up to 5 machine licenses</li>
-<li>Self-improvement pipeline</li>
-<li>Observability dashboard</li>
-<li>Team analytics</li>
-<li>Priority email support</li>
-<li>Slack channel access</li>
+<li>Everything in Core</li>
+<li>Adaptive retrieval</li>
+<li>Intelligent extraction</li>
+<li>Contradiction detection (advanced)</li>
+<li>Session deduplication</li>
+<li>Automatic backup</li>
+<li>Email support</li>
 </ul>
-<a href="https://mnemoai.lemonsqueezy.com/checkout/buy/aecdd59d-e583-4c6d-b7c0-b12a12f247dd" class="btn btn-primary">Get Started</a>
+<a href="https://api.m-nemo.ai/v1/health" class="btn btn-primary" target="_blank">Try Cloud API</a>
 </div>
 <div class="price-card reveal">
 <h3>Enterprise</h3>
-<p style="color:var(--text2);font-size:.9rem">For organizations with custom needs</p>
+<p style="color:var(--text2);font-size:.9rem">Custom deployment and SLAs</p>
 <div class="price" style="font-size:2rem">Contact Us</div>
-<div class="annual">Custom terms and SLAs</div>
+<div class="annual">Custom terms</div>
 <ul class="price-features">
-<li>Everything in Team</li>
-<li>Unlimited machines</li>
+<li>Everything in Cloud</li>
 <li>On-prem deployment</li>
 <li>Custom integrations</li>
-<li>Dedicated support engineer</li>
+<li>Dedicated support</li>
 <li>SLA guarantees</li>
 <li>Training and onboarding</li>
 </ul>
-<a href="https://mnemoai.lemonsqueezy.com/checkout/buy/b88a7a62-aa38-45f5-bf18-ad1e481afe18" class="btn btn-secondary">Contact Sales</a>
+<a href="mailto:hello@m-nemo.ai" class="btn btn-secondary">Contact Sales</a>
 </div>
 </div>
 <p style="text-align:center;color:var(--text3);font-size:.85rem;margin-top:24px;max-width:600px;margin-left:auto;margin-right:auto;">
-Mnemo pricing covers software licensing only. Embedding, LLM, and rerank API costs are separate &mdash; you bring your own API keys.
-Run 100% locally with <a href="https://ollama.com" style="color:var(--accent)">Ollama</a> for $0 API cost, or use cloud providers like OpenAI and Voyage (~$5-45/mo depending on usage). Ecosystem: <a href="https://www.npmjs.com/package/@mnemoai/vercel-ai" style="color:var(--accent)">Vercel AI SDK</a>, <a href="https://www.npmjs.com/package/@mnemoai/server" style="color:var(--accent)">REST Server</a>, <a href="https://pypi.org/project/mnemo-memory/" style="color:var(--accent)">Python SDK</a>.
+Self-hosted Core: you bring your own API keys. Run 100% locally with <a href="https://ollama.com" style="color:var(--accent)">Ollama</a> for $0, or use cloud providers (~$5-45/mo). Ecosystem: <a href="https://www.npmjs.com/package/@mnemoai/vercel-ai" style="color:var(--accent)">Vercel AI SDK</a>, <a href="https://www.npmjs.com/package/@mnemoai/server" style="color:var(--accent)">REST Server</a>, <a href="https://pypi.org/project/mnemo-memory/" style="color:var(--accent)">Python SDK</a>.
 </p>
 </div>
 </section>

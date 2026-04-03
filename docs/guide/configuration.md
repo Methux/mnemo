@@ -49,10 +49,7 @@ const mnemo = await createMnemo({
 
   // Optional: Weibull decay
   decay: {
-    recencyHalfLifeDays: 30,   // half-life in days
-    recencyWeight: 0.5,        // weight of recency score
-    frequencyWeight: 0.3,      // weight of access frequency
-    intrinsicWeight: 0.2,      // weight of importance score
+    recencyHalfLifeDays: 30,   // half-life in days (other weights use optimized defaults)
   },
 
   // Optional: Memory tiers

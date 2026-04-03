@@ -27,17 +27,7 @@ Three independent search paths run in parallel:
 Results from all three paths are fused using RRF, which combines rankings without requiring score normalization.
 
 ### Stage 5: Weibull Decay
-Each result's score is adjusted by the Weibull decay function based on memory age and tier:
-
-```
-score × exp(-(t/λ)^β)
-```
-
-| Tier | β | Behavior |
-|------|---|----------|
-| Core | 0.8 | Slow initial decay, then rapid |
-| Working | 1.0 | Exponential (standard) |
-| Peripheral | 1.3 | Fast initial decay |
+Each result's score is adjusted by the Weibull decay function based on memory age and tier. Tier-specific parameters ensure core memories persist longer while peripheral memories fade faster. See [Weibull Decay](/guide/decay) for details.
 
 ### Stage 6: Cross-Encoder Rerank
 Optional high-precision reranking using a cross-encoder model. Supports Jina, Voyage, SiliconFlow, Pinecone, or local Ollama.
@@ -54,40 +44,33 @@ Removes low-quality fragments using an embedding-based noise bank.
 ### Stage 10: Context Assembly
 Final results are assembled with metadata for injection into the LLM context.
 
-## Adaptive Candidate Pool & Minimum Score (Pro)
+## Adaptive Retrieval (Cloud)
 
-When Mnemo Pro is installed, the candidate pool size and minimum score threshold adapt to the size of the memory store.
+Mnemo Cloud dynamically adjusts retrieval parameters based on store size. All parameters are tuned through benchmark optimization — no manual configuration needed.
 
-### Candidate Pool
+### Adaptive Candidate Pool
 
-```
-candidatePool = min(200, max(50, sqrt(N) * 4))
-```
+The number of candidates retrieved before reranking scales with store size. Small stores use a conservative pool; large stores widen the pool to avoid missing relevant long-tail memories. The scaling function is derived from empirical testing across store sizes from 100 to 10,000+ memories.
 
-| Store Size (N) | Candidate Pool |
-|:--------------:|:--------------:|
-| 100 | 50 (floor) |
-| 500 | 89 |
-| 1,000 | 126 |
-| 2,500 | 200 (cap) |
+In Core (self-hosted), the pool is a fixed `candidatePoolSize` (default: 30) as set in config.
 
-`N` is obtained from `store.countRows()` and cached for 60 seconds to avoid repeated table scans.
+### Adaptive Minimum Score
 
-Without Pro, the pool is a fixed `candidatePoolSize` (default: 20) as set in config.
+Larger stores contain more diverse memories. Cloud automatically lowers the score threshold at scale to prevent relevant memories from being discarded by an overly aggressive filter.
 
-### Minimum Score
+In Core, the threshold is a fixed `minScore` value.
 
-```
-minScore = N > 1000 ? 0.25 : 0.3
-```
+### Soft Frequency Cap
 
-Larger stores contain more diverse memories. Lowering the threshold from 0.3 to 0.25 when the store exceeds 1,000 rows prevents relevant long-tail memories from being discarded by an overly aggressive filter.
+Cloud applies a logarithmic transform to access frequency, preventing frequently recalled memories from dominating retrieval results. The first few accesses count at full value; beyond that, each doubling of accesses adds diminishing returns.
 
-### surfacedIds (Session Deduplication)
+In Core, raw frequency count is used directly.
 
-Pro tracks which memory IDs have been returned during a retrieval session. On subsequent `recall` calls within the same session, previously surfaced memories are filtered out. This prevents the same high-scoring memory from appearing in every response.
+### Session Deduplication
 
-Without Pro, no cross-call deduplication is applied — each `recall` call is independent.
+Cloud tracks which memory IDs have been returned during a retrieval session. On subsequent `recall` calls within the same session, previously surfaced memories are filtered out. This prevents the same high-scoring memory from appearing in every response.
+
+In Core, each `recall` call is independent — no cross-call deduplication.
 
 ## Configuration
 
@@ -96,7 +79,7 @@ const mnemo = await createMnemo({
   embedding: { /* ... */ },
   dbPath: './db',
   retrieval: {
-    candidatePoolSize: 20,        // candidates before reranking
+    candidatePoolSize: 30,        // candidates before reranking
     rerank: 'cross-encoder',      // enable reranking
     rerankProvider: 'jina',
     rerankApiKey: process.env.JINA_API_KEY,
