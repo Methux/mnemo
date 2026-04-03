@@ -22,7 +22,7 @@
   <a href="#quick-start">Quick Start</a> ·
   <a href="https://docs.m-nemo.ai">Docs</a> ·
   <a href="#architecture">Architecture</a> ·
-  <a href="#core-vs-pro">Core vs Pro</a> ·
+  <a href="#core-vs-cloud">Core vs Cloud</a> ·
   <a href="https://m-nemo.ai">Website</a>
 </p>
 
@@ -43,7 +43,7 @@ The result: your AI agent's memory stays relevant instead of drowning in noise.
 
 ## Feature Highlights
 
-| Capability | Core (Free) | Pro |
+| Capability | Core (Free) | Cloud |
 |:---|:---:|:---:|
 | Vector + BM25 + Knowledge Graph | ✅ | ✅ |
 | Weibull forgetting model | ✅ | ✅ |
@@ -53,7 +53,7 @@ The result: your AI agent's memory stays relevant instead of drowning in noise.
 | Multi-backend (LanceDB, Qdrant, Chroma, PGVector) | ✅ | ✅ |
 | Scope isolation (multi-agent) | ✅ | ✅ |
 | $0 local deployment (Ollama) | ✅ | ✅ |
-| Pro production features | — | ✅ ([details](https://m-nemo.ai)) |
+| Cloud managed API + adaptive retrieval | — | ✅ ([details](https://m-nemo.ai)) |
 
 ---
 
@@ -144,14 +144,14 @@ docker compose up -d     # starts Neo4j + Graphiti + Dashboard
 | Package | Platform | Install |
 |:---|:---|:---|
 | [@mnemoai/core](https://www.npmjs.com/package/@mnemoai/core) | npm | `npm install @mnemoai/core` |
-| @mnemoai/pro | npm (private) | `npm install @mnemoai/pro` (requires license) |
+| [Mnemo Cloud](https://m-nemo.ai) | Managed API | Register at [m-nemo.ai](https://m-nemo.ai) |
 | [@mnemoai/server](https://www.npmjs.com/package/@mnemoai/server) | npm | `npx @mnemoai/server` |
 | [@mnemoai/vercel-ai](https://www.npmjs.com/package/@mnemoai/vercel-ai) | npm | `npm install @mnemoai/vercel-ai` |
 | [mnemo-memory](https://pypi.org/project/mnemo-memory/) | PyPI | `pip install mnemo-memory` |
 
 ---
 
-## Core vs Pro
+## Core vs Cloud
 
 ### Mnemo Core — Free, MIT License
 
@@ -163,32 +163,26 @@ The open-source foundation. Full retrieval engine, no restrictions.
 | Retrieval | Triple-path (Vector + BM25 + Graphiti) with RRF fusion |
 | Rerank | Cross-encoder (configurable provider) |
 | Decay | Weibull stretched-exponential, tier-specific β |
-| Tiers | Core (β=0.8) / Working (β=1.0) / Peripheral (β=1.3) |
+| Tiers | Core / Working / Peripheral — tier-specific parameters optimized through ablation testing |
 | Contradiction | Three-layer detection (regex + LLM + dedup) |
 | Extraction | Smart extraction (configurable LLM) |
 | Graph | Graphiti/Neo4j knowledge graph |
 | Scopes | Multi-agent isolation |
 | Noise filtering | Embedding-based noise bank + regex |
 
-### Mnemo Pro — From $69/mo
+### Mnemo Cloud
 
-Everything in Core, plus production features. [Learn more →](https://m-nemo.ai)
-
-```bash
-npm install @mnemoai/pro
-export MNEMO_PRO_KEY="your_license_key"
-```
+Everything in Core, plus adaptive intelligence and zero-ops hosting. [Learn more →](https://m-nemo.ai)
 
 ### Pricing
 
-| Plan | Price | Devices | Support |
-|:---|:---|:---:|:---|
-| **Core** | Free forever | Unlimited | GitHub Issues |
-| **Indie** | $69/mo · $690/yr | 1 | Email |
-| **Team** | $199/mo · $1,990/yr | 5 | Priority + Slack |
-| **Enterprise** | Custom | Unlimited | Dedicated + SLA |
+| Plan | Price | Description |
+|:---|:---|:---|
+| **Core** | Free forever | Self-hosted, MIT licensed, unlimited |
+| **Cloud Free** | $0 | Managed API — 1,000 memories, 5,000 recalls/mo |
+| **Cloud Pro** | Coming soon | Unlimited, priority support |
 
-[Get Mnemo Pro →](https://m-nemo.ai)
+[Try Mnemo Cloud →](https://m-nemo.ai)
 
 ### API Configuration Guide
 

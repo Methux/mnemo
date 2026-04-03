@@ -72,7 +72,7 @@ async function sendLicenseEmail(email, licensee, token, plan, resendApiKey) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "Mnemo Pro <hi@m-nemo.ai>",
+      from: "Mnemo Cloud <hello@m-nemo.ai>",
       to: [email],
       subject: `Your Mnemo Pro License (${plan})`,
       html: `

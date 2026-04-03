@@ -2,7 +2,7 @@
 
 ## Feature Comparison
 
-| Capability | Mem0 | Zep | Letta | Cognee | **Mnemo Core** | **Mnemo Pro** |
+| Capability | Mem0 | Zep | Letta | Cognee | **Mnemo Core** | **Mnemo Cloud** |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | Vector search | Yes | Yes | Yes | Yes | Yes | Yes |
 | BM25 keyword search | No | No | No | Yes | Yes | Yes |

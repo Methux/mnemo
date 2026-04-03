@@ -18,7 +18,7 @@ We are committed to making participation in this project a welcoming experience 
 
 ## Enforcement
 
-Instances of unacceptable behavior may be reported to hi@m-nemo.ai. All complaints will be reviewed and investigated promptly and fairly.
+Instances of unacceptable behavior may be reported to hello@m-nemo.ai. All complaints will be reviewed and investigated promptly and fairly.
 
 ## Attribution
 

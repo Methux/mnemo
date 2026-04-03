@@ -68,7 +68,7 @@ const mnemo = await createMnemo({
 
   // Optional: Retrieval pipeline
   retrieval: {
-    candidatePoolSize: 20,
+    candidatePoolSize: 30,  // candidates before reranking
     rerank: 'none',            // 'cross-encoder' | 'lightweight' | 'none'
     rerankApiKey: '...',
     rerankModel: '...',
@@ -85,7 +85,6 @@ const mnemo = await createMnemo({
 | `OPENAI_API_KEY` | Default API key for embedding and LLM |
 | `MNEMO_DB_PATH` | Override default database path |
 | `MNEMO_CONFIG` | Path to JSON config file |
-| `MNEMO_PRO_KEY` | Pro license key |
 | `MNEMO_DEBUG` | Enable debug logging |
 
 ## Embedding Providers

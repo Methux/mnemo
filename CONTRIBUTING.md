@@ -19,7 +19,7 @@ Thank you for your interest in contributing to Mnemo!
 git clone https://github.com/Methux/mnemo.git
 cd mnemo
 npm install
-docker-compose up -d   # Neo4j (optional, for Pro features)
+docker-compose up -d   # Neo4j (optional, for Knowledge Graph features)
 cp config/mnemo.example.json config/mnemo.json
 # Edit config/mnemo.json with your API keys
 ```

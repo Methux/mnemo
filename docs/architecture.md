@@ -23,7 +23,7 @@ Mnemo is a cognitive science-based AI memory framework with a layered architectu
 
 ## Strategy Pattern
 
-Mnemo uses a strategy pattern to separate framework from intelligence. Core defines optional hook points with fixed defaults; Pro injects smarter implementations at runtime.
+Mnemo uses a strategy pattern to separate framework from intelligence. Core defines optional hook points with fixed defaults; Cloud injects smarter implementations at runtime.
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -40,9 +40,9 @@ Mnemo uses a strategy pattern to separate framework from intelligence. Core defi
 └───────┼──────────────────────────────────────────────┘
         │ injects implementations
 ┌───────┴──────────────────────────────────────────────┐
-│  @mnemoai/pro (commercial)                           │
+│  Mnemo Cloud                                         │
 │                                                      │
-│  candidatePoolFn  → adaptive pool (sqrt-based)       │
+│  candidatePoolFn  → adaptive pool                    │
 │  frequencyTransformFn → soft logarithmic cap         │
 │  minScoreFn       → adaptive threshold               │
 │  preSearchHook    → extraction-time context injection │
@@ -50,7 +50,7 @@ Mnemo uses a strategy pattern to separate framework from intelligence. Core defi
 └──────────────────────────────────────────────────────┘
 ```
 
-**Core works fully without Pro.** When no hook is registered, fixed defaults apply (e.g., `candidatePoolSize = 20`, `minScore = 0.3`). Pro strategies activate automatically when `@mnemoai/pro` is installed — no code changes required.
+**Core works fully without Cloud.** When no hook is registered, sensible fixed defaults apply. Cloud strategies activate automatically — no code changes required.
 
 ## Memory Lifecycle
 
@@ -65,15 +65,15 @@ The `MemoryLifecycle` class manages tier transitions based on composite decay sc
   No hard capacity limits — decay naturally demotes irrelevant memories
 ```
 
-- **Working → Core**: accessed >= 5 times OR importance >= 0.8
-- **Working → Peripheral**: not accessed for 90+ days
+- **Working → Core**: based on access frequency and importance thresholds
+- **Working → Peripheral**: after extended inactivity
 - **Peripheral → Archived**: stale peripheral memories are archived to JSONL files, keeping the active store lean
 - Tier transitions are driven by the composite decay score (recency + frequency + intrinsic weights)
 - There are no hard capacity limits — the decay model ensures low-value memories fade naturally
 
 ## Pro Components
 
-Mnemo Pro adds production-grade capabilities. See [Mnemo Pro](/pro) for details.
+Mnemo Cloud adds production-grade capabilities. See [Mnemo Cloud](/pro) for details.
 
 ## Design Principles
 

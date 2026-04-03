@@ -38,7 +38,7 @@ Composite score weights and tier transition thresholds use optimized defaults. M
 ### retrieval
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| candidatePoolSize | integer | 20 | Number of candidates per search path |
+| candidatePoolSize | integer | 30 | Number of candidates per search path |
 | rerank | string | "cross-encoder" | Rerank strategy: cross-encoder, lightweight, none |
 | rerankApiKey | string | — | API key for reranker |
 | rerankProvider | string | "jina" | Provider: jina, voyage, siliconflow, pinecone |

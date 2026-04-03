@@ -81,15 +81,19 @@ const mnemo = await createMnemo({
 
 See [Storage Backends](/guide/backends) for all options.
 
-## Upgrading to Pro
+## Upgrading to Cloud
+
+Mnemo Cloud provides a managed API with adaptive retrieval — no self-hosting required.
 
 ```bash
-npm install @mnemoai/pro
-export MNEMO_PRO_KEY="your-license-key"
-# Pro features activate automatically — no code changes needed
+# Register at https://m-nemo.ai and get your API key
+curl -X POST https://api.m-nemo.ai/v1/store \
+  -H "Authorization: Bearer mn_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "User prefers dark mode"}'
 ```
 
-See [Mnemo Pro](/pro) for features and pricing.
+See [Mnemo Cloud](/pro) for features and pricing.
 
 ## Next Steps
 
@@ -97,4 +101,4 @@ See [Mnemo Pro](/pro) for features and pricing.
 - [Configuration](/guide/configuration) — All config options explained
 - [API Reference](/api/) — Full API documentation
 - [Storage Backends](/guide/backends) — LanceDB, Qdrant, Chroma, PGVector
-- [Mnemo Pro](/pro) — WAL, reflection, MCP, self-improvement
+- [Mnemo Cloud](/pro) — Managed API, adaptive retrieval, zero ops

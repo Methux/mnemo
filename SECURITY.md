@@ -14,7 +14,7 @@
 If you discover a security vulnerability in Mnemo, please report it through one of the following channels:
 
 1. **GitHub Private Vulnerability Reporting** — Use the "Report a vulnerability" button on the [Security tab](https://github.com/Methux/mnemo/security/advisories/new) of this repository.
-2. **Email** — Send details to **hi@m-nemo.ai**.
+2. **Email** — Send details to **hello@m-nemo.ai**.
 
 ### What to include
 

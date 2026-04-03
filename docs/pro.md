@@ -8,9 +8,9 @@ Everything in Core, plus adaptive intelligence and zero-ops hosting.
 |:---|:---|:---|
 | Hosting | You run it | Managed API at `api.m-nemo.ai` |
 | Embedding | You bring your own keys | Built-in |
-| Candidate pool | Fixed `20` | Adaptive `50–200` based on store size |
-| Min score | Fixed `0.3` | `0.25` when N > 1000 |
-| Frequency scoring | Raw count | Soft log cap |
+| Candidate pool | Fixed (sensible default) | Adaptive, scales with store size |
+| Min score | Fixed (sensible default) | Adaptive, lowers at scale |
+| Frequency scoring | Raw count | Logarithmic frequency cap |
 | Contradiction detection | Basic cosine dedup | Extraction-time context injection |
 | Session dedup | None | Automatic |
 | Smart extraction | Basic (stub prompts) | Full 6-category L0/L1/L2 with few-shot |
