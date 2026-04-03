@@ -282,10 +282,10 @@ Areas where we'd love help:
 
 Dual-license model:
 
-- **MIT** — Core features (`SPDX-License-Identifier: MIT`)
-- **Commercial** — Pro features (`SPDX-License-Identifier: LicenseRef-Mnemo-Pro`)
+- **MIT** — Core framework (`SPDX-License-Identifier: MIT`)
+- **Commercial** — Cloud features and advanced strategies
 
-See [LICENSE](LICENSE) and [packages/pro/LICENSE](packages/pro/LICENSE) for details.
+See [LICENSE](LICENSE) for details.
 
 ---
 

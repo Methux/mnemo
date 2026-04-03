@@ -239,10 +239,10 @@ Full documentation at **[docs.m-nemo.ai](https://docs.m-nemo.ai)**
 
 This project uses a dual-license model:
 
-- **MIT** — Files marked `SPDX-License-Identifier: MIT` (Core features)
-- **Commercial** — Files marked `SPDX-License-Identifier: LicenseRef-Mnemo-Pro` (Pro features)
+- **MIT** — Core framework (`SPDX-License-Identifier: MIT`)
+- **Commercial** — Cloud features and advanced strategies
 
-See [LICENSE](LICENSE) and [packages/pro/LICENSE](packages/pro/LICENSE) for details.
+See [LICENSE](LICENSE) for details.
 
 ---
 

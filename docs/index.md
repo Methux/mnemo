@@ -36,5 +36,5 @@ features:
     details: "npm install @mnemoai/core → createMnemo() → store() → recall(). That's it."
   - icon: 🛡️
     title: Production Ready
-    details: 47 tests, CI/CD, TypeScript types with JSDoc, zero security vulnerabilities, 142KB package.
+    details: Comprehensive test suite, CI/CD, TypeScript types with JSDoc, zero security vulnerabilities.
 ---

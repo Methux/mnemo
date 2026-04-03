@@ -4,7 +4,7 @@ Mnemo is evaluated on [LOCOMO](https://github.com/snap-research/locomo), a bench
 
 ## Results
 
-**Best configuration: Voyage voyage-4 + candidatePoolSize=40**
+**Best configuration: Voyage voyage-4 embedding with optimized retrieval parameters**
 
 | Category | Accuracy | Description |
 |----------|----------|-------------|
@@ -44,7 +44,7 @@ The 85.2% score comes from the full pipeline working together:
 - **Triple-path retrieval** (Vector + BM25 + Graphiti) catches different types of information
 - **Voyage rerank-2** re-scores candidates for precision
 - **Weibull decay** prevents stale memories from competing with relevant ones
-- **candidatePoolSize=40** ensures enough candidates reach the reranking stage
+- **Optimized candidate pool** ensures enough candidates reach the reranking stage
 
 Each component's contribution was validated through [ablation testing](/guide/ablation).
 
@@ -55,8 +55,8 @@ Each component's contribution was validated through [ablation testing](/guide/ab
 git clone https://github.com/Methux/mnemo
 cd mnemo
 
-# The benchmark suite is in the workspace (not published to npm)
-# Contact us for access to the evaluation harness
+# The benchmark suite is in the benchmark/ directory
+# See benchmark/README.md for setup instructions
 ```
 
 ## Cross-Framework Comparison

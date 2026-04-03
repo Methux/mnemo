@@ -52,12 +52,8 @@ const mnemo = await createMnemo({
     recencyHalfLifeDays: 30,   // half-life in days (other weights use optimized defaults)
   },
 
-  // Optional: Memory tiers
-  tier: {
-    coreAccessThreshold: 5,          // accesses to promote to Core
-    coreImportanceThreshold: 0.8,    // importance to promote to Core
-    peripheralAgeDays: 90,           // days before demotion to Peripheral
-  },
+  // Optional: Memory tiers (sensible defaults — most users don't need to change)
+  // tier: { /* see docs for available options */ },
 
   // Optional: LLM for smart extraction
   llm: {

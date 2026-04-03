@@ -27,7 +27,7 @@ Mnemo Cloud: frequently recalled memories are reinforced, extending their effect
 
 ### Amygdala Emotional Tagging → emotionalSalience
 Emotionally charged memories are more durable (McGaugh, 2004).
-Mnemo: `emotionalSalience` field modulates half-life by up to 1.5×.
+Mnemo: `emotionalSalience` field modulates decay rate — higher salience memories persist longer.
 
 ### Sleep Consolidation → Cron Maintenance
 Memory consolidation during sleep (Stickgold, 2005).

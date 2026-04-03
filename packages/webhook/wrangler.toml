@@ -1,7 +1,0 @@
-name = "mnemo-webhook"
-main = "src/index.js"
-compatibility_date = "2024-12-01"
-
-[vars]
-# Non-secret vars (secrets set via `wrangler secret put`)
-STORE_ID = "326196"
