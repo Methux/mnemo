@@ -53,7 +53,8 @@ curl -X POST https://api.m-nemo.ai/v1/recall \
 | Plan | Price | Limits |
 |------|-------|--------|
 | **Core** | Free forever | Self-hosted, unlimited |
-| **Cloud Free** | $0 | 1,000 memories, 5,000 recalls/mo |
-| **Cloud Pro** | Coming soon | Unlimited, priority support |
+| **Cloud Starter** | $29/month | 10K memories, 1K stores/day, 50K recalls/day |
+| **Cloud Pro** | $99/month | 100K memories, 10K stores/day, unlimited recalls |
+| **Enterprise** | Contact us | Custom limits, dedicated support, SLA |
 
-[Try Mnemo Cloud →](https://m-nemo.ai)
+[Get Started with Mnemo Cloud →](https://m-nemo.ai)
