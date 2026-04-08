@@ -122,14 +122,15 @@ The result: your agent's memory stays sharp at 100 memories or 10,000.
 
 ### How it compares
 
-| | Mnemo | mem0 | Zep | LangMem |
+| | Mnemo | Mem0 | Zep | LangMem |
 |:---|:---:|:---:|:---:|:---:|
-| Local-first (no SaaS lock-in) | **Yes** | No | No | Partial |
+| Local-first (no SaaS lock-in) | **Yes** | Yes | CE deprecated | Partial |
 | Forgetting model | **Weibull decay** | None | Time window | None |
-| Contradiction detection | **Auto** | Manual | Manual | None |
-| Multi-backend (LanceDB/Qdrant/Chroma/PGVector) | **Yes** | Qdrant only | Postgres only | Varies |
+| Contradiction detection | **3-layer LLM** | Graph layer | Temporal versioning | None |
+| Multi-backend (LanceDB/Qdrant/Chroma/PGVector) | **Yes** | Qdrant | Postgres | Varies |
 | Provider agnostic (BYO embedding/LLM) | **Yes** | Limited | No | LangChain only |
-| Fully offline ($0 with Ollama) | **Yes** | No | No | No |
+| Fully offline ($0 with Ollama) | **Yes** | Partial | No | No |
+| Cross-encoder rerank | **Yes** | Yes | Yes | No |
 
 ---
 

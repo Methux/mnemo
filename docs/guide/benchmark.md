@@ -61,20 +61,31 @@ cd mnemo
 
 ## Cross-Framework Comparison
 
-All frameworks tested under identical conditions using our [open-source benchmark harness](https://github.com/Methux/mnemo/tree/main/benchmark):
+### Default config (same conditions)
+
+All frameworks tested under identical conditions using our [open-source benchmark harness](https://github.com/Methux/mnemo/tree/main/benchmark). Each framework uses its out-of-the-box configuration — no custom tuning:
 
 | Framework | Accuracy | Ingestion Time | Config |
 |-----------|----------|---------------|--------|
-| **Mnemo Cloud** | **85.2%** | — | Voyage voyage-4, BM25, rerank-2 |
-| **Mnemo Core** | **46.4%** | 4.7 min | OpenAI text-embedding-3-small, vector only |
-| **Mem0** (default config) | **~31.7%** | 73 min | `Memory()` default — OpenAI embedding + LLM extraction |
+| **Mnemo Core** | **46.4%** | 4.7 min | `createMnemo()` default — OpenAI text-embedding-3-small, vector only |
+| **Mem0** | **~31.7%** | 73 min | `Memory()` default — OpenAI embedding + LLM extraction |
 | Baseline (no memory) | 0% | 0s | Control — no retrieval |
+
+### Optimized config
+
+| Framework | Accuracy | Config |
+|-----------|----------|--------|
+| **Mnemo Cloud** | **85.2%** | Voyage voyage-4, BM25 fusion, Voyage rerank-2 |
+| **Mem0** (self-reported) | **66.9%** | Optimized config from Mem0's published research |
+| **Zep** (self-reported) | **75.14%** | Tested on Zep Cloud platform |
+
+Note: Mem0 and Zep optimized scores are self-reported and not independently verified by us. Mnemo Cloud's score was tested with our benchmark harness.
 
 **Methodology**: Same LOCOMO dataset, same GPT-4.1 judge, same scoring rubric (0-3, ≥2 = correct), same answer generation prompt. Only the memory framework's store/recall differs. Full evaluation code is open source.
 
 **Key observations**:
-- Mnemo Cloud's full pipeline (triple-path retrieval + rerank) is the primary driver of the 85.2% score
-- Mnemo Core with basic vector search scores ~15pp higher than Mem0's default configuration
+- Under identical default conditions, Mnemo Core scores ~15pp higher than Mem0
+- Mnemo Cloud's full pipeline (triple-path retrieval + rerank) pushes accuracy to 85.2%
 - Mem0 uses LLM-based memory extraction which increases ingestion time significantly
 - The gap between Core (46%) and Cloud (85%) demonstrates the value of BM25 fusion and cross-encoder reranking
 
@@ -103,23 +114,22 @@ A stress test with 509 stored memories and 3,000 evaluation queries, designed to
 
 The 11pp drop from MQoT-500 reflects the harder retrieval challenge of a larger, noisier memory store. Cloud's adaptive retrieval parameters that scale with store size are specifically designed for this regime.
 
-## LongMemEval (Zep's preferred benchmark)
+## LongMemEval
 
 We also tested on [LongMemEval](https://github.com/xiaowu0162/LongMemEval), a 500-question benchmark across 6 categories.
 
 **Preliminary results** (20 questions, single-session-user category):
 
-| Framework | Accuracy | Sample | Notes |
-|-----------|----------|--------|-------|
-| **Mnemo Core** | **90.0%** | 20 QA (single-session-user) | OpenAI text-embedding-3-small, vector only |
-| **Mnemo Cloud** | Pending | — | Requires full pipeline (BM25 + rerank) in server; see LOCOMO results above |
-| **Zep** (self-reported) | "up to 18.5% over baseline" | 500 QA | No absolute accuracy published; tested on their cloud platform |
+| Framework | Accuracy | Sample |
+|-----------|----------|--------|
+| **Mnemo Core** | **90.0%** | 20 QA (single-session-user) |
 
-Note: Mnemo results are preliminary, covering only the single-session-user category. Full 500-question evaluation across all 6 categories is in progress. Zep's numbers are self-reported from their product page — we have not independently verified them.
+Full 500-question evaluation across all 6 categories is in progress.
 
 ## Notes
 
-- **Mem0 configuration**: We tested Mem0 using its default `Memory()` initialization (no custom config). Mem0's own published research reports 66.9% on LOCOMO with their optimized setup. The difference (31.7% vs 66.9%) likely reflects configuration choices — our harness tests each framework's out-of-the-box experience.
+- **Mem0 default vs optimized**: We tested Mem0 using its default `Memory()` initialization. Mem0's own published research reports 66.9% on LOCOMO with their optimized setup. The difference (31.7% vs 66.9%) likely reflects configuration choices — our harness tests each framework's out-of-the-box experience.
+- **Self-reported scores**: Mem0 (66.9%) and Zep (75.14%) optimized scores are from their own publications. We have not independently verified them.
 - Results may vary depending on embedding model, LLM judge, hardware, and framework configuration
 - We encourage independent benchmarking and welcome reproducibility efforts
 - Benchmark harness and data are open source: `benchmark/run_locomo.py`

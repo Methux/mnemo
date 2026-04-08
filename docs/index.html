@@ -558,13 +558,13 @@ console.<span class="fn">log</span>(memories);
 </thead>
 <tbody>
 <tr class="highlight"><td>Weibull Decay</td><td class="highlight">Yes</td><td>No</td><td>No</td><td>No</td></tr>
-<tr class="highlight"><td>Triple-Path Retrieval</td><td class="highlight">Vec+BM25+Graph</td><td>Vector only</td><td>Vector+temporal</td><td>Vector only</td></tr>
-<tr class="highlight"><td>Contradiction Detection</td><td class="highlight">3-layer LLM</td><td>Basic</td><td>No</td><td>No</td></tr>
-<tr class="highlight"><td>Cross-encoder Rerank</td><td class="highlight">Voyage/Jina/Ollama</td><td>No</td><td>No</td><td>No</td></tr>
-<tr class="highlight"><td>100% Local ($0)</td><td class="highlight">Ollama preset</td><td>No</td><td>No</td><td>Partial</td></tr>
-<tr class="highlight"><td>Open Source</td><td class="highlight">MIT</td><td>Open core + SaaS</td><td>Paid</td><td>Freemium</td></tr>
+<tr class="highlight"><td>Triple-Path Retrieval</td><td class="highlight">Vec+BM25+Graph</td><td>Vector + Graph</td><td>Vector+BM25+temporal</td><td>Vector only</td></tr>
+<tr class="highlight"><td>Contradiction Detection</td><td class="highlight">3-layer LLM</td><td>Graph layer</td><td>Temporal versioning</td><td>No</td></tr>
+<tr class="highlight"><td>Cross-encoder Rerank</td><td class="highlight">Voyage/Jina/Ollama</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+<tr class="highlight"><td>100% Local ($0)</td><td class="highlight">Ollama preset</td><td>Partial</td><td>No</td><td>Partial</td></tr>
+<tr class="highlight"><td>Open Source</td><td class="highlight">MIT</td><td>Open core + SaaS</td><td>CE deprecated</td><td>Apache 2.0</td></tr>
 <tr class="highlight"><td>Preset Config (1 line)</td><td class="highlight">4 presets</td><td>No</td><td>No</td><td>No</td></tr>
-<tr class="highlight"><td>LOCOMO Benchmark</td><td class="highlight">85.2% (Cloud) / 46.4% (Core)</td><td>~31.7%*</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr class="highlight"><td>LOCOMO Benchmark</td><td class="highlight">46.4% (Core, default)</td><td>~31.7% (default)*</td><td>&mdash;</td><td>&mdash;</td></tr>
 <tr class="highlight"><td>Ablation Validated</td><td class="highlight">35 tests</td><td>No</td><td>No</td><td>No</td></tr>
 <tr class="highlight"><td>MCP Server</td><td class="highlight">Built-in</td><td>No</td><td>No</td><td>No</td></tr>
 </tbody>
