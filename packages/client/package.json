@@ -1,0 +1,16 @@
+{
+  "name": "@mnemoai/client",
+  "version": "0.1.0",
+  "description": "Mnemo Cloud client — store and recall memories via API",
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "files": ["src"],
+  "keywords": ["memory", "ai", "agent", "llm", "mnemo"],
+  "license": "MIT"
+}
