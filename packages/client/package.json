@@ -1,16 +1,25 @@
 {
   "name": "@mnemoai/client",
   "version": "0.1.0",
-  "description": "Mnemo Cloud client — store and recall memories via API",
+  "description": "Mnemo Cloud client — store and recall AI agent memories via API",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "types": "./src/index.ts"
+      "import": "./index.js",
+      "types": "./index.d.ts"
     }
   },
-  "files": ["src"],
-  "keywords": ["memory", "ai", "agent", "llm", "mnemo"],
-  "license": "MIT"
+  "files": ["index.js", "index.d.ts"],
+  "keywords": ["memory", "ai", "agent", "llm", "mnemo", "long-term-memory"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Methux/mnemo.git",
+    "directory": "packages/client"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
