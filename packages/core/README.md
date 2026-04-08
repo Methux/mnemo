@@ -144,7 +144,8 @@ docker compose up -d     # starts Neo4j + Graphiti + Dashboard
 | Package | Platform | Install |
 |:---|:---|:---|
 | [@mnemoai/core](https://www.npmjs.com/package/@mnemoai/core) | npm | `npm install @mnemoai/core` |
-| [Mnemo Cloud](https://m-nemo.ai) | Managed API | Register at [m-nemo.ai](https://m-nemo.ai) |
+| [@mnemoai/client](https://www.npmjs.com/package/@mnemoai/client) | npm | `npm install @mnemoai/client` |
+| [Mnemo Cloud](https://m-nemo.ai) | Managed API | Sign up at [api.m-nemo.ai/signup](https://api.m-nemo.ai/signup) |
 | [@mnemoai/server](https://www.npmjs.com/package/@mnemoai/server) | npm | `npx @mnemoai/server` |
 | [@mnemoai/vercel-ai](https://www.npmjs.com/package/@mnemoai/vercel-ai) | npm | `npm install @mnemoai/vercel-ai` |
 | [mnemo-memory](https://pypi.org/project/mnemo-memory/) | PyPI | `pip install mnemo-memory` |
@@ -179,8 +180,9 @@ Everything in Core, plus adaptive intelligence and zero-ops hosting. [Learn more
 | Plan | Price | Description |
 |:---|:---|:---|
 | **Core** | Free forever | Self-hosted, MIT licensed, unlimited |
-| **Cloud Free** | $0 | Managed API — 1,000 memories, 5,000 recalls/mo |
-| **Cloud Pro** | Coming soon | Unlimited, priority support |
+| **Cloud Starter** | $29/mo | Managed API — 10K memories, 1K stores/day, 50K recalls/day |
+| **Cloud Pro** | $99/mo | Managed API — 100K memories, 10K stores/day, unlimited recalls |
+| **Enterprise** | Contact us | Custom limits, dedicated support |
 
 [Try Mnemo Cloud →](https://m-nemo.ai)
 

@@ -187,10 +187,15 @@ Every parameter adapts to your store size. No magic numbers to tune.
 **Mnemo Cloud** — hosted API, zero setup. Adaptive retrieval, intelligent extraction, and contradiction detection built in. No keys to manage, no infrastructure to run.
 
 ```bash
-# Cloud: one API call, done
-curl -X POST https://api.m-nemo.ai/v1/store \
-  -H "Authorization: Bearer mn_your_key" \
-  -d '{"text": "User prefers dark mode"}'
+npm install @mnemoai/client
+```
+
+```javascript
+import { createCloudMnemo } from "@mnemoai/client";
+
+const mnemo = createCloudMnemo({ apiKey: "mn_your_key" });
+await mnemo.store({ text: "User prefers dark mode" });
+const memories = await mnemo.recall("UI preferences");
 ```
 
 | Plan | Price | What you get |
@@ -200,7 +205,7 @@ curl -X POST https://api.m-nemo.ai/v1/store \
 | **Cloud Pro** | $99/month | 100K memories, 10K stores/day, unlimited recalls |
 | **Enterprise** | Contact us | Custom limits, dedicated support, SLA |
 
-[Get Started with Mnemo Cloud →](https://m-nemo.ai)
+[Sign Up for Mnemo Cloud →](https://api.m-nemo.ai/signup)
 
 ### API Configuration Guide
 
@@ -221,7 +226,8 @@ Mnemo is a framework — **you bring your own models**. Choose a setup that fits
 | Package | Platform | Install |
 |:---|:---|:---|
 | [@mnemoai/core](https://www.npmjs.com/package/@mnemoai/core) | npm | `npm install @mnemoai/core` |
-| [Mnemo Cloud](https://m-nemo.ai) | REST API | `https://api.m-nemo.ai` |
+| [@mnemoai/client](https://www.npmjs.com/package/@mnemoai/client) | npm | `npm install @mnemoai/client` |
+| [Mnemo Cloud](https://api.m-nemo.ai/signup) | REST API | Sign up at [api.m-nemo.ai/signup](https://api.m-nemo.ai/signup) |
 | [@mnemoai/server](https://www.npmjs.com/package/@mnemoai/server) | npm | `npx @mnemoai/server` |
 | [@mnemoai/vercel-ai](https://www.npmjs.com/package/@mnemoai/vercel-ai) | npm | `npm install @mnemoai/vercel-ai` |
 | [mnemo-memory](https://pypi.org/project/mnemo-memory/) | PyPI | `pip install mnemo-memory` |
