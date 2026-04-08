@@ -63,31 +63,26 @@ cd mnemo
 
 ### Default config (same conditions)
 
-All frameworks tested under identical conditions using our [open-source benchmark harness](https://github.com/Methux/mnemo/tree/main/benchmark). Each framework uses its out-of-the-box configuration — no custom tuning:
+All frameworks tested under identical conditions using our [open-source benchmark harness](https://github.com/Methux/mnemo/tree/main/benchmark). Each framework uses its out-of-the-box configuration — no custom tuning.
 
-| Framework | Accuracy | Ingestion Time | Config |
-|-----------|----------|---------------|--------|
-| **Mnemo Core** | **46.4%** | 4.7 min | `createMnemo()` default — OpenAI text-embedding-3-small, vector only |
-| **Mem0** | **~31.7%** | 73 min | `Memory()` default — OpenAI embedding + LLM extraction |
-| Baseline (no memory) | 0% | 0s | Control — no retrieval |
+Full 1986-question re-run in progress. Results will be published with complete result files.
 
-### Optimized config
+**Previous partial results** (235 questions, 1 conversation):
 
-| Framework | Accuracy | Config |
+| Framework | Accuracy | Sample | Config |
+|-----------|----------|--------|--------|
+| **Mnemo Core** | **46.4%** | 235 QA | `createMnemo()` default — OpenAI text-embedding-3-small, vector only |
+
+Full cross-framework comparison (Mnemo Core vs Mem0 vs Baseline) on all 1986 questions is being re-run for accuracy.
+
+### Self-reported optimized scores (not independently verified)
+
+| Framework | Accuracy | Source |
 |-----------|----------|--------|
-| **Mnemo Cloud** | **85.2%** | Voyage voyage-4, BM25 fusion, Voyage rerank-2 |
-| **Mem0** (self-reported) | **66.9%** | Optimized config from Mem0's published research |
-| **Zep** (self-reported) | **75.14%** | Tested on Zep Cloud platform |
-
-Note: Mem0 and Zep optimized scores are self-reported and not independently verified by us. Mnemo Cloud's score was tested with our benchmark harness.
+| **Mem0** | **66.9%** | Mem0 published research (optimized config) |
+| **Zep** | **75.14%** | Zep blog (corrected benchmark) |
 
 **Methodology**: Same LOCOMO dataset, same GPT-4.1 judge, same scoring rubric (0-3, ≥2 = correct), same answer generation prompt. Only the memory framework's store/recall differs. Full evaluation code is open source.
-
-**Key observations**:
-- Under identical default conditions, Mnemo Core scores ~15pp higher than Mem0
-- Mnemo Cloud's full pipeline (triple-path retrieval + rerank) pushes accuracy to 85.2%
-- Mem0 uses LLM-based memory extraction which increases ingestion time significantly
-- The gap between Core (46%) and Cloud (85%) demonstrates the value of BM25 fusion and cross-encoder reranking
 
 ## MQoT (Mnemo Quality-of-Thought)
 
